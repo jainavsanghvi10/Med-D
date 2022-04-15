@@ -52,39 +52,52 @@ export default function Signup() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("Helo there");
+    // console.log("Helo there");
 
     const form = document.getElementById("signup-form");
     if (form.checkValidity()) {
-      console.log("valid form")
+      // console.log("valid form")
       if (authMethod === "email") {
         if (passwordRef.current.value !== passwordConfirmRef.current.value) {
           return setError("Passwords do not match");
         }
 
         try {
+          // console.log("Helo there");
+
           setError("");
           setLoading(true);
-          await signup(emailRef.current.value, passwordRef.current.value);
-          console.log("Helo there");
 
-          // var ref = doc(db, "UserData", phoneNumberRef.current.value);
-
-          // const docRef = await setDoc(ref, {
-          //   FirstName: firstNameRef.current.value,
-          //   LastName: lastNameRef.current.value,
-          //   Email: emailRef.current.value,
-          //   Mobile: phoneNumberRef.current.value,
-          // });
+          firebase.auth().createUserWithEmailAndPassword(emailRef.current.value, passwordRef.current.value)
+          .then((userCredential) => {
+          // Signed in 
+          var user = userCredential.user;
+          alert("User Added Succesfully!");
+          // ...
+          })
+          .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorMessage);
+          // ..
+          });
+          // await signup(emailRef.current.value, passwordRef.current.value);
           // console.log("Helo there");
-          // .then(()=> {
-          //     alert("Data Added Succesfully");
-          //     // console.log("HEHE");
-          // })
-          // .catch((error)=>{
-          //     alert("Unsuccesfull: "+ error);
-          // });
-          // butt.addEventListener("click",Adbutt.onclick = AddDocument_AutoId;
+          
+          firebase.firestore().collection("UserData").doc(phoneNumberRef.current.value).set({
+            FirstName: firstNameRef.current.value,
+            LastName: lastNameRef.current.value,
+            Email: emailRef.current.value,
+            Mobile: phoneNumberRef.current.value,
+          })
+          .then(() => {
+            alert("User Added Succesfully!");
+            // console.log("Document successfully written!");
+          })
+          .catch((error) => {
+            console.error("Error writing document: ", error);
+          });
+         
           navigate("/");
         } catch {
           setError("Failed to create an account");
