@@ -113,3 +113,24 @@ p{
 .folder-wrap.level-down{
   transform: scale(0.8);  
 }
+
+#create-new-folder{
+  border-color: #337ab7;
+}
+
+
+#create-new-folder i{
+  font-size: 100px;
+  opacity: 70%;
+  /* margin-bottom: auto; */
+}
+#create-new-folder h5{
+  padding-top: 29px;
+  opacity: 70%;
+}
+
+.mdi-delete-circle{
+  font-size: 30px !important;
+  text-align: right !important;
+  color: black !important;
+}

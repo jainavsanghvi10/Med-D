@@ -15,7 +15,8 @@ export const MedRecords = () => {
         <div className="tile folder">
           <i className="mdi mdi-folder"></i>
           <h3>{ele}</h3>
-          <p>Its a Folder, Bitch!</p>
+          <p>Its a Folder</p>
+          {/* <i className="mdi mdi-delete-circle"></i> */}
         </div>
       )
     }
@@ -26,7 +27,7 @@ export const MedRecords = () => {
         <div className="tile form">
           <i className="mdi mdi-file-document"></i>
           <h3>{ele}</h3>
-          <p>Its a File, Bitch!</p>
+          <p>Its a File</p>
         </div>
       )
     }
@@ -54,6 +55,19 @@ export const MedRecords = () => {
           $(".level-up").addClass("level-current");
           $(".level-up").removeClass("level-up").prev().addClass("level-up");
         }
+      });
+
+      //Create folder on click
+      $(".create-folder").on("click", function () {
+          FolderNames.push('NewFolder');
+          FolderList.push(
+            <div className="tile folder">
+              <i className="mdi mdi-folder"></i>
+              <h3>New Folder</h3>
+              <p>Its a Folder, Bitch!</p>
+            </div>
+          )
+          console.log(FolderNames);
       });
     });
   }
@@ -89,7 +103,7 @@ export const MedRecords = () => {
           "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
           type="text/javascript" />
       </Helmet> */}
-      
+
 
       <button className="back">
         <i className="mdi mdi-arrow-left"></i>
@@ -110,6 +124,12 @@ export const MedRecords = () => {
             <h3>Form name</h3>
             <p>Something something</p>
           </div> */}
+
+          <div className="tile create-folder" id="create-new-folder">
+            <i className="mdi mdi-folder-plus"></i>
+            <h5>Create New Folder</h5>
+            {/* <p>Something something</p> */}
+          </div>
 
           {provideContent()}
           {FolderList}
