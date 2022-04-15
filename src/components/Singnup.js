@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import firebase from 'firebase';
-import { ref, getDownloadURL, uploadBytesResumable,listAll } from 'firebase/storage';
+// import { ref, getDownloadURL, uploadBytesResumable,listAll } from 'firebase/storage';
 import { storage } from '../firebase';
 // import { doc, setDoc } from "firebase/firestore";
 
@@ -75,8 +75,8 @@ export default function Signup() {
 
   const uploadFiles = (file) => {
 		// if (!file) return;
-		const storageRef = ref(storage, `/${phoneNumberRef.current.value.hashCode()}/${file.name}`);
-		uploadBytes(storageRef, file).then((snapshot) => {
+		const storageRef = firebase.storage().ref(storage, `/${phoneNumberRef.current.value.hashCode()}/${file.name}`);
+		firebase.storage().uploadBytes(storageRef, file).then((snapshot) => {
       console.log('User Registered!');
     });
     // const uploadTask = uploadBytesResumable(sotrageRef, file);
@@ -150,7 +150,7 @@ export default function Signup() {
 							console.error('Error writing document: ', error);
 						});
 					//write here
-          uploadFiles('');
+          			uploadFiles('');
 					navigate(`/?id=${phoneNumberRef.current.value.hashCode()}`);
 				} catch {
 					setError('Failed to create an account');
