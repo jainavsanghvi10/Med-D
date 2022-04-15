@@ -1,6 +1,8 @@
 import React, { useRef, useState} from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import firebase from 'firebase';
+
 
 export default function Login() {
   const emailRef = useRef();
@@ -8,16 +10,41 @@ export default function Login() {
   const { login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [userMobile, setUserMobile] = useState();
   const navigate = useNavigate();
+
+  String.prototype.hashCode = function() {
+    var hash = 0, i, chr;
+    if (this.length === 0) return hash;
+    for (i = 0; i < this.length; i++) {
+      chr   = this.charCodeAt(i);
+      hash  = ((hash << 5) - hash) + chr;
+      hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+  };
 
   async function handleSubmitLogin(e) {
     e.preventDefault();
 
     try {
+
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      navigate("/");
+      
+      var userData;
+      firebase.firestore().collection("UserData").where("Email", "==",emailRef.current.value )
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            userData = doc.data();
+            console.log(userData.Mobile, userData.FirstName, userData.LastName, userData.Email);
+            setUserMobile(userData.Mobile);
+          });
+      })
+      console.log(userMobile);
     } catch {
       setError("Incorrect Username or Password");
     }
