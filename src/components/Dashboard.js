@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import '../assets/styles/font-awesome.min.css';
 import '../assets/styles/icon-font.min.css';
@@ -24,6 +24,13 @@ import StatC from "../assets/images/counter/counter3.png";
 import StatCS from "../assets/images/counter/counter4.png";
 
 export default function Dashboard(){
+	const [id, setId] = useState();
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+		const id = params.get('id');
+		setId(id ? id : '');
+		//eslint-disable-next-line
+	  }, []);
   return (
 	  <>		
 		{/* <!--font-family--> */}

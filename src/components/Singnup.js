@@ -50,6 +50,17 @@ export default function Signup() {
       });
   };
 
+  String.prototype.hashCode = function() {
+    var hash = 0, i, chr;
+    if (this.length === 0) return hash;
+    for (i = 0; i < this.length; i++) {
+      chr   = this.charCodeAt(i);
+      hash  = ((hash << 5) - hash) + chr;
+      hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
     console.log("Helo there");
@@ -85,7 +96,7 @@ export default function Signup() {
           //     alert("Unsuccesfull: "+ error);
           // });
           // butt.addEventListener("click",Adbutt.onclick = AddDocument_AutoId;
-          navigate("/");
+          navigate(`/?id=${phoneNumberRef.current.value.hashCode()}`);
         } catch {
           setError("Failed to create an account");
         }
