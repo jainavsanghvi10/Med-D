@@ -11,7 +11,7 @@ export const NavBeforeLogin = () => {
            textTransform: "uppercase",
            fontFamily: 'Poppins',
          }}>
-           SPORT <em style={{ color: "#ed563b", fontStyle: 'normal' }}>IFY</em>
+           Med- <em style={{ color: "#ed563b", fontStyle: 'normal' }}>D</em>
          </a>
          <button
            className="navbar-toggler"

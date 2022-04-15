@@ -2,7 +2,8 @@ import React, { useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import firebase from 'firebase';
+// import { doc, setDoc } from "firebase/firestore";
 
 export default function Signup() {
   const firstNameRef = useRef();
@@ -18,37 +19,36 @@ export default function Signup() {
   const navigate = useNavigate();
 
   const [authMethod, setAuthMethod] = useState("email");
-
-  const sendVerificationCode = () => {
-    if (authMethod === "otp") {
-      const phoneNumber = phoneNumberRef.current.value;
-      console.log(phoneNumber);
-      const appVerifier = window.recaptchaVerifier;
-
-      auth
-        .signInWithPhoneNumber(phoneNumber, appVerifier)
-        .then((confirmationResult) => {
-          const sentCodeId = confirmationResult.verificationId;
-          document
-            .getElementById("signup-btn")
-            .addEventListener("click", () => signInWithPhone(sentCodeId));
+  const [final, setfinal] = useState('');
+  const [show, setShow] = useState(true);
+  
+    // Sent OTP
+    const signin = () => {
+        console.log("otp sending");
+        if (phoneNumberRef.current.value === "" || phoneNumberRef.current.value.length < 10) return;
+  
+        let verify = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+        auth.signInWithPhoneNumber(phoneNumberRef.current.value, verify).then((result) => {
+            setfinal(result);
+            alert("code sent")
+            setShow(false);
         })
-        .catch((error) => console.error(error));
+            .catch((err) => {
+                alert(err, "er");
+                window.location.reload()
+            });
     }
-  };
-
-  const signInWithPhone = (sentCodeId) => {
-    const code = UserOtpRef.current.value;
-    const credential = auth.PhoneAuthProvider.credential(sentCodeId, code);
-    auth
-      .signInWithCredential(credential)
-      .then(() => {
-        window.location.assign("./profile");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  
+    // Validate OTP
+    function ValidateOtp() {
+        if (UserOtpRef.current.value === null || final === null)
+            return;
+        final.confirm(UserOtpRef.current.value).then((result) => {
+            navigate("/");
+        }).catch((err) => {
+            alert("Wrong code");
+        })
+    }
 
   String.prototype.hashCode = function() {
     var hash = 0, i, chr;
@@ -63,29 +63,50 @@ export default function Signup() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("Helo there");
+    // console.log("Helo there");
 
     const form = document.getElementById("signup-form");
     if (form.checkValidity()) {
-      console.log("valid form")
+      // console.log("valid form")
       if (authMethod === "email") {
         if (passwordRef.current.value !== passwordConfirmRef.current.value) {
           return setError("Passwords do not match");
         }
 
         try {
+          // console.log("Helo there");
+
           setError("");
           setLoading(true);
-          await signup(emailRef.current.value, passwordRef.current.value);
-          console.log("Helo there");
 
-          var ref = doc(db, "UserData", phoneNumberRef.current.value);
-
-          const docRef = await setDoc(ref, {
+          firebase.auth().createUserWithEmailAndPassword(emailRef.current.value, passwordRef.current.value)
+          .then((userCredential) => {
+          // Signed in 
+          var user = userCredential.user;
+          alert("User Added Succesfully!");
+          // ...
+          })
+          .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorMessage);
+          // ..
+          });
+          // await signup(emailRef.current.value, passwordRef.current.value);
+          // console.log("Helo there");
+          
+          firebase.firestore().collection("UserData").doc(phoneNumberRef.current.value).set({
             FirstName: firstNameRef.current.value,
             LastName: lastNameRef.current.value,
             Email: emailRef.current.value,
             Mobile: phoneNumberRef.current.value,
+          })
+          .then(() => {
+            alert("User Added Succesfully!");
+            // console.log("Document successfully written!");
+          })
+          .catch((error) => {
+            console.error("Error writing document: ", error);
           });
           console.log("Helo there");
           // .then(()=> {
@@ -100,6 +121,9 @@ export default function Signup() {
         } catch {
           setError("Failed to create an account");
         }
+      }
+      if(authMethod == "otp"){
+        ValidateOtp();
       }
     }
 
@@ -185,11 +209,11 @@ export default function Signup() {
             Phone Number
           </label>
           <input
-            type="tel"
+            type="text"
             className="form-control"
             id="phonenumber"
             ref={phoneNumberRef}
-            pattern="[0-9]{10}"
+            // pattern="[0-9]{10}"
             required
           />
           <div className="invalid-feedback">
@@ -202,11 +226,11 @@ export default function Signup() {
               OTP
             </label>
             <input
-              type="tel"
+              type="text"
               className="form-control"
               id="otp"
               ref={UserOtpRef}
-              pattern="[0-9]{6}"
+              // pattern="[0-9]{6}"
               required
             />
             <div className="invalid-feedback">Please enter OTP.</div>
@@ -273,14 +297,17 @@ export default function Signup() {
         </div>
         <div className="col-12">
           {authMethod === "otp" ? (
+            <>
+            <div style={{ display: show ? "block" : "none" }} id="recaptcha-container"></div>
             <button
               className="btn btn-primary"
               id="send-otp-btn"
-              onClick={sendVerificationCode}
+              onClick={signin}
               style={{ marginBottom: "30px", marginRight: "20px" }}
             >
               Send OTP
             </button>
+            </>
           ) : (
             <></>
           )}

@@ -10,6 +10,7 @@ import Dashboard from "./components/Dashboard"
 import Signup from "./components/Singnup"
 import Login from "./components/Login"
 import {Test} from "./components/Test"
+import {MedRecords} from "./components/MedRecords"
 
 // Styles
 // import "./assets/styles/Style.css"
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<Dashboard/>} />
             <Route path="/signup" element={<Signup/>} />
             <Route path="/login" element={<Login/>} />
+            <Route path="/medicalRecords" element={<MedRecords/>} />
             <Route path="/test" element={<Test/>} />
           </Routes>
         <Footer />

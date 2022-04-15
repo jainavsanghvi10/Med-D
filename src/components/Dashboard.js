@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-
+import React, {useState, useEffect} from 'react'
+import { Link } from 'react-router-dom';
 import '../assets/styles/font-awesome.min.css';
 import '../assets/styles/icon-font.min.css';
 import '../assets/styles/animate.css';
@@ -28,7 +28,7 @@ export default function Dashboard(){
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
 		const id = params.get('id');
-		setId(id ? id : '');
+		setId(id);
 		//eslint-disable-next-line
 	  }, []);
   return (
@@ -215,7 +215,9 @@ export default function Dashboard(){
 									</div>
 								</div>
 							</div>
+							
 							<div className="col-sm-4 col-xs-12">
+							<Link to={"/medicalRecords?id=" + id}>
 								<div className="single-we-do-box text-center">
 									<div className="we-do-description">
 										<div className="we-do-info">
@@ -224,15 +226,15 @@ export default function Dashboard(){
 											</div>
 											<div className="we-do-topics">
 												<h2>
-													<a href="#">
 														Save your Medical Records
-													</a>
 												</h2>
 											</div>
 										</div>
 									</div>
 								</div>
+								</Link>
 							</div>
+							
 						</div>
 					</div>
 				</div>
