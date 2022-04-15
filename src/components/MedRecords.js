@@ -43,7 +43,8 @@ export const MedRecords = () => {
         }}>
           <i className="mdi mdi-folder"></i>
           <h3>{ele}</h3>
-          <p>Its a Folder, Bitch!</p>
+          <p>Its a Folder</p>
+          {/* <i className="mdi mdi-delete-circle"></i> */}
         </div>
       )
     }
@@ -54,7 +55,7 @@ export const MedRecords = () => {
         <div id={"file" + index} className="tile form">
           <i className="mdi mdi-file-document"></i>
           <h3>{ele}</h3>
-          <p>Its a File, Bitch!</p>
+          <p>Its a File</p>
         </div>
       )
     }
