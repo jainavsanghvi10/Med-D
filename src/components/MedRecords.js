@@ -7,113 +7,169 @@ export const MedRecords = () => {
 	const { currentUser } = useAuth();
 	const navigate = useNavigate();
 	const [id, setId] = useState();
-	const [currFolder, setCurrFolder] = useState("main");
+	const [currFolder, setCurrFolder] = useState(null);
 	// const [FileNames, setFileNames] = useState([]);
 	// const [FolderNames, setFolderNames] = useState([]);
+
 	var FileNames = [];
 	var FolderNames = [];
 
-	useEffect(() => {
-		FolderNames.push(currFolder);
-		// provideContent();
-    if(currFolder != "main")
-		  navigate(`/medicalRecords?id=${id}&fn=${currFolder}`);
-	}, [currFolder]);
+	// useEffect(() => {
+	// 	// provideContent();
+	// 	if (currFolder != null){
+	// 		navigate(`/medicalRecords?id=${id}&fn=${currFolder}`);
+  //   }
+	// }, [currFolder]);
 	useEffect(() => {
 		if (!currentUser) {
 			navigate('/signup');
 		}
 		const params = new URLSearchParams(window.location.search);
-		const id = params.get('id');
+		const ID = params.get('id');
 		setId(id);
+    const FOLDER = params.get('fn');
+    setCurrFolder(FOLDER);
+		console.log(id);
 		//eslint-disable-next-line
 	}, []);
 
-	for (let i = 1; i < Math.random() * 6 + 2; i++)
-		FolderNames.push('folder' + i);
 
-	const FileList = [];
-	const FolderList = [];
+    // <div className='folder-wrap level-current scrolling' id='Folder_lvl1'></div>
 
-	// const getItems = () => {
-		console.log('Getting all folder and file details:');
-		const listRef = firebase.storage().ref().child(`${id}}/`);
-    // const listRef = ref(storage, '');
-		listRef.listAll()
+    console.log(currFolder);
+		console.log('Getting all folder and file details from ' + id);
+		var listRef;
+    
+    if(currFolder != null){
+     listRef = firebase.storage().ref().child(`-2072624641/UserFolder1`);
+    }
+    else{
+      listRef = firebase.storage().ref().child(`-2072624641/`);
+    }
+    
+		listRef
+			.listAll()
 			.then((snap) => {
+				// console.log("printing file details")
+        // console.log(FileNames, FolderNames);
 				snap.prefixes.forEach((folderRef) => {
-					console.log('folderRef: ' + folderRef.name);
+					// console.log('folderRef: ' + folderRef.name);					
 					FolderNames.push(folderRef.name);
 				});
 				snap.items.forEach((itemRef) => {
-					console.log('itemRef: ' + itemRef.name);
-					// let temp = FileNames;
+					// console.log('itemRef: ' + itemRef.name);
 					FileNames.push(itemRef.name);
-					// setFileNames(temp);
 				});
+
+        if(currFolder != null){
+          const child = document.getElementById("Folder_lvl1");
+          // child.parentElement.removeChild(child);
+          console.log("childRemoved");
+          const divx = document.createElement('div');
+          divx.classList.add("folder-wrap").add("level-current").add("scrolling")
+          divx.id = "Folder_lvl1";
+          document.getElementById("stage").appendChild(divx);
+          // <div className='folder-wrap level-current scrolling' id='Folder_lvl1'>
+        }
+        
+        for (let index = 0; index < FolderNames.length; index++) {
+          // console.log("fl")
+          const ele = FolderNames[index];
+          console.log(ele)
+          const div1 = document.createElement('div');
+          const icon = document.createElement('i');
+          const folderName = document.createElement('p');
+          
+          div1.id = `folder_${index}`;
+          div1.classList.add("tile");
+          div1.classList.add("folder");
+          div1.onclick = () => { setCurrFolder(FolderNames[index]) }
+          
+          icon.id = `icon_${index}`;
+          icon.classList.add("mdi");
+          icon.classList.add("mdi-folder");
+    
+          folderName.innerText = ele;
+    
+          div1.appendChild(icon).appendChild(folderName);
+          document.getElementById("Folder_lvl1").appendChild(div1);
+        }
+    
+        for (let index = 0; index < FileNames.length; index++) {
+          const ele = FileNames[index];
+          console.log(ele)
+          const div1 = document.createElement('div');
+          const icon = document.createElement('i');
+          const fileName = document.createElement('p');
+          
+          div1.id = `folder_${index}`;
+          div1.classList.add("tile");
+          div1.classList.add("folder");
+          div1.onclick = () => { setCurrFolder(ele) }
+          
+          icon.id = `icon_${index}`;
+          icon.classList.add("mdi");
+          icon.classList.add("mdi-file-document");
+    
+          fileName.innerText = ele;
+    
+          div1.appendChild(icon).appendChild(fileName);
+          document.getElementById("Folder_lvl1").appendChild(div1);
+        }
+        console.log(FolderNames, FileNames);
+        // provideContent(FileNames, FolderNames);
 			})
 			.catch((error) => {
-				console.log(error);
+        console.log(error);
 			});
-	// };
 
-  // getItems();
-	function provideContent() {
-    for (let index = 0; index < FolderNames.length; index++) {
-			const ele = FolderNames[index];
-			FolderList.push(
-				<div
-					id={'folder' + index}
-					className='tile folder'
-					onClick={() => {
-						setCurrFolder(ele);
-					}}>
-					<i className='mdi mdi-folder'></i>
-					<h3>{ele}</h3>
-					<p>Its a Folder</p>
-					{/* <i className="mdi mdi-delete-circle"></i> */}
-				</div>
-			);
-		}
+	// function provideContent(files,folders) {
+	// 	console.log(files, folders)
+	// 	for (let index = 0; index < folders.length; index++) {
+	// 		// console.log("fl")
+	// 		const ele = folders[index];
+	// 		console.log(ele)
+  //     const div1 = document.createElement('div');
+  //     const icon = document.createElement('i');
+  //     const folderName = document.createElement('h3');
+      
+  //     div1.id = `folder_${index}`;
+  //     div1.classList.add("tile");
+  //     div1.classList.add("folder");
+  //     div1.onclick = () => { setCurrFolder(ele) }
+      
+  //     icon.id = `icon_${index}`;
+  //     icon.classList.add("mdi");
+  //     icon.classList.add("mdi-folder");
 
-		for (let index = 0; index < FileNames.length; index++) {
-			const ele = FileNames[index];
-			FileList.push(
-				<div id={'file' + index} className='tile form'>
-					<i className='mdi mdi-file-document'></i>
-					<h3>{ele}</h3>
-					<p>Its a File</p>
-				</div>
-			);
-		}
+  //     folderName.innerText = ele;
 
-		// $(document).ready(function () {
-		//   // Folder on click
-		//   $(".folder").on("click", function () {
-		//     console.log("Drill down");
-		//     $(".level-up").removeClass("level-up");
-		//     $(".level-current").addClass("level-up");
-		//     $(".level-current").removeClass("level-current");
-		//     $(".level-down").addClass("level-current");
-		//     $(".level-down").removeClass("level-down").next().addClass("level-down");
-		//   });
+  //     div1.appendChild(icon).appendChild(folderName);
+  //     document.getElementById("Folder_lvl1").appendChild(div1);
+	// 	}
 
-		// Back on Click
-		//   $(".back").on("click", function () {
-		//     if ($(".level-current").is(":first-child")) {
-		//       console.log("Current is top");
-		//     } else {
-		//       console.log("Drill back up");
-		//       $(".level-down").removeClass("level-down");
-		//       $(".level-current").addClass("level-down");
-		//       $(".level-current").removeClass("level-current");
-		//       $(".level-up").addClass("level-current");
-		//       $(".level-up").removeClass("level-up").prev().addClass("level-up");
-		//     }
-		//   });
-		// });
-	}
-	provideContent();
+	// 	for (let index = 0; index < files.length; index++) {
+	// 		const ele = files[index];
+  //     console.log(ele)
+  //     const div1 = document.createElement('div');
+  //     const icon = document.createElement('i');
+  //     const fileName = document.createElement('h3');
+      
+  //     div1.id = `folder_${index}`;
+  //     div1.classList.add("tile");
+  //     div1.classList.add("folder");
+  //     div1.onclick = () => { setCurrFolder(ele) }
+      
+  //     icon.id = `icon_${index}`;
+  //     icon.classList.add("mdi");
+  //     icon.classList.add("mdi-file-document");
+
+  //     fileName.innerText = ele;
+
+  //     div1.appendChild(icon).appendChild(fileName);
+  //     document.getElementById("Folder_lvl1").appendChild(div1);
+	// 	}
+	// }
 
 	return (
 		<div className='App'>
@@ -121,129 +177,8 @@ export const MedRecords = () => {
 				<i className='mdi mdi-arrow-left'></i>
 			</button>
 
-			<div className='stage'>
+			<div id="stage" className='stage'>
 				<div className='folder-wrap level-current scrolling' id='Folder_lvl1'>
-					{FolderList}
-					{FileList}
-				</div>
-
-				<div className='folder-wrap level-down'>
-					<div className='tile folder'>
-						<i className='mdi mdi-folder'></i>
-						<h3>Folder name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile folder'>
-						<i className='mdi mdi-folder'></i>
-						<h3>Folder name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile folder'>
-						<i className='mdi mdi-folder'></i>
-						<h3>Folder name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile form'>
-						<i className='mdi mdi-file-document'></i>
-						<h3>Form name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile form'>
-						<i className='mdi mdi-file-document'></i>
-						<h3>Form name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile form'>
-						<i className='mdi mdi-file-document'></i>
-						<h3>Form name</h3>
-						<p>Something something</p>
-					</div>
-				</div>
-				<div className='folder-wrap'>
-					<div className='tile folder'>
-						<i className='mdi mdi-folder'></i>
-						<h3>Folder name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile folder'>
-						<i className='mdi mdi-folder'></i>
-						<h3>Folder name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile form'>
-						<i className='mdi mdi-file-document'></i>
-						<h3>Form name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile form'>
-						<i className='mdi mdi-file-document'></i>
-						<h3>Form name</h3>
-						<p>Something something</p>
-					</div>
-				</div>
-				<div className='folder-wrap'>
-					<div className='tile folder'>
-						<i className='mdi mdi-folder'></i>
-						<h3>Folder name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile folder'>
-						<i className='mdi mdi-folder'></i>
-						<h3>Folder name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile folder'>
-						<i className='mdi mdi-folder'></i>
-						<h3>Folder name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile form'>
-						<i className='mdi mdi-file-document'></i>
-						<h3>Form name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile form'>
-						<i className='mdi mdi-file-document'></i>
-						<h3>Form name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile form'>
-						<i className='mdi mdi-file-document'></i>
-						<h3>Form name</h3>
-						<p>Something something</p>
-					</div>
-				</div>
-				<div className='folder-wrap'>
-					<div className='tile folder'>
-						<i className='mdi mdi-folder'></i>
-						<h3>Folder name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile form'>
-						<i className='mdi mdi-file-document'></i>
-						<h3>Form name</h3>
-						<p>Something something</p>
-					</div>
-
-					<div className='tile form'>
-						<i className='mdi mdi-file-document'></i>
-						<h3>Form name</h3>
-						<p>Something something</p>
-					</div>
 				</div>
 			</div>
 		</div>

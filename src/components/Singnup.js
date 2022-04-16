@@ -1,11 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import firebase from 'firebase';
-// import { ref, getDownloadURL, uploadBytesResumable,listAll } from 'firebase/storage';
 import { storage } from '../firebase';
-// import { doc, setDoc } from "firebase/firestore";
+
 
 export default function Signup() {
 	const firstNameRef = useRef();
@@ -23,6 +22,31 @@ export default function Signup() {
 	const [authMethod, setAuthMethod] = useState('email');
 	const [final, setfinal] = useState('');
 	const [show, setShow] = useState(true);
+	const [userValidate, setUserValidate] = useState(false);
+
+	useEffect(() => {
+		if(userValidate){
+			firebase
+				.firestore()
+				.collection('UserData')
+				.doc(phoneNumberRef.current.value)
+				.set({
+					FirstName: firstNameRef.current.value.toLowerCase(),
+					LastName: lastNameRef.current.value.toLowerCase(),
+					Email: emailRef.current.value.toLowerCase(),
+					Mobile: phoneNumberRef.current.value.toLowerCase(),
+				})
+				.then(() => {
+					console.log('User Added Succesfully!');
+					navigate(`/?id=${phoneNumberRef.current.value.hashCode()}`);
+				})
+				.catch((error) => {
+					console.error('Error writing document: ', error);
+				});
+		}
+		//eslint-disable-next-line
+	  }, [userValidate]);
+
 	// Sent OTP
 	const signin = () => {
 		console.log('otp sending');
@@ -37,11 +61,11 @@ export default function Signup() {
 			.signInWithPhoneNumber(phoneNumberRef.current.value, verify)
 			.then((result) => {
 				setfinal(result);
-				alert('code sent');
+				console.log('code sent');
 				setShow(false);
 			})
 			.catch((err) => {
-				alert(err, 'er');
+				console.log(err, 'er');
 				window.location.reload();
 			});
 	};
@@ -51,10 +75,11 @@ export default function Signup() {
 		final
 			.confirm(UserOtpRef.current.value)
 			.then((result) => {
-				navigate('/');
+				console.log("User Loged in");
+				setUserValidate(true);
 			})
 			.catch((err) => {
-				alert('Wrong code');
+				console.log('Wrong code');
 			});
 	}
 	String.prototype.hashCode = function () {
@@ -122,7 +147,7 @@ export default function Signup() {
 						.then((userCredential) => {
 							// Signed in
 							var user = userCredential.user;
-							alert('User Added Succesfully!');
+							console.log('User Added Succesfully!');
 							// ...
 						})
 						.catch((error) => {
@@ -139,13 +164,13 @@ export default function Signup() {
 						.collection('UserData')
 						.doc(phoneNumberRef.current.value)
 						.set({
-							FirstName: firstNameRef.current.value,
-							LastName: lastNameRef.current.value,
-							Email: emailRef.current.value,
-							Mobile: phoneNumberRef.current.value,
+							FirstName: firstNameRef.current.value.toLowerCase(),
+							LastName: lastNameRef.current.value.toLowerCase(),
+							Email: emailRef.current.value.toLowerCase(),
+							Mobile: phoneNumberRef.current.value.toLowerCase(),
 						})
 						.then(() => {
-							alert('User Added Succesfully!');
+							console.log('User Added Succesfully!');
 							// console.log("Document successfully written!");
 						})
 						.catch((error) => {
@@ -168,7 +193,7 @@ export default function Signup() {
 					// }).then(() => { alert("folder created")})
 					// .catch((error) => {console.error(error)})
 					// uploadFiles('');
-					// navigate(`/?id=${phoneNumberRef.current.value.hashCode()}`);
+					navigate(`/?id=${phoneNumberRef.current.value.hashCode()}`);
 				} catch {
 					setError('Failed to create an account');
 				}
@@ -189,7 +214,7 @@ export default function Signup() {
 				Sign Up
 			</h1>
 			{error && (
-				<div className='alert alert-danger' role='alert'>
+				<div className='console.log console.log-danger' role='console.log'>
 					{error}
 				</div>
 			)}
