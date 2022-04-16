@@ -1,4 +1,4 @@
-import React, { useRef, useState} from "react";
+import React, { useRef, useState, useEffect} from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import firebase from 'firebase';
@@ -10,8 +10,14 @@ export default function Login() {
   const { login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [userMobile, setUserMobile] = useState();
+  const [userMobile, setUserMobile] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+		if(userMobile != null)
+      navigate(`/?id=${userMobile.hashCode()}`);
+		//eslint-disable-next-line
+	  }, [userMobile]);
 
   String.prototype.hashCode = function() {
     var hash = 0, i, chr;
@@ -24,6 +30,42 @@ export default function Login() {
     return hash;
   };
 
+  // // Sent OTP
+	// const signin = () => {
+	// 	console.log('otp sending');
+	// 	if (
+	// 		phoneNumberRef.current.value === '' ||
+	// 		phoneNumberRef.current.value.length < 10
+	// 	)
+	// 		return;
+
+	// 	let verify = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+	// 	auth
+	// 		.signInWithPhoneNumber(phoneNumberRef.current.value, verify)
+	// 		.then((result) => {
+	// 			setfinal(result);
+	// 			console.log('code sent');
+	// 			setShow(false);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err, 'er');
+	// 			window.location.reload();
+	// 		});
+	// };
+
+  // function ValidateOtp() {
+	// 	if (UserOtpRef.current.value === null || final === null) return;
+	// 	final
+	// 		.confirm(UserOtpRef.current.value)
+	// 		.then((result) => {
+	// 			console.log("User Loged in");
+	// 			setUserValidate(true);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log('Wrong code');
+	// 		});
+	// }
+
   async function handleSubmitLogin(e) {
     e.preventDefault();
 
@@ -34,7 +76,7 @@ export default function Login() {
       await login(emailRef.current.value, passwordRef.current.value);
       
       var userData;
-      firebase.firestore().collection("UserData").where("Email", "==",emailRef.current.value )
+      firebase.firestore().collection("UserData").where("Email", "==",emailRef.current.value.toLowerCase() )
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {

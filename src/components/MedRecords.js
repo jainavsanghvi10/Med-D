@@ -6,7 +6,7 @@ export const MedRecords = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [id, setId] = useState();
-  const [currFolder, setCurrFolder] = useState();
+  const [currFolder, setCurrFolder] = useState("main");
 
   var FileNames = ['file1', 'file2', 'file3', 'file4'];
   var FolderNames = [];
@@ -14,7 +14,8 @@ export const MedRecords = () => {
   useEffect(() => { 
     FolderNames.push(currFolder);
     // provideContent();
-    navigate(`/medicalRecords?id=${id}&fn=${currFolder}`) 
+    if(currFolder != "main")
+      navigate(`/medicalRecords?id=${id}&fn=${currFolder}`) 
   }, [currFolder]);
 	useEffect(() => {
     if(!currentUser){
@@ -23,6 +24,7 @@ export const MedRecords = () => {
 		const params = new URLSearchParams(window.location.search);
 		const id = params.get('id');
 		setId(id);
+    console.log(id);
 		//eslint-disable-next-line
 	}, []);
 
