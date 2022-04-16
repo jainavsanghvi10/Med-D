@@ -23,7 +23,6 @@ export default function Signup() {
 	const [authMethod, setAuthMethod] = useState('email');
 	const [final, setfinal] = useState('');
 	const [show, setShow] = useState(true);
-
 	// Sent OTP
 	const signin = () => {
 		console.log('otp sending');
@@ -46,7 +45,6 @@ export default function Signup() {
 				window.location.reload();
 			});
 	};
-
 	// Validate OTP
 	function ValidateOtp() {
 		if (UserOtpRef.current.value === null || final === null) return;
@@ -59,7 +57,6 @@ export default function Signup() {
 				alert('Wrong code');
 			});
 	}
-
 	String.prototype.hashCode = function () {
 		var hash = 0,
 			i,
@@ -72,14 +69,19 @@ export default function Signup() {
 		}
 		return hash;
 	};
-
-  const uploadFiles = (file) => {
+	const uploadFiles = (file) => {
+		console.log('Registering User');
 		// if (!file) return;
-		const storageRef = firebase.storage().ref(storage, `/${phoneNumberRef.current.value.hashCode()}/${file.name}`);
-		firebase.storage().uploadBytes(storageRef, file).then((snapshot) => {
-      console.log('User Registered!');
-    });
-    // const uploadTask = uploadBytesResumable(sotrageRef, file);
+		const storageRef = firebase
+			.storage()
+			.ref(storage, `/${phoneNumberRef.current.value.hashCode()}/${file.name}`);
+		firebase
+			.storage()
+			.uploadBytes(storageRef, file)
+			.then((snapshot) => {
+				console.log('User Registered!');
+			});
+		// const uploadTask = uploadBytesResumable(sotrageRef, file);
 
 		// uploadTask.on(
 		// 	'state_changed',
@@ -150,8 +152,23 @@ export default function Signup() {
 							console.error('Error writing document: ', error);
 						});
 					//write here
-          			uploadFiles('');
-					navigate(`/?id=${phoneNumberRef.current.value.hashCode()}`);
+					console.log('OTP verified');
+					// console.log("Registering User")
+					const file = 'userTest';
+					console.log(phoneNumberRef.current.value.hashCode());
+					const storageRef = firebase
+						.storage()
+						.ref()
+						.child(`${phoneNumberRef.current.value.hashCode()}/${file}`);
+					storageRef.put('').then((snapshot) => {
+						console.log('Folder Created');
+					});
+					// firebase.storage().uploadBytes(storageRef, file).then((snapshot) => {
+					// console.log('User Registered!');
+					// }).then(() => { alert("folder created")})
+					// .catch((error) => {console.error(error)})
+					// uploadFiles('');
+					// navigate(`/?id=${phoneNumberRef.current.value.hashCode()}`);
 				} catch {
 					setError('Failed to create an account');
 				}
