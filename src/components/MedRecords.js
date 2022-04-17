@@ -14,24 +14,29 @@ export const MedRecords = () => {
 	var FileNames = [];
 	var FolderNames = [];
 
-	// useEffect(() => {
-	// 	// provideContent();
-	// 	if (currFolder != null){
-	// 		navigate(`/medicalRecords?id=${id}&fn=${currFolder}`);
-  //   }
-	// }, [currFolder]);
-	useEffect(() => {
+  useEffect(() => {
 		if (!currentUser) {
 			navigate('/signup');
 		}
 		const params = new URLSearchParams(window.location.search);
 		const ID = params.get('id');
-		setId(id);
+		setId(ID);
     const FOLDER = params.get('fn');
     setCurrFolder(FOLDER);
-		console.log(id);
+		console.log(ID, FOLDER);
 		//eslint-disable-next-line
 	}, []);
+	// useEffect(() => {
+	// 	// provideContent();
+	// 	if (currFolder != null){
+  //     const params = new URLSearchParams(window.location.search);
+  //     const FOLDER = params.get('fn');
+  //     setCurrFolder(FOLDER);
+  //     // window.location.href = `/medicalRecords?id=${id}&fn=${currFolder}`
+	// 		// navigate(`/medicalRecords?id=${id}&fn=${currFolder}`);
+  //     // window.location.reload();
+  //   }
+	// }, [currFolder]);
 
 
     // <div className='folder-wrap level-current scrolling' id='Folder_lvl1'></div>
@@ -41,10 +46,10 @@ export const MedRecords = () => {
 		var listRef;
     
     if(currFolder != null){
-     listRef = firebase.storage().ref().child(`-2072624641/UserFolder1`);
+     listRef = firebase.storage().ref().child(`${id}/${currFolder}`);
     }
     else{
-      listRef = firebase.storage().ref().child(`-2072624641/`);
+      listRef = firebase.storage().ref().child(`${id}/`);
     }
     
 		listRef
@@ -61,16 +66,16 @@ export const MedRecords = () => {
 					FileNames.push(itemRef.name);
 				});
 
-        if(currFolder != null){
-          const child = document.getElementById("Folder_lvl1");
-          // child.parentElement.removeChild(child);
-          console.log("childRemoved");
-          const divx = document.createElement('div');
-          divx.classList.add("folder-wrap").add("level-current").add("scrolling")
-          divx.id = "Folder_lvl1";
-          document.getElementById("stage").appendChild(divx);
-          // <div className='folder-wrap level-current scrolling' id='Folder_lvl1'>
-        }
+        // if(currFolder != null){
+        //   const child = document.getElementById("Folder_lvl1");
+        //   // child.parentElement.removeChild(child);
+        //   console.log("childRemoved");
+        //   const divx = document.createElement('div');
+        //   divx.classList.add("folder-wrap").add("level-current").add("scrolling")
+        //   divx.id = "Folder_lvl1";
+        //   document.getElementById("stage").appendChild(divx);
+        //   // <div className='folder-wrap level-current scrolling' id='Folder_lvl1'>
+        // }
         
         for (let index = 0; index < FolderNames.length; index++) {
           // console.log("fl")
@@ -83,7 +88,8 @@ export const MedRecords = () => {
           div1.id = `folder_${index}`;
           div1.classList.add("tile");
           div1.classList.add("folder");
-          div1.onclick = () => { setCurrFolder(FolderNames[index]) }
+          div1.onclick = () => { setCurrFolder(FolderNames[index]);
+            window.location.href = `/medicalRecords?id=${id}&fn=${FolderNames[index]}` }
           
           icon.id = `icon_${index}`;
           icon.classList.add("mdi");
