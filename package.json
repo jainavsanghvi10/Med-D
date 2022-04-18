@@ -12,6 +12,7 @@
     "jquey": "^0.0.1-security",
     "popper": "^1.0.1",
     "react": "^18.0.0",
+    "react-bootstrap": "^2.2.3",
     "react-dom": "^18.0.0",
     "react-firebase-hooks": "^3.0.5",
     "react-router-dom": "^6.3.0",
