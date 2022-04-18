@@ -22,6 +22,7 @@ export const MedRecords = () => {
 	var FolderNames = [];
 
 	useEffect(() => {
+		console.log("first log");
 		if (!currentUser) {
 			navigate('/signup');
 		}
@@ -167,16 +168,12 @@ export const MedRecords = () => {
 				<div className=''>
 					<button
 						type='button'
-						class='btn-outline-light back mx-3'
+						className='btn-outline-light back mx-3'
 						onClick={ConfirmAddFolder}>
 						<i className='mdi mdi-folder-plus fs-1'></i>
-						{/* <br></br>
-            Create Folder */}
 					</button>
-					<button type='button' class='btn-outline-light back mx-3' onClick={ChooseFiles}>
+					<button type='button' className='btn-outline-light back mx-3' onClick={ChooseFiles}>
 						<i className='mdi mdi-cloud-upload fs-1'></i>
-						{/* <br></br>
-            Upload File */}
 					</button>
 				</div>
 				{modalIsOpen && (
@@ -188,9 +185,6 @@ export const MedRecords = () => {
 				)}
 				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
 			</div>
-
-			{/* </div>
-      </div> */}
 
 			<div id='stage' className='stage'>
 				<div

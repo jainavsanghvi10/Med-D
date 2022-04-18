@@ -8,7 +8,9 @@ import { Footer } from "./components/Footer";
 import {NavAfterLogin} from "./components/NavAfterLogin"
 import Dashboard from "./components/Dashboard"
 import Signup from "./components/Singnup"
+import SignupDoctors from "./components/SignupDoctors";
 import Login from "./components/Login"
+import LoginDoctor from "./components/LoginDoctor";
 import {Test} from "./components/Test"
 import {MedRecords} from "./components/MedRecords"
 
@@ -23,7 +25,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard/>} />
             <Route path="/signup" element={<Signup/>} />
+            <Route path="/signup-doctor" element={<SignupDoctors/>} />
             <Route path="/login" element={<Login/>} />
+            <Route path="/login-doctor" element={<LoginDoctor/>} />
             <Route path="/medicalRecords" element={<MedRecords/>} />
             <Route path="/test" element={<Test/>} />
           </Routes>
