@@ -1,4 +1,6 @@
 import React from "react";
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap.bundle'
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { useState } from "react";
@@ -13,6 +15,8 @@ import Login from "./components/Login"
 import LoginDoctor from "./components/LoginDoctor";
 import {Test} from "./components/Test"
 import {MedRecords} from "./components/MedRecords"
+import {OfflineBooking} from "./components/OfflineBooking"
+import ForgotPassword from "./components/ForgotPassword"
 
 // Styles
 // import "./assets/styles/Style.css"
@@ -29,7 +33,9 @@ function App() {
             <Route path="/login" element={<Login/>} />
             <Route path="/login-doctor" element={<LoginDoctor/>} />
             <Route path="/medicalRecords" element={<MedRecords/>} />
+            <Route path="/offline-booking" element={<OfflineBooking/>} />
             <Route path="/test" element={<Test/>} />
+            <Route path="/forgot-password" element={<ForgotPassword/>}/>
           </Routes>
         <Footer />
       </AuthProvider>
