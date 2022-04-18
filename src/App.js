@@ -11,6 +11,7 @@ import Signup from "./components/Singnup"
 import Login from "./components/Login"
 import {Test} from "./components/Test"
 import {MedRecords} from "./components/MedRecords"
+import ForgotPassword from "./components/ForgotPassword"
 
 // Styles
 // import "./assets/styles/Style.css"
@@ -26,6 +27,7 @@ function App() {
             <Route path="/login" element={<Login/>} />
             <Route path="/medicalRecords" element={<MedRecords/>} />
             <Route path="/test" element={<Test/>} />
+            <Route path="/forgot-password" element={<ForgotPassword/>}/>
           </Routes>
         <Footer />
       </AuthProvider>

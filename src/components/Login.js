@@ -126,6 +126,9 @@ export default function Login() {
             required
           />
         </div>
+        <div className="w-100 text-center mt-2">
+                    <Link to="/forgot-password">Forgot Password?</Link> 
+        </div>
         <div className="d-flex justify-content-around align-items-center mb-4">
           <p>
             Don't have an account? <Link to="/signup"> Signup </Link>
@@ -140,6 +143,7 @@ export default function Login() {
             Sign in
           </button>
         </div>
+
       </form>
     </div>
   );
