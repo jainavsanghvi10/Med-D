@@ -22,8 +22,6 @@ export const MedRecords = () => {
 	var FileSize = [];
 	var FolderNames = [];
 
-	
-
 	useEffect(() => {
 		if (!currentUser) {
 			navigate('/signup');
@@ -60,12 +58,12 @@ export const MedRecords = () => {
 					FileNames.push(itemRef.name);
 					itemRef.getMetadata().then((metadata) => {
 						FileSize.push(metadata.size);
-						console.log(itemRef.name +': ' + metadata.size);
+						console.log(itemRef.name + ': ' + metadata.size);
 					});
 					itemRef.getDownloadURL().then((fileURL) => {
 						FileLinks.push(fileURL);
 					});
-					console.log(FileSize.length,FileLinks.length,FileNames.length);
+					console.log(FileSize.length, FileLinks.length, FileNames.length);
 				}
 			});
 			// console.log(FileSize.length);
@@ -108,7 +106,7 @@ export const MedRecords = () => {
 					showFile(index);
 				};
 
-				trash.id = `trash_${index}`
+				trash.id = `trash_${index}`;
 				trash.classList.add('mdi');
 				trash.classList.add('mdi-delete');
 				trash.classList.add('fs-1');
@@ -116,8 +114,7 @@ export const MedRecords = () => {
 				trash.onclick = () => {
 					deleteFile(FileNames[index]);
 					console.log('delete file');
-				
-				}
+				};
 
 				icon.id = `icon_${index}`;
 				icon.classList.add('mdi');
@@ -132,43 +129,140 @@ export const MedRecords = () => {
 			}
 
 			console.log(FolderNames, FileNames);
-			console.log(FileSize,FileSize.length);
+			console.log(FileSize, FileSize.length);
 			// provideContent(FileNames, FolderNames);
 		})
 		.catch((error) => {
 			console.log(error);
 		});
-	function sort_AtoZ(){
-		FileNames.sort();
-		// FileLinks.sort()0;
-		FolderNames.sort();
+	//showFile: use REACT PDF VIEWER--implementation left
+	function showFile(i) {
+		console.log(i);
+	}
+	function compareStrings(s1, s2) {
+		let min = Math.min(s1.length, s2.length);
+		for (let i = 0; i < min; i++) {
+			if (s1[i] > s2[i]) {
+			    console.log(s1+' '+s2+' '+1);
+				return 1;
+			} else if (s1[i] < s2[i]) {
+				console.log(s1+' '+s2+' '+2);
+				return 2;
+			} else {
+			    console.log('same')
+				continue;
+			}
+		}
+		return 0;
+	}
+	function sort_AtoZ() {
+		for (let i = 0; i < FileNames.length - 1; i++) {
+			for (let j = i + 1; j < FileNames.length; j++) {
+				let result = compareStrings(FileNames[i], FileNames[j]);
+				if (result == 1) {
+					let tmp = FileNames[j];
+					FileNames[j] = FileNames[i];
+					FileNames[i] = tmp;
+
+					let tmp2 = FileLinks[j];
+					FileLinks[j] = FileLinks[i];
+					FileLinks[i] = tmp2;
+				} else if (result == 2) {
+					continue;
+				} else {
+					if (FileNames[i].length > FileNames[j].length) {
+						let tmp = FileNames[j];
+						FileNames[j] = FileNames[i];
+						FileNames[i] = tmp;
+
+						let tmp2 = FileLinks[j];
+						FileLinks[j] = FileLinks[i];
+						FileLinks[i] = tmp2;
+					}
+				}
+			}
+		}
+		for (let i = 0; i < FolderNames.length - 1; i++) {
+			for (let j = i + 1; j < FolderNames.length; j++) {
+				let result = compareStrings(FolderNames[i], FolderNames[j]);
+				if (result == 1) {
+					let tmp = FolderNames[j];
+					FolderNames[j] = FolderNames[i];
+					FolderNames[i] = tmp;
+				} else if (result == 2) {
+					continue;
+				} else {
+					if (FolderNames[i].length > FolderNames[j].length) {
+						let tmp = FolderNames[j];
+						FolderNames[j] = FolderNames[i];
+						FolderNames[i] = tmp;
+					}
+				}
+			}
+		}
 	}
 	function sort_ZtoA() {
-		FileNames.sort();
-		// FileLinks.sort();
-		FolderNames.sort();
-		FileNames.reverse();
-		// FileLinks.reverse();
-		FolderNames.reverse();
+		sort_AtoZ();
+		FileNames.reverse()
+		FolderNames.reverse()
+		FileLinks.reverse()
 	}
-	function sort_size(){
-		
+	function sort_size_ascending(){
+		for(let i=0;i<FileSize.length;i++){
+			for(let j=0;j<FileSize.length;j++){
+				if(FileSize[i]>FileSize[j]){
+					let tmp = FileNames[j];
+					FileNames[j] = FileNames[i];
+					FileNames[i] = tmp;
+
+					let tmp2 = FileLinks[j];
+					FileLinks[j] = FileLinks[i];
+					FileLinks[i] = tmp2;
+
+					let tmp3 = FileSize[j];
+					FileSize[j] = FileSize[i];
+					FileSize[i] = tmp3;
+				}else{
+					continue;
+				}
+			}
+		}
 	}
-	function deleteFile(filename){
+	function sort_size_descending(){
+		sort_size_ascending();
+		FileNames.reverse()
+		FileLinks.reverse()
+		FileSize.reverse()
+	}
+	function deleteFile(filename) {
 		var deleteRef;
 		if (currFolder != null) {
-			deleteRef = firebase.storage().ref().child(`${id}/${currFolder}/${filename}`);
-		}else{
+			deleteRef = firebase
+				.storage()
+				.ref()
+				.child(`${id}/${currFolder}/${filename}`);
+		} else {
 			deleteRef = firebase.storage().ref().child(`${id}/${filename}`);
 		}
-		deleteRef.delete().then(() => {
-			console.log(`deleted ${filename} successfully`);
-		}).catch((error) => {
-			console.log(error);
-		});
+		deleteRef
+			.delete()
+			.then(() => {
+				console.log(`deleted ${filename} successfully`);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
-	function showFile(i){
-		console.log(i);
+	function deleteFolder(folderName) {
+		var deleteRef = firebase.storage().ref().child(`${id}/${folderName}`);
+		deleteRef
+			.delete()
+			.then(() => {
+				console.log(`deleted ${folderName} successfully`);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 	function ConfirmAddFolder() {
 		setPurpose('AddFolder');
@@ -181,7 +275,7 @@ export const MedRecords = () => {
 	function AddFolder(folderName) {
 		let file = '';
 		const storageRef = firebase.storage().ref();
-		var uploadRef = storageRef.child(`-2072624641/${folderName}/userTest`);
+		var uploadRef = storageRef.child(`${id}/${folderName}/userTest`);
 		uploadRef.put(file).then((snap) => {
 			console.log(folderName);
 			console.log('Folder Added with name-' + folderName);
@@ -190,11 +284,16 @@ export const MedRecords = () => {
 	}
 	function UploadFile(file) {
 		if (!file) return;
-		const storageRef = firebase.storage().ref();
-		var uploadRef = storageRef.child(`-2072624641/` + file.name);
+		let storageRef;
+		if (currFolder != null) {
+			storageRef = firebase.storage().ref().child(`${id}/${currFolder}`);
+		} else {
+			storageRef = firebase.storage().ref().child(`${id}/`);
+		}
+		var uploadRef = storageRef.child(file.name);
 		uploadRef.put(file).then((snap) => {
 			// console.log(id);
-			console.log('File successfully uploded ');
+			console.log('File successfully uploded to '+id);
 			setModalIsOpen(false);
 		});
 	}
@@ -209,21 +308,17 @@ export const MedRecords = () => {
 					<i className='mdi mdi-arrow-left'></i>
 				</button>
 				<div className=''>
-					<button
+					{currFolder==null? <button
 						type='button'
 						className='btn-outline-light back mx-3'
 						onClick={ConfirmAddFolder}>
 						<i className='mdi mdi-folder-plus fs-1'></i>
-						{/* <br></br>
-            Create Folder */}
-					</button>
+					</button>: null}
 					<button
 						type='button'
 						className='btn-outline-light back mx-3'
 						onClick={ChooseFiles}>
 						<i className='mdi mdi-cloud-upload fs-1'></i>
-						{/* <br></br>
-            Upload File */}
 					</button>
 				</div>
 				{modalIsOpen && (
@@ -235,10 +330,6 @@ export const MedRecords = () => {
 				)}
 				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
 			</div>
-
-			{/* </div>
-      </div> */}
-
 			<div id='stage' className='stage'>
 				<div
 					className='folder-wrap level-current scrolling'
