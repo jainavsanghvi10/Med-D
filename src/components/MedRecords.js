@@ -13,13 +13,16 @@ export const MedRecords = () => {
 	const [id, setId] = useState();
 	const [currFolder, setCurrFolder] = useState(null);
 	const [modalIsOpen, setModalIsOpen] = useState(false);
-	let folderName = '';
+	const [purpose, setPurpose] = useState('test');
 	// const [FileNames, setFileNames] = useState([]);
 	// const [FolderNames, setFolderNames] = useState([]);
 
 	var FileNames = [];
 	var FileLinks = [];
+	var FileSize = [];
 	var FolderNames = [];
+
+	
 
 	useEffect(() => {
 		if (!currentUser) {
@@ -43,7 +46,6 @@ export const MedRecords = () => {
 	} else {
 		listRef = firebase.storage().ref().child(`${id}/`);
 	}
-
 	listRef
 		.listAll()
 		.then((snap) => {
@@ -54,18 +56,19 @@ export const MedRecords = () => {
 				FolderNames.push(folderRef.name);
 			});
 			snap.items.forEach((itemRef) => {
-          if(itemRef.name !='userTest'){
-    				FileNames.push(itemRef.name);
-            console.log(itemRef.getDownloadURL().then((fileURL) => {
-              FileLinks.push(fileURL)
-            }));
-          }
+				if (itemRef.name != 'userTest') {
+					FileNames.push(itemRef.name);
+					itemRef.getMetadata().then((metadata) => {
+						FileSize.push(metadata.size);
+						console.log(itemRef.name +': ' + metadata.size);
+					});
+					itemRef.getDownloadURL().then((fileURL) => {
+						FileLinks.push(fileURL);
+					});
+					console.log(FileSize.length,FileLinks.length,FileNames.length);
+				}
 			});
-
-      // function showItem(){
-        
-      // }
-
+			// console.log(FileSize.length);
 			for (let index = 0; index < FolderNames.length; index++) {
 				// console.log("fl")
 				const ele = FolderNames[index];
@@ -91,69 +94,110 @@ export const MedRecords = () => {
 				div1.appendChild(icon).appendChild(folderName);
 				document.getElementById('Folder_lvl1').appendChild(div1);
 			}
-
 			for (let index = 0; index < FileNames.length; index++) {
 				const ele = FileNames[index];
-				// console.log(ele);
 				const div1 = document.createElement('div');
 				const icon = document.createElement('i');
+				const trash = document.createElement('i');
 				const fileName = document.createElement('p');
 
 				div1.id = `folder_${index}`;
 				div1.classList.add('tile');
 				div1.classList.add('folder');
 				div1.onclick = () => {
-					setCurrFolder(ele);
+					showFile(index);
 				};
+
+				trash.id = `trash_${index}`
+				trash.classList.add('mdi');
+				trash.classList.add('mdi-delete');
+				trash.classList.add('fs-1');
+				trash.classList.add('pb-3');
+				trash.onclick = () => {
+					deleteFile(FileNames[index]);
+					console.log('delete file');
+				
+				}
 
 				icon.id = `icon_${index}`;
 				icon.classList.add('mdi');
 				icon.classList.add('mdi-file-document');
 
 				fileName.innerText = ele;
-
+				div1.appendChild(trash);
 				div1.appendChild(icon).appendChild(fileName);
+				// div1.appendChild(icon).appendChild(trash);
+				// div1.appendChild(fileName);
 				document.getElementById('Folder_lvl1').appendChild(div1);
 			}
+
 			console.log(FolderNames, FileNames);
+			console.log(FileSize,FileSize.length);
 			// provideContent(FileNames, FolderNames);
 		})
 		.catch((error) => {
-      console.log(error);
+			console.log(error);
 		});
-  const [purpose,setPurpose]=useState('test');
-  // let purpose='test';
-	function ConfirmAddFolder() {
-    setPurpose('AddFolder')
-    setModalIsOpen(true);
+	function sort_AtoZ(){
+		FileNames.sort();
+		// FileLinks.sort()0;
+		FolderNames.sort();
 	}
-
-  function ChooseFiles() {
-    setPurpose('UploadFiles')
+	function sort_ZtoA() {
+		FileNames.sort();
+		// FileLinks.sort();
+		FolderNames.sort();
+		FileNames.reverse();
+		// FileLinks.reverse();
+		FolderNames.reverse();
+	}
+	function sort_size(){
+		
+	}
+	function deleteFile(filename){
+		var deleteRef;
+		if (currFolder != null) {
+			deleteRef = firebase.storage().ref().child(`${id}/${currFolder}/${filename}`);
+		}else{
+			deleteRef = firebase.storage().ref().child(`${id}/${filename}`);
+		}
+		deleteRef.delete().then(() => {
+			console.log(`deleted ${filename} successfully`);
+		}).catch((error) => {
+			console.log(error);
+		});
+	}
+	function showFile(i){
+		console.log(i);
+	}
+	function ConfirmAddFolder() {
+		setPurpose('AddFolder');
 		setModalIsOpen(true);
 	}
-
-	function AddFolder(folderName) {
-    let file=''
-    const storageRef = firebase.storage().ref();
-      var uploadRef = storageRef.child(`-2072624641/${folderName}/userTest`)
-      uploadRef.put(file).then((snap)=>{
-        console.log(folderName);
-        console.log("Folder Added with name-"+folderName);
-        setModalIsOpen(false);
-      })
+	function ChooseFiles() {
+		setPurpose('UploadFiles');
+		setModalIsOpen(true);
 	}
-  function UploadFile(file){
+	function AddFolder(folderName) {
+		let file = '';
+		const storageRef = firebase.storage().ref();
+		var uploadRef = storageRef.child(`-2072624641/${folderName}/userTest`);
+		uploadRef.put(file).then((snap) => {
+			console.log(folderName);
+			console.log('Folder Added with name-' + folderName);
+			setModalIsOpen(false);
+		});
+	}
+	function UploadFile(file) {
 		if (!file) return;
 		const storageRef = firebase.storage().ref();
-    var uploadRef = storageRef.child(`-2072624641/`+ file.name)
-    uploadRef.put(file).then((snap)=>{
-      // console.log(id);
-      console.log("File successfully uploded ");
-      setModalIsOpen(false);
-    })
-  }
-
+		var uploadRef = storageRef.child(`-2072624641/` + file.name);
+		uploadRef.put(file).then((snap) => {
+			// console.log(id);
+			console.log('File successfully uploded ');
+			setModalIsOpen(false);
+		});
+	}
 	function closeModalHandler() {
 		setModalIsOpen(false);
 	}
@@ -167,13 +211,16 @@ export const MedRecords = () => {
 				<div className=''>
 					<button
 						type='button'
-						class='btn-outline-light back mx-3'
+						className='btn-outline-light back mx-3'
 						onClick={ConfirmAddFolder}>
 						<i className='mdi mdi-folder-plus fs-1'></i>
 						{/* <br></br>
             Create Folder */}
 					</button>
-					<button type='button' class='btn-outline-light back mx-3' onClick={ChooseFiles}>
+					<button
+						type='button'
+						className='btn-outline-light back mx-3'
+						onClick={ChooseFiles}>
 						<i className='mdi mdi-cloud-upload fs-1'></i>
 						{/* <br></br>
             Upload File */}
@@ -182,8 +229,8 @@ export const MedRecords = () => {
 				{modalIsOpen && (
 					<Modal
 						onCancel={closeModalHandler}
-            onConfirm={ purpose =='AddFolder' ? AddFolder:UploadFile}
-            task={purpose}
+						onConfirm={purpose == 'AddFolder' ? AddFolder : UploadFile}
+						task={purpose}
 					/>
 				)}
 				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
