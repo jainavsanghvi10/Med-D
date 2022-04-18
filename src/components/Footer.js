@@ -1,98 +1,82 @@
 import React from "react";
 import logo from "../assets/images/logo/logo.png";
+import siteLogo from '../assets/images/site-logo.png'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap'
 
 export const Footer = () => {
-  return (
-    <section className="hm-footer">
-			<div className="container">
-				<div className="hm-footer-details">
+	return (
+
+
+		<>
+			<hr className="my-0" size="10"/>
+			<div className="py-4 pb-5 mt-0">
+				<div className="container">
 					<div className="row">
-						<div className="col-md-4 col-sm-6 col-xs-12">
-							<div className="hm-footer-widget">
-								<div className="hm-foot-title ">
-									<div className="logo">
-										<a href="index.html">
-											<img src={logo} alt="logo" />
-										</a>
-									</div>
-								</div>
-								<div className="hm-foot-para">
-									<p>
-										Lorem ipsum dolor sit amt conetur adcing elit. Sed do eiusod tempor utslr. Ut laboris nisi ut aute irure dolor in rein velit esse.
-									</p>
-								</div>
-								<div className="hm-foot-icon">
-									<ul>
-										<li><a href="#"><i className="fa fa-facebook" aria-hidden="true"></i></a></li>
-										<li><a href="#"><i className="fa fa-google-plus" aria-hidden="true"></i></a></li>
-										<li><a href="#"><i className="fa fa-linkedin" aria-hidden="true"></i></a></li>
-										<li><a href="#"><i className="fa fa-twitter" aria-hidden="true"></i></a></li>
-									</ul>
-								</div>
-							</div>
+						<div className="col-2 ps-5">
+							<h4><b>Med-D</b></h4>
+							<span>About Us</span><br></br>
+							<span>Careers</span><br></br>
+							<span>Press</span><br></br>
+							<span>Contact Us</span>
 						</div>
-						<div className=" col-md-2 col-sm-6 col-xs-12">
-							<div className="hm-footer-widget">
-								<div className="hm-foot-title">
-									<h4>MED D</h4>
-								</div>
-								<div className="footer-menu ">	  
-									<ul className="">
-										<li><a href="index.html" >Home</a></li>
-										<li><a href="about.html">About Us</a></li>
-										<li><a href="services.html">Careers</a></li>
-										<li><a href="portfolio.html">Press</a></li>
-										<li><a href="contact.html">Contact us</a></li> 
-									</ul>
-								</div>
-							</div>
+						<div className="col-2">
+							<h4><b>For Patients</b></h4>
+							<span>Login</span><br></br>
+							<span>Sign Up</span><br></br>
+							<h4><b>For Doctors</b></h4>
+							<span>Login</span><br></br>
+							<span>Sign Up</span>
 						</div>
-						<div className=" col-md-3 col-sm-6 col-xs-12">
-							<div className="hm-footer-widget">
-								<div className="hm-foot-title">
-									<h4>from the news</h4>
-								</div>
-								<div className="hm-para-news">
-									<a href="blog_single.html">
-										The Pros and Cons of Starting an Online Business.
-									</a>
-									<span>12th June 2017</span>
-								</div>
-								<div className="footer-line">
-									<div className="border-bottom"></div>
-								</div>
-								<div className="hm-para-news">
-									<a href="blog_single.html">
-										The Pros and Cons of Starting an Online Business.
-									</a>
-									<span>12th June 2017</span>
-								</div>
-							</div>
+						<div className="col-2">
+							<h4><b>More</b></h4>
+							<span>Legal</span><br></br>
+							<span>Privacy Policy</span><br></br>
+							<span>Terms & Conditions</span>
 						</div>
-						{/* <div className=" col-md-3 col-sm-6  col-xs-12">
-							<div className="hm-footer-widget">
-								<div className="hm-foot-title">
-									<h4> Our Newsletter</h4>
-								</div>
-								<div className="hm-foot-para">
-									<p className="para-news">
-										Subscribe to our newsletter to get the latest News and offers..
-									</p>
-								</div>
-								<div className="hm-foot-email">
-									<div className="foot-email-box">
-										<input type="text" className="form-control" placeholder="Email Address"/>
-									</div>
-									<div className="foot-email-subscribe">
-										<button type="button" >go</button>
-									</div>
-								</div>
-							</div>
-						</div> */}
+						<div className="col-3 ps-5">
+							<h4><b>Customer Support</b></h4>
+							<span>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+									<path
+										d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z" />
+								</svg>
+								support@medd.com
+							</span>
+							<br></br>
+							<span>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+									<path
+										d="M14.89 23.654c-7.367 3.367-18.802-18.86-11.601-22.615l2.107-1.039 3.492 6.817-2.082 1.026c-2.189 1.174 2.37 10.08 4.609 8.994.091-.041 2.057-1.007 2.064-1.011l3.521 6.795c-.008.004-1.989.978-2.11 1.033zm-1.538-13.409l2.917.87c.223-.747.16-1.579-.24-2.317-.399-.739-1.062-1.247-1.808-1.469l-.869 2.916zm1.804-6.058c1.551.462 2.926 1.516 3.756 3.051.831 1.536.96 3.263.498 4.813l-1.795-.535c.325-1.091.233-2.306-.352-3.387-.583-1.081-1.551-1.822-2.643-2.146l.536-1.796zm.95-3.187c2.365.705 4.463 2.312 5.729 4.656 1.269 2.343 1.466 4.978.761 7.344l-1.84-.548c.564-1.895.406-4.006-.608-5.882-1.016-1.877-2.696-3.165-4.591-3.729l.549-1.841z" />
+								</svg>
+								+91 XXXXXXXXXX</span>
+						</div>
+						<div className="col-3 ps-5">
+							<h4><b>Socials</b></h4>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+								<path
+									d="M11.984 16.815c2.596 0 4.706-2.111 4.706-4.707 0-1.409-.623-2.674-1.606-3.538-.346-.303-.735-.556-1.158-.748-.593-.27-1.249-.421-1.941-.421s-1.349.151-1.941.421c-.424.194-.814.447-1.158.749-.985.864-1.608 2.129-1.608 3.538 0 2.595 2.112 4.706 4.706 4.706zm.016-8.184c1.921 0 3.479 1.557 3.479 3.478 0 1.921-1.558 3.479-3.479 3.479s-3.479-1.557-3.479-3.479c0-1.921 1.558-3.478 3.479-3.478zm5.223.369h6.777v10.278c0 2.608-2.114 4.722-4.722 4.722h-14.493c-2.608 0-4.785-2.114-4.785-4.722v-10.278h6.747c-.544.913-.872 1.969-.872 3.109 0 3.374 2.735 6.109 6.109 6.109s6.109-2.735 6.109-6.109c.001-1.14-.327-2.196-.87-3.109zm2.055-9h-12.278v5h-1v-5h-1v5h-1v-4.923c-.346.057-.682.143-1 .27v4.653h-1v-4.102c-1.202.857-2 2.246-2 3.824v3.278h7.473c1.167-1.282 2.798-2 4.511-2 1.722 0 3.351.725 4.511 2h7.505v-3.278c0-2.608-2.114-4.722-4.722-4.722zm2.722 5.265c0 .406-.333.735-.745.735h-2.511c-.411 0-.744-.329-.744-.735v-2.53c0-.406.333-.735.744-.735h2.511c.412 0 .745.329.745.735v2.53z" />
+							</svg>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+								<path
+									d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.441 16.892c-2.102.144-6.784.144-8.883 0-2.276-.156-2.541-1.27-2.558-4.892.017-3.629.285-4.736 2.558-4.892 2.099-.144 6.782-.144 8.883 0 2.277.156 2.541 1.27 2.559 4.892-.018 3.629-.285 4.736-2.559 4.892zm-6.441-7.234l4.917 2.338-4.917 2.346v-4.684z" />
+							</svg>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+								<path
+									d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-.139 9.237c.209 4.617-3.234 9.765-9.33 9.765-1.854 0-3.579-.543-5.032-1.475 1.742.205 3.48-.278 4.86-1.359-1.437-.027-2.649-.976-3.066-2.28.515.098 1.021.069 1.482-.056-1.579-.317-2.668-1.739-2.633-3.26.442.246.949.394 1.486.411-1.461-.977-1.875-2.907-1.016-4.383 1.619 1.986 4.038 3.293 6.766 3.43-.479-2.053 1.08-4.03 3.199-4.03.943 0 1.797.398 2.395 1.037.748-.147 1.451-.42 2.086-.796-.246.767-.766 1.41-1.443 1.816.664-.08 1.297-.256 1.885-.517-.439.656-.996 1.234-1.639 1.697z" />
+							</svg>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+								<path
+									d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
+							</svg>
+						</div>
 					</div>
 				</div>
 			</div>
-
-		</section>
-  );
+			<div className="section d-flex justify-content-center flex-column align-items-center pt-5 bg-dark">
+				<span className="text-white">© Med D Technologies Private Limited</span>
+				<img src={siteLogo} className="w-25 text-center" alt="Med-D" />
+			</div>
+		</>
+	);
 };

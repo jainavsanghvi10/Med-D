@@ -54,17 +54,17 @@ export const MedRecords = () => {
 				FolderNames.push(folderRef.name);
 			});
 			snap.items.forEach((itemRef) => {
-          if(itemRef.name !='userTest'){
-    				FileNames.push(itemRef.name);
-            console.log(itemRef.getDownloadURL().then((fileURL) => {
-              FileLinks.push(fileURL)
-            }));
-          }
+				if (itemRef.name != 'userTest') {
+					FileNames.push(itemRef.name);
+					console.log(itemRef.getDownloadURL().then((fileURL) => {
+						FileLinks.push(fileURL)
+					}));
+				}
 			});
 
-      // function showItem(){
-        
-      // }
+			// function showItem(){
+
+			// }
 
 			for (let index = 0; index < FolderNames.length; index++) {
 				// console.log("fl")
@@ -119,40 +119,40 @@ export const MedRecords = () => {
 			// provideContent(FileNames, FolderNames);
 		})
 		.catch((error) => {
-      console.log(error);
+			console.log(error);
 		});
-  const [purpose,setPurpose]=useState('test');
-  // let purpose='test';
+	const [purpose, setPurpose] = useState('test');
+	// let purpose='test';
 	function ConfirmAddFolder() {
-    setPurpose('AddFolder')
-    setModalIsOpen(true);
+		setPurpose('AddFolder')
+		setModalIsOpen(true);
 	}
 
-  function ChooseFiles() {
-    setPurpose('UploadFiles')
+	function ChooseFiles() {
+		setPurpose('UploadFiles')
 		setModalIsOpen(true);
 	}
 
 	function AddFolder(folderName) {
-    let file=''
-    const storageRef = firebase.storage().ref();
-      var uploadRef = storageRef.child(`-2072624641/${folderName}/userTest`)
-      uploadRef.put(file).then((snap)=>{
-        console.log(folderName);
-        console.log("Folder Added with name-"+folderName);
-        setModalIsOpen(false);
-      })
+		let file = ''
+		const storageRef = firebase.storage().ref();
+		var uploadRef = storageRef.child(`-2072624641/${folderName}/userTest`)
+		uploadRef.put(file).then((snap) => {
+			console.log(folderName);
+			console.log("Folder Added with name-" + folderName);
+			setModalIsOpen(false);
+		})
 	}
-  function UploadFile(file){
+	function UploadFile(file) {
 		if (!file) return;
 		const storageRef = firebase.storage().ref();
-    var uploadRef = storageRef.child(`-2072624641/`+ file.name)
-    uploadRef.put(file).then((snap)=>{
-      // console.log(id);
-      console.log("File successfully uploded ");
-      setModalIsOpen(false);
-    })
-  }
+		var uploadRef = storageRef.child(`-2072624641/` + file.name)
+		uploadRef.put(file).then((snap) => {
+			// console.log(id);
+			console.log("File successfully uploded ");
+			setModalIsOpen(false);
+		})
+	}
 
 	function closeModalHandler() {
 		setModalIsOpen(false);
@@ -182,8 +182,8 @@ export const MedRecords = () => {
 				{modalIsOpen && (
 					<Modal
 						onCancel={closeModalHandler}
-            onConfirm={ purpose =='AddFolder' ? AddFolder:UploadFile}
-            task={purpose}
+						onConfirm={purpose == 'AddFolder' ? AddFolder : UploadFile}
+						task={purpose}
 					/>
 				)}
 				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
