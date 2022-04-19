@@ -1,0 +1,68 @@
+.close-modal {
+    position: absolute;
+    top: -100px;
+    right: 2rem;
+    font-size: 5rem;
+    color: red;
+    cursor: pointer;
+    border: none;
+    background: none;
+    z-index: 10000;
+}
+
+.hidden {
+    display: none;
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 700px;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+    z-index: 8;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+    z-index: 5;
+}
+
+.show-modal {
+    position: relative;
+    width: 200px;
+    height: 50px;
+    margin-top: 50px;
+    margin-left: 30px;
+    padding: 50px;
+    padding-bottom: 70px;
+    cursor: pointer;
+    border: none;
+    font-family: 'Comfortaa', cursive;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 20px;
+    border-radius: 10px;
+    box-shadow: inset 3px 0px 5px 2px rgba(255, 255, 255, 0.5), 0px 0px 10px rgba(0, 0, 0, 0.25);
+    background: rgb(2, 0, 36);
+    background: linear-gradient(45deg, rgba(2, 0, 36, 0) 5%, rgba(255, 255, 255, .5) 6%, rgba(255, 255, 255, 0) 9%, rgba(255, 255, 255, .5) 10%, rgba(255, 255, 255, 0) 17%, rgba(255, 255, 255, .5) 19%, rgba(255, 255, 255, 0) 21%);
+    background-size: 150%;
+    background-position: right;
+    transition: 1s;
+}
+
+.show-modal:hover {
+    background-position: left;
+    color: white;
+    box-shadow: inset 0px 3px 10px rgba(255, 255, 255, 1), 0px 0px 10px rgba(0, 0, 0, 0.25);
+}

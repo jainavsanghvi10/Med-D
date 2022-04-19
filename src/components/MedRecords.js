@@ -10,166 +10,226 @@ import '../assets/styles/modal.css';
 export const MedRecords = () => {
 	const { currentUser } = useAuth();
 	const navigate = useNavigate();
-	const [id, setId] = useState();
-	const [currFolder, setCurrFolder] = useState(null);
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const [purpose, setPurpose] = useState('test');
-	// const [FileNames, setFileNames] = useState([]);
-	// const [FolderNames, setFolderNames] = useState([]);
+	const [FileNames, setFileNames] = useState([]);
+	const [FolderNames, setFolderNames] = useState([]);
 
-	var FileNames = [];
 	var FileLinks = [];
 	var FileSize = [];
-	var FolderNames = [];
-
 	
+	// Extracting variables from query string
+	const params = new URLSearchParams(window.location.search);
+	const id = params.get('id');
+	const currFolder = params.get('fn');
 
 	useEffect(() => {
-		console.log("first log");
+
 		if (!currentUser) {
 			navigate('/signup');
 		}
-		const params = new URLSearchParams(window.location.search);
-		const ID = params.get('id');
-		setId(ID);
-		const FOLDER = params.get('fn');
-		setCurrFolder(FOLDER);
-		console.log(ID, FOLDER);
+
 		//eslint-disable-next-line
+
+		// get data from storage
+		if (currFolder != null) {
+			listRef = firebase.storage().ref().child(`${id}/${currFolder}`);
+		} else {
+			listRef = firebase.storage().ref().child(`${id}/`);
+		}
+		listRef
+			.listAll()
+			.then((snap) => {
+				const fiNames = [];
+				const foNames = [];
+				snap.prefixes.forEach((folderRef) => {
+					console.log('folderRef: ' + folderRef.name);
+					foNames.push(folderRef.name);
+				});
+				snap.items.forEach((itemRef) => {
+					if (itemRef.name != 'userTest') {
+						fiNames.push(itemRef.name);
+						itemRef.getMetadata().then((metadata) => {
+							FileSize.push(metadata.size);
+							console.log(itemRef.name + ': ' + metadata.size);
+						});
+						itemRef.getDownloadURL().then((fileURL) => {
+							FileLinks.push(fileURL);
+						});
+						console.log(FileSize.length, FileLinks.length, FileNames.length);
+					}
+				});
+	
+				console.log("fofi", foNames, fiNames);
+				setFolderNames(foNames);
+				setFileNames(fiNames);
+
+				// console.log(FileSize, FileSize.length);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}, []);
 
 	console.log(currFolder);
 	console.log('Getting all folder and file details from ' + id);
+	console.log("folders and files", FolderNames, FileNames);
 	var listRef;
+	const FolderList = [], FileList = [];
+	for (let index = 0; index < FolderNames.length; index++) {
+		const ele = FolderNames[index];
+		FolderList.push(
+		  <div className="tile folder"
+			onClick={() => {
+				navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
+				window.location.reload();
+			}}
+		  >
+			<i className="mdi mdi-folder"></i>
+			<span>{ele}</span>
+		  </div>
+		)
+	  }
+  
+	  for (let index = 0; index < FileNames.length; index++) {
+		const ele = FileNames[index];
+		FileList.push(
+		  <div className="tile form">
+			<i className="mdi mdi-file-document"></i>
+			<span>{ele}</span>
+		  </div>
+		)
+	  }
 
-	if (currFolder != null) {
-		listRef = firebase.storage().ref().child(`${id}/${currFolder}`);
-	} else {
-		listRef = firebase.storage().ref().child(`${id}/`);
+
+	//showFile: use REACT PDF VIEWER--implementation left
+	function showFile(i) {
+		console.log(i);
 	}
-	listRef
-		.listAll()
-		.then((snap) => {
-			// console.log("printing file details")
-			// console.log(FileNames, FolderNames);
-			snap.prefixes.forEach((folderRef) => {
-				// console.log('folderRef: ' + folderRef.name);
-				FolderNames.push(folderRef.name);
-			});
-			snap.items.forEach((itemRef) => {
-				if (itemRef.name != 'userTest') {
-					FileNames.push(itemRef.name);
-					itemRef.getMetadata().then((metadata) => {
-						FileSize.push(metadata.size);
-						console.log(itemRef.name +': ' + metadata.size);
-					});
-					itemRef.getDownloadURL().then((fileURL) => {
-						FileLinks.push(fileURL);
-					});
-					console.log(FileSize.length,FileLinks.length,FileNames.length);
-				}
-			});
-			// console.log(FileSize.length);
-			for (let index = 0; index < FolderNames.length; index++) {
-				// console.log("fl")
-				const ele = FolderNames[index];
-				// console.log(ele);
-				const div1 = document.createElement('div');
-				const icon = document.createElement('i');
-				const folderName = document.createElement('p');
-
-				div1.id = `folder_${index}`;
-				div1.classList.add('tile');
-				div1.classList.add('folder');
-				div1.onclick = () => {
-					setCurrFolder(FolderNames[index]);
-					window.location.href = `/medicalRecords?id=${id}&fn=${FolderNames[index]}`;
-				};
-
-				icon.id = `icon_${index}`;
-				icon.classList.add('mdi');
-				icon.classList.add('mdi-folder');
-
-				folderName.innerText = ele;
-
-				div1.appendChild(icon).appendChild(folderName);
-				document.getElementById('Folder_lvl1').appendChild(div1);
+	function compareStrings(s1, s2) {
+		let min = Math.min(s1.length, s2.length);
+		for (let i = 0; i < min; i++) {
+			if (s1[i] > s2[i]) {
+			    console.log(s1+' '+s2+' '+1);
+				return 1;
+			} else if (s1[i] < s2[i]) {
+				console.log(s1+' '+s2+' '+2);
+				return 2;
+			} else {
+			    console.log('same')
+				continue;
 			}
-			for (let index = 0; index < FileNames.length; index++) {
-				const ele = FileNames[index];
-				const div1 = document.createElement('div');
-				const icon = document.createElement('i');
-				const trash = document.createElement('i');
-				const fileName = document.createElement('p');
+		}
+		return 0;
+	}
+	function sort_AtoZ() {
+		for (let i = 0; i < FileNames.length - 1; i++) {
+			for (let j = i + 1; j < FileNames.length; j++) {
+				let result = compareStrings(FileNames[i], FileNames[j]);
+				if (result == 1) {
+					let tmp = FileNames[j];
+					FileNames[j] = FileNames[i];
+					FileNames[i] = tmp;
 
-				div1.id = `folder_${index}`;
-				div1.classList.add('tile');
-				div1.classList.add('folder');
-				div1.onclick = () => {
-					showFile(index);
-				};
+					let tmp2 = FileLinks[j];
+					FileLinks[j] = FileLinks[i];
+					FileLinks[i] = tmp2;
+				} else if (result == 2) {
+					continue;
+				} else {
+					if (FileNames[i].length > FileNames[j].length) {
+						let tmp = FileNames[j];
+						FileNames[j] = FileNames[i];
+						FileNames[i] = tmp;
 
-				trash.id = `trash_${index}`
-				trash.classList.add('mdi');
-				trash.classList.add('mdi-delete');
-				trash.classList.add('fs-1');
-				trash.classList.add('pb-3');
-				trash.onclick = () => {
-					deleteFile(FileNames[index]);
-					console.log('delete file');
-				
+						let tmp2 = FileLinks[j];
+						FileLinks[j] = FileLinks[i];
+						FileLinks[i] = tmp2;
+					}
 				}
-
-				icon.id = `icon_${index}`;
-				icon.classList.add('mdi');
-				icon.classList.add('mdi-file-document');
-
-				fileName.innerText = ele;
-				div1.appendChild(trash);
-				div1.appendChild(icon).appendChild(fileName);
-				// div1.appendChild(icon).appendChild(trash);
-				// div1.appendChild(fileName);
-				document.getElementById('Folder_lvl1').appendChild(div1);
 			}
-
-			console.log(FolderNames, FileNames);
-			console.log(FileSize,FileSize.length);
-			// provideContent(FileNames, FolderNames);
-		})
-		.catch((error) => {
-			console.log(error);
-		});
-	function sort_AtoZ(){
-		FileNames.sort();
-		// FileLinks.sort()0;
-		FolderNames.sort();
+		}
+		for (let i = 0; i < FolderNames.length - 1; i++) {
+			for (let j = i + 1; j < FolderNames.length; j++) {
+				let result = compareStrings(FolderNames[i], FolderNames[j]);
+				if (result == 1) {
+					let tmp = FolderNames[j];
+					FolderNames[j] = FolderNames[i];
+					FolderNames[i] = tmp;
+				} else if (result == 2) {
+					continue;
+				} else {
+					if (FolderNames[i].length > FolderNames[j].length) {
+						let tmp = FolderNames[j];
+						FolderNames[j] = FolderNames[i];
+						FolderNames[i] = tmp;
+					}
+				}
+			}
+		}
 	}
 	function sort_ZtoA() {
-		FileNames.sort();
-		// FileLinks.sort();
-		FolderNames.sort();
-		FileNames.reverse();
-		// FileLinks.reverse();
-		FolderNames.reverse();
+		sort_AtoZ();
+		FileNames.reverse()
+		FolderNames.reverse()
+		FileLinks.reverse()
 	}
-	function sort_size(){
-		
+	function sort_size_ascending(){
+		for(let i=0;i<FileSize.length;i++){
+			for(let j=0;j<FileSize.length;j++){
+				if(FileSize[i]>FileSize[j]){
+					let tmp = FileNames[j];
+					FileNames[j] = FileNames[i];
+					FileNames[i] = tmp;
+
+					let tmp2 = FileLinks[j];
+					FileLinks[j] = FileLinks[i];
+					FileLinks[i] = tmp2;
+
+					let tmp3 = FileSize[j];
+					FileSize[j] = FileSize[i];
+					FileSize[i] = tmp3;
+				}else{
+					continue;
+				}
+			}
+		}
 	}
-	function deleteFile(filename){
+	function sort_size_descending(){
+		sort_size_ascending();
+		FileNames.reverse()
+		FileLinks.reverse()
+		FileSize.reverse()
+	}
+	function deleteFile(filename) {
 		var deleteRef;
 		if (currFolder != null) {
-			deleteRef = firebase.storage().ref().child(`${id}/${currFolder}/${filename}`);
-		}else{
+			deleteRef = firebase
+				.storage()
+				.ref()
+				.child(`${id}/${currFolder}/${filename}`);
+		} else {
 			deleteRef = firebase.storage().ref().child(`${id}/${filename}`);
 		}
-		deleteRef.delete().then(() => {
-			console.log(`deleted ${filename} successfully`);
-		}).catch((error) => {
-			console.log(error);
-		});
+		deleteRef
+			.delete()
+			.then(() => {
+				console.log(`deleted ${filename} successfully`);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
-	function showFile(i){
-		console.log(i);
+	function deleteFolder(folderName) {
+		var deleteRef = firebase.storage().ref().child(`${id}/${folderName}`);
+		deleteRef
+			.delete()
+			.then(() => {
+				console.log(`deleted ${folderName} successfully`);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 	function ConfirmAddFolder() {
 		setPurpose('AddFolder');
@@ -182,7 +242,7 @@ export const MedRecords = () => {
 	function AddFolder(folderName) {
 		let file = '';
 		const storageRef = firebase.storage().ref();
-		var uploadRef = storageRef.child(`-2072624641/${folderName}/userTest`);
+		var uploadRef = storageRef.child(`${id}/${folderName}/userTest`);
 		uploadRef.put(file).then((snap) => {
 			console.log(folderName);
 			console.log('Folder Added with name-' + folderName);
@@ -191,11 +251,16 @@ export const MedRecords = () => {
 	}
 	function UploadFile(file) {
 		if (!file) return;
-		const storageRef = firebase.storage().ref();
-		var uploadRef = storageRef.child(`-2072624641/` + file.name);
+		let storageRef;
+		if (currFolder != null) {
+			storageRef = firebase.storage().ref().child(`${id}/${currFolder}`);
+		} else {
+			storageRef = firebase.storage().ref().child(`${id}/`);
+		}
+		var uploadRef = storageRef.child(file.name);
 		uploadRef.put(file).then((snap) => {
 			// console.log(id);
-			console.log('File successfully uploded ');
+			console.log('File successfully uploded to '+id);
 			setModalIsOpen(false);
 		});
 	}
@@ -206,16 +271,21 @@ export const MedRecords = () => {
 	return (
 		<div className='App'>
 			<div className='d-flex justify-content-between align-items-center mt-4'>
-				<button className='back mt-0'>
+				{currFolder != null ?
+				<button className='back mt-0'
+				onClick={() => {
+					navigate(`/medicalRecords?id=${id}`);
+					window.location.reload();
+					}}>
 					<i className='mdi mdi-arrow-left'></i>
-				</button>
+				</button> : <button className='back mt-0'></button>}
 				<div className=''>
-					<button
+					{currFolder==null? <button
 						type='button'
 						className='btn-outline-light back mx-3'
 						onClick={ConfirmAddFolder}>
 						<i className='mdi mdi-folder-plus fs-1'></i>
-					</button>
+					</button>: null}
 					<button
 						type='button'
 						className='btn-outline-light back mx-3'
@@ -232,11 +302,14 @@ export const MedRecords = () => {
 				)}
 				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
 			</div>
-
+			{currFolder != null ? <h2>{currFolder}</h2> : <h2>Your Medical Records</h2>}
 			<div id='stage' className='stage'>
-				<div
-					className='folder-wrap level-current scrolling'
-					id='Folder_lvl1'></div>
+				<div className='folder-wrap level-current scrolling' id='Folder_stage'>
+					{FolderList}
+				</div>
+				<div className='folder-wrap level-current scrolling' id='File_stage'>
+					{FileList}
+				</div>
 			</div>
 		</div>
 	);
