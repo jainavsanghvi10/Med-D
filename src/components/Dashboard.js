@@ -40,7 +40,7 @@ export default function Dashboard() {
 				</div>
 			</div>
 			<div className="greyishColor">
-				<div className="gallery js-flickity pt-5" data-flickity-options='{ "wrapAround": true }' data-ride="carousel">
+				{/* <div className="gallery js-flickity pt-5" data-flickity-options='{ "wrapAround": true }' data-ride="carousel">
 					<div className="gallery-cell">
 						<div className="carousel-caption d-none d-md-block fw-bold fs-2">
 							<h2>Refer and you both get a coupon worth 50% off!</h2>
@@ -58,28 +58,66 @@ export default function Dashboard() {
 							<button className="btn btn-light">Know more</button>
 						</div>
 					</div>
+				</div> */}
+				<div id="carouselExampleCaptions" class="carousel slide carousel-dark" data-bs-ride="carousel">
+					<div class="carousel-indicators">
+						<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+						<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+						<button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+					</div>
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img src={DoctorBlack} class="d-block w-50 mx-auto" alt="..."/>
+								<div class="carousel-caption d-none d-md-block">
+									<h5>First slide label</h5>
+									<p>Some representative placeholder content for the first slide.</p>
+								</div>
+						</div>
+						<div class="carousel-item">
+							<img src={DoctorBlack} class="d-block w-50 mx-auto" alt="..."/>
+								<div class="carousel-caption d-none d-md-block">
+									<h5>Second slide label</h5>
+									<p>Some representative placeholder content for the second slide.</p>
+								</div>
+						</div>
+						<div class="carousel-item">
+							<img src={DoctorBlack} class="d-block w-50 mx-auto" alt="..."/>
+								<div class="carousel-caption d-none d-md-block">
+									<h5>Third slide label</h5>
+									<p>Some representative placeholder content for the third slide.</p>
+								</div>
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
 				</div>
 			</div>
 
 			<div className="cards row mt-5 py-5 justify-content-center darkerWebsiteColor">
-				<div className="card py-3 w-25 styleCarousel mx-5 border-top-0 border-dark border-4 bg-light">
-					<img className="card-img-top w-75 align-self-center" src={events} alt="Card image cap"/>
-						<div className="card-body">
-							<h5 className="card-title">Book Offline Appointment</h5>
-							<p className="card-text">This is a wider card with supporting text below as a natural lead-in.</p>
+				<Link to="/offline-booking" className="card py-3 w-25 styleCarousel mx-5 border-top-0 border-dark border-4 bg-light">
+					<img className="card-img-top w-75 align-self-center" src={events} alt="Card image cap" />
+					<div className="card-body">
+						<h5 className="card-title">Book Offline Appointment</h5>
+						<p className="card-text">This is a wider card with supporting text below as a natural lead-in.</p>
 
-						</div>
-						<button className="btn btn-dark">Know More</button>
-				</div>
+					</div>
+					<button className="btn btn-dark">Know More</button>
+				</Link>
 
 				<Link to={"/medicalRecords?id=" + id} className="card py-3 w-25 styleCarousel mx-5 border-top-0 border-dark border-4 bg-light">
-					<img className="card-img-top w-75 align-self-center" src={saveFiles} alt="Card image cap"/>
-						<div className="card-body">
-							<h5 className="card-title">Save Your Medical Records</h5>
-							<p className="card-text">This content is a little bit longer.</p>
+					<img className="card-img-top w-75 align-self-center" src={saveFiles} alt="Card image cap" />
+					<div className="card-body">
+						<h5 className="card-title">Save Your Medical Records</h5>
+						<p className="card-text">This content is a little bit longer.</p>
 
-						</div>
-						<button className="btn btn-dark">Know More</button>
+					</div>
+					<button className="btn btn-dark">Know More</button>
 				</Link>
 			</div>
 		</>
