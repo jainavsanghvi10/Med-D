@@ -143,13 +143,13 @@ export const MedRecords = () => {
 		let min = Math.min(s1.length, s2.length);
 		for (let i = 0; i < min; i++) {
 			if (s1[i] > s2[i]) {
-			    console.log(s1+' '+s2+' '+1);
+				console.log(s1 + ' ' + s2 + ' ' + 1);
 				return 1;
 			} else if (s1[i] < s2[i]) {
-				console.log(s1+' '+s2+' '+2);
+				console.log(s1 + ' ' + s2 + ' ' + 2);
 				return 2;
 			} else {
-			    console.log('same')
+				console.log('same');
 				continue;
 			}
 		}
@@ -203,14 +203,14 @@ export const MedRecords = () => {
 	}
 	function sort_ZtoA() {
 		sort_AtoZ();
-		FileNames.reverse()
-		FolderNames.reverse()
-		FileLinks.reverse()
+		FileNames.reverse();
+		FolderNames.reverse();
+		FileLinks.reverse();
 	}
-	function sort_size_ascending(){
-		for(let i=0;i<FileSize.length;i++){
-			for(let j=0;j<FileSize.length;j++){
-				if(FileSize[i]>FileSize[j]){
+	function sort_size_ascending() {
+		for (let i = 0; i < FileSize.length; i++) {
+			for (let j = 0; j < FileSize.length; j++) {
+				if (FileSize[i] > FileSize[j]) {
 					let tmp = FileNames[j];
 					FileNames[j] = FileNames[i];
 					FileNames[i] = tmp;
@@ -222,17 +222,17 @@ export const MedRecords = () => {
 					let tmp3 = FileSize[j];
 					FileSize[j] = FileSize[i];
 					FileSize[i] = tmp3;
-				}else{
+				} else {
 					continue;
 				}
 			}
 		}
 	}
-	function sort_size_descending(){
+	function sort_size_descending() {
 		sort_size_ascending();
-		FileNames.reverse()
-		FileLinks.reverse()
-		FileSize.reverse()
+		FileNames.reverse();
+		FileLinks.reverse();
+		FileSize.reverse();
 	}
 	function deleteFile(filename) {
 		var deleteRef;
@@ -293,7 +293,7 @@ export const MedRecords = () => {
 		var uploadRef = storageRef.child(file.name);
 		uploadRef.put(file).then((snap) => {
 			// console.log(id);
-			console.log('File successfully uploded to '+id);
+			console.log('File successfully uploded to ' + id);
 			setModalIsOpen(false);
 		});
 	}
@@ -308,12 +308,14 @@ export const MedRecords = () => {
 					<i className='mdi mdi-arrow-left'></i>
 				</button>
 				<div className=''>
-					{currFolder==null? <button
-						type='button'
-						className='btn-outline-light back mx-3'
-						onClick={ConfirmAddFolder}>
-						<i className='mdi mdi-folder-plus fs-1'></i>
-					</button>: null}
+					{currFolder == null ? (
+						<button
+							type='button'
+							className='btn-outline-light back mx-3'
+							onClick={ConfirmAddFolder}>
+							<i className='mdi mdi-folder-plus fs-1'></i>
+						</button>
+					) : null}
 					<button
 						type='button'
 						className='btn-outline-light back mx-3'
