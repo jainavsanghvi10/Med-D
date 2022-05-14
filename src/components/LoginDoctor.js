@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import firebase from 'firebase';
 
 
-export default function Login() {
+export default function LoginDoctor() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login } = useAuth();
@@ -76,7 +76,7 @@ export default function Login() {
       await login(emailRef.current.value, passwordRef.current.value);
       
       var userData;
-      firebase.firestore().collection("UserData").where("Email", "==",emailRef.current.value.toLowerCase() )
+      firebase.firestore().collection("DoctorData").where("Email", "==",emailRef.current.value.toLowerCase() )
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -99,7 +99,7 @@ export default function Login() {
       className="container-md"
       style={{ maxWidth: "500px", marginTop: "100px" }}
     >
-      <h1 className="mt-100 text-center"> Login </h1>
+      <h1 className="mt-100 text-center"> Login As Doctor </h1>
       {error && (
         <div className="alert alert-danger" role="alert">
           {error}
@@ -126,9 +126,6 @@ export default function Login() {
             required
           />
         </div>
-        <div className="w-100 text-center mt-2">
-                    <Link to="/forgot-password">Forgot Password?</Link> 
-        </div>
         <div className="d-flex justify-content-around align-items-center mb-4">
           <p>
             Don't have an account? <Link to="/signup"> Signup </Link>
@@ -143,11 +140,6 @@ export default function Login() {
             Sign in
           </button>
         </div>
-        <div className='d-flex justify-content-around align-items-center mb-4'>
-				<p>
-				  <Link to='/login-doctor'> Login as Doctor </Link>
-				</p>
-			</div>
       </form>
     </div>
   );

@@ -6,7 +6,7 @@ import firebase from 'firebase';
 import { storage } from '../firebase';
 
 
-export default function Signup() {
+export default function SignupDoctors() {
 	const firstNameRef = useRef();
 	const lastNameRef = useRef();
 	const emailRef = useRef();
@@ -28,7 +28,7 @@ export default function Signup() {
 		if(userValidate){
 			firebase
 				.firestore()
-				.collection('UserData')
+				.collection('DoctorData')
 				.doc(phoneNumberRef.current.value)
 				.set({
 					FirstName: firstNameRef.current.value.toLowerCase(),
@@ -211,7 +211,7 @@ export default function Signup() {
 			className='container-md'
 			style={{ maxWidth: '500px', position: 'relative', marginTop: '100px' }}>
 			<h1 className='mt-100 text-center' style={{ marginBottom: '50px' }}>
-				Sign Up
+				Sign Up As Doctor
 			</h1>
 			{error && (
 				<div className='console.log console.log-danger' role='console.log'>
@@ -397,12 +397,7 @@ export default function Signup() {
 			</form>
 			<div className='d-flex justify-content-around align-items-center mb-4'>
 				<p>
-					Already a User ? <Link to='/login'> Login </Link>
-				</p>
-			</div>
-			<div className='d-flex justify-content-around align-items-center mb-4'>
-				<p>
-				<Link to='/signup-doctor'> Signup as Doctor </Link>
+					Already a Registered Doctor ? <Link to='/login-doctor'> Login </Link>
 				</p>
 			</div>
 		</div>

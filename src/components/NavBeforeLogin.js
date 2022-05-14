@@ -7,9 +7,9 @@ export const NavBeforeLogin = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark p-0 aestheticColor1">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <Link className="navbar-brand" to="/">
           <img src={siteLogo} width="100" alt="Med-D" />
-        </a>
+        </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
           aria-expanded="false" aria-label="Toggle navigation">
