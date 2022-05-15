@@ -67,25 +67,25 @@ export default function Dashboard() {
 					</div>
 					<div class="carousel-inner">
 						<div class="carousel-item active">
-							<img src={DoctorBlack} class="d-block w-50 mx-auto" alt="..."/>
-								<div class="carousel-caption d-none d-md-block">
-									<h5>First slide label</h5>
-									<p>Some representative placeholder content for the first slide.</p>
-								</div>
+							<img src={DoctorBlack} class="d-block w-50 mx-auto" alt="..." />
+							<div class="carousel-caption d-none d-md-block">
+								<h5>First slide label</h5>
+								<p>Some representative placeholder content for the first slide.</p>
+							</div>
 						</div>
 						<div class="carousel-item">
-							<img src={DoctorBlack} class="d-block w-50 mx-auto" alt="..."/>
-								<div class="carousel-caption d-none d-md-block">
-									<h5>Second slide label</h5>
-									<p>Some representative placeholder content for the second slide.</p>
-								</div>
+							<img src={DoctorBlack} class="d-block w-50 mx-auto" alt="..." />
+							<div class="carousel-caption d-none d-md-block">
+								<h5>Second slide label</h5>
+								<p>Some representative placeholder content for the second slide.</p>
+							</div>
 						</div>
 						<div class="carousel-item">
-							<img src={DoctorBlack} class="d-block w-50 mx-auto" alt="..."/>
-								<div class="carousel-caption d-none d-md-block">
-									<h5>Third slide label</h5>
-									<p>Some representative placeholder content for the third slide.</p>
-								</div>
+							<img src={DoctorBlack} class="d-block w-50 mx-auto" alt="..." />
+							<div class="carousel-caption d-none d-md-block">
+								<h5>Third slide label</h5>
+								<p>Some representative placeholder content for the third slide.</p>
+							</div>
 						</div>
 					</div>
 					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -100,25 +100,29 @@ export default function Dashboard() {
 			</div>
 
 			<div className="cards row mt-5 py-5 justify-content-center darkerWebsiteColor">
-				<Link to="/offline-booking" className="card py-3 w-25 styleCarousel mx-5 border-top-0 border-dark border-4 bg-light">
+				<div className="card py-3 w-25 styleCarousel mx-5 border-top-0 border-dark border-4 bg-light">
 					<img className="card-img-top w-75 align-self-center" src={events} alt="Card image cap" />
 					<div className="card-body">
 						<h5 className="card-title">Book Offline Appointment</h5>
 						<p className="card-text">This is a wider card with supporting text below as a natural lead-in.</p>
 
 					</div>
-					<button className="btn btn-dark">Know More</button>
-				</Link>
+					<Link to="/offline-booking">
+						<button className="btn btn-dark w-100">Know More</button>
+					</Link>
+				</div>
 
-				<Link to={"/medicalRecords?id=" + id} className="card py-3 w-25 styleCarousel mx-5 border-top-0 border-dark border-4 bg-light">
+				<div className="card py-3 w-25 styleCarousel mx-5 border-top-0 border-dark border-4 bg-light">
 					<img className="card-img-top w-75 align-self-center" src={saveFiles} alt="Card image cap" />
 					<div className="card-body">
 						<h5 className="card-title">Save Your Medical Records</h5>
 						<p className="card-text">This content is a little bit longer.</p>
 
 					</div>
-					<button className="btn btn-dark">Know More</button>
-				</Link>
+					<Link to={"/medicalRecords?id=" + id}>
+						<button className="btn btn-dark w-100">Know More</button>
+					</Link>
+				</div>
 			</div>
 		</>
 	);

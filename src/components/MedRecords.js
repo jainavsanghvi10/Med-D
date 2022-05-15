@@ -17,7 +17,7 @@ export const MedRecords = () => {
 
 	var FileLinks = [];
 	var FileSize = [];
-	
+
 	// Extracting variables from query string
 	const params = new URLSearchParams(window.location.search);
 	const id = params.get('id');
@@ -59,7 +59,7 @@ export const MedRecords = () => {
 						console.log(FileSize.length, FileLinks.length, FileNames.length);
 					}
 				});
-	
+
 				console.log("fofi", foNames, fiNames);
 				setFolderNames(foNames);
 				setFileNames(fiNames);
@@ -79,27 +79,27 @@ export const MedRecords = () => {
 	for (let index = 0; index < FolderNames.length; index++) {
 		const ele = FolderNames[index];
 		FolderList.push(
-		  <div className="tile folder"
-			onClick={() => {
-				navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
-				window.location.reload();
-			}}
-		  >
-			<i className="mdi mdi-folder"></i>
-			<span>{ele}</span>
-		  </div>
+			<div className="tile folder"
+				onClick={() => {
+					navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
+					window.location.reload();
+				}}
+			>
+				<i className="mdi mdi-folder"></i>
+				<span>{ele}</span>
+			</div>
 		)
-	  }
-  
-	  for (let index = 0; index < FileNames.length; index++) {
+	}
+
+	for (let index = 0; index < FileNames.length; index++) {
 		const ele = FileNames[index];
 		FileList.push(
-		  <div className="tile form">
-			<i className="mdi mdi-file-document"></i>
-			<span>{ele}</span>
-		  </div>
+			<div className="tile form">
+				<i className="mdi mdi-file-document"></i>
+				<span>{ele}</span>
+			</div>
 		)
-	  }
+	}
 
 
 	//showFile: use REACT PDF VIEWER--implementation left
@@ -110,13 +110,13 @@ export const MedRecords = () => {
 		let min = Math.min(s1.length, s2.length);
 		for (let i = 0; i < min; i++) {
 			if (s1[i] > s2[i]) {
-			    console.log(s1+' '+s2+' '+1);
+				console.log(s1 + ' ' + s2 + ' ' + 1);
 				return 1;
 			} else if (s1[i] < s2[i]) {
-				console.log(s1+' '+s2+' '+2);
+				console.log(s1 + ' ' + s2 + ' ' + 2);
 				return 2;
 			} else {
-			    console.log('same')
+				console.log('same')
 				continue;
 			}
 		}
@@ -174,10 +174,10 @@ export const MedRecords = () => {
 		FolderNames.reverse()
 		FileLinks.reverse()
 	}
-	function sort_size_ascending(){
-		for(let i=0;i<FileSize.length;i++){
-			for(let j=0;j<FileSize.length;j++){
-				if(FileSize[i]>FileSize[j]){
+	function sort_size_ascending() {
+		for (let i = 0; i < FileSize.length; i++) {
+			for (let j = 0; j < FileSize.length; j++) {
+				if (FileSize[i] > FileSize[j]) {
 					let tmp = FileNames[j];
 					FileNames[j] = FileNames[i];
 					FileNames[i] = tmp;
@@ -189,13 +189,13 @@ export const MedRecords = () => {
 					let tmp3 = FileSize[j];
 					FileSize[j] = FileSize[i];
 					FileSize[i] = tmp3;
-				}else{
+				} else {
 					continue;
 				}
 			}
 		}
 	}
-	function sort_size_descending(){
+	function sort_size_descending() {
 		sort_size_ascending();
 		FileNames.reverse()
 		FileLinks.reverse()
@@ -260,7 +260,7 @@ export const MedRecords = () => {
 		var uploadRef = storageRef.child(file.name);
 		uploadRef.put(file).then((snap) => {
 			// console.log(id);
-			console.log('File successfully uploded to '+id);
+			console.log('File successfully uploded to ' + id);
 			setModalIsOpen(false);
 		});
 	}
@@ -269,48 +269,229 @@ export const MedRecords = () => {
 	}
 
 	return (
-		<div className='App'>
-			<div className='d-flex justify-content-between align-items-center mt-4'>
-				{currFolder != null ?
-				<button className='back mt-0'
-				onClick={() => {
-					navigate(`/medicalRecords?id=${id}`);
-					window.location.reload();
-					}}>
-					<i className='mdi mdi-arrow-left'></i>
-				</button> : <button className='back mt-0'></button>}
-				<div className=''>
-					{currFolder==null? <button
-						type='button'
-						className='btn-outline-light back mx-3'
-						onClick={ConfirmAddFolder}>
-						<i className='mdi mdi-folder-plus fs-1'></i>
-					</button>: null}
-					<button
-						type='button'
-						className='btn-outline-light back mx-3'
-						onClick={ChooseFiles}>
-						<i className='mdi mdi-cloud-upload fs-1'></i>
-					</button>
-				</div>
-				{modalIsOpen && (
-					<Modal
-						onCancel={closeModalHandler}
-						onConfirm={purpose == 'AddFolder' ? AddFolder : UploadFile}
-						task={purpose}
-					/>
-				)}
-				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
+		<>
+			<div className='container mt-3 w-75'>
+				<h2 className='fw-bold'>Save Your Medical Records</h2>
 			</div>
-			{currFolder != null ? <h2>{currFolder}</h2> : <h2>Your Medical Records</h2>}
-			<div id='stage' className='stage'>
-				<div className='folder-wrap level-current scrolling' id='Folder_stage'>
-					{FolderList}
+			<div className='container mt-3 mb-5 w-75 websiteColor styleCarousel' style={{ height: "560px" }}>
+				<button className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
+					<span className="material-icons me-2 align-middle">
+						file_upload
+					</span>
+					Upload
+				</button>
+
+				<button className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
+					<span className="material-icons align-middle">
+						delete
+					</span>
+				</button>
+				<button className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
+					<span className="material-icons align-middle">
+						create_new_folder
+					</span>
+				</button>
+				<button className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
+					SORT
+					<span className="material-icons ms-2 align-middle">
+						sort
+					</span>
+				</button>
+
+				<div className='container mt-5 darkerWebsiteColor styleCarousel horizontal-scrollable' style={{ height: "150px" }} id="folderScroll">
+					<div className='text-center' style={{ overflowX: "auto", overflowY: "hidden", whiteSpace: "nowrap" }}>
+						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
+							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
+								folder
+							</span>
+							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
+						</div>
+						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
+							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
+								folder
+							</span>
+							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
+						</div>
+						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
+							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
+								folder
+							</span>
+							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
+						</div>
+						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
+							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
+								folder
+							</span>
+							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
+						</div>
+						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
+							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
+								folder
+							</span>
+							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
+						</div>
+						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
+							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
+								folder
+							</span>
+							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
+						</div>
+						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
+							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
+								folder
+							</span>
+							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
+						</div>
+						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
+							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
+								folder
+							</span>
+							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
+						</div>
+						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
+							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
+								folder
+							</span>
+							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
+						</div>
+
+					</div>
 				</div>
-				<div className='folder-wrap level-current scrolling' id='File_stage'>
-					{FileList}
+
+				<div className='container mt-5 websiteColor styleCarousel horizontal-scrollable' style={{ height: "230px", overflowY: "auto" }} id="fileScroll">
+					<div className='row mb-2'>
+						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>15th July 2022</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
+							<span className="material-icons align-middle">
+								delete
+							</span>
+						</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1'>
+							<span class="material-icons align-middle">
+								visibility
+							</span>
+						</button>
+						<label className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer' id="docName">Dr. Mahesh</label>
+					</div>
+					<div className='row mb-2'>
+						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>15th July 2022</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
+							<span className="material-icons align-middle">
+								delete
+							</span>
+						</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1'>
+							<span class="material-icons align-middle">
+								visibility
+							</span>
+						</button>
+						<label className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer' id="docName">Dr. Mahesh</label>
+					</div>
+					<div className='row mb-2'>
+						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>15th July 2022</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
+							<span className="material-icons align-middle">
+								delete
+							</span>
+						</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1'>
+							<span class="material-icons align-middle">
+								visibility
+							</span>
+						</button>
+						<label className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer' id="docName">Dr. Mahesh</label>
+					</div>
+					<div className='row mb-2'>
+						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>15th July 2022</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
+							<span className="material-icons align-middle">
+								delete
+							</span>
+						</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1'>
+							<span class="material-icons align-middle">
+								visibility
+							</span>
+						</button>
+						<label className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer' id="docName">Dr. Mahesh</label>
+					</div>
+					<div className='row mb-2'>
+						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>15th July 2022</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
+							<span className="material-icons align-middle">
+								delete
+							</span>
+						</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1'>
+							<span class="material-icons align-middle">
+								visibility
+							</span>
+						</button>
+						<label className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer' id="docName">Dr. Mahesh</label>
+					</div>
+					<div className='row mb-2'>
+						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>15th July 2022</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
+							<span className="material-icons align-middle">
+								delete
+							</span>
+						</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1'>
+							<span class="material-icons align-middle">
+								visibility
+							</span>
+						</button>
+						<label className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer' id="docName">Dr. Mahesh</label>
+					</div>
+
 				</div>
+
+
 			</div>
-		</div>
+		</>
+
+		// <div className='App'>
+		// 	<div className='d-flex justify-content-between align-items-center mt-4'>
+		// 		{currFolder != null ?
+		// 		<button className='back mt-0'
+		// 		onClick={() => {
+		// 			navigate(`/medicalRecords?id=${id}`);
+		// 			window.location.reload();
+		// 			}}>
+		// 			<i className='mdi mdi-arrow-left'></i>
+		// 		</button> : <button className='back mt-0'></button>}
+		// 		<div className=''>
+		// 			{currFolder==null? <button
+		// 				type='button'
+		// 				className='btn-outline-light back mx-3'
+		// 				onClick={ConfirmAddFolder}>
+		// 				<i className='mdi mdi-folder-plus fs-1'></i>
+		// 			</button>: null}
+		// 			<button
+		// 				type='button'
+		// 				className='btn-outline-light back mx-3'
+		// 				onClick={ChooseFiles}>
+		// 				<i className='mdi mdi-cloud-upload fs-1'></i>
+		// 			</button>
+		// 		</div>
+		// 		{modalIsOpen && (
+		// 			<Modal
+		// 				onCancel={closeModalHandler}
+		// 				onConfirm={purpose == 'AddFolder' ? AddFolder : UploadFile}
+		// 				task={purpose}
+		// 			/>
+		// 		)}
+		// 		{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
+		// 	</div>
+		// 	{currFolder != null ? <h2>{currFolder}</h2> : <h2>Your Medical Records</h2>}
+		// 	<div id='stage' className='stage'>
+		// 		<div className='folder-wrap level-current scrolling' id='Folder_stage'>
+		// 			{FolderList}
+		// 		</div>
+		// 		<div className='folder-wrap level-current scrolling' id='File_stage'>
+		// 			{FileList}
+		// 		</div>
+		// 	</div>
+		// </div>
 	);
 };
