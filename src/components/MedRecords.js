@@ -14,8 +14,9 @@ export const MedRecords = () => {
 	const [purpose, setPurpose] = useState('test');
 	const [FileNames, setFileNames] = useState([]);
 	const [FolderNames, setFolderNames] = useState([]);
-
-	var FileLinks = [];
+	
+	const FileLinks = new Map();
+	// var FileLinks = [];
 	var FileSize = [];
 	
 	// Extracting variables from query string
@@ -42,28 +43,40 @@ export const MedRecords = () => {
 			.then((snap) => {
 				const fiNames = [];
 				const foNames = [];
+				const FileL=[];
+				// const FileL = new Map();
+				console.log(snap)
 				snap.prefixes.forEach((folderRef) => {
 					console.log('folderRef: ' + folderRef.name);
 					foNames.push(folderRef.name);
 				});
+
 				snap.items.forEach((itemRef) => {
+					// console.log(itemRef.getDownloadURL.then((url)=> {return url}))
 					if (itemRef.name != 'userTest') {
 						fiNames.push(itemRef.name);
 						itemRef.getMetadata().then((metadata) => {
+							console.log(FileSize.length);
+							console.log(FileSize);
+
 							FileSize.push(metadata.size);
-							console.log(itemRef.name + ': ' + metadata.size);
+							// console.log(itemRef.name + ': ' + metadata.size);
 						});
 						itemRef.getDownloadURL().then((fileURL) => {
-							FileLinks.push(fileURL);
+							// FileL.set(itemRef.name,fileURL);
+							let obj={'filename':fileURL};
+							FileL.push(obj);
+							// FileLinks.push(fileURL);
 						});
-						console.log(FileSize.length, FileLinks.length, FileNames.length);
+						// console.log(FileL)							
+						// console.log(FileL.size);
+						// console.log(FileSize.length, FileLinks.size, FileNames.length);
 					}
 				});
-	
-				console.log("fofi", foNames, fiNames);
+				// console.log(FileL)
+				console.log("fofi:", foNames, fiNames);
 				setFolderNames(foNames);
 				setFileNames(fiNames);
-
 				// console.log(FileSize, FileSize.length);
 			})
 			.catch((error) => {
@@ -73,7 +86,7 @@ export const MedRecords = () => {
 
 	console.log(currFolder);
 	console.log('Getting all folder and file details from ' + id);
-	console.log("folders and files", FolderNames, FileNames);
+	console.log("folders: "+ FolderNames + "files: " + FileNames);
 	var listRef;
 	const FolderList = [], FileList = [];
 	for (let index = 0; index < FolderNames.length; index++) {
@@ -94,14 +107,16 @@ export const MedRecords = () => {
 	  for (let index = 0; index < FileNames.length; index++) {
 		const ele = FileNames[index];
 		FileList.push(
-		  <div className="tile form">
+		  <div className="tile form"
+		  	onClick={()=>{
+				  showFile(FileNames[index]);
+			  }}
+			  >
 			<i className="mdi mdi-file-document"></i>
 			<span>{ele}</span>
 		  </div>
 		)
 	  }
-
-
 	//showFile: use REACT PDF VIEWER--implementation left
 	function showFile(i) {
 		console.log(i);
@@ -131,9 +146,9 @@ export const MedRecords = () => {
 					FileNames[j] = FileNames[i];
 					FileNames[i] = tmp;
 
-					let tmp2 = FileLinks[j];
-					FileLinks[j] = FileLinks[i];
-					FileLinks[i] = tmp2;
+					// let tmp2 = FileLinks[j];
+					// FileLinks[j] = FileLinks[i];
+					// FileLinks[i] = tmp2;
 				} else if (result == 2) {
 					continue;
 				} else {
@@ -142,9 +157,9 @@ export const MedRecords = () => {
 						FileNames[j] = FileNames[i];
 						FileNames[i] = tmp;
 
-						let tmp2 = FileLinks[j];
-						FileLinks[j] = FileLinks[i];
-						FileLinks[i] = tmp2;
+						// let tmp2 = FileLinks[j];
+						// FileLinks[j] = FileLinks[i];
+						// FileLinks[i] = tmp2;
 					}
 				}
 			}
@@ -172,7 +187,7 @@ export const MedRecords = () => {
 		sort_AtoZ();
 		FileNames.reverse();
 		FolderNames.reverse();
-		FileLinks.reverse();
+		// FileLinks.reverse();
 	}
 	function sort_size_ascending() {
 		for (let i = 0; i < FileSize.length; i++) {
@@ -182,9 +197,9 @@ export const MedRecords = () => {
 					FileNames[j] = FileNames[i];
 					FileNames[i] = tmp;
 
-					let tmp2 = FileLinks[j];
-					FileLinks[j] = FileLinks[i];
-					FileLinks[i] = tmp2;
+					// let tmp2 = FileLinks[j];
+					// FileLinks[j] = FileLinks[i];
+					// FileLinks[i] = tmp2;
 
 					let tmp3 = FileSize[j];
 					FileSize[j] = FileSize[i];
@@ -198,9 +213,10 @@ export const MedRecords = () => {
 	function sort_size_descending() {
 		sort_size_ascending();
 		FileNames.reverse();
-		FileLinks.reverse();
+		// FileLinks.reverse();
 		FileSize.reverse();
 	}
+
 	function deleteFile(filename) {
 		var deleteRef;
 		if (currFolder != null) {
