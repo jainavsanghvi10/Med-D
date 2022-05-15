@@ -37,7 +37,7 @@
   }
   
   .styleCarousel {
-    border-radius: 30px !important;
+    border-radius: 25px !important;
   }
   
   /* .carousel-inner:after {
@@ -197,3 +197,5 @@
     -webkit-line-clamp: 3;
     overflow: hidden;
   }
+
+  #docName:hover{ cursor: pointer !important; }

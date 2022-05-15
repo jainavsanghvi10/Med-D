@@ -14,18 +14,17 @@ export const MedRecords = () => {
 	const [purpose, setPurpose] = useState('test');
 	const [FileNames, setFileNames] = useState([]);
 	const [FolderNames, setFolderNames] = useState([]);
-	
+
 	const FileLinks = new Map();
 	// var FileLinks = [];
 	var FileSize = [];
-	
+
 	// Extracting variables from query string
 	const params = new URLSearchParams(window.location.search);
 	const id = params.get('id');
 	const currFolder = params.get('fn');
 
 	useEffect(() => {
-
 		if (!currentUser) {
 			navigate('/signup');
 		}
@@ -43,9 +42,9 @@ export const MedRecords = () => {
 			.then((snap) => {
 				const fiNames = [];
 				const foNames = [];
-				const FileL=[];
+				const FileL = [];
 				// const FileL = new Map();
-				console.log(snap)
+				console.log(snap);
 				snap.prefixes.forEach((folderRef) => {
 					console.log('folderRef: ' + folderRef.name);
 					foNames.push(folderRef.name);
@@ -64,17 +63,17 @@ export const MedRecords = () => {
 						});
 						itemRef.getDownloadURL().then((fileURL) => {
 							// FileL.set(itemRef.name,fileURL);
-							let obj={'filename':fileURL};
+							let obj = { filename: fileURL };
 							FileL.push(obj);
 							// FileLinks.push(fileURL);
 						});
-						// console.log(FileL)							
+						// console.log(FileL)
 						// console.log(FileL.size);
 						// console.log(FileSize.length, FileLinks.size, FileNames.length);
 					}
 				});
-				// console.log(FileL)
-				console.log("fofi:", foNames, fiNames);
+
+				console.log('fofi', foNames, fiNames);
 				setFolderNames(foNames);
 				setFileNames(fiNames);
 				// console.log(FileSize, FileSize.length);
@@ -86,37 +85,57 @@ export const MedRecords = () => {
 
 	console.log(currFolder);
 	console.log('Getting all folder and file details from ' + id);
-	console.log("folders: "+ FolderNames + "files: " + FileNames);
+	console.log('folders: ' + FolderNames + ' files: ' + FileNames);
 	var listRef;
-	const FolderList = [], FileList = [];
+	const FolderList = [],
+		FileList = [];
 	for (let index = 0; index < FolderNames.length; index++) {
 		const ele = FolderNames[index];
 		FolderList.push(
-		  <div className="tile folder"
-			onClick={() => {
-				navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
-				window.location.reload();
-			}}
-		  >
-			<i className="mdi mdi-folder"></i>
-			<span>{ele}</span>
-		  </div>
-		)
-	  }
-  
-	  for (let index = 0; index < FileNames.length; index++) {
+			<div
+				className='col-xs-4'
+				style={{
+					width: '120px',
+					display: 'inline-block',
+					float: 'none',
+				}}
+				onClick={() => {
+					navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
+					window.location.reload();
+				}}
+			>
+			<span
+				className='material-icons align-bottom'
+				style={{ fontSize: '100px' }}>
+				folder
+			</span>
+			<h6 className='align-text-top text-center text-dark font-'>{ele}</h6>
+			</div>
+		);
+	}
+
+	for (let index = 0; index < FileNames.length; index++) {
 		const ele = FileNames[index];
 		FileList.push(
-		  <div className="tile form"
-		  	onClick={()=>{
-				  showFile(FileNames[index]);
-			  }}
-			  >
-			<i className="mdi mdi-file-document"></i>
-			<span>{ele}</span>
-		  </div>
-		)
-	  }
+			<div className='row mb-2'>
+						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>
+							15th July 2022
+						</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
+							<span className='material-icons align-middle'>delete</span>
+						</button>
+						<button className='btn btn-dark styleCarousel fw-bold col-1'>
+							<span class='material-icons align-middle'>visibility</span>
+						</button>
+						<label
+							className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer'
+							id='docName'>
+							{ele}
+						</label>
+					</div>
+		);
+	}
+
 	//showFile: use REACT PDF VIEWER--implementation left
 	function showFile(i) {
 		console.log(i);
@@ -285,32 +304,33 @@ export const MedRecords = () => {
 	}
 
 	return (
-		<div className='App'>
-			<div className='d-flex justify-content-between align-items-center mt-4'>
-				{currFolder != null ?
-				<button className='back mt-0'
-				onClick={() => {
-					navigate(`/medicalRecords?id=${id}`);
-					window.location.reload();
-					}}>
-					<i className='mdi mdi-arrow-left'></i>
-				</button> : <button className='back mt-0'></button>}
-				<div className=''>
-					{currFolder == null ? (
-						<button
-							type='button'
-							className='btn-outline-light back mx-3'
-							onClick={ConfirmAddFolder}>
-							<i className='mdi mdi-folder-plus fs-1'></i>
-						</button>
-					) : null}
-					<button
-						type='button'
-						className='btn-outline-light back mx-3'
-						onClick={ChooseFiles}>
-						<i className='mdi mdi-cloud-upload fs-1'></i>
-					</button>
-				</div>
+		<>
+			<div className='container mt-3 w-75'>
+				<h2 className='fw-bold'>Save Your Medical Records</h2>
+			</div>
+			<div
+				className='container mt-3 mb-5 w-75 websiteColor styleCarousel'
+				style={{ height: '560px' }}>
+				<button
+					className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
+					onClick={ChooseFiles}>
+					<span className='material-icons me-2 align-middle'>file_upload</span>
+					Upload
+				</button>
+
+				<button className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
+					<span className='material-icons align-middle'>delete</span>
+				</button>
+				<button
+					className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
+					onClick={ConfirmAddFolder}>
+					<span className='material-icons align-middle'>create_new_folder</span>
+				</button>
+				<button className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
+					SORT
+					<span className='material-icons ms-2 align-middle'>sort</span>
+				</button>
+
 				{modalIsOpen && (
 					<Modal
 						onCancel={closeModalHandler}
@@ -319,16 +339,73 @@ export const MedRecords = () => {
 					/>
 				)}
 				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
-			</div>
-			{currFolder != null ? <h2>{currFolder}</h2> : <h2>Your Medical Records</h2>}
-			<div id='stage' className='stage'>
-				<div className='folder-wrap level-current scrolling' id='Folder_stage'>
-					{FolderList}
+
+				<div
+					className='container mt-5 darkerWebsiteColor styleCarousel horizontal-scrollable'
+					style={{ height: '150px' }}
+					id='folderScroll'>
+					<div
+						className='text-center'
+						style={{
+							overflowX: 'auto',
+							overflowY: 'hidden',
+							whiteSpace: 'nowrap',
+						}}>
+						{FolderList}	
+					</div>
 				</div>
-				<div className='folder-wrap level-current scrolling' id='File_stage'>
-					{FileList}
+
+				<div
+					className='container mt-5 websiteColor styleCarousel horizontal-scrollable'
+					style={{ height: '230px', overflow: 'auto' }}
+					id='fileScroll'>
+						{FileList}
 				</div>
 			</div>
-		</div>
+		</>
+
+		// <div className='App'>
+		// 	<div className='d-flex justify-content-between align-items-center mt-4'>
+		// 		{currFolder != null ?
+		// 		<button className='back mt-0'
+		// 		onClick={() => {
+		// 			navigate(`/medicalRecords?id=${id}`);
+		// 			window.location.reload();
+		// 			}}>
+		// 			<i className='mdi mdi-arrow-left'></i>
+		// 		</button> : <button className='back mt-0'></button>}
+		// 		<div className=''>
+		// 			{currFolder==null? <button
+		// 				type='button'
+		// 				className='btn-outline-light back mx-3'
+		// 				onClick={ConfirmAddFolder}>
+		// 				<i className='mdi mdi-folder-plus fs-1'></i>
+		// 			</button>: null}
+		// 			<button
+		// 				type='button'
+		// 				className='btn-outline-light back mx-3'
+		// 				onClick={ChooseFiles}>
+		// 				<i className='mdi mdi-cloud-upload fs-1'></i>
+		// 			</button>
+		// 		</div>
+		// 		{modalIsOpen && (
+		// 			<Modal
+		// 				onCancel={closeModalHandler}
+		// 				onConfirm={purpose == 'AddFolder' ? AddFolder : UploadFile}
+		// 				task={purpose}
+		// 			/>
+		// 		)}
+		// 		{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
+		// 	</div>
+		// 	{currFolder != null ? <h2>{currFolder}</h2> : <h2>Your Medical Records</h2>}
+		// 	<div id='stage' className='stage'>
+		// 		<div className='folder-wrap level-current scrolling' id='Folder_stage'>
+		// 			{FolderList}
+		// 		</div>
+		// 		<div className='folder-wrap level-current scrolling' id='File_stage'>
+		// 			{FileList}
+		// 		</div>
+		// 	</div>
+		// </div>
 	);
 };
