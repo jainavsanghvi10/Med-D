@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import firebase from 'firebase';
 import { storage } from '../firebase';
+// import { getDatabase, ref, set, push, update } from "firebase/database";
 
 
 export default function SignupDoctors() {
@@ -12,6 +13,9 @@ export default function SignupDoctors() {
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
+	const cityRef = useRef();
+	const stateRef = useRef();
+	const specialityRef = useRef();
 	const phoneNumberRef = useRef();
 	const UserOtpRef = useRef();
 	const { signup } = useAuth();
@@ -33,8 +37,11 @@ export default function SignupDoctors() {
 				.set({
 					FirstName: firstNameRef.current.value.toLowerCase(),
 					LastName: lastNameRef.current.value.toLowerCase(),
+					City: cityRef.current.value.toLowerCase(),
+					State: stateRef.current.value.toLowerCase(),
+					Speciality: specialityRef.current.value.toLowerCase(),
 					Email: emailRef.current.value.toLowerCase(),
-					Mobile: phoneNumberRef.current.value.toLowerCase(),
+					Mobile: phoneNumberRef.current.value.toLowerCase()
 				})
 				.then(() => {
 					console.log('User Added Succesfully!');
@@ -161,13 +168,17 @@ export default function SignupDoctors() {
 
 					firebase
 						.firestore()
-						.collection('UserData')
+						.collection('DoctorData')
 						.doc(phoneNumberRef.current.value)
 						.set({
 							FirstName: firstNameRef.current.value.toLowerCase(),
 							LastName: lastNameRef.current.value.toLowerCase(),
+							City: cityRef.current.value.toLowerCase(),
+							State: stateRef.current.value.toLowerCase(),
+							Speciality: specialityRef.current.value.toLowerCase(),
 							Email: emailRef.current.value.toLowerCase(),
-							Mobile: phoneNumberRef.current.value.toLowerCase(),
+							Mobile: phoneNumberRef.current.value.toLowerCase()
+							
 						})
 						.then(() => {
 							console.log('User Added Succesfully!');
@@ -178,7 +189,18 @@ export default function SignupDoctors() {
 						});
 					//write here
 					console.log('OTP verified');
-					// console.log("Registering User")
+
+					firebase
+					.database()
+            		.ref(`Doctors/`+ phoneNumberRef.current.value.toLowerCase()).update({
+						DoctorID: phoneNumberRef.current.value.toLowerCase(),
+						City: cityRef.current.value.toLowerCase(),
+						State: stateRef.current.value.toLowerCase(),
+						Speciality: specialityRef.current.value.toLowerCase() 
+
+            		});
+					console.log("Registering User")
+					
 					const file = 'userTest';
 					console.log(phoneNumberRef.current.value.hashCode());
 					const storageRef = firebase
@@ -245,6 +267,48 @@ export default function SignupDoctors() {
 						className='form-control'
 						id='lname'
 						ref={lastNameRef}
+						required
+					/>
+					<div className='valid-feedback'>Looks Good!</div>
+				</div>
+
+				<div className='col-md-6'>
+					<label htmlFor='validationCustom03' className='form-label'>
+						City
+					</label>
+					<input
+						type='text'
+						className='form-control'
+						id='city'
+						ref={cityRef}
+						required
+					/>
+					<div className='valid-feedback'>Looks Good!</div>
+				</div>
+
+				<div className='col-md-6'>
+					<label htmlFor='validationCustom03' className='form-label'>
+						State
+					</label>
+					<input
+						type='text'
+						className='form-control'
+						id='state'
+						ref={stateRef}
+						required
+					/>
+					<div className='valid-feedback'>Looks Good!</div>
+				</div>
+
+				<div className='col-md-6'>
+					<label htmlFor='validationCustom03' className='form-label'>
+						Speciality
+					</label>
+					<input
+						type='text'
+						className='form-control'
+						id='speciality'
+						ref={specialityRef}
 						required
 					/>
 					<div className='valid-feedback'>Looks Good!</div>
