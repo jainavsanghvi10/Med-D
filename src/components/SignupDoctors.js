@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import firebase from 'firebase';
 import { storage } from '../firebase';
-
+import { state, cities, specialization } from './Arrays';
 
 export default function SignupDoctors() {
 	const firstNameRef = useRef();
@@ -206,6 +206,29 @@ export default function SignupDoctors() {
 		setLoading(false);
 	}
 
+	let stateDropdown = [];
+	stateDropdown.push(<option key={"nostate"} defaultValue>Select State</option>);
+	for(let i=0;i<state.length;i++){
+		stateDropdown.push(
+			<option value={i} key={"state" + i}>{state[i]}</option>
+		);
+	}
+	let cityDropdown = [];
+	cityDropdown.push(<option key={"nocity"} defaultValue>Select City</option>);
+	for(let i=0;i<cities.length;i++){
+		cityDropdown.push(
+			<option value={i} key={"city" + i}>{cities[i]}</option>
+		);
+	}
+	let specializationDropdown = [];
+	specializationDropdown.push(<option key={"nospecialization"} defaultValue>Select City</option>);
+	for(let i=0;i<cities.length;i++){
+		specializationDropdown.push(
+			<option value={i} key={"special" + i}>{specialization[i]}</option>
+		);
+	}
+	
+
 	return (
 		<div
 			className='container-md'
@@ -294,6 +317,20 @@ export default function SignupDoctors() {
 						Please provide a valid phone number.
 					</div>
 				</div>
+
+				<label htmlFor="state-dropdown">State</label>
+				<select id="state-dropdown" className="form-select" aria-label="Default select example">
+					{stateDropdown}
+				</select>
+				<label htmlFor="city-dropdown">City</label>
+				<select id="city-dropdown" className="form-select" aria-label="Default select example">
+					{cityDropdown}
+				</select>
+				<label htmlFor="specialization-dropdown">Specialization</label>
+				<select id="specialization-dropdown" className="form-select" aria-label="Default select example">
+					{specializationDropdown}
+				</select>
+
 				{authMethod === 'otp' ? (
 					<div className='form-outline mb-4'>
 						<label htmlFor='validationCustom03' className='form-label'>
@@ -368,7 +405,7 @@ export default function SignupDoctors() {
 						style={{ marginLeft: '15px' }}
 					/>
 					<label htmlFor='otp'>Signup with OTP</label>
-				</div>
+				</div>d
 				<div className='col-12'>
 					{authMethod === 'otp' ? (
 						<>
