@@ -1,7 +1,17 @@
-import React from 'react'
+import React, { useRef, useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { auth, db } from '../firebase';
+import firebase from 'firebase';
+import { storage } from '../firebase';
 import doctorProfile from '../assets/images/doctorProfile.svg'
 
+
+
 export const OfflineBooking = () => {
+    const cityRef = useRef();
+    const stateRef = useRef();
+    const specialityRef = useRef();
 
     function bookAppoinmentBtn() {
         const bookAppoinmentBtn = document.getElementById('collapseExample');
@@ -11,8 +21,35 @@ export const OfflineBooking = () => {
 
     return (
         <>
-            <div className="container row my-4">
-                <span className="my-2">
+            <div className="container my-4 ms-0">
+            <div className='col-md-6'>
+					<label htmlFor='validationCustom03' className='form-label'>
+						Speciality
+					</label>
+					<input
+						type='text'
+						className='form-control'
+						id='speciality'
+						ref={specialityRef}
+						required
+					/>
+					<div className='valid-feedback'>Looks Good!</div>
+			</div>
+            <div className='col-md-6'>
+					<label htmlFor='validationCustom03' className='form-label'>
+						City
+					</label>
+					<input
+						type='text'
+						className='form-control'
+						id='city'
+						ref={stateRef}
+						required
+					/>
+					<div className='valid-feedback'>Looks Good!</div>
+			</div>
+           
+                {/* <span className="my-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         className="bi bi-geo-alt-fill" viewBox="0 0 16 16">
                         <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
@@ -24,7 +61,29 @@ export const OfflineBooking = () => {
                     id="sts" name="stt" className="form-control col"
                     required></select>
                 <select id="state" className="form-control col" required></select>
-                <script language="javascript">print_state("sts");</script>
+                <script language="javascript">print_state("sts");</script> */}
+            
+
+            <div className='col-md-6'>
+					<label htmlFor='validationCustom03' className='form-label'>
+						State
+					</label>
+					<input
+						type='text'
+						className='form-control'
+						id='state'
+						ref={stateRef}
+						required
+					/>
+					<div className='valid-feedback'>Looks Good!</div>
+			</div>
+            <button
+						className='btn btn-primary'
+						type='submit'
+						id='signup-btn'
+						style={{ marginBottom: '30px' }}>
+						Search
+					</button>
             </div>
 
             <div className="cards">
