@@ -130,14 +130,14 @@ export const MedRecords = () => {
 		const ele = FileNames[index];
 		FileList.push(
 			<div className='row mb-2'>
-				<button className='btn btn-light styleCarousel fw-bold col-2 me-2' style={{ cursor: 'default' }}>
-					15th July 2022
+				<button className='btn btn-light styleCarousel fw-bold col-2 me-2' style={{cursor:'default'}}>
+					15th July 2022 _Not Real Date_
 				</button>
 				<button className='btn btn-outline-danger styleCarousel fw-bold col-1 me-2'>
 					<span className='material-icons align-middle'>delete</span>
 				</button>
 				<button className='btn btn-outline-dark styleCarousel fw-bold col-1'>
-					<span class='material-icons align-middle'>drive_file_rename_outline</span>
+					<span className='material-icons align-middle'>drive_file_rename_outline</span>
 				</button>
 				<span
 					className='border text-center pt-2 styleCarousel fw-bold col-6 ms-5'
@@ -295,6 +295,7 @@ export const MedRecords = () => {
 			console.log(folderName);
 			console.log('Folder Added with name-' + folderName);
 			setModalIsOpen(false);
+			navigate(0);
 		});
 	}
 	function UploadFile(file) {
@@ -310,6 +311,7 @@ export const MedRecords = () => {
 			// console.log(id);
 			console.log('File successfully uploded to ' + id);
 			setModalIsOpen(false);
+			navigate(0);
 		});
 	}
 	function closeModalHandler() {

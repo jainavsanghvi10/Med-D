@@ -1,146 +1,206 @@
-import React, { useRef, useState, useEffect} from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
+
 import { Link, useNavigate } from "react-router-dom";
-import firebase from 'firebase';
+import { auth, db } from "../firebase";
+import firebase from "firebase";
+import { storage } from "../firebase";
 
+export default function Signup() {
+	const firstNameRef = useRef();
+	const lastNameRef = useRef();
+	const emailRef = useRef();
+	const phoneNumberRef = useRef();
+	const UserOtpRef = useRef();
+	const [error, setError] = useState("");
+	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
+	const { currentUser } = useAuth();
+	const [final, setfinal] = useState("");
+	const [show, setShow] = useState(true);
+	const [userValidate, setUserValidate] = useState(false);
 
-export default function LoginDoctor() {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const { login } = useAuth();
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [userMobile, setUserMobile] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-		if(userMobile != null)
-      navigate(`/?id=${userMobile.hashCode()}`);
+	useEffect(() => {
+		if (userValidate) {
+			navigate(`/?id=${currentUser.uid}`);
+		}
 		//eslint-disable-next-line
-	  }, [userMobile]);
+	}, [userValidate]);
 
-  String.prototype.hashCode = function() {
-    var hash = 0, i, chr;
-    if (this.length === 0) return hash;
-    for (i = 0; i < this.length; i++) {
-      chr   = this.charCodeAt(i);
-      hash  = ((hash << 5) - hash) + chr;
-      hash |= 0; // Convert to 32bit integer
-    }
-    return hash;
-  };
+	// Sent OTP
+	const signin = () => {
+		console.log("otp sending");
+		if (
+			phoneNumberRef.current.value === "" ||
+			phoneNumberRef.current.value.length < 10
+		)
+			return;
 
-  // // Sent OTP
-	// const signin = () => {
-	// 	console.log('otp sending');
-	// 	if (
-	// 		phoneNumberRef.current.value === '' ||
-	// 		phoneNumberRef.current.value.length < 10
-	// 	)
-	// 		return;
+		let verify = new firebase.auth.RecaptchaVerifier("recaptcha-container");
+		auth
+			.signInWithPhoneNumber("+91" + phoneNumberRef.current.value, verify)
+			.then((result) => {
+				setfinal(result);
+				console.log("code sent");
+				setShow(false);
+			})
+			.catch((err) => {
+				console.log(err, "er");
+				window.location.reload();
+			});
+	};
+	// Validate OTP
+	function ValidateOtp() {
+		if (UserOtpRef.current.value === null || final === null) return;
+		final
+			.confirm(UserOtpRef.current.value)
+			.then((result) => {
+				console.log("User Loged in");
+				setUserValidate(true);
+			})
+			.catch((err) => {
+				console.log("Wrong code");
+			});
+	}
 
-	// 	let verify = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-	// 	auth
-	// 		.signInWithPhoneNumber(phoneNumberRef.current.value, verify)
-	// 		.then((result) => {
-	// 			setfinal(result);
-	// 			console.log('code sent');
-	// 			setShow(false);
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err, 'er');
-	// 			window.location.reload();
-	// 		});
-	// };
+	const uploadFiles = (file) => {
+		console.log("Registering User");
+		// if (!file) return;
+		const storageRef = firebase
+			.storage()
+			.ref(storage, `/${currentUser.uid}/${file.name}`);
+		firebase
+			.storage()
+			.uploadBytes(storageRef, file)
+			.then((snapshot) => {
+				console.log("User Registered!");
+			});
+		// const uploadTask = uploadBytesResumable(sotrageRef, file);
 
-  // function ValidateOtp() {
-	// 	if (UserOtpRef.current.value === null || final === null) return;
-	// 	final
-	// 		.confirm(UserOtpRef.current.value)
-	// 		.then((result) => {
-	// 			console.log("User Loged in");
-	// 			setUserValidate(true);
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log('Wrong code');
-	// 		});
-	// }
+		// uploadTask.on(
+		// 	'state_changed',
+		// 	(snapshot) => {
+		// 		const prog = Math.round(
+		// 			(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+		// 		);
+		// 		setProgress(prog);
+		// 	},
+		// 	(error) => console.log(error),
+		// );
+	};
 
-  async function handleSubmitLogin(e) {
-    e.preventDefault();
+	async function handleSubmit(e) {
+		e.preventDefault();
 
-    try {
+		const form = document.getElementById("signup-form");
+		if (form.checkValidity()) {
+			// console.log("valid form")
+			ValidateOtp();
+		}
 
-      setError("");
-      setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
-      
-      var userData;
-      firebase.firestore().collection("DoctorData").where("Email", "==",emailRef.current.value.toLowerCase() )
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            userData = doc.data();
-            console.log(userData.Mobile, userData.FirstName, userData.LastName, userData.Email);
-            setUserMobile(userData.Mobile);
-          });
-      })
-      console.log(userMobile);
-    } catch {
-      setError("Incorrect Username or Password");
-    }
+		setLoading(false);
+	}
 
-    setLoading(false);
-  }
-
-  return (
-    <div
-      className="container-md"
-      style={{ maxWidth: "500px", marginTop: "100px" }}
-    >
-      <h1 className="mt-100 text-center"> Login As Doctor </h1>
-      {error && (
-        <div className="alert alert-danger" role="alert">
-          {error}
+	return (
+		<div
+			className="container-md"
+			style={{ maxWidth: "500px", position: "relative", marginTop: "100px" }}
+		>
+			<h1 className="mt-100 text-center" style={{ marginBottom: "50px" }}>
+				Sign Up
+			</h1>
+			{error && (
+				<div className="console.log console.log-danger" role="console.log">
+					{error}
+				</div>
+			)}
+			<form
+				className="row g-3 needs-validation"
+				id="signup-form"
+				onSubmit={handleSubmit}
+				noValidate
+			>
+      <div className="form-outline mb-4">
+        <label htmlFor="validationCustom03" className="form-label">
+          Phone Number
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="phonenumber"
+          ref={phoneNumberRef}
+          required
+        />
+        <div className="invalid-feedback">
+          Please provide a valid phone number.
         </div>
-      )}
-      <form onSubmit={handleSubmitLogin} className="d-flex flex-column">
-        <div className="form-outline mb-4">
-          <label className="form-label"> Email </label>
-          <input
-            type="email"
-            id="email"
-            className="form-control form-control-lg"
-            ref={emailRef}
-            required
-          />
-        </div>
-        <div className="form-outline mb-4">
-          <label className="form-label"> Password </label>
-          <input
-            type="password"
-            id="pass"
-            className="form-control form-control-lg"
-            ref={passwordRef}
-            required
-          />
-        </div>
-        <div className="d-flex justify-content-around align-items-center mb-4">
-          <p>
-            Don't have an account? <Link to="/signup"> Signup </Link>
-          </p>
-        </div>
-        <div className="d-flex justify-content-around align-items-center mb-4">
-          <button
-            type="submit"
-            disabled={loading}
-            className="btn btn-primary btn-lg btn-block"
-          >
-            Sign in
-          </button>
-        </div>
-      </form>
-    </div>
-  );
+				</div>
+				<div className="form-outline mb-4">
+					<label htmlFor="validationCustom03" className="form-label">
+						OTP
+					</label>
+					<input
+						type="text"
+						className="form-control"
+						id="otp"
+						ref={UserOtpRef}
+						// pattern="[0-9]{6}"
+						required
+					/>
+					<div className="invalid-feedback">Please enter OTP.</div>
+				</div>
+				<div className="col-12">
+					<div className="form-check">
+						<input
+							className="form-check-input"
+							type="checkbox"
+							value=""
+							id="invalidCheck"
+							required
+						/>
+						<label className="form-check-label" htmlFor="invalidCheck">
+							Agree to terms and conditions
+						</label>
+						<div className="invalid-feedback">
+							You must agree before submitting.
+						</div>
+					</div>
+				</div>
+				<div className="col-12">
+					<>
+						<div
+							style={{ display: show ? "block" : "none" }}
+							id="recaptcha-container"
+						></div>
+						<button
+							className="btn btn-primary"
+							id="send-otp-btn"
+							onClick={signin}
+							style={{ marginBottom: "30px", marginRight: "20px" }}
+						>
+							Send OTP
+						</button>
+					</>
+					<button
+						className="btn btn-primary"
+						type="submit"
+						id="signup-btn"
+						style={{ marginBottom: "30px" }}
+					>
+						Login
+					</button>
+				</div>
+			</form>
+			<div className="d-flex justify-content-around align-items-center mb-4">
+				<p>
+					Register as Doctor <Link to="/signup-doctor"> Signup </Link>
+				</p>
+			</div>
+			<div className="d-flex justify-content-around align-items-center mb-4">
+				<p>
+					<Link to="/login"> Login as Patient </Link>
+				</p>
+			</div>
+		</div>
+	);
 }
