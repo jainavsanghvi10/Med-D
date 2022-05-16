@@ -13,6 +13,10 @@
   .greyishColor {
     background-color: #eeeeee;
   }
+
+  .darkGreyishColor {
+    background-color: #91b1d281;
+  }
   
   .bluishBlack {
     /* background: linear-gradient(#50DAEE, #000000); */
@@ -197,5 +201,3 @@
     -webkit-line-clamp: 3;
     overflow: hidden;
   }
-
-  #docName:hover{ cursor: pointer !important; }

@@ -93,10 +93,10 @@ export const MedRecords = () => {
 		const ele = FolderNames[index];
 		FolderList.push(
 			<div
-				className='col-xs-4'
+				className='col-xs-4 me-4'
 				id={"folder" + { index }}
 				style={{
-					width: '120px',
+					width: '100px',
 					display: 'inline-block',
 					float: 'none',
 				}}
@@ -111,7 +111,7 @@ export const MedRecords = () => {
 						color: '#13B0D0'
 					}}
 					onClick={(event) => {
-						event.target.classList.toggle('aestheticColor1');
+						event.target.classList.toggle('darkGreyishColor');
 						console.log("Folder Clicked")
 					}
 					}
@@ -121,7 +121,7 @@ export const MedRecords = () => {
 					}}>
 					folder
 				</span>
-				<h6 className='align-text-top text-center text-dark font-' style={{ overflowX: 'hidden', textOverflow: 'ellipsis' }}>{ele}</h6>
+				<h6 className='align-text-top text-center text-dark font-' style={{ overflowX: 'hidden', textOverflow: 'ellipsis', width: '100px' }}>{ele}</h6>
 			</div>
 		);
 	}
@@ -130,7 +130,7 @@ export const MedRecords = () => {
 		const ele = FileNames[index];
 		FileList.push(
 			<div className='row mb-2'>
-				<button className='btn btn-light styleCarousel fw-bold col-2 me-2' style={{cursor:'default'}}>
+				<button className='btn btn-light styleCarousel fw-bold col-2 me-2' style={{ cursor: 'default' }}>
 					15th July 2022
 				</button>
 				<button className='btn btn-outline-danger styleCarousel fw-bold col-1 me-2'>
@@ -141,7 +141,7 @@ export const MedRecords = () => {
 				</button>
 				<span
 					className='border text-center pt-2 styleCarousel fw-bold col-6 ms-5'
-					style={{cursor:'default'}}
+					style={{ cursor: 'default' }}
 					id='docName'>
 					{ele}
 				</span>
@@ -357,22 +357,38 @@ export const MedRecords = () => {
 					className='container mt-5 styleCarousel horizontal-scrollable'
 					style={{ height: '150px', backgroundColor: 'white' }}
 					id='folderScroll'>
-					<div
-						className='text-center'
-						style={{
-							overflowX: 'auto',
-							overflowY: 'hidden',
-							whiteSpace: 'nowrap',
-						}}>
-						{FolderList}
-					</div>
+					{
+						FolderList.length != 0 ?
+							<div
+								className='text-left'
+								placeholder='No Folders'
+								style={{
+									overflowX: 'auto',
+									overflowY: 'hidden',
+									whiteSpace: 'nowrap',
+								}}>
+								{FolderList}
+							</div>
+							:
+							<div className='text-center'>
+								<h2 style={{ color: 'grey', paddingTop: '50px' }}>--No Folders--</h2>
+							</div>
+					}
 				</div>
 
 				<div
 					className='container mt-5 pt-4 ps-5 styleCarousel horizontal-scrollable'
-					style={{ height: '230px', overflow: 'auto' , backgroundColor:'white'}}
+					style={{ height: '230px', overflow: 'auto', backgroundColor: 'white' }}
 					id='fileScroll'>
-					{FileList}
+					{
+						FileList.length != 0 ?
+							FileList
+							:
+							<div className='text-center'>
+								<h2 style={{ color: 'grey', paddingTop: '50px' }}>--No Files--</h2>
+							</div>
+					}
+					{/* {FileList} */}
 				</div>
 			</div>
 		</>
