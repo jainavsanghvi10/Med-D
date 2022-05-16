@@ -94,22 +94,34 @@ export const MedRecords = () => {
 		FolderList.push(
 			<div
 				className='col-xs-4'
+				id={"folder" + { index }}
 				style={{
 					width: '120px',
 					display: 'inline-block',
 					float: 'none',
 				}}
-				onClick={() => {
-					navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
-					window.location.reload();
-				}}
+
+
 			>
-			<span
-				className='material-icons align-bottom'
-				style={{ fontSize: '100px' }}>
-				folder
-			</span>
-			<h6 className='align-text-top text-center text-dark font-'>{ele}</h6>
+				<span
+					className='material-icons align-bottom'
+					style={{
+						fontSize: '100px',
+						cursor: 'pointer',
+						color: '#13B0D0'
+					}}
+					onClick={(event) => {
+						event.target.classList.toggle('aestheticColor1');
+						console.log("Folder Clicked")
+					}
+					}
+					onDoubleClick={() => {
+						navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
+						window.location.reload();
+					}}>
+					folder
+				</span>
+				<h6 className='align-text-top text-center text-dark font-' style={{ overflowX: 'hidden', textOverflow: 'ellipsis' }}>{ele}</h6>
 			</div>
 		);
 	}
@@ -118,21 +130,22 @@ export const MedRecords = () => {
 		const ele = FileNames[index];
 		FileList.push(
 			<div className='row mb-2'>
-						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>
-							15th July 2022
-						</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
-							<span className='material-icons align-middle'>delete</span>
-						</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1'>
-							<span class='material-icons align-middle'>visibility</span>
-						</button>
-						<label
-							className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer'
-							id='docName'>
-							{ele}
-						</label>
-					</div>
+				<button className='btn btn-light styleCarousel fw-bold col-2 me-2' style={{cursor:'default'}}>
+					15th July 2022
+				</button>
+				<button className='btn btn-outline-danger styleCarousel fw-bold col-1 me-2'>
+					<span className='material-icons align-middle'>delete</span>
+				</button>
+				<button className='btn btn-outline-dark styleCarousel fw-bold col-1'>
+					<span class='material-icons align-middle'>drive_file_rename_outline</span>
+				</button>
+				<span
+					className='border text-center pt-2 styleCarousel fw-bold col-6 ms-5'
+					style={{cursor:'default'}}
+					id='docName'>
+					{ele}
+				</span>
+			</div>
 		);
 	}
 
@@ -326,7 +339,7 @@ export const MedRecords = () => {
 					onClick={ConfirmAddFolder}>
 					<span className='material-icons align-middle'>create_new_folder</span>
 				</button>
-				<button className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
+				<button className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
 					SORT
 					<span className='material-icons ms-2 align-middle'>sort</span>
 				</button>
@@ -341,8 +354,8 @@ export const MedRecords = () => {
 				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
 
 				<div
-					className='container mt-5 darkerWebsiteColor styleCarousel horizontal-scrollable'
-					style={{ height: '150px' }}
+					className='container mt-5 styleCarousel horizontal-scrollable'
+					style={{ height: '150px', backgroundColor: 'white' }}
 					id='folderScroll'>
 					<div
 						className='text-center'
@@ -351,15 +364,15 @@ export const MedRecords = () => {
 							overflowY: 'hidden',
 							whiteSpace: 'nowrap',
 						}}>
-						{FolderList}	
+						{FolderList}
 					</div>
 				</div>
 
 				<div
-					className='container mt-5 websiteColor styleCarousel horizontal-scrollable'
-					style={{ height: '230px', overflow: 'auto' }}
+					className='container mt-5 pt-4 ps-5 styleCarousel horizontal-scrollable'
+					style={{ height: '230px', overflow: 'auto' , backgroundColor:'white'}}
 					id='fileScroll'>
-						{FileList}
+					{FileList}
 				</div>
 			</div>
 		</>
