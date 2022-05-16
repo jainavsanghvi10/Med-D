@@ -5,7 +5,10 @@ import firebase from 'firebase';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from './Modal';
 import Backdrop from './Backdrop';
+import { Viewer } from '@react-pdf-viewer/core';
 import '../assets/styles/modal.css';
+
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 
 export const MedRecords = () => {
 	const { currentUser } = useAuth();
@@ -102,14 +105,13 @@ export const MedRecords = () => {
 				onClick={() => {
 					navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
 					window.location.reload();
-				}}
-			>
-			<span
-				className='material-icons align-bottom'
-				style={{ fontSize: '100px' }}>
-				folder
-			</span>
-			<h6 className='align-text-top text-center text-dark font-'>{ele}</h6>
+				}}>
+				<span
+					className='material-icons align-bottom'
+					style={{ fontSize: '100px' }}>
+					folder
+				</span>
+				<h6 className='align-text-top text-center text-dark font-'>{ele}</h6>
 			</div>
 		);
 	}
@@ -118,27 +120,38 @@ export const MedRecords = () => {
 		const ele = FileNames[index];
 		FileList.push(
 			<div className='row mb-2'>
-						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>
-							15th July 2022
-						</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
-							<span className='material-icons align-middle'>delete</span>
-						</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1'>
-							<span class='material-icons align-middle'>visibility</span>
-						</button>
-						<label
-							className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer'
-							id='docName'>
-							{ele}
-						</label>
-					</div>
+				<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>
+					15th July 2022
+				</button>
+				<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
+					<span className='material-icons align-middle'>delete</span>
+				</button>
+				<button className='btn btn-dark styleCarousel fw-bold col-1'>
+					<span class='material-icons align-middle'>visibility</span>
+				</button>
+				<label
+					className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer'
+					id='docName'>
+					{ele}
+				</label>
+			</div>
 		);
 	}
 
 	//showFile: use REACT PDF VIEWER--implementation left
-	function showFile(i) {
-		console.log(i);
+	function showFile(filename){
+		if (currFolder != null) {
+			listRef = firebase.storage().ref().child(`${id}/${currFolder}/${filename}`);
+		} else {
+			listRef = firebase.storage().ref().child(`${id}/${filename}`);
+		}
+		
+		listRef
+			.getDownloadURL()
+			.then((url) => {
+				cosnole.log(url);
+				// <Viewer fileUrl={url} defaultScale={SpecialZoomLevel.PageFit} />;
+			})
 	}
 	function compareStrings(s1, s2) {
 		let min = Math.min(s1.length, s2.length);
@@ -351,7 +364,7 @@ export const MedRecords = () => {
 							overflowY: 'hidden',
 							whiteSpace: 'nowrap',
 						}}>
-						{FolderList}	
+						{FolderList}
 					</div>
 				</div>
 
@@ -359,7 +372,7 @@ export const MedRecords = () => {
 					className='container mt-5 websiteColor styleCarousel horizontal-scrollable'
 					style={{ height: '230px', overflow: 'auto' }}
 					id='fileScroll'>
-						{FileList}
+					{FileList}
 				</div>
 			</div>
 		</>
