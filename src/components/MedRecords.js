@@ -15,7 +15,8 @@ export const MedRecords = () => {
 	const [FileNames, setFileNames] = useState([]);
 	const [FolderNames, setFolderNames] = useState([]);
 
-	var FileLinks = [];
+	const FileLinks = new Map();
+	// var FileLinks = [];
 	var FileSize = [];
 
 	// Extracting variables from query string
@@ -24,7 +25,6 @@ export const MedRecords = () => {
 	const currFolder = params.get('fn');
 
 	useEffect(() => {
-
 		if (!currentUser) {
 			navigate('/signup');
 		}
@@ -42,28 +42,40 @@ export const MedRecords = () => {
 			.then((snap) => {
 				const fiNames = [];
 				const foNames = [];
+				const FileL = [];
+				// const FileL = new Map();
+				console.log(snap);
 				snap.prefixes.forEach((folderRef) => {
 					console.log('folderRef: ' + folderRef.name);
 					foNames.push(folderRef.name);
 				});
+
 				snap.items.forEach((itemRef) => {
+					// console.log(itemRef.getDownloadURL.then((url)=> {return url}))
 					if (itemRef.name != 'userTest') {
 						fiNames.push(itemRef.name);
 						itemRef.getMetadata().then((metadata) => {
+							console.log(FileSize.length);
+							console.log(FileSize);
+
 							FileSize.push(metadata.size);
-							console.log(itemRef.name + ': ' + metadata.size);
+							// console.log(itemRef.name + ': ' + metadata.size);
 						});
 						itemRef.getDownloadURL().then((fileURL) => {
-							FileLinks.push(fileURL);
+							// FileL.set(itemRef.name,fileURL);
+							let obj = { filename: fileURL };
+							FileL.push(obj);
+							// FileLinks.push(fileURL);
 						});
-						console.log(FileSize.length, FileLinks.length, FileNames.length);
+						// console.log(FileL)
+						// console.log(FileL.size);
+						// console.log(FileSize.length, FileLinks.size, FileNames.length);
 					}
 				});
 
-				console.log("fofi", foNames, fiNames);
+				console.log('fofi', foNames, fiNames);
 				setFolderNames(foNames);
 				setFileNames(fiNames);
-
 				// console.log(FileSize, FileSize.length);
 			})
 			.catch((error) => {
@@ -73,34 +85,69 @@ export const MedRecords = () => {
 
 	console.log(currFolder);
 	console.log('Getting all folder and file details from ' + id);
-	console.log("folders and files", FolderNames, FileNames);
+	console.log('folders: ' + FolderNames + ' files: ' + FileNames);
 	var listRef;
-	const FolderList = [], FileList = [];
+	const FolderList = [],
+		FileList = [];
 	for (let index = 0; index < FolderNames.length; index++) {
 		const ele = FolderNames[index];
 		FolderList.push(
-			<div className="tile folder"
-				onClick={() => {
-					navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
-					window.location.reload();
+			<div
+				className='col-xs-4'
+				id={"folder" + { index }}
+				style={{
+					width: '120px',
+					display: 'inline-block',
+					float: 'none',
 				}}
+
+
 			>
-				<i className="mdi mdi-folder"></i>
-				<span>{ele}</span>
+				<span
+					className='material-icons align-bottom'
+					style={{
+						fontSize: '100px',
+						cursor: 'pointer',
+						color: '#13B0D0'
+					}}
+					onClick={(event) => {
+						event.target.classList.toggle('aestheticColor1');
+						console.log("Folder Clicked")
+					}
+					}
+					onDoubleClick={() => {
+						navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
+						window.location.reload();
+					}}>
+					folder
+				</span>
+				<h6 className='align-text-top text-center text-dark font-' style={{ overflowX: 'hidden', textOverflow: 'ellipsis' }}>{ele}</h6>
 			</div>
-		)
+		);
 	}
 
 	for (let index = 0; index < FileNames.length; index++) {
 		const ele = FileNames[index];
 		FileList.push(
-			<div className="tile form">
-				<i className="mdi mdi-file-document"></i>
-				<span>{ele}</span>
+			<div className='row mb-2'>
+				<button className='btn btn-light styleCarousel fw-bold col-2 me-2' style={{cursor:'default'}}>
+					15th July 2022
+				</button>
+				<button className='btn btn-outline-danger styleCarousel fw-bold col-1 me-2'>
+					<span className='material-icons align-middle'>delete</span>
+				</button>
+				<button className='btn btn-outline-dark styleCarousel fw-bold col-1'>
+					<span class='material-icons align-middle'>drive_file_rename_outline</span>
+				</button>
+				<span
+					className='border text-center pt-2 styleCarousel fw-bold col-6 ms-5'
+					style={{cursor:'default'}}
+					id='docName'>
+					{ele}
+				</span>
 			</div>
-		)
+		);
 	}
-
 
 	//showFile: use REACT PDF VIEWER--implementation left
 	function showFile(i) {
@@ -116,7 +163,7 @@ export const MedRecords = () => {
 				console.log(s1 + ' ' + s2 + ' ' + 2);
 				return 2;
 			} else {
-				console.log('same')
+				console.log('same');
 				continue;
 			}
 		}
@@ -131,9 +178,9 @@ export const MedRecords = () => {
 					FileNames[j] = FileNames[i];
 					FileNames[i] = tmp;
 
-					let tmp2 = FileLinks[j];
-					FileLinks[j] = FileLinks[i];
-					FileLinks[i] = tmp2;
+					// let tmp2 = FileLinks[j];
+					// FileLinks[j] = FileLinks[i];
+					// FileLinks[i] = tmp2;
 				} else if (result == 2) {
 					continue;
 				} else {
@@ -142,9 +189,9 @@ export const MedRecords = () => {
 						FileNames[j] = FileNames[i];
 						FileNames[i] = tmp;
 
-						let tmp2 = FileLinks[j];
-						FileLinks[j] = FileLinks[i];
-						FileLinks[i] = tmp2;
+						// let tmp2 = FileLinks[j];
+						// FileLinks[j] = FileLinks[i];
+						// FileLinks[i] = tmp2;
 					}
 				}
 			}
@@ -170,9 +217,9 @@ export const MedRecords = () => {
 	}
 	function sort_ZtoA() {
 		sort_AtoZ();
-		FileNames.reverse()
-		FolderNames.reverse()
-		FileLinks.reverse()
+		FileNames.reverse();
+		FolderNames.reverse();
+		// FileLinks.reverse();
 	}
 	function sort_size_ascending() {
 		for (let i = 0; i < FileSize.length; i++) {
@@ -182,9 +229,9 @@ export const MedRecords = () => {
 					FileNames[j] = FileNames[i];
 					FileNames[i] = tmp;
 
-					let tmp2 = FileLinks[j];
-					FileLinks[j] = FileLinks[i];
-					FileLinks[i] = tmp2;
+					// let tmp2 = FileLinks[j];
+					// FileLinks[j] = FileLinks[i];
+					// FileLinks[i] = tmp2;
 
 					let tmp3 = FileSize[j];
 					FileSize[j] = FileSize[i];
@@ -197,10 +244,11 @@ export const MedRecords = () => {
 	}
 	function sort_size_descending() {
 		sort_size_ascending();
-		FileNames.reverse()
-		FileLinks.reverse()
-		FileSize.reverse()
+		FileNames.reverse();
+		// FileLinks.reverse();
+		FileSize.reverse();
 	}
+
 	function deleteFile(filename) {
 		var deleteRef;
 		if (currFolder != null) {
@@ -273,180 +321,59 @@ export const MedRecords = () => {
 			<div className='container mt-3 w-75'>
 				<h2 className='fw-bold'>Save Your Medical Records</h2>
 			</div>
-			<div className='container mt-3 mb-5 w-75 websiteColor styleCarousel' style={{ height: "560px" }}>
-				<button className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
-					<span className="material-icons me-2 align-middle">
-						file_upload
-					</span>
+			<div
+				className='container mt-3 mb-5 w-75 websiteColor styleCarousel'
+				style={{ height: '560px' }}>
+				<button
+					className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
+					onClick={ChooseFiles}>
+					<span className='material-icons me-2 align-middle'>file_upload</span>
 					Upload
 				</button>
 
 				<button className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
-					<span className="material-icons align-middle">
-						delete
-					</span>
+					<span className='material-icons align-middle'>delete</span>
 				</button>
-				<button className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
-					<span className="material-icons align-middle">
-						create_new_folder
-					</span>
+				<button
+					className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
+					onClick={ConfirmAddFolder}>
+					<span className='material-icons align-middle'>create_new_folder</span>
 				</button>
-				<button className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
+				<button className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
 					SORT
-					<span className="material-icons ms-2 align-middle">
-						sort
-					</span>
+					<span className='material-icons ms-2 align-middle'>sort</span>
 				</button>
 
-				<div className='container mt-5 darkerWebsiteColor styleCarousel horizontal-scrollable' style={{ height: "150px" }} id="folderScroll">
-					<div className='text-center' style={{ overflowX: "auto", overflowY: "hidden", whiteSpace: "nowrap" }}>
-						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
-							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
-								folder
-							</span>
-							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
-						</div>
-						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
-							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
-								folder
-							</span>
-							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
-						</div>
-						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
-							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
-								folder
-							</span>
-							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
-						</div>
-						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
-							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
-								folder
-							</span>
-							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
-						</div>
-						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
-							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
-								folder
-							</span>
-							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
-						</div>
-						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
-							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
-								folder
-							</span>
-							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
-						</div>
-						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
-							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
-								folder
-							</span>
-							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
-						</div>
-						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
-							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
-								folder
-							</span>
-							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
-						</div>
-						<div className='col-xs-4' style={{ width: "120px", display: "inline-block", float: "none" }}>
-							<span className="material-icons align-bottom" style={{ fontSize: "100px" }}>
-								folder
-							</span>
-							<h6 className='align-text-top text-center text-dark font-' >Recents</h6>
-						</div>
+				{modalIsOpen && (
+					<Modal
+						onCancel={closeModalHandler}
+						onConfirm={purpose == 'AddFolder' ? AddFolder : UploadFile}
+						task={purpose}
+					/>
+				)}
+				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
 
+				<div
+					className='container mt-5 styleCarousel horizontal-scrollable'
+					style={{ height: '150px', backgroundColor: 'white' }}
+					id='folderScroll'>
+					<div
+						className='text-center'
+						style={{
+							overflowX: 'auto',
+							overflowY: 'hidden',
+							whiteSpace: 'nowrap',
+						}}>
+						{FolderList}
 					</div>
 				</div>
 
-				<div className='container mt-5 websiteColor styleCarousel horizontal-scrollable' style={{ height: "230px", overflowY: "auto" }} id="fileScroll">
-					<div className='row mb-2'>
-						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>15th July 2022</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
-							<span className="material-icons align-middle">
-								delete
-							</span>
-						</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1'>
-							<span class="material-icons align-middle">
-								visibility
-							</span>
-						</button>
-						<label className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer' id="docName">Dr. Mahesh</label>
-					</div>
-					<div className='row mb-2'>
-						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>15th July 2022</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
-							<span className="material-icons align-middle">
-								delete
-							</span>
-						</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1'>
-							<span class="material-icons align-middle">
-								visibility
-							</span>
-						</button>
-						<label className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer' id="docName">Dr. Mahesh</label>
-					</div>
-					<div className='row mb-2'>
-						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>15th July 2022</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
-							<span className="material-icons align-middle">
-								delete
-							</span>
-						</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1'>
-							<span class="material-icons align-middle">
-								visibility
-							</span>
-						</button>
-						<label className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer' id="docName">Dr. Mahesh</label>
-					</div>
-					<div className='row mb-2'>
-						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>15th July 2022</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
-							<span className="material-icons align-middle">
-								delete
-							</span>
-						</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1'>
-							<span class="material-icons align-middle">
-								visibility
-							</span>
-						</button>
-						<label className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer' id="docName">Dr. Mahesh</label>
-					</div>
-					<div className='row mb-2'>
-						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>15th July 2022</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
-							<span className="material-icons align-middle">
-								delete
-							</span>
-						</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1'>
-							<span class="material-icons align-middle">
-								visibility
-							</span>
-						</button>
-						<label className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer' id="docName">Dr. Mahesh</label>
-					</div>
-					<div className='row mb-2'>
-						<button className='btn btn-dark styleCarousel fw-bold col-2 me-2'>15th July 2022</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1 me-2'>
-							<span className="material-icons align-middle">
-								delete
-							</span>
-						</button>
-						<button className='btn btn-dark styleCarousel fw-bold col-1'>
-							<span class="material-icons align-middle">
-								visibility
-							</span>
-						</button>
-						<label className='btn btn-dark styleCarousel fw-bold col-6 ms-5 pointer' id="docName">Dr. Mahesh</label>
-					</div>
-
+				<div
+					className='container mt-5 pt-4 ps-5 styleCarousel horizontal-scrollable'
+					style={{ height: '230px', overflow: 'auto' , backgroundColor:'white'}}
+					id='fileScroll'>
+					{FileList}
 				</div>
-
-
 			</div>
 		</>
 
