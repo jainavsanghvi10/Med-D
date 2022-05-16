@@ -16,7 +16,7 @@ export default function Dashboard() {
 		const params = new URLSearchParams(window.location.search);
 		const id = params.get('id');
 		setId(id);
-
+		console.log(currentUser);
 		if(currentUser && id == null){
 			navigate({
 				pathname: '/',

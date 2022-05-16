@@ -3,13 +3,12 @@ import firebase from 'firebase';
 // import {getFirestore} from "firebase/firestore";
 
 const app = firebase.initializeApp({
-    apiKey: "AIzaSyCX_3acgwyllXQhdajaibqN3092Ea8AApI",
-    authDomain: "sportify-main.firebaseapp.com",
-    projectId: "sportify-main",
-    storageBucket: "sportify-main.appspot.com",
-    messagingSenderId: "657882108497",
-    appId: "1:657882108497:web:1d4bb6a165a980c656de70",
-    measurementId: "G-ZRQHCLHYF4"
+    apiKey: "AIzaSyBJLCbpYs70sWzqWtknqKM38OBat7KRqMM",
+    authDomain: "auth-production-561fe.firebaseapp.com",
+    projectId: "auth-production-561fe",
+    storageBucket: "auth-production-561fe.appspot.com",
+    messagingSenderId: "992104554241",
+    appId: "1:992104554241:web:54ab5c6b295414ef4a4500"
 });
 
 const db = firebase.firestore();
