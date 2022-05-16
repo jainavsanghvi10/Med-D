@@ -21,12 +21,18 @@ export const MedRecords = () => {
 
 	// Extracting variables from query string
 	const params = new URLSearchParams(window.location.search);
-	const id = params.get('id');
+	var id = params.get('id');
 	const currFolder = params.get('fn');
 
 	useEffect(() => {
 		if (!currentUser) {
 			navigate('/signup');
+		}
+		if(currentUser && id == null){
+			navigate({
+				pathname: '/medicalRecords',
+				search: `?id=${currentUser.uid}`})
+			id = currentUser.uid;
 		}
 
 		//eslint-disable-next-line
@@ -353,6 +359,7 @@ export const MedRecords = () => {
 						task={purpose}
 					/>
 				)}
+				
 				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
 
 				<div
