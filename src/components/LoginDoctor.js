@@ -128,7 +128,7 @@ export default function LoginDoctor() {
         </div>
         <div className="d-flex justify-content-around align-items-center mb-4">
           <p>
-            Don't have an account? <Link to="/signup"> Signup </Link>
+            Don't have an account? <Link to="/signup-doctor"> Signup </Link>
           </p>
         </div>
         <div className="d-flex justify-content-around align-items-center mb-4">

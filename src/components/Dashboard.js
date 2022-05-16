@@ -5,13 +5,23 @@ import '../assets/styles/customMade.css';
 import DoctorBlack from '../assets/images/Doctor1Black.svg'
 import saveFiles from '../assets/images/saveFiles.svg'
 import events from '../assets/images/events.svg'
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
 	const [id, setId] = useState();
+	const { currentUser } = useAuth();
+	const navigate = useNavigate();
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
 		const id = params.get('id');
 		setId(id);
+
+		if(currentUser && id == null){
+			navigate({
+				pathname: '/',
+				search: `?id=${currentUser.uid}`})
+		}
 		//eslint-disable-next-line
 	}, []);
 	return (

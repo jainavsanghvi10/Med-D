@@ -10,29 +10,26 @@ export default function SignupDoctors() {
 	const firstNameRef = useRef();
 	const lastNameRef = useRef();
 	const emailRef = useRef();
-	const passwordRef = useRef();
-	const passwordConfirmRef = useRef();
 	const cityRef = useRef();
 	const stateRef = useRef();
 	const specialityRef = useRef();
 	const phoneNumberRef = useRef();
 	const UserOtpRef = useRef();
 	const { signup } = useAuth();
+	const { currentUser } = useAuth();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
-
-	const [authMethod, setAuthMethod] = useState('email');
 	const [final, setfinal] = useState('');
 	const [show, setShow] = useState(true);
 	const [userValidate, setUserValidate] = useState(false);
 
 	useEffect(() => {
-		if(userValidate){
+		if (userValidate) {
 			firebase
 				.firestore()
 				.collection('DoctorData')
-				.doc(phoneNumberRef.current.value)
+				.doc(currentUser.uid)
 				.set({
 					FirstName: firstNameRef.current.value.toLowerCase(),
 					LastName: lastNameRef.current.value.toLowerCase(),
@@ -44,14 +41,14 @@ export default function SignupDoctors() {
 				})
 				.then(() => {
 					console.log('User Added Succesfully!');
-					navigate(`/?id=${phoneNumberRef.current.value.hashCode()}`);
+					navigate(`/?id=${currentUser.uid}`);
 				})
 				.catch((error) => {
 					console.error('Error writing document: ', error);
 				});
 		}
 		//eslint-disable-next-line
-	  }, [userValidate]);
+	}, [userValidate]);
 
 	// Sent OTP
 	const signin = () => {
@@ -64,7 +61,7 @@ export default function SignupDoctors() {
 
 		let verify = new firebase.auth.RecaptchaVerifier('recaptcha-container');
 		auth
-			.signInWithPhoneNumber(phoneNumberRef.current.value, verify)
+			.signInWithPhoneNumber("+91" + phoneNumberRef.current.value, verify)
 			.then((result) => {
 				setfinal(result);
 				console.log('code sent');
@@ -88,24 +85,13 @@ export default function SignupDoctors() {
 				console.log('Wrong code');
 			});
 	}
-	String.prototype.hashCode = function () {
-		var hash = 0,
-			i,
-			chr;
-		if (this.length === 0) return hash;
-		for (i = 0; i < this.length; i++) {
-			chr = this.charCodeAt(i);
-			hash = (hash << 5) - hash + chr;
-			hash |= 0; // Convert to 32bit integer
-		}
-		return hash;
-	};
+
 	const uploadFiles = (file) => {
 		console.log('Registering User');
 		// if (!file) return;
 		const storageRef = firebase
 			.storage()
-			.ref(storage, `/${phoneNumberRef.current.value.hashCode()}/${file.name}`);
+			.ref(storage, `/${currentUser.uid}/${file.name}`);
 		firebase
 			.storage()
 			.uploadBytes(storageRef, file)
@@ -134,95 +120,7 @@ export default function SignupDoctors() {
 		const form = document.getElementById('signup-form');
 		if (form.checkValidity()) {
 			// console.log("valid form")
-			if (authMethod === 'email') {
-				if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-					return setError('Passwords do not match');
-				}
-
-				try {
-					// console.log("Helo there");
-
-					setError('');
-					setLoading(true);
-
-					firebase
-						.auth()
-						.createUserWithEmailAndPassword(
-							emailRef.current.value,
-							passwordRef.current.value
-						)
-						.then((userCredential) => {
-							// Signed in
-							var user = userCredential.user;
-							console.log('User Added Succesfully!');
-							// ...
-						})
-						.catch((error) => {
-							var errorCode = error.code;
-							var errorMessage = error.message;
-							console.log(errorMessage);
-							// ..
-						});
-					// await signup(emailRef.current.value, passwordRef.current.value);
-					// console.log("Helo there");
-
-					firebase
-						.firestore()
-						.collection('DoctorData')
-						.doc(phoneNumberRef.current.value)
-						.set({
-							FirstName: firstNameRef.current.value.toLowerCase(),
-							LastName: lastNameRef.current.value.toLowerCase(),
-							City: cityRef.current.value.toLowerCase(),
-							State: stateRef.current.value.toLowerCase(),
-							Speciality: specialityRef.current.value.toLowerCase(),
-							Email: emailRef.current.value.toLowerCase(),
-							Mobile: phoneNumberRef.current.value.toLowerCase()
-							
-						})
-						.then(() => {
-							console.log('User Added Succesfully!');
-							// console.log("Document successfully written!");
-						})
-						.catch((error) => {
-							console.error('Error writing document: ', error);
-						});
-					//write here
-					console.log('OTP verified');
-
-					firebase
-					.database()
-            		.ref(`Doctors/`+ phoneNumberRef.current.value.toLowerCase()).update({
-						DoctorID: phoneNumberRef.current.value.toLowerCase(),
-						City: cityRef.current.value.toLowerCase(),
-						State: stateRef.current.value.toLowerCase(),
-						Speciality: specialityRef.current.value.toLowerCase() 
-
-            		});
-					console.log("Registering User")
-					
-					const file = 'userTest';
-					console.log(phoneNumberRef.current.value.hashCode());
-					const storageRef = firebase
-						.storage()
-						.ref()
-						.child(`${phoneNumberRef.current.value.hashCode()}/${file}`);
-					storageRef.put('').then((snapshot) => {
-						console.log('Folder Created');
-					});
-					// firebase.storage().uploadBytes(storageRef, file).then((snapshot) => {
-					// console.log('User Registered!');
-					// }).then(() => { alert("folder created")})
-					// .catch((error) => {console.error(error)})
-					// uploadFiles('');
-					navigate(`/?id=${phoneNumberRef.current.value.hashCode()}`);
-				} catch {
-					setError('Failed to create an account');
-				}
-			}
-			if (authMethod == 'otp') {
-				ValidateOtp();
-			}
+			ValidateOtp();
 		}
 
 		setLoading(false);
@@ -230,26 +128,26 @@ export default function SignupDoctors() {
 
 	let stateDropdown = [];
 	stateDropdown.push(<option key={"nostate"} defaultValue>Select State</option>);
-	for(let i=0;i<state.length;i++){
+	for (let i = 0; i < state.length; i++) {
 		stateDropdown.push(
 			<option key={"state" + i}>{state[i]}</option>
 		);
 	}
 	let cityDropdown = [];
 	cityDropdown.push(<option key={"nocity"} defaultValue>Select City</option>);
-	for(let i=0;i<cities.length;i++){
+	for (let i = 0; i < cities.length; i++) {
 		cityDropdown.push(
 			<option key={"city" + i}>{cities[i]}</option>
 		);
 	}
 	let specializationDropdown = [];
 	specializationDropdown.push(<option key={"nospecialization"} defaultValue>Select City</option>);
-	for(let i=0;i<cities.length;i++){
+	for (let i = 0; i < cities.length; i++) {
 		specializationDropdown.push(
 			<option key={"special" + i}>{specialization[i]}</option>
 		);
 	}
-	
+
 
 	return (
 		<div
@@ -295,73 +193,19 @@ export default function SignupDoctors() {
 					<div className='valid-feedback'>Looks Good!</div>
 				</div>
 
-				{/* <div className='col-md-6'>
-					<label htmlFor='validationCustom03' className='form-label'>
-						City
-					</label>
-					<input
-						type='text'
-						className='form-control'
-						id='city'
-						ref={cityRef}
-						required
-					/>
-					<div className='valid-feedback'>Looks Good!</div>
-				</div> */}
-
-				{/* <div className='col-md-6'>
-					<label htmlFor='validationCustom03' className='form-label'>
-						State
-					</label>
-					<input
-						type='text'
-						className='form-control'
-						id='state'
-						ref={stateRef}
-						required
-					/>
-					<div className='valid-feedback'>Looks Good!</div>
-				</div> */}
-
-				{/* <div className='col-md-6'>
-					<label htmlFor='validationCustom03' className='form-label'>
-						Speciality
-					</label>
-					<input
-						type='text'
-						className='form-control'
-						id='speciality'
-						ref={specialityRef}
-						required
-					/>
-					<div className='valid-feedback'>Looks Good!</div>
-				</div> */}
-
 				<div className='form-outline mb-4'>
 					<label htmlFor='validationCustomUsername' className='form-label'>
 						Email
 					</label>
 					<div className='input-group has-validation'>
-						{authMethod === 'email' ? (
-							<input
-								type='email'
-								className='form-control'
-								id='email'
-								ref={emailRef}
-								placeholder='abc@gmail.com'
-								aria-describedby='inputGroupPrepend'
-								required
-							/>
-						) : (
-							<input
-								type='email'
-								className='form-control'
-								id='email'
-								ref={emailRef}
-								placeholder='abc@gmail.com (optional)'
-								aria-describedby='inputGroupPrepend'
-							/>
-						)}
+						<input
+							type='email'
+							className='form-control'
+							id='email'
+							ref={emailRef}
+							placeholder='abc@gmail.com (optional)'
+							aria-describedby='inputGroupPrepend'
+						/>
 						<div className='invalid-feedback'>Please choose a username.</div>
 					</div>
 				</div>
@@ -395,45 +239,20 @@ export default function SignupDoctors() {
 					{specializationDropdown}
 				</select>
 
-				{authMethod === 'otp' ? (
-					<div className='form-outline mb-4'>
-						<label htmlFor='validationCustom03' className='form-label'>
-							OTP
-						</label>
-						<input
-							type='text'
-							className='form-control'
-							id='otp'
-							ref={UserOtpRef}
-							// pattern="[0-9]{6}"
-							required
-						/>
-						<div className='invalid-feedback'>Please enter OTP.</div>
-					</div>
-				) : (
-					<>
-						<div className='form-outline mb-4'>
-							<label className='form-label'> Password </label>
-							<input
-								type='password'
-								id='pass'
-								className='form-control form-control-lg'
-								ref={passwordRef}
-								required
-							/>
-						</div>
-						<div className='form-outline mb-4'>
-							<label className='form-label'> Confirm Password </label>
-							<input
-								type='password'
-								id='confirmpass'
-								className='form-control form-control-lg'
-								ref={passwordConfirmRef}
-								required
-							/>
-						</div>
-					</>
-				)}
+				<div className='form-outline mb-4'>
+					<label htmlFor='validationCustom03' className='form-label'>
+						OTP
+					</label>
+					<input
+						type='text'
+						className='form-control'
+						id='otp'
+						ref={UserOtpRef}
+						// pattern="[0-9]{6}"
+						required
+					/>
+					<div className='invalid-feedback'>Please enter OTP.</div>
+				</div>
 				<div className='col-12'>
 					<div className='form-check'>
 						<input
@@ -451,42 +270,19 @@ export default function SignupDoctors() {
 						</div>
 					</div>
 				</div>
-				<div style={{ marginTop: '20px' }}>
-					<input
-						type='radio'
-						id='emailSelect'
-						name='fav_language'
-						value='checked'
-						onClick={() => setAuthMethod('email')}
-					/>
-					<label htmlFor='email'>Signup with Email</label>
-					<input
-						type='radio'
-						id='otpSelect'
-						name='fav_language'
-						value='waschecked'
-						onClick={() => setAuthMethod('otp')}
-						style={{ marginLeft: '15px' }}
-					/>
-					<label htmlFor='otp'>Signup with OTP</label>
-				</div>d
 				<div className='col-12'>
-					{authMethod === 'otp' ? (
-						<>
-							<div
-								style={{ display: show ? 'block' : 'none' }}
-								id='recaptcha-container'></div>
-							<button
-								className='btn btn-primary'
-								id='send-otp-btn'
-								onClick={signin}
-								style={{ marginBottom: '30px', marginRight: '20px' }}>
-								Send OTP
-							</button>
-						</>
-					) : (
-						<></>
-					)}
+					<>
+						<div
+							style={{ display: show ? 'block' : 'none' }}
+							id='recaptcha-container'></div>
+						<button
+							className='btn btn-primary'
+							id='send-otp-btn'
+							onClick={signin}
+							style={{ marginBottom: '30px', marginRight: '20px' }}>
+							Send OTP
+						</button>
+					</>
 					<button
 						className='btn btn-primary'
 						type='submit'
