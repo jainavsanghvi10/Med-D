@@ -9,13 +9,16 @@ export default function Modal(props) {
     function confirmHandler() {
       if(props.task=='AddFolder')
         props.onConfirm(folderName);
-      else{
+      else if(props.task=='UploadFiles'){
         props.onConfirm(file);
+      }else if(props.task=='DeleteFile'){
+        props.onConfirm();
+      }else{
+        props.onConfirm();
       }
     }
     
     const FolderTask=()=>{
-      // console.log(props.task);
       return(
         <input type='text' required onChange={(e)=>{folderName=e.target.value}} placeholder='Enter Folder Name'/>
       );
@@ -26,11 +29,10 @@ export default function Modal(props) {
         <input type='file' onChange={(e)=>{file=e.target.files[0]}}/>
         );
     }
-
     return (
       <div className='modal_up'>
         {console.log(props.task)}
-        {props.task=='AddFolder' ? FolderTask() : FileTask()}
+        {props.task=='AddFolder' ? FolderTask() : props.task =='UploadFiles' ? FileTask(): <h4>Are you sure you want to delete</h4>}
         <button className='btn_up' onClick={confirmHandler}>
           Confirm
         </button>
