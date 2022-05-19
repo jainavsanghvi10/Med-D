@@ -82,7 +82,7 @@ export const MedRecords = () => {
 				console.log(error);
 			});
 	}, []);
-
+	
 	console.log(currFolder);
 	console.log('Getting all folder and file details from ' + id);
 	console.log('folders: ' + FolderNames + ' files: ' + FileNames);
@@ -118,6 +118,7 @@ export const MedRecords = () => {
 					onDoubleClick={() => {
 						navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
 						window.location.reload();
+						document.getElementById('folderScroll').classList.add('invisible')
 					}}>
 					folder
 				</span>
@@ -336,6 +337,7 @@ export const MedRecords = () => {
 				<button className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
 					<span className='material-icons align-middle'>delete</span>
 				</button>
+				
 				<button
 					className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
 					onClick={ConfirmAddFolder}>
@@ -354,7 +356,7 @@ export const MedRecords = () => {
 					/>
 				)}
 				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
-
+				{!currFolder ? document.getElementById('folderScroll').classList.remove('invisible') : null}
 				<div
 					className='container mt-5 styleCarousel horizontal-scrollable'
 					style={{ height: '150px', backgroundColor: 'white' }}

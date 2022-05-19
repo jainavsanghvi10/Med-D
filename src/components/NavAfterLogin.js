@@ -19,7 +19,7 @@ export const NavAfterLogin = (props) => {
  }
  
  return (
-  <nav className="navbar navbar-expand-lg navbar-dark p-0 aestheticColor1">
+  <nav className="navbar navbar-expand-lg navbar-dark p-0 aestheticColor1" style={{height:'10vh'}}>
   <div className="container-fluid">
     <a href="/">
       <img src={siteLogo} width="100" alt="Med-D" />

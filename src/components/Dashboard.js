@@ -30,7 +30,7 @@ export default function Dashboard() {
 			<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i" rel="stylesheet" />
 			<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
 			<link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
-			<div className='websiteColor'>
+			<div className='websiteColor' style={{height: '90vh'}}>
 				<div className="row h-100 border-bottom border-5">
 					<div className="w-50 p-0">
 						<div className="websiteColor h-80 d-flex justify-content-center align-items-start flex-column pt-5 ps-5">
