@@ -5,7 +5,7 @@ import siteLogo from '../assets/images/site-logo.png'
 
 export const NavBeforeLogin = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark p-0 aestheticColor1" style={{height:'10vh'}}>
+    <nav className="navbar navbar-expand-lg navbar-dark p-0 headerColor" style={{height:'10vh'}}>
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           <img src={siteLogo} width="100" alt="Med-D" />

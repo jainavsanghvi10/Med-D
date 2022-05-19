@@ -19,7 +19,7 @@ export const NavAfterLogin = (props) => {
  }
  
  return (
-  <nav className="navbar navbar-expand-lg navbar-dark p-0 aestheticColor1" style={{height:'10vh'}}>
+  <nav className="navbar navbar-expand-lg navbar-dark p-0 headerColor" style={{height:'10vh'}}>
   <div className="container-fluid">
     <a href="/">
       <img src={siteLogo} width="100" alt="Med-D" />
@@ -48,7 +48,7 @@ export const NavAfterLogin = (props) => {
       <form className="d-flex">
         <Link to="/">
           <button type="button" onClick={handleLogout}
-          className="btn btn-dark btn-outline-info mx-2 fw-bold fs-6 rounded">Logout</button>
+          className="btn btn-dark btn-outline-light mx-2 fw-bold fs-6 rounded">Logout</button>
         </Link>
       </form>
     </div>

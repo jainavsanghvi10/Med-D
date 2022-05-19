@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import 'bootstrap/js/dist/carousel'
 import { Link } from 'react-router-dom';
 import '../assets/styles/customMade.css';
-import DoctorBlack from '../assets/images/Doctor1Black.svg'
+import DoctorBlack from '../assets/images/undraw_doctor.svg'
+import dashboardDoctor from '../assets/images/dashboard-doctor.jpeg'
 import saveFiles from '../assets/images/saveFiles.svg'
 import events from '../assets/images/events.svg'
 import { useAuth } from '../context/AuthContext';
@@ -17,10 +18,11 @@ export default function Dashboard() {
 		const id = params.get('id');
 		setId(id);
 		console.log(currentUser);
-		if(currentUser && id == null){
+		if (currentUser && id == null) {
 			navigate({
 				pathname: '/',
-				search: `?id=${currentUser.uid}`})
+				search: `?id=${currentUser.uid}`
+			})
 		}
 		//eslint-disable-next-line
 	}, []);
@@ -30,26 +32,27 @@ export default function Dashboard() {
 			<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i" rel="stylesheet" />
 			<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
 			<link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
-			<div className='websiteColor' style={{height: '90vh'}}>
-				<div className="row h-100 border-bottom border-5">
-					<div className="w-50 p-0">
-						<div className="websiteColor h-80 d-flex justify-content-center align-items-start flex-column pt-5 ps-5">
-							<h1 className="display-4 fw-bold bigText p-4 ps-5 text-black">Book Offline <br></br>
+			<div style={{ height: '90vh' }}>
+				<div className="row h-100 dashboardSlogan">
+					<div className="col-6 p-0">
+						<div className="h-80 d-flex justify-content-center align-items-start flex-column pt-5 ps-5">
+							<h1 className="display-4 fw-bold bigText p-4 ps-5 text-white" style={{ fontSize: '8vh' }}>Book Offline <br></br>
 								Appointments <br></br>
 								Directly From Your <br></br>
 								Phone
 							</h1>
-							<p className="ps-5 text-dark">Med D makes booking offline doctor appointments easier and <br></br>
+							<p className="ps-5 text-white" style={{ fontSize: '2.5vh' }}>Med D makes booking offline doctor appointments easier and <br></br>
 								more flexible so that you never have to wait for <br></br>
 								your turn when visiting a doctor.
 							</p>
-							<button className="btn btn-dark btn-outline-info ms-5 mb-5 rounded-pill">Learn More</button>
+							<button className="btn btn-light btn-outline-info ms-5 mb-5 rounded-pill fw-bold">Learn More</button>
 						</div>
 					</div>
-					<img src={DoctorBlack} className="w-50 img-fluid align-self-center" alt="Responsive image" />
+					<img src={dashboardDoctor} className="img-fluid align-self-center p-0 ml-auto" style={{height:'90vh', width:'auto'}} alt="Responsive image" />
+
 				</div>
 			</div>
-			<div className="greyishColor">
+			<div className="greyishColor pt-3">
 				{/* <div className="gallery js-flickity pt-5" data-flickity-options='{ "wrapAround": true }' data-ride="carousel">
 					<div className="gallery-cell">
 						<div className="carousel-caption d-none d-md-block fw-bold fs-2">
@@ -77,25 +80,25 @@ export default function Dashboard() {
 					</div>
 					<div className="carousel-inner">
 						<div className="carousel-item active">
-							<img src={DoctorBlack} className="d-block w-50 mx-auto" alt="..."/>
-								<div className="carousel-caption d-none d-md-block">
-									<h5>First slide label</h5>
-									<p>Some representative placeholder content for the first slide.</p>
-								</div>
+							<img src={DoctorBlack} className="d-block w-50 mx-auto" alt="..." />
+							<div className="carousel-caption d-none d-md-block">
+								<h5>First slide label</h5>
+								<p>Some representative placeholder content for the first slide.</p>
+							</div>
 						</div>
 						<div className="carousel-item">
-							<img src={DoctorBlack} className="d-block w-50 mx-auto" alt="..."/>
-								<div className="carousel-caption d-none d-md-block">
-									<h5>Second slide label</h5>
-									<p>Some representative placeholder content for the second slide.</p>
-								</div>
+							<img src={DoctorBlack} className="d-block w-50 mx-auto" alt="..." />
+							<div className="carousel-caption d-none d-md-block">
+								<h5>Second slide label</h5>
+								<p>Some representative placeholder content for the second slide.</p>
+							</div>
 						</div>
 						<div className="carousel-item">
-							<img src={DoctorBlack} className="d-block w-50 mx-auto" alt="..."/>
-								<div className="carousel-caption d-none d-md-block">
-									<h5>Third slide label</h5>
-									<p>Some representative placeholder content for the third slide.</p>
-								</div>
+							<img src={DoctorBlack} className="d-block w-50 mx-auto" alt="..." />
+							<div className="carousel-caption d-none d-md-block">
+								<h5>Third slide label</h5>
+								<p>Some representative placeholder content for the third slide.</p>
+							</div>
 						</div>
 					</div>
 					<button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -109,7 +112,7 @@ export default function Dashboard() {
 				</div>
 			</div>
 
-			<div className="cards row mt-5 py-5 justify-content-center darkerWebsiteColor">
+			<div className="cards row mt-5 py-5 justify-content-center">
 				<div className="card py-3 w-25 styleCarousel mx-5 border-top-0 border-dark border-4 bg-light">
 					<img className="card-img-top w-75 align-self-center" src={events} alt="Card image cap" />
 					<div className="card-body">
