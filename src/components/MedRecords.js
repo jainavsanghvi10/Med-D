@@ -106,8 +106,6 @@ export const MedRecords = () => {
 					display: 'inline-block',
 					float: 'none',
 				}}
-
-
 			>
 				<span
 					className='material-icons align-bottom'
@@ -122,8 +120,7 @@ export const MedRecords = () => {
 					}
 					}
 					onDoubleClick={() => {
-						navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
-						window.location.reload();
+						window.location.href = `/medicalRecords?id=${id}&fn=${FolderNames[index]}`
 					}}>
 					folder
 				</span>
@@ -342,11 +339,12 @@ export const MedRecords = () => {
 				<button className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
 					<span className='material-icons align-middle'>delete</span>
 				</button>
+				{currFolder != null ? <></>:
 				<button
 					className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
 					onClick={ConfirmAddFolder}>
 					<span className='material-icons align-middle'>create_new_folder</span>
-				</button>
+				</button>}
 				<button className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
 					SORT
 					<span className='material-icons ms-2 align-middle'>sort</span>
@@ -362,12 +360,13 @@ export const MedRecords = () => {
 				
 				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
 
+				{currFolder === null ?
 				<div
 					className='container mt-5 styleCarousel horizontal-scrollable'
 					style={{ height: '150px', backgroundColor: 'white' }}
 					id='folderScroll'>
 					{
-						FolderList.length != 0 ?
+						(FolderList.length != 0) ?
 							<div
 								className='text-left'
 								placeholder='No Folders'
@@ -383,7 +382,7 @@ export const MedRecords = () => {
 								<h2 style={{ color: 'grey', paddingTop: '50px' }}>--No Folders--</h2>
 							</div>
 					}
-				</div>
+				</div> : <h2 style={{marginTop: "20px", textAlign: "center"}}>{currFolder}</h2>}
 
 				<div
 					className='container mt-5 pt-4 ps-5 styleCarousel horizontal-scrollable'
