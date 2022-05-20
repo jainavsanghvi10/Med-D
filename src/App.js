@@ -16,6 +16,8 @@ import LoginDoctor from "./components/LoginDoctor";
 import {Test} from "./components/Test"
 import {MedRecords} from "./components/MedRecords"
 import {OfflineBooking} from "./components/OfflineBooking"
+import {BookPatientSide} from "./components/BookPatientSide"
+import {BookDoctorSide} from "./components/BookDoctorSide"
 import ForgotPassword from "./components/ForgotPassword"
 
 // Styles
@@ -36,6 +38,8 @@ function App() {
             <Route path="/offline-booking" element={<OfflineBooking/>} />
             <Route path="/test" element={<Test/>} />
             <Route path="/forgot-password" element={<ForgotPassword/>}/>
+            <Route path="/book-patient-side" element={<BookPatientSide/>}/>
+            <Route path="/book-doctor-side" element={<BookDoctorSide/>}/>
           </Routes>
         <Footer />
       </AuthProvider>
