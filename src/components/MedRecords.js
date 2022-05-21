@@ -17,23 +17,32 @@ export const MedRecords = () => {
 	const [purpose, setPurpose] = useState('test');
 	const [FileNames, setFileNames] = useState([]);
 	const [FolderNames, setFolderNames] = useState([]);
+	const [AllFileNames, setAllFileNames] = useState([]);
+	const [AllFolderNames, setAllFolderNames] = useState([]);
 	const [FileData, setFileData] = useState([]);
 	// const [FolderSize, setFolderSize] = useState([]);
 	const [FileLinks, setFileLinks] = useState([]);
 	const [deleteFileName, setDeleteFileName] = useState('');
 	const [FoldersSelected, setFolderSelected] = useState([]);
 
-
 	// Extracting variables from query string
 	const params = new URLSearchParams(window.location.search);
-	const id = params.get('id');
+	var id = params.get('id');
 	const currFolder = params.get('fn');
 
-	let count=0;
-	let listRef,searchString='';
+	let count = 0;
+	let listRef,
+		searchString = '';
 	useEffect(() => {
 		if (!currentUser) {
 			navigate('/signup');
+		}
+		if (currentUser && id == null) {
+			navigate({
+				pathname: '/medicalRecords',
+				search: `?id=${currentUser.uid}`,
+			});
+			id = currentUser.uid;
 		}
 
 		//eslint-disable-next-line
@@ -75,22 +84,28 @@ export const MedRecords = () => {
 					if (itemRef.name != 'userTest') {
 						fiNames.push(itemRef.name);
 						itemRef.getMetadata().then((metadata) => {
-							let obj = { "FileName": itemRef.name, "Size": metadata.size, "DateAdded":metadata.updated };
+							let obj = {
+								FileName: itemRef.name,
+								Size: metadata.size,
+								DateAdded: metadata.updated,
+							};
 							filedata.push(obj);
 						});
 						itemRef.getDownloadURL().then((fileURL) => {
-							let obj = { "FileName": itemRef.name, "Link": fileURL };
+							let obj = { FileName: itemRef.name, Link: fileURL };
 							filelinks.push(obj);
 						});
 					}
 				});
 				// console.log(filelinks)
 				// console.log(filesize)
-				setFileData(filedata)
-				setFileLinks(filelinks)
-				console.log('fofi', foNames, fiNames,);
+				setFileData(filedata);
+				setFileLinks(filelinks);
+				console.log('fofi', foNames, fiNames);
 				setFolderNames(foNames);
+				setAllFolderNames(foNames);
 				setFileNames(fiNames);
+				setAllFileNames(fiNames);
 				// console.log(filesize, filesize.length);
 			})
 			.catch((error) => {
@@ -100,9 +115,11 @@ export const MedRecords = () => {
 	// console.log(currFolder);
 	console.log('Getting all folder and file details from ' + id);
 	console.log('folders: ' + FolderNames + ' files: ' + FileNames);
-	
-	const FolderList = [],FileList = [],selectedFolders = [];
-	for (let index = 0; index < FolderNames.length; index++){
+
+	const FolderList = [],
+		FileList = [],
+		selectedFolders = [];
+	for (let index = 0; index < FolderNames.length; index++) {
 		const ele = FolderNames[index];
 		FolderList.push(
 			<div
@@ -133,13 +150,12 @@ export const MedRecords = () => {
 								}
 							}
 							selectedFolders.splice(j, 1);
-							console.log(selectedFolders);
 						}
 						console.log('Folder Clicked');
+						console.log(selectedFolders);
 					}}
 					onDoubleClick={() => {
-						navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
-						window.location.reload();
+						window.location.href = `/medicalRecords?id=${id}&fn=${FolderNames[index]}`;
 					}}>
 					folder
 				</span>
@@ -193,25 +209,30 @@ export const MedRecords = () => {
 			</div>
 		);
 	}
-//****************************************************************************************************************
+	//****************************************************************************************************************
 
-	function search(word){
-		let matchfiles=[]
-		FileNames.forEach((e)=>{
-			if(e.includes(word)){
+	function search(word) {
+		if (word == '' || word == null) {
+			setFileNames(AllFileNames);
+			setFolderNames(AllFolderNames);
+			return;
+		}
+		let matchfiles = [];
+		FileNames.forEach((e) => {
+			if (e.toLowerCase().includes(word)) {
 				matchfiles.push(e);
 			}
-		})
-		let matchfolders=[];
-		FolderNames.forEach((f)=>{
-			if(f.includes(word)){
-				matchfolders.push(f)
+		});
+		let matchfolders = [];
+		FolderNames.forEach((f) => {
+			if (f.toLowerCase().includes(word)) {
+				matchfolders.push(f);
 			}
-		})
+		});
 		setFolderNames(matchfolders);
 		setFileNames(matchfiles);
 	}
-	function goBack(){
+	function goBack() {
 		navigate(`/medicalRecords?id=${id}`);
 		window.location.reload();
 	}
@@ -231,48 +252,47 @@ export const MedRecords = () => {
 			// <Viewer fileUrl={url} defaultScale={SpecialZoomLevel.PageFit} />;
 		});
 	}
-	function sort_AtoZ(){
-		console.log("Sorting size in ascending order...")
-		let fileN=[]
-		FileNames.forEach((e)=> fileN.push(e));
-		let folderN=[]
-		FolderNames.forEach((e)=> folderN.push(e));
-		setFileNames(fileN)
-		setFolderNames(folderN)
-
+	function sort_AtoZ() {
+		console.log('Sorting size in ascending order...');
+		let fileN = [];
+		AllFileNames.forEach((e) => fileN.push(e));
+		let folderN = [];
+		AllFolderNames.forEach((e) => folderN.push(e));
+		setFileNames(fileN);
+		setFolderNames(folderN);
 	}
 	function sort_ZtoA() {
-		console.log("Sorting size in descening order...")
-		let fileN=[]
-		FileNames.forEach((e)=> fileN.push(e));
-		let folderN=[]
-		FolderNames.forEach((e)=> folderN.push(e));
-		setFileNames(fileN.reverse())
-		setFolderNames(folderN.reverse())
+		console.log('Sorting size in descening order...');
+		let fileN = [];
+		AllFileNames.forEach((e) => fileN.push(e));
+		let folderN = [];
+		AllFolderNames.forEach((e) => folderN.push(e));
+		setFileNames(fileN.reverse());
+		setFolderNames(folderN.reverse());
 	}
 	function sort_size_ascending() {
-		console.log("Sorting size in ascending order...")
-		let filedata=FileData;
+		console.log('Sorting size in ascending order...');
+		let filedata = FileData;
 		filedata.sort((a, b) => {
 			return a.Size - b.Size;
 		});
 
-		let filenames=[]
-		filedata.forEach((f)=> filenames.push(f.FileName));
-		setFileNames(filenames)
-		setFileData(filedata)
+		let filenames = [];
+		filedata.forEach((f) => filenames.push(f.FileName));
+		setFileNames(filenames);
+		setFileData(filedata);
 	}
 	function sort_size_descending() {
-		console.log("Sorting size in descening order...")
-		let filedata=FileData;
+		console.log('Sorting size in descening order...');
+		let filedata = FileData;
 		filedata.sort((a, b) => {
 			return b.Size - a.Size;
 		});
 
-		let filenames=[]
-		filedata.forEach((f)=> filenames.push(f.FileName));
-		setFileNames(filenames)
-		setFileData(filedata)
+		let filenames = [];
+		filedata.forEach((f) => filenames.push(f.FileName));
+		setFileNames(filenames);
+		setFileData(filedata);
 	}
 	function deleteFile(filename) {
 		console.log('deletingfile');
@@ -294,7 +314,17 @@ export const MedRecords = () => {
 				console.log(error);
 			});
 		setModalIsOpen(false);
-		window.location.reload();
+		let fileN = FileNames;
+		let j = -1;
+		for (let i = 0; i < fileN.length; i++) {
+			if (fileN[i] == filename) {
+				j = i;
+				break;
+			}
+		}
+		fileN.splice(j, 1);
+		setFileNames(fileN);
+		// window.location.reload();
 	}
 	function deleteFilefromFolder(filename, folderName) {
 		var deleteRef;
@@ -310,25 +340,18 @@ export const MedRecords = () => {
 			res.items.forEach((itemRef) => {
 				deleteFilefromFolder(itemRef.name, folderName);
 			});
-			count++;
-			console.log(count, FoldersSelected.length);
-			if (count == FoldersSelected.length) {
-				window.location.reload();
-			}
 		});
+		let folderN = FolderNames;
+		let j = -1;
+		for (let i = 0; i < folderN.length; i++) {
+			if (folderN[i] == folderName) {
+				j = i;
+				break;
+			}
+		}
+		folderN.splice(j, 1);
+		setFolderNames(folderN);
 		console.log(folderName + ' deleted successfully!');
-		// console.log(
-		// 	'deleteting folder ' + folderName + ' from ' + `/${id}/${folderName}`
-		// );
-		// let deleteRef = firebase.storage().ref().child(`${id}/${folderName}`);
-		// deleteRef
-		// 	.delete()
-		// 	.then(() => {
-		// 		console.log(`deleted ${folderName} successfully`);
-		// 	})
-		// .catch((error) => {
-		// 	console.log(error);
-		// });
 	}
 	function ConfirmAddFolder() {
 		setPurpose('AddFolder');
@@ -338,7 +361,7 @@ export const MedRecords = () => {
 		setPurpose('UploadFiles');
 		setModalIsOpen(true);
 	}
-	function ConfirmDelete(object, name) {
+	function ConfirmDelete(object) {
 		if (object == 'Folder') {
 			setPurpose('DeleteFolder');
 		} else {
@@ -354,8 +377,11 @@ export const MedRecords = () => {
 			console.log(folderName);
 			console.log('Folder Added with name-' + folderName);
 			setModalIsOpen(false);
-			navigate(0);
+			// navigate(0);
 		});
+		let folderN = FolderNames;
+		folderN.push(folderName);
+		setFolderNames(folderN);
 	}
 	function UploadFile(file) {
 		// console.log('uploading: '+ file);
@@ -371,15 +397,17 @@ export const MedRecords = () => {
 			// console.log(id);
 			console.log('File successfully uploded to ' + id);
 			// window.location.reload();
-			navigate(0);
+			// navigate(0);
 		});
+		let fileN = FileNames;
+		fileN.push(file.name);
+		setFileNames(fileN);
 		setModalIsOpen(false);
 	}
 	function closeModalHandler() {
 		setModalIsOpen(false);
 	}
 
-	
 	return (
 		<>
 			<div className='container mt-3 w-75'>
@@ -408,7 +436,12 @@ export const MedRecords = () => {
 							className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
 							onClick={() => {
 								setFolderSelected(selectedFolders);
-								ConfirmDelete('Folder');
+								console.log();
+								if (selectedFolders.length == 0) {
+									alert('Please select some folders to delete');
+								} else {
+									ConfirmDelete('Folder');
+								}
 							}}>
 							<span className='material-icons align-middle'>delete</span>
 						</button>
@@ -421,18 +454,76 @@ export const MedRecords = () => {
 						</button>
 					</>
 				) : null}
-				<button className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
-					onClick={()=>{ 
-						search("w1")
-					}}
-				>
+				{/* <button
+					className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
+					onClick={() => {
+						search('w1');
+					}}>
+					SORT
+					<span className='material-icons ms-2 align-middle'>sort</span>
+				</button> */}
+				{/* 
+				<button className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
 					SORT
 					<span className='material-icons ms-2 align-middle'>sort</span>
 				</button>
-				<input type='text' required onChange={(e)=>{searchString=e.target.value}} placeholder='Enter file/folder to search'/>
-				<button className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold ' onClick={()=>search("w1")}>
-				Search
+				 */}
+				<div class='btn-group dropright'>
+					<button
+						type='button'
+						class='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold dropdown-toggle'
+						data-toggle='dropdown'
+						aria-haspopup='true'
+						aria-expanded='false'>
+						SORT
+						<span className='material-icons ms-2 align-middle'>sort</span>
+					</button>
+					<div class='dropdown-menu'>
+						<button
+							className='dropdown-item fw-bold'
+							onClick={sort_AtoZ}>
+							Lexiographically(A to Z)
+						</button>
+						<button
+							className='dropdown-item fw-bold'
+							onClick={sort_ZtoA}>
+							Lexiographically(Z to A)
+						</button>
+						<button
+							className='dropdown-item fw-bold'
+							onClick={sort_size_ascending}>
+							Increasing Size
+						</button>
+						<button
+							className='dropdown-item fw-bold'
+							onClick={sort_size_descending}>
+							Decreasing Size
+						</button>
+
+						{/* <a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
+						<a class="dropdown-item" href="#">Something else here</a> */}
+					</div>
+				</div>
+
+				<input
+					type='text'
+					required
+					onChange={(e) => {
+						setFolderNames(AllFolderNames);
+						setFileNames(AllFileNames);
+						searchString = e.target.value;
+					}}
+					placeholder='Enter file/folder to search'
+				/>
+				<button
+					className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold '
+					onClick={() => {
+						search(searchString.toLowerCase());
+					}}>
+					Search
 				</button>
+
 				{!currFolder ? null : (
 					<div className='container mt-3 w-100'>
 						<h2 className='fw-bold'>{currFolder}</h2>
@@ -462,6 +553,7 @@ export const MedRecords = () => {
 						task={purpose}
 					/>
 				)}
+
 				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
 				{!currFolder ? (
 					<div

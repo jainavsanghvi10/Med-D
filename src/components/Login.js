@@ -108,7 +108,7 @@ export default function Signup() {
 			style={{ maxWidth: "500px", position: "relative", marginTop: "100px" }}
 		>
 			<h1 className="mt-100 text-center" style={{ marginBottom: "50px" }}>
-				Sign Up
+				Login
 			</h1>
 			{error && (
 				<div className="console.log console.log-danger" role="console.log">
