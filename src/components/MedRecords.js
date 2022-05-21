@@ -25,13 +25,19 @@ export const MedRecords = () => {
 
 	// Extracting variables from query string
 	const params = new URLSearchParams(window.location.search);
-	const id = params.get('id');
+	var id = params.get('id');
 	const currFolder = params.get('fn');
 	// let deleteFileName='';
 
 	useEffect(() => {
 		if (!currentUser) {
 			navigate('/signup');
+		}
+		if(currentUser && id == null){
+			navigate({
+				pathname: '/medicalRecords',
+				search: `?id=${currentUser.uid}`})
+			id = currentUser.uid;
 		}
 
 		//eslint-disable-next-line
@@ -105,7 +111,8 @@ export const MedRecords = () => {
 					width: '100px',
 					display: 'inline-block',
 					float: 'none',
-				}}>
+				}}
+			>
 				<span
 					className='material-icons align-bottom'
 					style={{
@@ -131,9 +138,7 @@ export const MedRecords = () => {
 						console.log('Folder Clicked');
 					}}
 					onDoubleClick={() => {
-						navigate(`/medicalRecords?id=${id}&fn=${FolderNames[index]}`);
-						window.location.reload();
-						document.getElementById('folderScroll').classList.add('invisible')
+						window.location.href = `/medicalRecords?id=${id}&fn=${FolderNames[index]}`
 					}}>
 					folder
 				</span>
@@ -482,6 +487,7 @@ export const MedRecords = () => {
 						task={purpose}
 					/>
 				)}
+				
 				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
 				{!currFolder ? (
 					<div

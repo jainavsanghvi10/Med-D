@@ -6,43 +6,57 @@ import firebase from 'firebase';
 import { storage } from '../firebase';
 
 export const BookDoctorSide = () => {
+    const dateRef = useRef();
+    const timefromRef = useRef();
+    const timetoRef = useRef();
+    const peopleperslotRef = useRef();
+    const slotdurationRef = useRef();
+
+    function createSlots(e){
+        e.preventDefault();
+        console.log("creating slots");
+
+        const form = document.getElementById("create-slot-form");
+        console.log(dateRef.current.value, timefromRef.current.value, timetoRef.current.value, peopleperslotRef.current.value, slotdurationRef.current.value);
+    }
+    
     return (
         <div className='bg-white mt-auto'>
             <h2 className='ms-5 ps-3 pt-3'>Doctors' ID</h2>
-            <div className='container border border-5 mt-4 mb-4 rounded'>
+            <form onSubmit={createSlots} id="create-slot-form" className='container border border-5 mt-4 mb-4 rounded'>
                 <div className="form-group col-2 mt-3">
-                    <label for="SlotFrom" className="form-label">Choose Date</label>
-                    <input type="date" className="form-control" id="SlotFrom" aria-describedby="emailHelp" placeholder="Enter email"></input>
+                    <label htmlFor="SlotFrom" className="form-label">Choose Date</label>
+                    <input ref={dateRef} type="date" className="form-control" id="SlotFrom" aria-describedby="emailHelp" placeholder="Enter email"/>
                     {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                 </div>
                 <div className='container border border-5 mt-4 mb-4 rounded'>
                     <div className='row mt-3 mb-4'>
                         <div className="form-group col-2">
-                            <label for="SlotFrom" className="form-label">From</label>
-                            <input type="time" className="form-control" id="SlotFrom" aria-describedby="emailHelp" placeholder="Enter email"></input>
+                            <label htmlFor="SlotFrom" className="form-label">From</label>
+                            <input ref={timefromRef} type="time" className="form-control" id="SlotFrom" aria-describedby="emailHelp" placeholder="Enter email"/>
                             {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                         </div>
                         <div className="form-group col-2">
-                            <label for="SlotTo" className="form-label">To</label>
-                            <input type="time" className="form-control" id="SlotTo" aria-describedby="emailHelp" placeholder="Enter email"></input>
+                            <label htmlFor="SlotTo" className="form-label">To</label>
+                            <input ref={timetoRef} type="time" className="form-control" id="SlotTo" aria-describedby="emailHelp" placeholder="Enter email"/>
                             {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                         </div>
                         <div className="form-group col-3">
-                            <label for="PeoplePerSlot" className="form-label">People per Slot</label>
+                            <label htmlFor="PeoplePerSlot" className="form-label">People per Slot</label>
                             <div className="col-sm-10">
-                                <input type="number" className="form-control" id="PeoplePerSlot" placeholder="Enter Number"></input>
+                                <input ref={peopleperslotRef} type="number" className="form-control" id="PeoplePerSlot" placeholder="Enter Number"/>
                             </div>
                         </div>
                         <div className="form-group col-3">
-                            <label for="SlotDuration" className="form-label">Slot Duration</label>
+                            <label htmlFor="SlotDuration" className="form-label">Slot Duration {"( in minutes )"}</label>
                             <div className="col-sm-10">
-                                <input type="email" className="form-control" id="SlotDuration" placeholder="Enter 1 Slot Time"></input>
+                                <input ref={slotdurationRef} type="number" className="form-control" id="SlotDuration" placeholder="Enter 1 Slot Time"/>
                             </div>
                         </div>
                     </div>
-                    <div className='btn btn-dark mb-3'>Create Slot</div>
+                    <button type="submit" className='btn btn-dark mb-3'>Create Slot</button>
                 </div>
-            </div>
+            </form>
 
             <div className='container border border-5 mt-4 mb-4 rounded'>
                 <h2>Today's Slots</h2>
