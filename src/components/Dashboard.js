@@ -70,7 +70,7 @@ export default function Dashboard() {
 							<button className="btn btn-light btn-outline-info ms-5 mb-5 rounded-pill fw-bold">Learn More</button>
 						</div>
 					</div>
-					<img src={dashboardDoctor} className="img-fluid align-self-center p-0 ml-auto border-left" style={{ height: '90vh', width: 'auto', marginLeft: 'auto' }} alt="Responsive image" />
+					<img src={dashboardDoctor} className="img-fluid align-self-center p-0 ml-auto border-left" style={{ height: '90vh', width: 'auto', marginLeft: 'auto', position:'absolute', right:'0' }} alt="Responsive image" />
 
 				</div>
 			</div>

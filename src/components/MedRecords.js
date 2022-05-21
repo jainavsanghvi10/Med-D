@@ -33,10 +33,11 @@ export const MedRecords = () => {
 		if (!currentUser) {
 			navigate('/signup');
 		}
-		if(currentUser && id == null){
+		if (currentUser && id == null) {
 			navigate({
 				pathname: '/medicalRecords',
-				search: `?id=${currentUser.uid}`})
+				search: `?id=${currentUser.uid}`
+			})
 			id = currentUser.uid;
 		}
 
@@ -101,7 +102,7 @@ export const MedRecords = () => {
 	const FolderList = [],
 		FileList = [];
 	const selectedFolders = [];
-	for (let index = 0; index < FolderNames.length; index++){
+	for (let index = 0; index < FolderNames.length; index++) {
 		const ele = FolderNames[index];
 		FolderList.push(
 			<div
@@ -410,7 +411,7 @@ export const MedRecords = () => {
 		setModalIsOpen(false);
 	}
 
-	
+
 	return (
 		<>
 			<div className='container mt-3 w-75'>
@@ -453,10 +454,22 @@ export const MedRecords = () => {
 						</button>
 					</>
 				) : null}
-				<button className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
+				{/* <button className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
 					SORT
 					<span className='material-icons ms-2 align-middle'>sort</span>
-				</button>
+				</button> */}
+
+				<div class="btn-group dropright">
+					<button type="button" class="btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						SORT
+						<span className='material-icons ms-2 align-middle'>sort</span>
+					</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div>
+				</div>
 
 				{!currFolder ? null : (
 					<div className='container mt-3 w-100'>
@@ -471,23 +484,23 @@ export const MedRecords = () => {
 							purpose == 'AddFolder'
 								? AddFolder
 								: purpose == 'DeleteFile'
-								? () => {
+									? () => {
 										console.log(deleteFileName);
 										deleteFile(deleteFileName);
-								  }
-								: purpose == 'DeleteFolder'
-								? () => {
-										console.log('Folders Selected: ', FoldersSelected);
-										FoldersSelected.forEach((fo) => deleteFolder(fo));
-										setModalIsOpen(false);
-										// window.location.reload();
-								  }
-								: UploadFile
+									}
+									: purpose == 'DeleteFolder'
+										? () => {
+											console.log('Folders Selected: ', FoldersSelected);
+											FoldersSelected.forEach((fo) => deleteFolder(fo));
+											setModalIsOpen(false);
+											// window.location.reload();
+										}
+										: UploadFile
 						}
 						task={purpose}
 					/>
 				)}
-				
+
 				{modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
 				{!currFolder ? (
 					<div

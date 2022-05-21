@@ -19,22 +19,22 @@ export default function Signup() {
 	const [final, setfinal] = useState("");
 	const [show, setShow] = useState(true);
 	const [userValidate, setUserValidate] = useState(false);
-	
-// 	getAuth()
-//   	.getUsers([
-//     { phoneNumber: '+919413352325' }
-//   ])
-//   .then((getUsersResult) => {
-//     console.log('Successfully fetched user data:');
-//     getUsersResult.users.forEach((userRecord) => {
-//       console.log(userRecord);
-//     });
 
-//     console.log('Unable to find users corresponding to these identifiers:');
-//     getUsersResult.notFound.forEach((userIdentifier) => {
-//       console.log(userIdentifier);
-//     });
-//   })
+	// 	getAuth()
+	//   	.getUsers([
+	//     { phoneNumber: '+919413352325' }
+	//   ])
+	//   .then((getUsersResult) => {
+	//     console.log('Successfully fetched user data:');
+	//     getUsersResult.users.forEach((userRecord) => {
+	//       console.log(userRecord);
+	//     });
+
+	//     console.log('Unable to find users corresponding to these identifiers:');
+	//     getUsersResult.notFound.forEach((userIdentifier) => {
+	//       console.log(userIdentifier);
+	//     });
+	//   })
 
 	useEffect(() => {
 		if (userValidate) {
