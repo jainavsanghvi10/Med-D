@@ -20,7 +20,6 @@ export const MedRecords = () => {
 	const [AllFileNames, setAllFileNames] = useState([]);
 	const [AllFolderNames, setAllFolderNames] = useState([]);
 	const [FileData, setFileData] = useState([]);
-	// const [FolderSize, setFolderSize] = useState([]);
 	const [FileLinks, setFileLinks] = useState([]);
 	const [deleteFileName, setDeleteFileName] = useState('');
 	const [FoldersSelected, setFolderSelected] = useState([]);
@@ -45,8 +44,6 @@ export const MedRecords = () => {
 			id = currentUser.uid;
 		}
 
-		//eslint-disable-next-line
-
 		// get data from storage
 		if (currFolder != null) {
 			listRef = firebase.storage().ref().child(`${id}/${currFolder}`);
@@ -60,24 +57,8 @@ export const MedRecords = () => {
 				const foNames = [];
 				const filelinks = [];
 				const filedata = [];
-				// const foldersize=[];
 				snap.prefixes.forEach((folderRef) => {
-					// console.log('folderRef: ' + folderRef.name);
 					foNames.push(folderRef.name);
-					// console.log(folderRef)
-					// folderRef.listAll().then((snap)=>{
-					// 	snap.items.forEach((itemRef)=>{
-					// 		let size=[];
-					// 		itemRef.getMetadata().then((metadata) => {
-					// 			// size+=metadata.size
-					// 			size.push(metadata.size);
-					// 		});
-					// 		console.log(size);
-					// 		let fsize=0;
-					// 		size.forEach((item)=>fsize+=item)
-					// 		console.log(fsize);
-					// 	})
-					// })
 				});
 
 				snap.items.forEach((itemRef) => {
@@ -97,22 +78,19 @@ export const MedRecords = () => {
 						});
 					}
 				});
-				// console.log(filelinks)
-				// console.log(filesize)
+
 				setFileData(filedata);
 				setFileLinks(filelinks);
-				console.log('fofi', foNames, fiNames);
 				setFolderNames(foNames);
 				setAllFolderNames(foNames);
 				setFileNames(fiNames);
 				setAllFileNames(fiNames);
-				// console.log(filesize, filesize.length);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 	}, []);
-	// console.log(currFolder);
+// *******************************************************************************************************************************************************************
 	console.log('Getting all folder and file details from ' + id);
 	console.log('folders: ' + FolderNames + ' files: ' + FileNames);
 
@@ -151,8 +129,8 @@ export const MedRecords = () => {
 							}
 							selectedFolders.splice(j, 1);
 						}
-						console.log('Folder Clicked');
-						console.log(selectedFolders);
+						// console.log('Folder Clicked');
+						// console.log(selectedFolders);
 					}}
 					onDoubleClick={() => {
 						window.location.href = `/medicalRecords?id=${id}&fn=${FolderNames[index]}`;
@@ -173,8 +151,6 @@ export const MedRecords = () => {
 	}
 
 	for (let index = 0; index < FileNames.length; index++) {
-		// const fileData=FileData[index];
-		// console.log(fileData)
 		const ele = FileNames[index];
 		FileList.push(
 			<div className='row mb-2'>
@@ -209,7 +185,7 @@ export const MedRecords = () => {
 			</div>
 		);
 	}
-	//****************************************************************************************************************
+// *******************************************************************************************************************************************************************
 
 	function search(word) {
 		if (word == '' || word == null) {
@@ -248,12 +224,10 @@ export const MedRecords = () => {
 
 		listRef.getDownloadURL().then((url) => {
 			window.open(url);
-			// console.log(url);
-			// <Viewer fileUrl={url} defaultScale={SpecialZoomLevel.PageFit} />;
 		});
 	}
 	function sort_AtoZ() {
-		console.log('Sorting size in ascending order...');
+		console.log('Sorting file alphebetically in ascending order...');
 		let fileN = [];
 		AllFileNames.forEach((e) => fileN.push(e));
 		let folderN = [];
@@ -262,7 +236,7 @@ export const MedRecords = () => {
 		setFolderNames(folderN);
 	}
 	function sort_ZtoA() {
-		console.log('Sorting size in descening order...');
+		console.log('Sorting file alphebetically in descening order...');
 		let fileN = [];
 		AllFileNames.forEach((e) => fileN.push(e));
 		let folderN = [];
@@ -271,7 +245,7 @@ export const MedRecords = () => {
 		setFolderNames(folderN.reverse());
 	}
 	function sort_size_ascending() {
-		console.log('Sorting size in ascending order...');
+		console.log('Sorting file in ascending order of size...');
 		let filedata = FileData;
 		filedata.sort((a, b) => {
 			return a.Size - b.Size;
@@ -283,7 +257,7 @@ export const MedRecords = () => {
 		setFileData(filedata);
 	}
 	function sort_size_descending() {
-		console.log('Sorting size in descening order...');
+		console.log('Sorting file in descening order of size...');
 		let filedata = FileData;
 		filedata.sort((a, b) => {
 			return b.Size - a.Size;
@@ -324,6 +298,17 @@ export const MedRecords = () => {
 		}
 		fileN.splice(j, 1);
 		setFileNames(fileN);
+
+		let AfileN =AllFileNames;
+		let r = -1;
+		for (let i = 0; i < AfileN.length; i++) {
+			if (AfileN[i] == filename) {
+				j = i;
+				break;
+			}
+		}
+		AfileN.splice(r, 1);
+		setAllFileNames(AfileN);
 		// window.location.reload();
 	}
 	function deleteFilefromFolder(filename, folderName) {
@@ -351,6 +336,16 @@ export const MedRecords = () => {
 		}
 		folderN.splice(j, 1);
 		setFolderNames(folderN);
+		let AfolderN = AllFolderNames;
+		let r = -1;
+		for (let i = 0; i < AfolderN.length; i++) {
+			if (AfolderN[i] == folderName) {
+				r = i;
+				break;
+			}
+		}
+		AfolderN.splice(r, 1);
+		setAllFolderNames(folderN);
 		console.log(folderName + ' deleted successfully!');
 	}
 	function ConfirmAddFolder() {
@@ -370,11 +365,11 @@ export const MedRecords = () => {
 		setModalIsOpen(true);
 	}
 	function AddFolder(folderName) {
+		console.log('adding: '+ folderName);
 		let file = '';
 		const storageRef = firebase.storage().ref();
 		var uploadRef = storageRef.child(`${id}/${folderName}/userTest`);
 		uploadRef.put(file).then((snap) => {
-			console.log(folderName);
 			console.log('Folder Added with name-' + folderName);
 			setModalIsOpen(false);
 			// navigate(0);
@@ -382,9 +377,13 @@ export const MedRecords = () => {
 		let folderN = FolderNames;
 		folderN.push(folderName);
 		setFolderNames(folderN);
+		
+		// let AfolderN = AllFolderNames;
+		// AfolderN.push(folderName);
+		// setAllFolderNames(AfolderN);
 	}
 	function UploadFile(file) {
-		// console.log('uploading: '+ file);
+		console.log('uploading: '+ file);
 		if (!file) return;
 		let storageRef;
 		if (currFolder != null) {
@@ -394,7 +393,6 @@ export const MedRecords = () => {
 		}
 		var uploadRef = storageRef.child(file.name);
 		uploadRef.put(file).then((snap) => {
-			// console.log(id);
 			console.log('File successfully uploded to ' + id);
 			// window.location.reload();
 			// navigate(0);
@@ -402,11 +400,17 @@ export const MedRecords = () => {
 		let fileN = FileNames;
 		fileN.push(file.name);
 		setFileNames(fileN);
-		setModalIsOpen(false);
+		
+		// let AfileN = AllFileNames;
+		// AfileN.push(file.name);
+		// setAllFileNames(AfileN);
+		// setModalIsOpen(false);
 	}
 	function closeModalHandler() {
 		setModalIsOpen(false);
 	}
+
+// *******************************************************************************************************************************************************************
 
 	return (
 		<>
@@ -436,7 +440,6 @@ export const MedRecords = () => {
 							className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
 							onClick={() => {
 								setFolderSelected(selectedFolders);
-								console.log();
 								if (selectedFolders.length == 0) {
 									alert('Please select some folders to delete');
 								} else {
@@ -454,20 +457,6 @@ export const MedRecords = () => {
 						</button>
 					</>
 				) : null}
-				{/* <button
-					className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
-					onClick={() => {
-						search('w1');
-					}}>
-					SORT
-					<span className='material-icons ms-2 align-middle'>sort</span>
-				</button> */}
-				{/* 
-				<button className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
-					SORT
-					<span className='material-icons ms-2 align-middle'>sort</span>
-				</button>
-				 */}
 				<div class='btn-group dropright'>
 					<button
 						type='button'
@@ -499,10 +488,6 @@ export const MedRecords = () => {
 							onClick={sort_size_descending}>
 							Decreasing Size
 						</button>
-
-						{/* <a class="dropdown-item" href="#">Action</a>
-						<a class="dropdown-item" href="#">Another action</a>
-						<a class="dropdown-item" href="#">Something else here</a> */}
 					</div>
 				</div>
 
