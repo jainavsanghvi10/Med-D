@@ -5,6 +5,7 @@ import firebase from 'firebase';
 const app = firebase.initializeApp({
     apiKey: "AIzaSyBJLCbpYs70sWzqWtknqKM38OBat7KRqMM",
     authDomain: "auth-production-561fe.firebaseapp.com",
+    databaseURL: "https://auth-production-561fe-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "auth-production-561fe",
     storageBucket: "auth-production-561fe.appspot.com",
     messagingSenderId: "992104554241",
