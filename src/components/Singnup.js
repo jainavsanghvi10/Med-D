@@ -142,149 +142,151 @@ export default function Signup() {
 
 		setLoading(false);
 	}
+	document.body.style.background = 'white';
 
 	return (
-		<div
-			className="container-md"
-			style={{ maxWidth: "500px", position: "relative", marginTop: "100px" }}
-		>
-			<h1 className="mt-100 text-center" style={{ marginBottom: "50px" }}>
-				Sign Up
-			</h1>
-			{error && (
-				<div className="console.log console.log-danger" role="console.log">
-					{error}
-				</div>
-			)}
-			<form
-				className="row g-3 needs-validation"
-				id="signup-form"
-				onSubmit={handleSubmit}
-				noValidate
-			>
-				<div className="col-md-6">
-					<label htmlFor="validationCustom03" className="form-label">
-						First Name
-					</label>
-					<input
-						type="text"
-						className="form-control"
-						id="fname"
-						ref={firstNameRef}
-						required
-					/>
-					<div className="valid-feedback">Looks Good!</div>
-				</div>
-				<div className="col-md-6">
-					<label htmlFor="validationCustom03" className="form-label">
-						Last Name
-					</label>
-					<input
-						type="text"
-						className="form-control"
-						id="lname"
-						ref={lastNameRef}
-						required
-					/>
-					<div className="valid-feedback">Looks Good!</div>
-				</div>
-
-				<div className="form-outline mb-4">
-					<label htmlFor="validationCustomUsername" className="form-label">
-						Email
-					</label>
-					<div className="input-group has-validation">
-						<input
-							type="email"
-							className="form-control"
-							id="email"
-							ref={emailRef}
-							placeholder="abc@gmail.com (optional)"
-							aria-describedby="inputGroupPrepend"
-						/>
-						<div className="invalid-feedback">Please choose a username.</div>
-					</div>
-				</div>
-				<div className="form-outline mb-4">
-					<label htmlFor="validationCustom03" className="form-label">
-						Phone Number
-					</label>
-					<input
-						type="text"
-						className="form-control"
-						id="phonenumber"
-						ref={phoneNumberRef}
-						required
-					/>
-					<div className="invalid-feedback">
-						Please provide a valid phone number.
-					</div>
-				</div>
-				<div className="form-outline mb-4">
-					<label htmlFor="validationCustom03" className="form-label">
-						OTP
-					</label>
-					<input
-						type="text"
-						className="form-control"
-						id="otp"
-						ref={UserOtpRef}
-						// pattern="[0-9]{6}"
-						required
-					/>
-					<div className="invalid-feedback">Please enter OTP.</div>
-				</div>
-				<div className="col-12">
-					<div className="form-check">
-						<input
-							className="form-check-input"
-							type="checkbox"
-							value=""
-							id="invalidCheck"
-							required
-						/>
-						<label className="form-check-label" htmlFor="invalidCheck">
-							Agree to terms and conditions
-						</label>
-						<div className="invalid-feedback">
-							You must agree before submitting.
+		<div className="container-md my-5 pt-3 darkerWebsiteColor styleCarousel" style={{ height: '80vh' }}>
+			<div className="row">
+				<div className="col-6">
+					<h1 className="text-center fw-bold text-white">
+						Sign Up
+					</h1>
+					{error && (
+						<div className="console.log console.log-danger" role="console.log">
+							{error}
 						</div>
+					)}
+					<form
+						className="row g-3 needs-validation"
+						id="signup-form"
+						onSubmit={handleSubmit}
+						noValidate
+					>
+						<div className="col-md-6">
+							<label htmlFor="validationCustom03 shadow-lg" className="form-label">
+								First Name
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="fname"
+								ref={firstNameRef}
+								required
+							/>
+							<div className="valid-feedback">Looks Good!</div>
+						</div>
+						<div className="col-md-6">
+							<label htmlFor="validationCustom03" className="form-label">
+								Last Name
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="lname"
+								ref={lastNameRef}
+								required
+							/>
+							<div className="valid-feedback">Looks Good!</div>
+						</div>
+
+						<div className="form-outline mb-4">
+							<label htmlFor="validationCustomUsername" className="form-label">
+								Email
+							</label>
+							<div className="input-group has-validation">
+								<input
+									type="email"
+									className="form-control"
+									id="email"
+									ref={emailRef}
+									placeholder="abc@gmail.com (optional)"
+									aria-describedby="inputGroupPrepend"
+								/>
+								<div className="invalid-feedback">Please choose a username.</div>
+							</div>
+						</div>
+						<div className="form-outline mb-4">
+							<label htmlFor="validationCustom03" className="form-label">
+								Phone Number
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="phonenumber"
+								ref={phoneNumberRef}
+								required
+							/>
+							<div className="invalid-feedback">
+								Please provide a valid phone number.
+							</div>
+						</div>
+						<div className="form-outline mb-4">
+							<label htmlFor="validationCustom03" className="form-label">
+								OTP
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="otp"
+								ref={UserOtpRef}
+								// pattern="[0-9]{6}"
+								required
+							/>
+							<div className="invalid-feedback">Please enter OTP.</div>
+						</div>
+						<div className="col-12">
+							<div className="form-check">
+								<input
+									className="form-check-input"
+									type="checkbox"
+									value=""
+									id="invalidCheck"
+									required
+								/>
+								<label className="form-check-label" htmlFor="invalidCheck">
+									Agree to terms and conditions
+								</label>
+								<div className="invalid-feedback">
+									You must agree before submitting.
+								</div>
+							</div>
+						</div>
+						<div className="col-12">
+							<>
+								<div
+									style={{ display: show ? "block" : "none" }}
+									id="recaptcha-container"
+								></div>
+								<button
+									className="btn btn-primary"
+									id="send-otp-btn"
+									onClick={signin}
+									style={{ marginBottom: "30px", marginRight: "20px" }}
+								>
+									Send OTP
+								</button>
+							</>
+							<button
+								className="btn btn-primary"
+								type="submit"
+								id="signup-btn"
+								style={{ marginBottom: "30px" }}
+							>
+								Signup
+							</button>
+						</div>
+					</form>
+					<div className="d-flex justify-content-around align-items-center mb-4">
+						<p>
+							Already a User ? <Link to="/login"> Login </Link>
+						</p>
+					</div>
+					<div className="d-flex justify-content-around align-items-center mb-4">
+						<p>
+							<Link to="/signup-doctor"> Signup as Doctor </Link>
+						</p>
 					</div>
 				</div>
-				<div className="col-12">
-					<>
-						<div
-							style={{ display: show ? "block" : "none" }}
-							id="recaptcha-container"
-						></div>
-						<button
-							className="btn btn-primary"
-							id="send-otp-btn"
-							onClick={signin}
-							style={{ marginBottom: "30px", marginRight: "20px" }}
-						>
-							Send OTP
-						</button>
-					</>
-					<button
-						className="btn btn-primary"
-						type="submit"
-						id="signup-btn"
-						style={{ marginBottom: "30px" }}
-					>
-						Signup
-					</button>
-				</div>
-			</form>
-			<div className="d-flex justify-content-around align-items-center mb-4">
-				<p>
-					Already a User ? <Link to="/login"> Login </Link>
-				</p>
-			</div>
-			<div className="d-flex justify-content-around align-items-center mb-4">
-				<p>
-					<Link to="/signup-doctor"> Signup as Doctor </Link>
-				</p>
 			</div>
 		</div>
 	);
