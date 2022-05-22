@@ -17,18 +17,21 @@ export const MedRecords = () => {
 	const [purpose, setPurpose] = useState('test');
 	const [FileNames, setFileNames] = useState([]);
 	const [FolderNames, setFolderNames] = useState([]);
+	const [AllFileNames, setAllFileNames] = useState([]);
+	const [AllFolderNames, setAllFolderNames] = useState([]);
+	const [FileData, setFileData] = useState([]);
+	const [FileLinks, setFileLinks] = useState([]);
 	const [deleteFileName, setDeleteFileName] = useState('');
 	const [FoldersSelected, setFolderSelected] = useState([]);
-	// var FileLinks = [];
-	let count = 0;
-	var FileSize = [];
 
 	// Extracting variables from query string
 	const params = new URLSearchParams(window.location.search);
 	var id = params.get('id');
 	const currFolder = params.get('fn');
-	// let deleteFileName='';
 
+	let count = 0;
+	let listRef,
+		searchString = '';
 	useEffect(() => {
 		if (!currentUser) {
 			navigate('/signup');
@@ -36,12 +39,10 @@ export const MedRecords = () => {
 		if (currentUser && id == null) {
 			navigate({
 				pathname: '/medicalRecords',
-				search: `?id=${currentUser.uid}`
-			})
+				search: `?id=${currentUser.uid}`,
+			});
 			id = currentUser.uid;
 		}
-
-		//eslint-disable-next-line
 
 		// get data from storage
 		if (currFolder != null) {
@@ -54,54 +55,48 @@ export const MedRecords = () => {
 			.then((snap) => {
 				const fiNames = [];
 				const foNames = [];
-				const FileL = [];
-				// const FileL = new Map();
-				// console.log(snap);
+				const filelinks = [];
+				const filedata = [];
 				snap.prefixes.forEach((folderRef) => {
-					// console.log('folderRef: ' + folderRef.name);
 					foNames.push(folderRef.name);
 				});
 
 				snap.items.forEach((itemRef) => {
-					// console.log(itemRef.getDownloadURL.then((url)=> {return url}))
 					if (itemRef.name != 'userTest') {
 						fiNames.push(itemRef.name);
 						itemRef.getMetadata().then((metadata) => {
-							// console.log(FileSize.length);
-							// console.log(FileSize);
-
-							FileSize.push(metadata.size);
-							// console.log(itemRef.name + ': ' + metadata.size);
+							let obj = {
+								FileName: itemRef.name,
+								Size: metadata.size,
+								DateAdded: metadata.updated,
+							};
+							filedata.push(obj);
 						});
 						itemRef.getDownloadURL().then((fileURL) => {
-							// FileL.set(itemRef.name,fileURL);
-							let obj = { filename: fileURL };
-							FileL.push(obj);
-							// FileLinks.push(fileURL);
+							let obj = { FileName: itemRef.name, Link: fileURL };
+							filelinks.push(obj);
 						});
-						// console.log(FileL)
-						// console.log(FileL.size);
-						// console.log(FileSize.length, FileLinks.size, FileNames.length);
 					}
 				});
 
-				console.log('fofi', foNames, fiNames);
+				setFileData(filedata);
+				setFileLinks(filelinks);
 				setFolderNames(foNames);
+				setAllFolderNames(foNames);
 				setFileNames(fiNames);
-				// console.log(FileSize, FileSize.length);
+				setAllFileNames(fiNames);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 	}, []);
-
-	// console.log(currFolder);
+// *******************************************************************************************************************************************************************
 	console.log('Getting all folder and file details from ' + id);
 	console.log('folders: ' + FolderNames + ' files: ' + FileNames);
-	var listRef;
+
 	const FolderList = [],
-		FileList = [];
-	const selectedFolders = [];
+		FileList = [],
+		selectedFolders = [];
 	for (let index = 0; index < FolderNames.length; index++) {
 		const ele = FolderNames[index];
 		FolderList.push(
@@ -112,8 +107,7 @@ export const MedRecords = () => {
 					width: '100px',
 					display: 'inline-block',
 					float: 'none',
-				}}
-			>
+				}}>
 				<span
 					className='material-icons align-bottom'
 					style={{
@@ -134,12 +128,12 @@ export const MedRecords = () => {
 								}
 							}
 							selectedFolders.splice(j, 1);
-							console.log(selectedFolders);
 						}
-						console.log('Folder Clicked');
+						// console.log('Folder Clicked');
+						// console.log(selectedFolders);
 					}}
 					onDoubleClick={() => {
-						window.location.href = `/medicalRecords?id=${id}&fn=${FolderNames[index]}`
+						window.location.href = `/medicalRecords?id=${id}&fn=${FolderNames[index]}`;
 					}}>
 					folder
 				</span>
@@ -191,6 +185,29 @@ export const MedRecords = () => {
 			</div>
 		);
 	}
+// *******************************************************************************************************************************************************************
+
+	function search(word) {
+		if (word == '' || word == null) {
+			setFileNames(AllFileNames);
+			setFolderNames(AllFolderNames);
+			return;
+		}
+		let matchfiles = [];
+		FileNames.forEach((e) => {
+			if (e.toLowerCase().includes(word)) {
+				matchfiles.push(e);
+			}
+		});
+		let matchfolders = [];
+		FolderNames.forEach((f) => {
+			if (f.toLowerCase().includes(word)) {
+				matchfolders.push(f);
+			}
+		});
+		setFolderNames(matchfolders);
+		setFileNames(matchfiles);
+	}
 	function goBack() {
 		navigate(`/medicalRecords?id=${id}`);
 		window.location.reload();
@@ -207,104 +224,49 @@ export const MedRecords = () => {
 
 		listRef.getDownloadURL().then((url) => {
 			window.open(url);
-			// console.log(url);
-			// <Viewer fileUrl={url} defaultScale={SpecialZoomLevel.PageFit} />;
 		});
 	}
-	function compareStrings(s1, s2) {
-		let min = Math.min(s1.length, s2.length);
-		for (let i = 0; i < min; i++) {
-			if (s1[i] > s2[i]) {
-				console.log(s1 + ' ' + s2 + ' ' + 1);
-				return 1;
-			} else if (s1[i] < s2[i]) {
-				console.log(s1 + ' ' + s2 + ' ' + 2);
-				return 2;
-			} else {
-				console.log('same');
-				continue;
-			}
-		}
-		return 0;
-	}
 	function sort_AtoZ() {
-		for (let i = 0; i < FileNames.length - 1; i++) {
-			for (let j = i + 1; j < FileNames.length; j++) {
-				let result = compareStrings(FileNames[i], FileNames[j]);
-				if (result == 1) {
-					let tmp = FileNames[j];
-					FileNames[j] = FileNames[i];
-					FileNames[i] = tmp;
-
-					// let tmp2 = FileLinks[j];
-					// FileLinks[j] = FileLinks[i];
-					// FileLinks[i] = tmp2;
-				} else if (result == 2) {
-					continue;
-				} else {
-					if (FileNames[i].length > FileNames[j].length) {
-						let tmp = FileNames[j];
-						FileNames[j] = FileNames[i];
-						FileNames[i] = tmp;
-
-						// let tmp2 = FileLinks[j];
-						// FileLinks[j] = FileLinks[i];
-						// FileLinks[i] = tmp2;
-					}
-				}
-			}
-		}
-		for (let i = 0; i < FolderNames.length - 1; i++) {
-			for (let j = i + 1; j < FolderNames.length; j++) {
-				let result = compareStrings(FolderNames[i], FolderNames[j]);
-				if (result == 1) {
-					let tmp = FolderNames[j];
-					FolderNames[j] = FolderNames[i];
-					FolderNames[i] = tmp;
-				} else if (result == 2) {
-					continue;
-				} else {
-					if (FolderNames[i].length > FolderNames[j].length) {
-						let tmp = FolderNames[j];
-						FolderNames[j] = FolderNames[i];
-						FolderNames[i] = tmp;
-					}
-				}
-			}
-		}
+		console.log('Sorting file alphebetically in ascending order...');
+		let fileN = [];
+		AllFileNames.forEach((e) => fileN.push(e));
+		let folderN = [];
+		AllFolderNames.forEach((e) => folderN.push(e));
+		setFileNames(fileN);
+		setFolderNames(folderN);
 	}
 	function sort_ZtoA() {
-		sort_AtoZ();
-		FileNames.reverse();
-		FolderNames.reverse();
-		// FileLinks.reverse();
+		console.log('Sorting file alphebetically in descening order...');
+		let fileN = [];
+		AllFileNames.forEach((e) => fileN.push(e));
+		let folderN = [];
+		AllFolderNames.forEach((e) => folderN.push(e));
+		setFileNames(fileN.reverse());
+		setFolderNames(folderN.reverse());
 	}
 	function sort_size_ascending() {
-		for (let i = 0; i < FileSize.length; i++) {
-			for (let j = 0; j < FileSize.length; j++) {
-				if (FileSize[i] > FileSize[j]) {
-					let tmp = FileNames[j];
-					FileNames[j] = FileNames[i];
-					FileNames[i] = tmp;
+		console.log('Sorting file in ascending order of size...');
+		let filedata = FileData;
+		filedata.sort((a, b) => {
+			return a.Size - b.Size;
+		});
 
-					// let tmp2 = FileLinks[j];
-					// FileLinks[j] = FileLinks[i];
-					// FileLinks[i] = tmp2;
-
-					let tmp3 = FileSize[j];
-					FileSize[j] = FileSize[i];
-					FileSize[i] = tmp3;
-				} else {
-					continue;
-				}
-			}
-		}
+		let filenames = [];
+		filedata.forEach((f) => filenames.push(f.FileName));
+		setFileNames(filenames);
+		setFileData(filedata);
 	}
 	function sort_size_descending() {
-		sort_size_ascending();
-		FileNames.reverse();
-		// FileLinks.reverse();
-		FileSize.reverse();
+		console.log('Sorting file in descening order of size...');
+		let filedata = FileData;
+		filedata.sort((a, b) => {
+			return b.Size - a.Size;
+		});
+
+		let filenames = [];
+		filedata.forEach((f) => filenames.push(f.FileName));
+		setFileNames(filenames);
+		setFileData(filedata);
 	}
 	function deleteFile(filename) {
 		console.log('deletingfile');
@@ -326,7 +288,28 @@ export const MedRecords = () => {
 				console.log(error);
 			});
 		setModalIsOpen(false);
-		window.location.reload();
+		let fileN = FileNames;
+		let j = -1;
+		for (let i = 0; i < fileN.length; i++) {
+			if (fileN[i] == filename) {
+				j = i;
+				break;
+			}
+		}
+		fileN.splice(j, 1);
+		setFileNames(fileN);
+
+		let AfileN =AllFileNames;
+		let r = -1;
+		for (let i = 0; i < AfileN.length; i++) {
+			if (AfileN[i] == filename) {
+				j = i;
+				break;
+			}
+		}
+		AfileN.splice(r, 1);
+		setAllFileNames(AfileN);
+		// window.location.reload();
 	}
 	function deleteFilefromFolder(filename, folderName) {
 		var deleteRef;
@@ -342,25 +325,28 @@ export const MedRecords = () => {
 			res.items.forEach((itemRef) => {
 				deleteFilefromFolder(itemRef.name, folderName);
 			});
-			count++;
-			console.log(count, FoldersSelected.length);
-			if (count == FoldersSelected.length) {
-				window.location.reload();
-			}
 		});
+		let folderN = FolderNames;
+		let j = -1;
+		for (let i = 0; i < folderN.length; i++) {
+			if (folderN[i] == folderName) {
+				j = i;
+				break;
+			}
+		}
+		folderN.splice(j, 1);
+		setFolderNames(folderN);
+		let AfolderN = AllFolderNames;
+		let r = -1;
+		for (let i = 0; i < AfolderN.length; i++) {
+			if (AfolderN[i] == folderName) {
+				r = i;
+				break;
+			}
+		}
+		AfolderN.splice(r, 1);
+		setAllFolderNames(folderN);
 		console.log(folderName + ' deleted successfully!');
-		// console.log(
-		// 	'deleteting folder ' + folderName + ' from ' + `/${id}/${folderName}`
-		// );
-		// let deleteRef = firebase.storage().ref().child(`${id}/${folderName}`);
-		// deleteRef
-		// 	.delete()
-		// 	.then(() => {
-		// 		console.log(`deleted ${folderName} successfully`);
-		// 	})
-		// .catch((error) => {
-		// 	console.log(error);
-		// });
 	}
 	function ConfirmAddFolder() {
 		setPurpose('AddFolder');
@@ -370,7 +356,7 @@ export const MedRecords = () => {
 		setPurpose('UploadFiles');
 		setModalIsOpen(true);
 	}
-	function ConfirmDelete(object, name) {
+	function ConfirmDelete(object) {
 		if (object == 'Folder') {
 			setPurpose('DeleteFolder');
 		} else {
@@ -379,18 +365,25 @@ export const MedRecords = () => {
 		setModalIsOpen(true);
 	}
 	function AddFolder(folderName) {
+		console.log('adding: '+ folderName);
 		let file = '';
 		const storageRef = firebase.storage().ref();
 		var uploadRef = storageRef.child(`${id}/${folderName}/userTest`);
 		uploadRef.put(file).then((snap) => {
-			console.log(folderName);
 			console.log('Folder Added with name-' + folderName);
 			setModalIsOpen(false);
-			navigate(0);
+			// navigate(0);
 		});
+		let folderN = FolderNames;
+		folderN.push(folderName);
+		setFolderNames(folderN);
+		
+		// let AfolderN = AllFolderNames;
+		// AfolderN.push(folderName);
+		// setAllFolderNames(AfolderN);
 	}
 	function UploadFile(file) {
-		// console.log('uploading: '+ file);
+		console.log('uploading: '+ file);
 		if (!file) return;
 		let storageRef;
 		if (currFolder != null) {
@@ -400,17 +393,24 @@ export const MedRecords = () => {
 		}
 		var uploadRef = storageRef.child(file.name);
 		uploadRef.put(file).then((snap) => {
-			// console.log(id);
 			console.log('File successfully uploded to ' + id);
 			// window.location.reload();
-			navigate(0);
+			// navigate(0);
 		});
-		setModalIsOpen(false);
+		let fileN = FileNames;
+		fileN.push(file.name);
+		setFileNames(fileN);
+		
+		// let AfileN = AllFileNames;
+		// AfileN.push(file.name);
+		// setAllFileNames(AfileN);
+		// setModalIsOpen(false);
 	}
 	function closeModalHandler() {
 		setModalIsOpen(false);
 	}
 
+// *******************************************************************************************************************************************************************
 
 	return (
 		<>
@@ -439,9 +439,12 @@ export const MedRecords = () => {
 						<button
 							className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
 							onClick={() => {
-								// console.log("hiiiiiiiiii",selectedFolders);
 								setFolderSelected(selectedFolders);
-								ConfirmDelete('Folder');
+								if (selectedFolders.length == 0) {
+									alert('Please select some folders to delete');
+								} else {
+									ConfirmDelete('Folder');
+								}
 							}}>
 							<span className='material-icons align-middle'>delete</span>
 						</button>
@@ -454,22 +457,57 @@ export const MedRecords = () => {
 						</button>
 					</>
 				) : null}
-				{/* <button className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'>
-					SORT
-					<span className='material-icons ms-2 align-middle'>sort</span>
-				</button> */}
-
-				<div class="btn-group dropright">
-					<button type="button" class="btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<div class='btn-group dropright'>
+					<button
+						type='button'
+						class='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold dropdown-toggle'
+						data-toggle='dropdown'
+						aria-haspopup='true'
+						aria-expanded='false'>
 						SORT
 						<span className='material-icons ms-2 align-middle'>sort</span>
 					</button>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">Action</a>
-						<a class="dropdown-item" href="#">Another action</a>
-						<a class="dropdown-item" href="#">Something else here</a>
+					<div class='dropdown-menu'>
+						<button
+							className='dropdown-item fw-bold'
+							onClick={sort_AtoZ}>
+							Lexiographically(A to Z)
+						</button>
+						<button
+							className='dropdown-item fw-bold'
+							onClick={sort_ZtoA}>
+							Lexiographically(Z to A)
+						</button>
+						<button
+							className='dropdown-item fw-bold'
+							onClick={sort_size_ascending}>
+							Increasing Size
+						</button>
+						<button
+							className='dropdown-item fw-bold'
+							onClick={sort_size_descending}>
+							Decreasing Size
+						</button>
 					</div>
 				</div>
+
+				<input
+					type='text'
+					required
+					onChange={(e) => {
+						setFolderNames(AllFolderNames);
+						setFileNames(AllFileNames);
+						searchString = e.target.value;
+					}}
+					placeholder='Enter file/folder to search'
+				/>
+				<button
+					className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold '
+					onClick={() => {
+						search(searchString.toLowerCase());
+					}}>
+					Search
+				</button>
 
 				{!currFolder ? null : (
 					<div className='container mt-3 w-100'>
@@ -484,18 +522,18 @@ export const MedRecords = () => {
 							purpose == 'AddFolder'
 								? AddFolder
 								: purpose == 'DeleteFile'
-									? () => {
+								? () => {
 										console.log(deleteFileName);
 										deleteFile(deleteFileName);
-									}
-									: purpose == 'DeleteFolder'
-										? () => {
-											console.log('Folders Selected: ', FoldersSelected);
-											FoldersSelected.forEach((fo) => deleteFolder(fo));
-											setModalIsOpen(false);
-											// window.location.reload();
-										}
-										: UploadFile
+								  }
+								: purpose == 'DeleteFolder'
+								? () => {
+										console.log('Folders Selected: ', FoldersSelected);
+										FoldersSelected.forEach((fo) => deleteFolder(fo));
+										setModalIsOpen(false);
+										// window.location.reload();
+								  }
+								: UploadFile
 						}
 						task={purpose}
 					/>
