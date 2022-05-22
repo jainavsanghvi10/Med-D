@@ -34,6 +34,30 @@ export const BookDoctorSide = () => {
   let maxDate = new Date(Date.now());
   maxDate.setDate(maxDate.getDate() + 7);
 
+  var slotData;
+  
+  function updateSlots(){
+    console.log(slotData);
+    //Write the code to display
+  }
+
+  function update(){
+    console.log("In updateSlots........");
+    var database = firebase.database();
+    
+    var ref = firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}`);
+    // var starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
+    ref.on('value', (snapshot) => {
+    const data = snapshot.val();
+    // console.log(data);
+    slotData = data;
+    // updateStarCount(postElement, data);
+    })
+    console.log("Slots Updated !");
+    updateSlots();
+  }
+  
+
   function createSlots(e) {
     e.preventDefault();
     console.log("creating slots");
@@ -49,14 +73,15 @@ export const BookDoctorSide = () => {
     let totalMinutes = 60*(endTime[0]-startTime[0]) + (endTime[1]-startTime[1]);
     let totalSlots = Math.floor(totalMinutes/slotDuration);
 
+    var database = firebase.database();
+    var ref = firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}`);
+
     slotTimeFrom.setHours(startTime[0]);
     slotTimeFrom.setMinutes(startTime[1]);
     slotTimeTo.setHours(startTime[0]);
     slotTimeTo.setMinutes(startTime[1]);
 
     const slotTimeArr = [];
-    var database = firebase.database();
-    var ref = firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}`);
     let start, end;
     
     for(let i=0;i<totalSlots;i++){
@@ -80,28 +105,10 @@ export const BookDoctorSide = () => {
         firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}/${key}`).update({
           AttendanceCount:0
         });
-
-        // firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}/${key}/${j}`).set({
-        //   Duration: slotTimeArr[i],
-        //   NumberOfPeople: peopleperslotRef.current.value
-        // });
-
-        
-        // var newRef = ref.push();
-        // newRef.set({
-       //  Duration: slotTimeArr[i],
-        //   NumberOfPeople: peopleperslotRef.current.value
-        // })
     }
-
-    
-    // firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}`).set({
-      
-      
-    // });
-    
     console.log(totalSlots,slotTimeArr);
     console.log("___________");
+    update();
 
   }
 
@@ -262,7 +269,23 @@ export const BookDoctorSide = () => {
 };
 
 
+  // firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}/${key}/${j}`).set({
+        //   Duration: slotTimeArr[i],
+        //   NumberOfPeople: peopleperslotRef.current.value
+        // });
 
+        
+        // var newRef = ref.push();
+        // newRef.set({
+       //  Duration: slotTimeArr[i],
+        //   NumberOfPeople: peopleperslotRef.current.value
+        // })
+
+
+        // firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}`).set({
+      
+      
+    // });
 
 
 
