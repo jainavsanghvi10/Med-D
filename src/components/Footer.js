@@ -9,7 +9,7 @@ export const Footer = () => {
 
 
 		<>
-			<div className="py-4 pb-5 mt-0 bg-white darkerTextColor">
+			<div className="py-4 pb-5 mt-0 bg-white darkerTextColor" id="footerInfo">
 				<div className="container">
 					<div className="row">
 						<div className="col-2 ps-5">

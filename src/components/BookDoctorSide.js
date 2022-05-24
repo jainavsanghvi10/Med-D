@@ -119,7 +119,7 @@ export const BookDoctorSide = () => {
   }
 
   return (
-    <div className="bg-white mt-auto">
+    <div className="bg-white mt-auto mb-2 pb-2">
       <h2 className="ms-5 ps-3 pt-3">Doctors' ID</h2>
       <form
         onSubmit={createSlots}

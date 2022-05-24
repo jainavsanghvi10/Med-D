@@ -54,57 +54,65 @@ export default function Dashboard() {
 			<link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i" rel="stylesheet" />
 			<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
 			<link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
-			<div style={{ height: '90vh' }}>
-				<div className="row h-100 dashboardSlogan">
+			
+			<div style={{ height: '90vh' }} id='dashboardSloganContainer'>
+				<div className="row h-100 dashboardSlogan align-items-center mx-auto">
 					<div className="col-6 p-0">
-						<div className="h-80 d-flex justify-content-center align-items-start flex-column pt-5 ps-5">
-							<h1 className="display-4 fw-bold bigText p-4 ps-5 text-white" style={{ fontSize: '8vh' }}>Book Offline <br></br>
+						<div className="d-flex justify-content-center align-items-start flex-column">
+							<h1 className="display-4 fw-bold bigText p-4 ps-5 text-white" style={{ fontSize: '8vh' }}>
+								Book Offline <br></br>
 								Appointments <br></br>
-								Directly From Your <br></br>
-								Phone
+								Directly From <br></br>
+								Your Home
 							</h1>
-							<p className="ps-5 text-white" style={{ fontSize: '2.5vh' }}>Med D makes booking offline doctor appointments easier and <br></br>
+							<p className="ps-5 text-white desktopView" style={{ fontSize: '2.5vh' }}>Med D makes booking offline doctor appointments easier and <br></br>
 								more flexible so that you never have to wait for <br></br>
 								your turn when visiting a doctor.
 							</p>
-							<button className="btn btn-light btn-outline-info ms-5 mb-5 rounded-pill fw-bold">Learn More</button>
+							<p className="ps-5 text-white mobileView" style={{ fontSize: '2.5vh' }}>Med D makes booking offline doctor appointments easier and
+								more flexible so that you never have to wait for
+								your turn when visiting a doctor.
+							</p>
+							<button className="btn btn-light btn-outline-info ms-5 mb-5 rounded-pill fw-bold shadow">Learn More</button>
 						</div>
 					</div>
-					<img src={dashboardDoctor} className="img-fluid align-self-center p-0 ml-auto border-left" style={{ height: '90vh', width: 'auto', marginLeft: 'auto', position:'absolute', right:'0' }} alt="Responsive image" />
+					<img src={dashboardDoctor} className="img-fluid align-self-center p-0 ml-auto border-left" id ='doctorDashboard' style={{ height: '90vh', width: 'auto', marginLeft: 'auto', position: 'absolute', right: '0' }} alt="Responsive image" />
 
 				</div>
 			</div>
 			<div className='greyishColor pt-5'>
-				<div className='shadow-lg darkerWebsiteColor row col-10 ps-3 mx-auto styleCarousel'>
-					<div className="jumbotron col-6 p-4">
-						<h1 className="display-5 fw-bold text-white">Book Offline Appointments</h1>
-						<p className="lead text-white pt-2">No more standing in queues, sitting in the waiting area.<br></br>
-							Skip the hassle and get your health checked up<br></br>
-							quickly with live tracking system.<br></br>
+				<div className='shadow darkerWebsiteColor row col-10 ps-3 mx-auto styleCarousel' id='bookNowContainer'>
+					<img className='roundedTop mx-auto ms-0 p-0 mobileView' src={ConsultOfflineDoc} alt="Responsive image"></img>
+					<div className="jumbotron col-6 p-4 my-auto">
+						<h1 className="display-5 fw-bold text-white" style={{ fontSize: '4.7vh' }}>Book Offline Appointments</h1>
+						<p className="lead text-white pt-2" style={{ fontSize: '2.5vh' }}>No more standing in queues, sitting in the waiting area.<br className='desktopBreak'></br>
+							Skip the hassle and get your health checked up<br className='desktopBreak'></br>
+							quickly with live tracking system.<br className='desktopBreak'></br>
 						</p>
-						<hr className="my-4"></hr>
+						<hr style={{ marginTop: '1vw', marginBottom:'1vw' }}></hr>
 
 						<Link to="/offline-booking">
-							<button className="btn btn-light btn-outline-info rounded-pill fw-bold">BOOK NOW</button>
+							<button className="btn btn-light btn-outline-info rounded-pill fw-bold" style={{ fontSize: '1.5vw' }}>BOOK NOW</button>
 						</Link>
 
 					</div>
-					<img className='col-6 me-0 p-0 borderRight' src={ConsultOfflineDoc} alt="Responsive image"></img>
+					<img className='col-6 me-0 p-0 borderRight desktopView' src={ConsultOfflineDoc} alt="Responsive image"></img>
 				</div>
 			</div>
 			<div className='greyishColor py-5'>
-				<div className='shadow-lg darkerWebsiteColor row col-10 pe-3 mx-auto styleCarousel'>
-					<img className='col-6 ms-0 p-0 borderLeft' src={SaveMedicalRecords} alt="Responsive image"></img>
-					<div className="jumbotron col-6 p-4">
-						<h1 className="display-5 fw-bold text-white">Save Your Medical Records</h1>
-						<p className="lead text-white pt-2">No more standing in queues, sitting in the waiting area.<br></br>
-							Skip the hassle and get your health checked up<br></br>
-							quickly with live tracking system.<br></br>
+				<div className='shadow-lg darkerWebsiteColor row col-10 pe-3 mx-auto styleCarousel' id='bookNowContainer'>
+					<img className='col-6 ms-0 p-0 borderLeft desktopView' src={SaveMedicalRecords} alt="Responsive image"></img>
+					<img className='roundedTop mx-auto ms-0 p-0 mobileView' src={SaveMedicalRecords} alt="Responsive image"></img>
+					<div className="jumbotron col-6 p-4 my-auto">
+						<h1 className="display-5 fw-bold text-white" style={{ fontSize: '4.7vh' }}>Save Your Medical Records</h1>
+						<p className="lead text-white pt-2" style={{ fontSize: '2.5vh' }}>No more standing in queues, sitting in the waiting area.<br className='desktopBreak'></br>
+							Skip the hassle and get your health checked up<br className='desktopBreak'></br>
+							quickly with live tracking system.<br className='desktopBreak'></br>
 						</p>
-						<hr className="my-4"></hr>
+						<hr style={{ marginTop: '1vw', marginBottom:'1vw' }}></hr>
 
 						<Link to={"/medicalRecords?id=" + id}>
-							<button className="btn btn-light btn-outline-info rounded-pill fw-bold">UPLOAD</button>
+							<button className="btn btn-light btn-outline-info rounded-pill fw-bold" style={{ fontSize: '1.5vw' }}>UPLOAD</button>
 						</Link>
 
 					</div>
@@ -142,34 +150,34 @@ export default function Dashboard() {
 
 			{/* Offers Carousel*/}
 			<div id="carouselExampleIndicators" className="carousel carousel-dark pt-5 slide" data-ride="carousel">
-					<ol className="carousel-indicators">
-						<li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-						<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-					</ol>
-					<div className="carousel-inner" style={{ height: '50vh' }}>
-						<div className="carousel-item active">
-							<img className="d-block mx-auto w-auto thickBorder" style={{ height: '50vh' }} src={PercentOff25} alt="First slide"></img>
-						</div>
-						<div className="carousel-item">
-							<img className="d-block mx-auto w-auto thickBorder" style={{ height: '50vh' }} src={PercentOff50} alt="Second slide"></img>
-						</div>
-						<div className="carousel-item">
-							<img className="d-block mx-auto w-auto thickBorder" style={{ height: '50vh' }} src={Refer100Off} alt="Third slide"></img>
-						</div>
+				<ol className="carousel-indicators">
+					<li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
+					<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+					<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+				</ol>
+				<div className="carousel-inner" style={{ height: '50vh', maxWidth:'100%'}} id='offerCarousel'>
+					<div className="carousel-item active">
+						<img className="d-block mx-auto w-auto thickBorder" style={{ height: '50vh' , maxWidth:'100%'}} src={PercentOff25} alt="First slide"></img>
 					</div>
-					<a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-						<span className="carousel-control-prev-icon" aria-hidden="true"></span>
-						{/* <span className="sr-only text-black">Previous</span> */}
-					</a>
-					<a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-						<span className="carousel-control-next-icon" aria-hidden="true"></span>
-						{/* <span className="sr-only text-black border rounded">Next</span> */}
-					</a>
+					<div className="carousel-item">
+						<img className="d-block mx-auto w-auto thickBorder" style={{ height: '50vh' , maxWidth:'100%'}} src={PercentOff50} alt="Second slide"></img>
+					</div>
+					<div className="carousel-item">
+						<img className="d-block mx-auto w-auto thickBorder" style={{ height: '50vh' , maxWidth:'100%'}} src={Refer100Off} alt="Third slide"></img>
+					</div>
 				</div>
+				<a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+					<span className="carousel-control-prev-icon" aria-hidden="true"></span>
+					{/* <span className="sr-only text-black">Previous</span> */}
+				</a>
+				<a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+					<span className="carousel-control-next-icon" aria-hidden="true"></span>
+					{/* <span className="sr-only text-black border rounded">Next</span> */}
+				</a>
+			</div>
 
 			<div className='container py-5'>
-				<div className='row d-flex flex-row justify-content-around' style={{ color: '#40B2C1' }}>
+				<div className='row d-flex flex-row justify-content-around' id='happyCircles' style={{ color: '#40B2C1' }}>
 					<div className='col-3 bg-white rounded-circle d-flex justify-content-center align-items-center flex-column' style={{ height: '30vh', width: '30vh' }}>
 						<h2 className='fw-bold data-fact' style={{ fontSize: '5vh' }} data-val='1500'>0</h2>
 						<h3 style={{ fontSize: '3vh' }}>Happy Patients</h3>
@@ -200,11 +208,11 @@ export default function Dashboard() {
 						<button type="button" data-bs-target="#HappyCustomer" data-bs-slide-to="1" aria-label="Slide 2"></button>
 						<button type="button" data-bs-target="#HappyCustomer" data-bs-slide-to="2" aria-label="Slide 3"></button>
 					</div>
-					<div className="carousel-inner">
+					<div className="carousel-inner" id='customerReview'>
 						<div className="carousel-item active">
 							<div className='row styleCarousel mx-auto darkerWebsiteColor mt-5 pb-5 w-75'>
 								<h2 className='text-white fw-bold text-center py-2'>Our Happy Customers</h2>
-								<h5 className='text-white text-center py-3'>“Perfect for people who have to take hours from their work just for a consultation with a doctor.”
+								<h5 className='text-white text-center py-3 mx-auto'>“Perfect for people who have to take hours from their work just for a consultation with a doctor.”
 								</h5>
 								<div className='text-center align-middle'>
 
@@ -219,7 +227,7 @@ export default function Dashboard() {
 						<div className="carousel-item">
 							<div className='row styleCarousel mx-auto darkerWebsiteColor mt-5 pb-5 w-75'>
 								<h2 className='text-white fw-bold text-center py-2'>Our Happy Customers</h2>
-								<h5 className='text-white text-center py-3'>"Helped me Save a lot of time during regular checkups."</h5>
+								<h5 className='text-white text-center py-3 mx-auto'>"Helped me Save a lot of time during regular checkups."</h5>
 								<div className='text-center align-middle'>
 
 									<span className="material-icons text-white align-middle" style={{ fontSize: '40px' }}>
@@ -233,7 +241,7 @@ export default function Dashboard() {
 						<div className="carousel-item">
 							<div className='row styleCarousel mx-auto darkerWebsiteColor mt-5 pb-5 w-75'>
 								<h2 className='text-white fw-bold text-center py-2'>Our Happy Customers</h2>
-								<h5 className='text-white text-center py-3'>"This is a dummy text."</h5>
+								<h5 className='text-white text-center py-3 mx-auto'>"This is a dummy text."</h5>
 								<div className='text-center align-middle'>
 
 									<span className="material-icons text-white align-middle" style={{ fontSize: '40px' }}>
@@ -254,35 +262,7 @@ export default function Dashboard() {
 						<span className="visually-hidden">Next</span>
 					</button>
 				</div>
-
-				
 			</div>
-
-			{/* <div className="cards row mt-5 py-5 justify-content-center">
-				<div className="card py-3 w-25 styleCarousel mx-5 border-top-0 border-dark border-4 bg-light">
-					<img className="card-img-top w-75 align-self-center" src={events} alt="Card image cap" />
-					<div className="card-body">
-						<h5 className="card-title">Book Offline Appointment</h5>
-						<p className="card-text">This is a wider card with supporting text below as a natural lead-in.</p>
-
-					</div>
-					<Link to="/offline-booking">
-						<button className="btn btn-dark w-100">Know More</button>
-					</Link>
-				</div>
-
-				<div className="card py-3 w-25 styleCarousel mx-5 border-top-0 border-dark border-4 bg-light">
-					<img className="card-img-top w-75 align-self-center" src={saveFiles} alt="Card image cap" />
-					<div className="card-body">
-						<h5 className="card-title">Save Your Medical Records</h5>
-						<p className="card-text">This content is a little bit longer.</p>
-
-					</div>
-					<Link to={"/medicalRecords?id=" + id}>
-						<button className="btn btn-dark w-100">Know More</button>
-					</Link>
-				</div>
-			</div> */}
 		</>
 	);
 }
