@@ -42,7 +42,7 @@ export const Footer = () => {
 								<li><a className="text-secondary" href="#">Terms & Conditions</a></li>
 							</ul>
 						</div>
-						<div className="col-3 ps-5">
+						<div className="col-4 ps-5">
 							<h4><b>Customer Support</b></h4>
 							<ul className="list-unstyled text-small">
 								<li className="align-top"><a className="text-secondary" href="#">
@@ -57,7 +57,7 @@ export const Footer = () => {
 								</a></li>
 							</ul>
 						</div>
-						<div className="col-3 ps-5">
+						<div className="col-2 ps-5">
 							<h4><b>Socials</b></h4>
 							<svg className="me-1 socialIcons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
 								<path
