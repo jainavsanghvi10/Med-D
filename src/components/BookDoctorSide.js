@@ -1,9 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, db } from "../firebase";
 import firebase from "firebase";
-import { storage } from "../firebase";
 
 export const BookDoctorSide = () => {
   const dateRef = useRef();
@@ -12,111 +10,156 @@ export const BookDoctorSide = () => {
   const peopleperslotRef = useRef();
   const slotdurationRef = useRef();
 
+  const [slotInfo, setSlotInfo] = useState();
   const [Did, setId] = useState();
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  useEffect(() => {
-      const params = new URLSearchParams(window.location.search);
-      const Did = params.get('Did');
-      setId(Did);
-      console.log(currentUser);
-      if (currentUser && Did == null) {
-          navigate({
-              pathname: '/book-doctor-side',
-              search: `?Did=${currentUser.uid}`
-          })
-      }
-      //eslint-disable-next-line
-  }, []);
 
-
+  // Setting today's date and date after 7 days
   let dateToday = new Date(Date.now());
+  let dateTodayString =
+    dateToday.getFullYear() +
+    "-" +
+    `${dateToday.getMonth() < 10 ? "0" : ""}` +
+    (dateToday.getMonth() + 1) +
+    "-" +
+    `${dateToday.getDate() < 10 ? "0" : ""}` +
+    dateToday.getDate();
   let maxDate = new Date(Date.now());
   maxDate.setDate(maxDate.getDate() + 7);
+  let maxDateString =
+    maxDate.getFullYear() +
+    "-" +
+    `${maxDate.getMonth() < 10 ? "0" : ""}` +
+    (maxDate.getMonth() + 1) +
+    "-" +
+    `${maxDate.getDate() < 10 ? "0" : ""}` +
+    maxDate.getDate();
 
-  var slotData;
-  
-  function updateSlots(){
-    console.log(slotData);
-    //Write the code to display
-  }
+  useEffect(() => {
+    if(currentUser == null){
+      navigate("/signup");
+    }
+    const params = new URLSearchParams(window.location.search);
+    const Did = params.get("Did");
+    setId(Did);
+    console.log(currentUser);
+    if (currentUser && Did == null) {
+      navigate({
+        pathname: "/book-doctor-side",
+        search: `?Did=${currentUser.uid}`,
+      });
+    }
+    //eslint-disable-next-line
 
-  function update(){
-    console.log("In updateSlots........");
-    var database = firebase.database();
-    
-    var ref = firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}`);
-    // var starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
-    ref.on('value', (snapshot) => {
-    const data = snapshot.val();
-    // console.log(data);
-    slotData = data;
-    // updateStarCount(postElement, data);
-    })
-    console.log("Slots Updated !");
-    updateSlots();
-  }
+    // fetching slot details
+    var slotData;
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${dateTodayString}`);
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      setSlotInfo(data);
+    });
+  }, []);
+
+  const morningSlots = [];
+  const afternoonSlots = [];
+  const eveningSlots = [];
+  for (let s in slotInfo) {
+    let time = s.split("_")[0];
+
+    for(let ss in s){
+      console.log(s, ss);
+      for(let sss in ss){
+        console.log(ss, sss);
+      }
+    }
+
+    // const iterate = (obj) => {
+    //   Object.keys(obj).forEach(key => {
   
+    //   console.log(`key: ${key}, value: ${obj[key]}`)
+  
+    //   if (typeof obj[key] === 'object' && obj[key] !== null) {
+    //           iterate(obj[key])
+    //       }
+    //   })
+    // }
+    // iterate(s);
+
+    if(time.split(":")[0] < 12){
+      morningSlots.push(<button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>);
+    }
+    else{
+      if(time.split(":")[0] < 17){
+        afternoonSlots.push(<button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>);
+      }
+      else{
+        eveningSlots.push(<button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>);
+      }
+    }
+  }
 
   function createSlots(e) {
     e.preventDefault();
     console.log("creating slots");
     console.log(Did);
 
-    
-
     let slotTimeFrom = new Date(0, 0, 0);
     let slotTimeTo = new Date(0, 0, 0);
-    let startTime = (timefromRef.current.value).split(":");
-    let endTime = (timetoRef.current.value).split(":");
+    let startTime = timefromRef.current.value.split(":");
+    let endTime = timetoRef.current.value.split(":");
     let slotDuration = slotdurationRef.current.value;
-    let totalMinutes = 60*(endTime[0]-startTime[0]) + (endTime[1]-startTime[1]);
-    let totalSlots = Math.floor(totalMinutes/slotDuration);
+    let totalMinutes =
+      60 * (endTime[0] - startTime[0]) + (endTime[1] - startTime[1]);
+    let totalSlots = Math.floor(totalMinutes / slotDuration);
 
     var database = firebase.database();
-    var ref = firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}`);
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${dateRef.current.value}`);
 
     slotTimeFrom.setHours(startTime[0]);
     slotTimeFrom.setMinutes(startTime[1]);
     slotTimeTo.setHours(startTime[0]);
     slotTimeTo.setMinutes(startTime[1]);
 
-    const slotTimeArr = [];
     let start, end;
-    
-    for(let i=0;i<totalSlots;i++){
-        start = slotTimeTo.getHours()+":"+slotTimeTo.getMinutes()
-        slotTimeTo.setMinutes( slotTimeTo.getMinutes() + Number(slotDuration));
-        end = slotTimeTo.getHours()+":"+slotTimeTo.getMinutes();
-        slotTimeArr.push(start + "-" + end);
 
-        var key = slotTimeArr[i] + "_" + peopleperslotRef.current.value;
-        
-        
-        for(let j=0; j< peopleperslotRef.current.value; j++)
-        {
-          firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}/${key}/${j}`).set({
+    for (let i = 0; i < totalSlots; i++) {
+      start = slotTimeTo.getHours() + ":" + slotTimeTo.getMinutes();
+      slotTimeTo.setMinutes(slotTimeTo.getMinutes() + Number(slotDuration));
+      end = slotTimeTo.getHours() + ":" + slotTimeTo.getMinutes();
+
+      var key = start + "_" + peopleperslotRef.current.value;
+      console.log(key);
+
+      for (let j = 0; j < peopleperslotRef.current.value; j++) {
+        firebase
+          .database()
+          .ref(`Doctors/${Did}/${dateRef.current.value}/${key}/${j}`)
+          .set({
             PatientId: "NULL",
-            Attendance: false
+            Attendance: false,
           });
-        }
+      }
 
-
-        firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}/${key}`).update({
-          AttendanceCount:0
+      firebase
+        .database()
+        .ref(`Doctors/${Did}/${dateRef.current.value}/${key}`)
+        .update({
+          AttendanceCount: 0,
         });
     }
-    console.log(totalSlots,slotTimeArr);
+    console.log(totalSlots, start);
     console.log("___________");
-    update();
-
   }
 
-  const slots = [];
-  for(let i=0;i<30;i++){
-      slots.push(<button className={"btn btn-sm mx-2 my-2 " + 
-      `${Math.random() > 0.5 ?"btn-secondary" : "btn-primary"}`}> 6:30 </button>);
-  }
+  // for(let i=0;i<30;i++){
+  //     slots.push(<button className={"btn btn-sm mx-2 my-2 " +
+  //     `${Math.random() > 0.5 ?"btn-secondary" : "btn-primary"}`}> 6:30 </button>);
+  // }
 
   return (
     <div className="bg-white mt-auto">
@@ -137,24 +180,8 @@ export const BookDoctorSide = () => {
             id="SlotFrom"
             aria-describedby="emailHelp"
             placeholder="Enter email"
-            min={
-              dateToday.getFullYear() +
-              "-" +
-              `${dateToday.getMonth() < 10 ? "0" : ""}` +
-              (dateToday.getMonth() + 1) +
-              "-" +
-              `${dateToday.getDate() < 10 ? "0" : ""}` +
-              dateToday.getDate()
-            }
-            max={
-              maxDate.getFullYear() +
-              "-" +
-              `${maxDate.getMonth() < 10 ? "0" : ""}` +
-              (maxDate.getMonth() + 1) +
-              "-" +
-              `${maxDate.getDate() < 10 ? "0" : ""}` +
-              maxDate.getDate()
-            }
+            min={dateTodayString}
+            max={maxDateString}
             required
           />
           {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
@@ -242,23 +269,17 @@ export const BookDoctorSide = () => {
             <div className="container">
               <div className="row my-2">
                 <div className="col-2 align-self-center">Morning</div>
-                <div className="col-8">
-                    {slots}
-                </div>
+                <div className="col-8">{morningSlots}</div>
               </div>
               <hr></hr>
               <div className="row my-2">
                 <div className="col-2 align-self-center">Afternoon</div>
-                <div className="col-8">
-                  {slots}
-                </div>
+                <div className="col-8">{afternoonSlots}</div>
               </div>
               <hr></hr>
               <div className="row my-2">
                 <div className="col-2 align-self-center">Evening</div>
-                <div className="col-8">
-                  {slots}
-                </div>
+                <div className="col-8">{eveningSlots}</div>
               </div>
             </div>
           </div>
@@ -268,24 +289,17 @@ export const BookDoctorSide = () => {
   );
 };
 
+// firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}/${key}/${j}`).set({
+//   Duration: slotTimeArr[i],
+//   NumberOfPeople: peopleperslotRef.current.value
+// });
 
-  // firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}/${key}/${j}`).set({
-        //   Duration: slotTimeArr[i],
-        //   NumberOfPeople: peopleperslotRef.current.value
-        // });
+// var newRef = ref.push();
+// newRef.set({
+//  Duration: slotTimeArr[i],
+//   NumberOfPeople: peopleperslotRef.current.value
+// })
 
-        
-        // var newRef = ref.push();
-        // newRef.set({
-       //  Duration: slotTimeArr[i],
-        //   NumberOfPeople: peopleperslotRef.current.value
-        // })
+// firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}`).set({
 
-
-        // firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}`).set({
-      
-      
-    // });
-
-
-
+// });
