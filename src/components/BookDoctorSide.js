@@ -15,29 +15,38 @@ export const BookDoctorSide = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
-  // Setting today's date and date after 7 days
-  let dateToday = new Date(Date.now());
-  let dateTodayString =
-    dateToday.getFullYear() +
+  /* Setting dates of 7 days from today */
+  const weekDates = [null];
+  // add Today's date
+  weekDates.push(new Date(Date.now()));
+  for(let i=1;i<=7;i++){
+    let dateI = new Date((weekDates[1]));
+    dateI.setDate(dateI.getDate() + i);
+    weekDates.push(dateI);
+  }
+
+  /* function to convert from Date object to string */
+  function DateToString(date){
+    return (date.getFullYear() +
     "-" +
-    `${dateToday.getMonth() < 10 ? "0" : ""}` +
-    (dateToday.getMonth() + 1) +
+    `${date.getMonth() < 10 ? "0" : ""}` +
+    (date.getMonth() + 1) +
     "-" +
-    `${dateToday.getDate() < 10 ? "0" : ""}` +
-    dateToday.getDate();
-  let maxDate = new Date(Date.now());
-  maxDate.setDate(maxDate.getDate() + 7);
-  let maxDateString =
-    maxDate.getFullYear() +
-    "-" +
-    `${maxDate.getMonth() < 10 ? "0" : ""}` +
-    (maxDate.getMonth() + 1) +
-    "-" +
-    `${maxDate.getDate() < 10 ? "0" : ""}` +
-    maxDate.getDate();
+    `${date.getDate() < 10 ? "0" : ""}` +
+    date.getDate());
+  }
+
+  /* function to fetch slot data of a date */
+  function fetchSlotWithDate(date){
+    var ref = firebase.database().ref(`Doctors/${Did}/${DateToString(date)}`);
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      setSlotInfo(data);
+    });
+  }
 
   useEffect(() => {
-    if(currentUser == null){
+    if (currentUser == null) {
       navigate("/signup");
     }
     const params = new URLSearchParams(window.location.search);
@@ -52,11 +61,8 @@ export const BookDoctorSide = () => {
     }
     //eslint-disable-next-line
 
-    // fetching slot details
-    var slotData;
-    var ref = firebase
-      .database()
-      .ref(`Doctors/${Did}/${dateTodayString}`);
+    // fetching today's slot details
+    var ref = firebase.database().ref(`Doctors/${Did}/${DateToString(weekDates[1])}`);
     ref.on("value", (snapshot) => {
       const data = snapshot.val();
       setSlotInfo(data);
@@ -69,34 +75,19 @@ export const BookDoctorSide = () => {
   for (let s in slotInfo) {
     let time = s.split("_")[0];
 
-    for(let ss in s){
-      console.log(s, ss);
-      for(let sss in ss){
-        console.log(ss, sss);
-      }
-    }
-
-    // const iterate = (obj) => {
-    //   Object.keys(obj).forEach(key => {
-  
-    //   console.log(`key: ${key}, value: ${obj[key]}`)
-  
-    //   if (typeof obj[key] === 'object' && obj[key] !== null) {
-    //           iterate(obj[key])
-    //       }
-    //   })
-    // }
-    // iterate(s);
-
-    if(time.split(":")[0] < 12){
-      morningSlots.push(<button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>);
-    }
-    else{
-      if(time.split(":")[0] < 17){
-        afternoonSlots.push(<button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>);
-      }
-      else{
-        eveningSlots.push(<button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>);
+    if (time.split(":")[0] < 12) {
+      morningSlots.push(
+        <button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>
+      );
+    } else {
+      if (time.split(":")[0] < 17) {
+        afternoonSlots.push(
+          <button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>
+        );
+      } else {
+        eveningSlots.push(
+          <button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>
+        );
       }
     }
   }
@@ -156,10 +147,21 @@ export const BookDoctorSide = () => {
     console.log("___________");
   }
 
-  // for(let i=0;i<30;i++){
-  //     slots.push(<button className={"btn btn-sm mx-2 my-2 " +
-  //     `${Math.random() > 0.5 ?"btn-secondary" : "btn-primary"}`}> 6:30 </button>);
-  // }
+  const dateNavigation = [];
+  for(let i=1;i<=7;i++){
+    dateNavigation.push(
+    <a className={"nav-item nav-link " + `${i===1 ? "active" : ""}`}
+      id={"day-" + i + "-tab"}
+      data-toggle="tab"
+      href={"#day-" + i}
+      role="tab"
+      aria-controls={"day-" + i}
+      aria-selected="true"
+      onClick={() => {fetchSlotWithDate(weekDates[i])}}
+    >
+      {weekDates[i].getDate() + " / " + `${weekDates[i].getMonth() < 10 ? "0" : ""}` + weekDates[i].getMonth()}
+    </a>);
+  }
 
   return (
     <div className="bg-white mt-auto">
@@ -180,8 +182,8 @@ export const BookDoctorSide = () => {
             id="SlotFrom"
             aria-describedby="emailHelp"
             placeholder="Enter email"
-            min={dateTodayString}
-            max={maxDateString}
+            min={DateToString(weekDates[1])}
+            max={DateToString(weekDates[7])}
             required
           />
           {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
@@ -255,9 +257,14 @@ export const BookDoctorSide = () => {
         </div>
       </form>
 
-      <div className="container border border-5 mt-4 mb-4 rounded">
-        <h2>Today's Slots</h2>
 
+      <h2 className="ms-5 ps-3 pt-3">Appointments</h2>
+      <div className="container mt-5">
+        <nav>
+          <div className="nav nav-tabs" id="nav-tab" role="tablist">
+            {dateNavigation}
+          </div>
+        </nav>
         <div className="tab-content" id="nav-tabContent">
           <div
             className="tab-pane fade show active"
@@ -265,7 +272,6 @@ export const BookDoctorSide = () => {
             role="tabpanel"
             aria-labelledby="day-1-tab"
           >
-            {/* Its DAY1 */}
             <div className="container">
               <div className="row my-2">
                 <div className="col-2 align-self-center">Morning</div>

@@ -40,6 +40,10 @@ export const NavAfterLogin = (props) => {
             Appointment</a>
         </li>
         <li className="nav-item mx-2">
+          <a className="nav-link active fw-bold fs-6 text-light" aria-current="page" href="/book-doctor-side">
+            Make Slots</a>
+        </li>
+        <li className="nav-item mx-2">
           <a className="nav-link active fw-bold fs-6 text-light" aria-current="page" href="#">Customer
             Support</a>
         </li>
