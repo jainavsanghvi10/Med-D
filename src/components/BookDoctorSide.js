@@ -18,6 +18,12 @@ export const BookDoctorSide = () => {
   const {isDoctor} = useAuth();
   const navigate = useNavigate();
 
+  // check if user is a doctor
+  console.log(isDoctor);
+  if(isDoctor === false){
+    navigate("/");
+  }
+
   /* Setting dates of 7 days from today */
   const weekDates = [null];
   // add Today's date
@@ -76,10 +82,6 @@ export const BookDoctorSide = () => {
   useEffect(() => {
     if (currentUser == null) {
       navigate("/signup");
-    }
-
-    if(isDoctor === false){
-      navigate("/");
     }
 
     const params = new URLSearchParams(window.location.search);
