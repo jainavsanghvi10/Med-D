@@ -11,7 +11,9 @@ export const BookDoctorSide = () => {
   const slotdurationRef = useRef();
 
   const [slotInfo, setSlotInfo] = useState();
+  const [slot, setSlot] = useState();
   const [Did, setDid] = useState();
+  const [ddate, setDDate] = useState();
 
   const { currentUser } = useAuth();
   const navigate = useNavigate();
@@ -43,6 +45,53 @@ export const BookDoctorSide = () => {
     ref.on("value", (snapshot) => {
       const data = snapshot.val();
       setSlotInfo(data);
+      setDDate(DateToString(date));
+      setSlot(data);
+    });
+  }
+
+  // const slotTime = []
+  // const slotAttendance = []
+  function PatientIn(){
+  //   console.log("Hello BCCCC");
+  //   fetchSlotWithDate(weekDates[1]);
+  //   for (let s in slotInfo) {
+  //     let time = s.split("_")[0];
+  //     slotTime.push(time);
+  //     let totalSlotAtTime = s.split("_")[1];
+  //     slotAttendance = [];
+  //   // var ref = firebase.database().ref(`Doctors/${Did}/${DateToString(weekDates[1])}/`);
+  //   // ref.on("value", (snapshot) => {
+  //   //   const data = snapshot.val();
+  //   //   setSlotInfo(data);
+  //   // });
+  //   }
+  }
+  function updateSlot(time, maxPerson){
+    var key = time + "_" + maxPerson;
+    // console.log(ddate);
+    // console.log("Heww");
+    var ref = firebase.database().ref(`Doctors/${Did}/${ddate}/${key}/AttendanceCount`);
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      console.log("Attendance " + data);
+      if(data < maxPerson){
+        console.log("Slots Avalaible !");
+        var xxx = data + 1;
+        firebase
+        .database()
+        .ref(`Doctors/${Did}/${ddate}/${key}`)
+        .update({
+          AttendanceCount: xxx,
+        });
+        console.log("Patient Booked SuccesFully!");
+
+      }
+      else
+      {
+        console.log("Slots Not Avalaible !");
+      }
+
     });
   }
 
@@ -80,16 +129,19 @@ export const BookDoctorSide = () => {
 
     if (time.split(":")[0] < 12) {
       morningSlots.push(
-        <button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>
+        <button className="btn btn-sm mx-2 my-2 btn-primary" 
+        onClick={() => {updateSlot(time, totalSlotAtTime)}}>{time}</button>
       );
     } else {
       if (time.split(":")[0] < 17) {
         afternoonSlots.push(
-          <button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>
+          <button className="btn btn-sm mx-2 my-2 btn-primary"
+          onClick={() => {updateSlot(time, totalSlotAtTime)}}>{time}</button>
         );
       } else {
         eveningSlots.push(
-          <button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>
+          <button className="btn btn-sm mx-2 my-2 btn-primary"
+          onClick={() => {updateSlot(time, totalSlotAtTime)}}>{time}</button>
         );
       }
     }
@@ -213,6 +265,7 @@ export const BookDoctorSide = () => {
                 required
               />
             </div>
+
             <div className="form-group col-2">
               <label htmlFor="SlotTo" className="form-label">
                 To
@@ -261,7 +314,19 @@ export const BookDoctorSide = () => {
           <button type="submit" className="btn btn-dark mb-3">
             Create Slot
           </button>
+          <div className="col-3 mt-auto">
+          <button
+            className="btn btn-light btn-outline-dark fw-bold"
+            type="submit"
+            id="search-btn"
+            onClick={PatientIn}
+          >
+            In
+          </button>
         </div>
+        
+        </div>
+        
       </form>
 
 
