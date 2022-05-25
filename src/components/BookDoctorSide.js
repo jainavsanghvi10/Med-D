@@ -11,7 +11,10 @@ export const BookDoctorSide = () => {
   const slotdurationRef = useRef();
 
   const [slotInfo, setSlotInfo] = useState();
-  const [Did, setId] = useState();
+  const [slot, setSlot] = useState();
+  const [Did, setDid] = useState();
+  const [ddate, setDDate] = useState();
+
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
@@ -42,6 +45,53 @@ export const BookDoctorSide = () => {
     ref.on("value", (snapshot) => {
       const data = snapshot.val();
       setSlotInfo(data);
+      setDDate(DateToString(date));
+      setSlot(data);
+    });
+  }
+
+  // const slotTime = []
+  // const slotAttendance = []
+  function PatientIn(){
+  //   console.log("Hello BCCCC");
+  //   fetchSlotWithDate(weekDates[1]);
+  //   for (let s in slotInfo) {
+  //     let time = s.split("_")[0];
+  //     slotTime.push(time);
+  //     let totalSlotAtTime = s.split("_")[1];
+  //     slotAttendance = [];
+  //   // var ref = firebase.database().ref(`Doctors/${Did}/${DateToString(weekDates[1])}/`);
+  //   // ref.on("value", (snapshot) => {
+  //   //   const data = snapshot.val();
+  //   //   setSlotInfo(data);
+  //   // });
+  //   }
+  }
+  function updateSlot(time, maxPerson){
+    var key = time + "_" + maxPerson;
+    // console.log(ddate);
+    // console.log("Heww");
+    var ref = firebase.database().ref(`Doctors/${Did}/${ddate}/${key}/AttendanceCount`);
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      console.log("Attendance " + data);
+      if(data < maxPerson){
+        console.log("Slots Avalaible !");
+        var xxx = data + 1;
+        firebase
+        .database()
+        .ref(`Doctors/${Did}/${ddate}/${key}`)
+        .update({
+          AttendanceCount: xxx,
+        });
+        console.log("Patient Booked SuccesFully!");
+
+      }
+      else
+      {
+        console.log("Slots Not Avalaible !");
+      }
+
     });
   }
 
@@ -49,11 +99,12 @@ export const BookDoctorSide = () => {
     if (currentUser == null) {
       navigate("/signup");
     }
+
     const params = new URLSearchParams(window.location.search);
-    const Did = params.get("Did");
-    setId(Did);
+    const DID = params.get("Did");
+    setDid(DID);
     console.log(currentUser);
-    if (currentUser && Did == null) {
+    if (currentUser && DID == null) {
       navigate({
         pathname: "/book-doctor-side",
         search: `?Did=${currentUser.uid}`,
@@ -74,19 +125,23 @@ export const BookDoctorSide = () => {
   const eveningSlots = [];
   for (let s in slotInfo) {
     let time = s.split("_")[0];
+    let totalSlotAtTime = s.split("_")[1];
 
     if (time.split(":")[0] < 12) {
       morningSlots.push(
-        <button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>
+        <button className="btn btn-sm mx-2 my-2 btn-primary" 
+        onClick={() => {updateSlot(time, totalSlotAtTime)}}>{time}</button>
       );
     } else {
       if (time.split(":")[0] < 17) {
         afternoonSlots.push(
-          <button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>
+          <button className="btn btn-sm mx-2 my-2 btn-primary"
+          onClick={() => {updateSlot(time, totalSlotAtTime)}}>{time}</button>
         );
       } else {
         eveningSlots.push(
-          <button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>
+          <button className="btn btn-sm mx-2 my-2 btn-primary"
+          onClick={() => {updateSlot(time, totalSlotAtTime)}}>{time}</button>
         );
       }
     }
@@ -94,11 +149,8 @@ export const BookDoctorSide = () => {
 
   function createSlots(e) {
     e.preventDefault();
-    console.log("creating slots");
-    console.log(Did);
 
-    let slotTimeFrom = new Date(0, 0, 0);
-    let slotTimeTo = new Date(0, 0, 0);
+    let slotInterval = new Date(0, 0, 0);
     let startTime = timefromRef.current.value.split(":");
     let endTime = timetoRef.current.value.split(":");
     let slotDuration = slotdurationRef.current.value;
@@ -111,17 +163,15 @@ export const BookDoctorSide = () => {
       .database()
       .ref(`Doctors/${Did}/${dateRef.current.value}`);
 
-    slotTimeFrom.setHours(startTime[0]);
-    slotTimeFrom.setMinutes(startTime[1]);
-    slotTimeTo.setHours(startTime[0]);
-    slotTimeTo.setMinutes(startTime[1]);
+    slotInterval.setHours(startTime[0]);
+    slotInterval.setMinutes(startTime[1]);
 
     let start, end;
 
     for (let i = 0; i < totalSlots; i++) {
-      start = slotTimeTo.getHours() + ":" + slotTimeTo.getMinutes();
-      slotTimeTo.setMinutes(slotTimeTo.getMinutes() + Number(slotDuration));
-      end = slotTimeTo.getHours() + ":" + slotTimeTo.getMinutes();
+      start = slotInterval.getHours() + ":" + slotInterval.getMinutes();
+      slotInterval.setMinutes(slotInterval.getMinutes() + Number(slotDuration));
+      end = slotInterval.getHours() + ":" + slotInterval.getMinutes();
 
       var key = start + "_" + peopleperslotRef.current.value;
       console.log(key);
@@ -143,8 +193,20 @@ export const BookDoctorSide = () => {
           AttendanceCount: 0,
         });
     }
-    console.log(totalSlots, start);
-    console.log("___________");
+
+    for(let i=1;i<=7;i++){
+      let tab = document.getElementById(`day-${i}-tab`);
+      if(!tab.classList.contains("active")){
+        if(DateToString(weekDates[i]) === dateRef.current.value){
+          tab.classList.add("active");
+        }
+      }
+      else{
+        tab.classList.remove("active");
+        continue;
+      }
+    }
+
   }
 
   const dateNavigation = [];
@@ -186,7 +248,6 @@ export const BookDoctorSide = () => {
             max={DateToString(weekDates[7])}
             required
           />
-          {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
         </div>
         <div className="container border border-5 mt-4 mb-4 rounded">
           <div className="row mt-3 mb-4">
@@ -203,8 +264,8 @@ export const BookDoctorSide = () => {
                 placeholder="Enter email"
                 required
               />
-              {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
             </div>
+
             <div className="form-group col-2">
               <label htmlFor="SlotTo" className="form-label">
                 To
@@ -218,7 +279,6 @@ export const BookDoctorSide = () => {
                 placeholder="Enter email"
                 required
               />
-              {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
             </div>
             <div className="form-group col-3">
               <label htmlFor="PeoplePerSlot" className="form-label">
@@ -254,7 +314,19 @@ export const BookDoctorSide = () => {
           <button type="submit" className="btn btn-dark mb-3">
             Create Slot
           </button>
+          <div className="col-3 mt-auto">
+          <button
+            className="btn btn-light btn-outline-dark fw-bold"
+            type="submit"
+            id="search-btn"
+            onClick={PatientIn}
+          >
+            In
+          </button>
         </div>
+        
+        </div>
+        
       </form>
 
 
@@ -275,17 +347,17 @@ export const BookDoctorSide = () => {
             <div className="container">
               <div className="row my-2">
                 <div className="col-2 align-self-center">Morning</div>
-                <div className="col-8">{morningSlots}</div>
+                <div className="col-8">{morningSlots.length!=0 ? morningSlots : <h3 style={{color: "grey"}}>No Slots Available</h3>}</div>
               </div>
               <hr></hr>
               <div className="row my-2">
                 <div className="col-2 align-self-center">Afternoon</div>
-                <div className="col-8">{afternoonSlots}</div>
+                <div className="col-8">{afternoonSlots!=0 ? afternoonSlots : <h3 style={{color: "grey"}}>No Slots Available</h3>}</div>
               </div>
               <hr></hr>
               <div className="row my-2">
                 <div className="col-2 align-self-center">Evening</div>
-                <div className="col-8">{eveningSlots}</div>
+                <div className="col-8">{eveningSlots!=0 ? eveningSlots : <h3 style={{color: "grey"}}>No Slots Available</h3>}</div>
               </div>
             </div>
           </div>
@@ -294,18 +366,3 @@ export const BookDoctorSide = () => {
     </div>
   );
 };
-
-// firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}/${key}/${j}`).set({
-//   Duration: slotTimeArr[i],
-//   NumberOfPeople: peopleperslotRef.current.value
-// });
-
-// var newRef = ref.push();
-// newRef.set({
-//  Duration: slotTimeArr[i],
-//   NumberOfPeople: peopleperslotRef.current.value
-// })
-
-// firebase.database().ref(`Doctors/${Did}/${dateRef.current.value}`).set({
-
-// });

@@ -66,6 +66,9 @@ export const NavAfterLogin = (props) => {
                 <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="/offline-booking">Book Appointment</a>
               </li>
               <li className="nav-item">
+                <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="/book-doctor-side">Make Slots</a>
+              </li>
+              <li className="nav-item">
                 <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="#">Customer Support</a>
               </li>
             </ul>
