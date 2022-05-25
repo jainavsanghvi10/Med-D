@@ -104,105 +104,113 @@ export default function Signup() {
 	document.body.style.background = 'white';
 
 	return (
-		<div
-			className="container-md"
-			style={{ maxWidth: "500px", position: "relative", marginTop: "100px" }}
-		>
-			<h1 className="mt-100 text-center" style={{ marginBottom: "50px" }}>
-				Sign Up
-			</h1>
-			{error && (
-				<div className="console.log console.log-danger" role="console.log">
-					{error}
-				</div>
-			)}
-			<form
-				className="row g-3 needs-validation"
-				id="signup-form"
-				onSubmit={handleSubmit}
-				noValidate
-			>
-				<div className="form-outline mb-4">
-					<label htmlFor="validationCustom03" className="form-label">
-						Phone Number
-					</label>
-					<input
-						type="text"
-						className="form-control"
-						id="phonenumber"
-						ref={phoneNumberRef}
-						required
-					/>
-					<div className="invalid-feedback">
-						Please provide a valid phone number.
-					</div>
-				</div>
-				<div className="form-outline mb-4">
-					<label htmlFor="validationCustom03" className="form-label">
-						OTP
-					</label>
-					<input
-						type="text"
-						className="form-control"
-						id="otp"
-						ref={UserOtpRef}
-						// pattern="[0-9]{6}"
-						required
-					/>
-					<div className="invalid-feedback">Please enter OTP.</div>
-				</div>
-				<div className="col-12">
-					<div className="form-check">
-						<input
-							className="form-check-input"
-							type="checkbox"
-							value=""
-							id="invalidCheck"
-							required
-						/>
-						<label className="form-check-label" htmlFor="invalidCheck">
-							Agree to terms and conditions
-						</label>
-						<div className="invalid-feedback">
-							You must agree before submitting.
+		<div className='FormsHeightMobile' style={{ height: '90vh' }}>
+			<div id='loginContainer' className="container h-100 mt-0 mb-0 d-flex align-items-center" style={{ width: '35vw' }}>
+				<div className="shadow-lg row mt-0 pt-0">
+					{/* <h1 className="mt-100 text-center" style={{ marginBottom: "50px" }}>
+						Sign Up
+					</h1> */}
+					{error && (
+						<div className="console.log console.log-danger" role="console.log">
+							{error}
 						</div>
+					)}
+					<form
+						className="row g-3 needs-validation mt-0 px-0 mx-0"
+						id="signup-form"
+						onSubmit={handleSubmit}
+						noValidate
+					>
+						<div className="col-6 text-center border mt-0 py-3 darkerTextColor fw-bold fs-4">
+							<Link to="/login"> <a type='button' className='w-100 darkerTextColor'>Login</a> </Link>
+						</div>
+						<div className="col-6 text-center border mt-0 py-3 btn-group dropdown greyishColor darkerTextColor fw-bold fs-4">
+							<span type="button" className="dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false"><u>Sign Up</u></span>
+							<ul className="dropdown-menu">
+								<Link to="/signup"><button className="dropdown-item darkerTextColor" type="button">As Patient</button></Link>
+								<Link to="/signup-doctor"><button className="dropdown-item darkerTextColor" type="button">As Doctor</button></Link>
+							</ul>
+						</div>
+
+						<span className="text-center darkerTextColor fw-bold">Doctor Login Form</span>
+						<div className="form-outline mb-2">
+							<input
+								type="text"
+								className="form-control rounded-pill"
+								placeholder="Enter Your Phone Number"
+								id="phonenumber"
+								ref={phoneNumberRef}
+								required
+							/>
+							<div className="invalid-feedback">
+								Please provide a valid phone number.
+							</div>
+						</div>
+						<div className="form-outline mb-4">
+							<input
+								type="text"
+								className="form-control rounded-pill"
+								placeholder="Enter OTP"
+								id="otp"
+								ref={UserOtpRef}
+								// pattern="[0-9]{6}"
+								required
+							/>
+							<div className="invalid-feedback">Please enter OTP.</div>
+						</div>
+						<div className="form-check  d-flex justify-content-center">
+							<input
+								className="form-check-input me-2"
+								type="checkbox"
+								value=""
+								id="invalidCheck"
+								required
+							/>
+							<label className="form-check-label" htmlFor="invalidCheck">
+								Agree to terms and conditions
+							</label>
+							<div className="invalid-feedback">
+								You must agree before submitting.
+							</div>
+						</div>
+						<div className="col-12" style={{ textAlign: 'center' }}>
+							<>
+								<div
+									style={{ display: show ? "block" : "none" }}
+									id="recaptcha-container"
+								></div>
+								<button
+									className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill"
+									id="send-otp-btn"
+									onClick={signin}
+									style={{ marginBottom: "20px", marginRight: "20px" }}
+								>
+									Send OTP
+								</button>
+							</>
+							<button
+								className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill"
+								type="submit"
+								id="signup-btn"
+								style={{ marginBottom: "20px" }}
+							>
+								Login
+							</button>
+						</div>
+					</form>
+					<hr className="w-75 mx-auto my-auto mt-3"></hr>
+					<div className="d-flex justify-content-around align-items-center">
+						<p className="mb-1 mt-2">
+							Register as Doctor <Link to="/signup-doctor"> Signup </Link>
+						</p>
+					</div>
+					<div className="d-flex justify-content-around align-items-center mb-4">
+						<p>
+							<Link to="/login"> Login as Patient </Link>
+						</p>
 					</div>
 				</div>
-				<div className="col-12">
-					<>
-						<div
-							style={{ display: show ? "block" : "none" }}
-							id="recaptcha-container"
-						></div>
-						<button
-							className="btn btn-primary"
-							id="send-otp-btn"
-							onClick={signin}
-							style={{ marginBottom: "30px", marginRight: "20px" }}
-						>
-							Send OTP
-						</button>
-					</>
-					<button
-						className="btn btn-primary"
-						type="submit"
-						id="signup-btn"
-						style={{ marginBottom: "30px" }}
-					>
-						Login
-					</button>
-				</div>
-			</form>
-			<div className="d-flex justify-content-around align-items-center mb-4">
-				<p>
-					Register as Doctor <Link to="/signup-doctor"> Signup </Link>
-				</p>
-			</div>
-			<div className="d-flex justify-content-around align-items-center mb-4">
-				<p>
-					<Link to="/login"> Login as Patient </Link>
-				</p>
-			</div>
-		</div>
+			</div >
+		</div >
 	);
 }
