@@ -101,6 +101,8 @@ export default function Signup() {
 		setLoading(false);
 	}
 
+	document.body.style.background = 'white';
+
 	return (
 		<div
 			className="container-md"
@@ -120,20 +122,20 @@ export default function Signup() {
 				onSubmit={handleSubmit}
 				noValidate
 			>
-      <div className="form-outline mb-4">
-        <label htmlFor="validationCustom03" className="form-label">
-          Phone Number
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="phonenumber"
-          ref={phoneNumberRef}
-          required
-        />
-        <div className="invalid-feedback">
-          Please provide a valid phone number.
-        </div>
+				<div className="form-outline mb-4">
+					<label htmlFor="validationCustom03" className="form-label">
+						Phone Number
+					</label>
+					<input
+						type="text"
+						className="form-control"
+						id="phonenumber"
+						ref={phoneNumberRef}
+						required
+					/>
+					<div className="invalid-feedback">
+						Please provide a valid phone number.
+					</div>
 				</div>
 				<div className="form-outline mb-4">
 					<label htmlFor="validationCustom03" className="form-label">

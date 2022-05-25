@@ -8,35 +8,35 @@ export const BookPatientSide = () => {
   const [Did, setDid] = useState();
   const [slotInfo, setSlotInfo] = useState();
 
-    /* Setting dates of 7 days from today */
-    const weekDates = [null];
-    // add Today's date
-    weekDates.push(new Date(Date.now()));
-    for(let i=1;i<=7;i++){
-      let dateI = new Date((weekDates[1]));
-      dateI.setDate(dateI.getDate() + i);
-      weekDates.push(dateI);
-    }
-  
-    /* function to convert from Date object to string */
-    function DateToString(date){
-      return (date.getFullYear() +
+  /* Setting dates of 7 days from today */
+  const weekDates = [null];
+  // add Today's date
+  weekDates.push(new Date(Date.now()));
+  for (let i = 1; i <= 7; i++) {
+    let dateI = new Date((weekDates[1]));
+    dateI.setDate(dateI.getDate() + i);
+    weekDates.push(dateI);
+  }
+
+  /* function to convert from Date object to string */
+  function DateToString(date) {
+    return (date.getFullYear() +
       "-" +
       `${date.getMonth() < 10 ? "0" : ""}` +
       (date.getMonth() + 1) +
       "-" +
       `${date.getDate() < 10 ? "0" : ""}` +
       date.getDate());
-    }
-  
-    /* function to fetch slot data of a date */
-    function fetchSlotWithDate(date){
-      var ref = firebase.database().ref(`Doctors/${Did}/${DateToString(date)}`);
-      ref.on("value", (snapshot) => {
-        const data = snapshot.val();
-        setSlotInfo(data);
-      });
-    }
+  }
+
+  /* function to fetch slot data of a date */
+  function fetchSlotWithDate(date) {
+    var ref = firebase.database().ref(`Doctors/${Did}/${DateToString(date)}`);
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      setSlotInfo(data);
+    });
+  }
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -48,7 +48,7 @@ export const BookPatientSide = () => {
     }
 
     // fetching today's slot details
-    if(slotInfo===null){
+    if (slotInfo === null) {
       fetchSlotWithDate(weekDates[1]);
     }
   });
@@ -89,82 +89,84 @@ export const BookPatientSide = () => {
   }
 
   const dateNavigation = [];
-  for(let i=1;i<=7;i++){
+  for (let i = 1; i <= 7; i++) {
     dateNavigation.push(
-    <a className={"nav-item nav-link " + `${i===1 ? "active" : ""}`}
-      id={"day-" + i + "-tab"}
-      data-toggle="tab"
-      href={"#day-" + i}
-      role="tab"
-      aria-controls={"day-" + i}
-      aria-selected="true"
-      onClick={() => {fetchSlotWithDate(weekDates[i])}}
-    >
-      {weekDates[i].getDate() + " / " + `${weekDates[i].getMonth() < 10 ? "0" : ""}` + weekDates[i].getMonth()}
-    </a>);
+      <a className={"nav-item nav-link dateCSS " + `${i === 1 ? "active" : ""}`}
+        id={"day-" + i + "-tab"}
+        data-toggle="tab"
+        href={"#day-" + i}
+        role="tab"
+        aria-controls={"day-" + i}
+        aria-selected="true"
+        onClick={() => { fetchSlotWithDate(weekDates[i]) }}
+      >
+        {weekDates[i].getDate() + " /" + `${weekDates[i].getMonth() < 10 ? "0" : ""}` + weekDates[i].getMonth()}
+      </a>);
   }
+
+  document.body.style.background = 'white';
 
   return (
     <div className="bg-white">
-      {docData!=null ? 
-      <div className="container pt-4">
-        <div className="row">
-          <div className="col-3 text-center">
-            <img
-              src={doctorProfile}
-              className="img-thumbnail border-info"
-              alt="..."
-            />
+      {docData != null ?
+        <div className="container pt-4">
+          <div className="row" id="row-bookPatient">
+            <div className="col-3 text-center">
+              <img
+                src={doctorProfile}
+                className="img-thumbnail border-info"
+                alt="..."
+              />
+            </div>
+            <div className="col-6 mt-auto mb-auto">
+              <div className="form-group row">
+                <label htmlFor="docName" className="col-sm-4 fieldName-bookPatient col-form-label">
+                  Doctor Name:
+                </label>
+                <div className="col-sm-6 fieldEntry-bookPatient">
+                  <h3 id="doc-name" type="text" readOnly className="form-control">
+                    {"Dr. " + docData.FirstName + " " + docData.LastName}
+                  </h3>
+                </div>
+              </div>
+              <div className="form-group row">
+                <label htmlFor="experience" className="col-sm-4 fieldName-bookPatient col-form-label">
+                  Experience:
+                </label>
+                <div className="col-sm-6 fieldEntry-bookPatient">
+                  <h3 id="doc-exp" type="text" readOnly className="form-control">
+                    blank
+                  </h3>
+                </div>
+              </div>
+              <div className="form-group row">
+                <label htmlFor="specialisation" className="col-sm-4 fieldName-bookPatient col-form-label">
+                  Specialisation:
+                </label>
+                <div className="col-sm-6 fieldEntry-bookPatient">
+                  <h3 id="doc-splz" type="text" readOnly className="form-control">
+                    {docData.Speciality}
+                  </h3>
+                </div>
+              </div>
+              <div className="form-group row">
+                <label htmlFor="contact" className="col-sm-4 fieldName-bookPatient col-form-label">
+                  Contact:
+                </label>
+                <div className="col-sm-6 fieldEntry-bookPatient">
+                  <h3 type="text" readOnly className="form-control">
+                    {docData.Mobile}
+                  </h3>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="col-6 mt-auto mb-auto">
-            <div className="form-group row">
-              <label htmlFor="docName" className="col-sm-4 col-form-label">
-                Doctor Name:
-              </label>
-              <div className="col-sm-6">
-                <h3 id="doc-name" type="text" readOnly className="form-control">
-                  {"Dr. " + docData.FirstName + " " + docData.LastName}
-                </h3>
-              </div>
-            </div>
-            <div className="form-group row">
-              <label htmlFor="experience" className="col-sm-4 col-form-label">
-                Experience:
-              </label>
-              <div className="col-sm-6">
-                <h3 id="doc-exp" type="text" readOnly className="form-control">
-                  blank
-                </h3>
-              </div>
-            </div>
-            <div className="form-group row">
-              <label htmlFor="specialisation" className="col-sm-4 col-form-label">
-                Specialisation:
-              </label>
-              <div className="col-sm-6">
-                <h3 id="doc-splz" type="text" readOnly className="form-control">
-                {docData.Speciality}
-                </h3>
-              </div>
-            </div>
-            <div className="form-group row">
-              <label htmlFor="contact" className="col-sm-4 col-form-label">
-                Contact:
-              </label>
-              <div className="col-sm-6">
-                <h3 type="text" readOnly className="form-control">
-                {docData.Mobile}
-                </h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> : <></>}
+        </div> : <></>}
 
-      <h2 className="ms-5 ps-3 pt-3">Appointments</h2>
+      <h3 className="ms-5 ps-3 pt-3 darkerTextColor fw-bold "><u>Appointments</u></h3>
       <div className="container mt-5">
         <nav>
-          <div className="nav nav-tabs" id="nav-tab" role="tablist">
+          <div className="nav nav-tabs" style={{flexWrap:'nowrap', fontSize:'x-small'}} id="nav-tab" role="tablist">
             {dateNavigation}
           </div>
         </nav>
@@ -178,17 +180,17 @@ export const BookPatientSide = () => {
             <div className="container">
               <div className="row my-2">
                 <div className="col-2 align-self-center">Morning</div>
-                <div className="col-8">{morningSlots.length!=0 ? morningSlots : <h3 style={{color: "grey"}}>No Slots Available</h3>}</div>
+                <div className="col-8">{morningSlots.length != 0 ? morningSlots : <p className='my-2' style={{ color: "grey" }}>No Slots Available</p>}</div>
               </div>
               <hr></hr>
               <div className="row my-2">
                 <div className="col-2 align-self-center">Afternoon</div>
-                <div className="col-8">{afternoonSlots!=0 ? afternoonSlots : <h3 style={{color: "grey"}}>No Slots Available</h3>}</div>
+                <div className="col-8">{afternoonSlots != 0 ? afternoonSlots : <p className='my-2' style={{ color: "grey" }}>No Slots Available</p>}</div>
               </div>
               <hr></hr>
               <div className="row my-2">
                 <div className="col-2 align-self-center">Evening</div>
-                <div className="col-8">{eveningSlots!=0 ? eveningSlots : <h3 style={{color: "grey"}}>No Slots Available</h3>}</div>
+                <div className="col-8">{eveningSlots != 0 ? eveningSlots : <p className='my-2' style={{ color: "grey" }}>No Slots Available</p>}</div>
               </div>
             </div>
           </div>

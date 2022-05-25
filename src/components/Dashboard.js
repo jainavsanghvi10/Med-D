@@ -48,6 +48,8 @@ export default function Dashboard() {
 		}, duration);
 	});
 
+	document.body.style.background = 'linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(5, 218, 238, 1) 100%)';
+
 	return (
 		<>
 			{/* <!--font-family--> */}

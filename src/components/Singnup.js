@@ -121,7 +121,7 @@ export default function Signup() {
 
 	return (
 		<>
-			<div style={{ height: '80vh' }}>
+			<div className='FormsHeightMobile' style={{ height: '90vh' }}>
 				<div id='signupContainer' className="container h-100 mt-0 mb-0 d-flex align-items-center" style={{ width: '35vw' }}>
 					<div className="shadow-lg row mt-0 pt-0">
 						{error && (

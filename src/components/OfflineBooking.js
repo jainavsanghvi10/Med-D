@@ -14,26 +14,6 @@ export const OfflineBooking = () => {
   useEffect(() => {
     if (docData === null) {
       db.collection("DoctorData")
-      .get()
-      .then((querySnapshot) => {
-        const tempData = [];
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
-          tempData.push([doc.id, doc.data()]);
-        });
-        console.log("available", tempData);
-        setDocData(tempData);
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-    });
-    }
-  });
-
-  function SearchDoctors(){
-    db.collection("DoctorData")
-        .where("State", "==", `${stateRef.current.value.toLowerCase()}`)
         .get()
         .then((querySnapshot) => {
           const tempData = [];
@@ -47,6 +27,26 @@ export const OfflineBooking = () => {
         })
         .catch((error) => {
           console.log("Error getting documents: ", error);
+        });
+    }
+  });
+
+  function SearchDoctors() {
+    db.collection("DoctorData")
+      .where("State", "==", `${stateRef.current.value.toLowerCase()}`)
+      .get()
+      .then((querySnapshot) => {
+        const tempData = [];
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          tempData.push([doc.id, doc.data()]);
+        });
+        console.log("available", tempData);
+        setDocData(tempData);
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
       });
   }
 
@@ -55,15 +55,15 @@ export const OfflineBooking = () => {
     for (let i = 0; i < docData.length; i++) {
       let doc = docData[i][1];
       docBox.push(
-        <div className="card text-left">
-          <div className="card-body row">
+        <div className="card text-left shadow-lg docCard-parent-offlineBooking">
+          <div className="card-body row docCard-offlineBooking">
             <div className="col-2 text-center">
               <img
                 src={doctorProfile}
                 className="img-thumbnail border-info"
                 alt="..."
               />
-              <a className="text-info" href="">
+              <a className="text-info desktopView" href="">
                 <b>View Profile</b>
               </a>
             </div>
@@ -140,7 +140,7 @@ export const OfflineBooking = () => {
   let specializationDropdown = [];
   specializationDropdown.push(
     <option key={"nospecialization"} defaultValue>
-      Select City
+      Select Specialization
     </option>
   );
   for (let i = 0; i < cities.length; i++) {
@@ -148,12 +148,12 @@ export const OfflineBooking = () => {
       <option key={"special" + i}>{specialization[i]}</option>
     );
   }
-
+  document.body.style.background = 'white';
   return (
     <>
-      <div className="row container my-4 ms-0">
+      <div id='findDoc-offlineBooking' className="row container my-4 mx-0 pe-0">
         <div className="col-3">
-          <label htmlFor="specialization-dropdown">Specialization</label>
+          <label htmlFor="specialization-dropdown mobileView">Specialization</label>
           <select
             ref={specialityRef}
             id="specialization-dropdown"
@@ -161,6 +161,18 @@ export const OfflineBooking = () => {
             aria-label="Default select example"
           >
             {specializationDropdown}
+          </select>
+          <div className="valid-feedback">Looks Good!</div>
+        </div>
+        <div className="col-3">
+          <label htmlFor="state-dropdown">State</label>
+          <select
+            ref={stateRef}
+            id="state-dropdown"
+            className="form-select"
+            aria-label="Default select example"
+          >
+            {stateDropdown}
           </select>
           <div className="valid-feedback">Looks Good!</div>
         </div>
@@ -177,27 +189,33 @@ export const OfflineBooking = () => {
           <div className="valid-feedback">Looks Good!</div>
         </div>
 
-        <div className="col-3">
-          <label htmlFor="state-dropdown">State</label>
-          <select
-            ref={stateRef}
-            id="state-dropdown"
-            className="form-select"
-            aria-label="Default select example"
-          >
-            {stateDropdown}
-          </select>
-          <div className="valid-feedback">Looks Good!</div>
-        </div>
-        <div className="col-3 mt-auto">
-          <button
+
+        <div className="col-3 mt-auto button-offlineBooking">
+          <div class="input-group">
+            <select class="custom-select" id="inputGroupSelect04">
+              <option selected> Sort Result by...</option>
+              <option value="1">By Customer Rating  </option>
+              <option value="2">By Consultation Fees</option>
+            </select>
+            <div class="input-group-append">
+              <button
+                className="btn btn-light btn-outline-dark fw-bold"
+                type="submit"
+                id="search-btn"
+                onClick={SearchDoctors}
+              >
+                Search
+              </button>
+            </div>
+          </div>
+          {/* <button
             className="btn btn-light btn-outline-dark fw-bold"
             type="submit"
             id="search-btn"
             onClick={SearchDoctors}
           >
             Search
-          </button>
+          </button> */}
         </div>
       </div>
 

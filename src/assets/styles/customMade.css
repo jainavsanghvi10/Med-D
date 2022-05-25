@@ -53,6 +53,7 @@ html, body {
 .borderRight {
   border-radius: 0px 25px 25px 0px;
 }
+
 .borderLeft {
   border-radius: 25px 0px 0px 25px;
 }
@@ -60,16 +61,17 @@ html, body {
 .roundedBottom {
   border-radius: 0px 0px 50px 50px;
 }
+
 .roundedTop {
   border-radius: 25px 25px 0px 0px;
 }
 
 .thickBorder {
-  border: 37px solid #40B2C1!important
+  border: 37px solid #40B2C1 !important
 }
 
 .thinBorder {
-  border: 7px solid #40B2C1!important
+  border: 7px solid #40B2C1 !important
 }
 
 .dashboardSlogan {
@@ -234,45 +236,52 @@ body {
   overflow: hidden;
 }
 
-.socialIcons{
+.socialIcons {
   color: #4a4d5081;
   fill: currentColor;
 }
 
-#signup-form > div{
+#signup-form>div {
   padding-left: 50px;
   padding-right: 50px;
 }
 
+#findDoc-offlineBooking label {
+  color: #40B2C1 !important;
+  font-weight: 700;
+  padding-left: 10px;
+}
+
 @media only screen and (max-width: 600px) {
-  #dashboardSloganContainer{
+  #dashboardSloganContainer {
     height: 60vh !important;
   }
-  .dashboardSlogan h1{
+
+  .dashboardSlogan h1 {
     padding: 0px !important;
     font-size: 5vh !important;
   }
 
-  .dashboardSlogan > div {
-    width:100% !important;
+  .dashboardSlogan>div {
+    width: 100% !important;
   }
 
-  .dashboardSlogan button{
+  .dashboardSlogan button {
     margin: 0 !important;
   }
 
-  .dashboardSlogan > div > div {
+  .dashboardSlogan>div>div {
     padding: 20px !important;
   }
 
-  .dashboardSlogan p{
+  .dashboardSlogan p {
     padding: 0px !important;
     /* display: block !important; */
     width: 100% !important;
     font-size: medium !important;
   }
 
-  #doctorDashboard{
+  #doctorDashboard {
     display: none;
   }
 
@@ -281,107 +290,193 @@ body {
     /* margin: 10px !important; */
     width: 90%;
   }
-  #bookNowContainer > div{
+
+  #bookNowContainer>div {
     padding: 10px 0px 0px 0px !important;
     width: 100%;
     text-align: center;
   }
 
-  #bookNowContainer h1{
+  #bookNowContainer h1 {
     font-size: large !important;
   }
-  #bookNowContainer p{
+
+  #bookNowContainer p {
     font-size: small !important;
     padding-left: 0px;
     padding-right: 0px;
     margin-left: 0px;
     margin-right: 0px;
   }
-  #bookNowContainer button{
+
+  #bookNowContainer button {
     font-size: large !important;
     margin-bottom: 10px;
-    
+
   }
 
   #offerCarousel, #offerCarousel img {
     height: auto !important;
   }
 
-  #customerReview > div > div{
+  #customerReview>div>div {
     width: 100% !important;
     padding: 0px !important;
   }
 
-  #customerReview h2{
+  #customerReview h2 {
     font-size: large;
     padding-bottom: 0px !important;
   }
-  #customerReview h5{
+
+  #customerReview h5 {
     font-size: x-small !important;
     padding-top: 5px !important;
     padding-bottom: 5px !important;
     width: 80% !important;
   }
-  #customerReview span{
+
+  #customerReview span {
     font-size: small !important;
     /* padding-bottom: 2px !important; */
   }
-  #footerInfo, #footerInfo >div>div>div{
+
+  #footerInfo, #footerInfo>div>div>div {
     padding: 0px !important;
     margin: 0px !important;
 
   }
 
-  #footerInfo h4{
+  #footerInfo h4 {
     font-size: small;
   }
-  #footerInfo li, #footerInfo span{
+
+  #footerInfo li, #footerInfo span {
     font-size: xx-small;
   }
 
-  #footerInfo svg{
+  #footerInfo svg {
     width: 20px !important;
     height: 20px !important;
   }
 
-  .mobileView{
+  .mobileView {
     display: block !important;
   }
-  .desktopView{
+
+  .desktopView {
     display: none !important;
   }
 
-  #happyCircles > div{
+  #happyCircles>div {
     height: 15vh !important;
     width: 15vh !important;
   }
-  #happyCircles h2{
+
+  #happyCircles h2 {
     font-size: 2.5vh !important;
   }
-  #happyCircles h3{
+
+  #happyCircles h3 {
     font-size: 1vh !important;
   }
 
-  .desktopBreak{
+  .desktopBreak {
     display: none;
   }
+
   .thickBorder {
-    border: 20px solid #40B2C1!important
+    border: 20px solid #40B2C1 !important
   }
 
-  #carouselExampleIndicators{
-    padding-top:0px !important ;
+  #carouselExampleIndicators {
+    padding-top: 0px !important;
   }
-  #signupContainer {
+
+  #signupContainer, #loginContainer {
     width: 100% !important;
+  }
+
+  .FormsHeightMobile {
+    height: 80vh !important;
+  }
+
+  #findDoc-offlineBooking>div {
+    width: 100% !important;
+  }
+
+  #findDoc-offlineBooking label {
+    color: #40B2C1 !important;
+    font-weight: 500;
+  }
+
+  .button-offlineBooking {
+    text-align: center !important;
+    padding-top: 10px;
+  }
+
+  .docCard-offlineBooking>div {
+    width: 100% !important;
+  }
+
+  .docCard-offlineBooking img {
+    width: 50% !important;
+    display: block !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .docCard-offlineBooking a {
+    width: 100% !important;
+    font-size: small;
+  }
+
+  .docCard-offlineBooking {
+    text-align: center;
+  }
+
+  .docCard-parent-offlineBooking {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: #102b2f !important;
+    /* border-radius: 30px !important; */
+  }
+
+  .docCard-offlineBooking span {
+    font-size: smaller;
+  }
+
+  .doc-location {
+    margin-bottom: 5px;
+  }
+  #row-bookPatient > div{
+    width: 100%;
+  }
+  .fieldName-bookPatient{
+    width: 30% !important;
+    font-size: smaller !important;
+  }
+  .fieldEntry-bookPatient{
+    width: 70% !important;
+  }
+  .fieldEntry-bookPatient h3{
+    font-size: smaller !important;
+  }
+  .dateCSS{
+    padding-left: 2vw !important;
+    padding-right: 2vw !important;
   }
 }
 
 @media only screen and (min-width: 600px) {
-  .mobileView{
-    display: none ;
+  .mobileView {
+    display: none;
   }
-  .desktopView{
-    display: block ;
+
+  .desktopView {
+    display: block;
   }
 }
