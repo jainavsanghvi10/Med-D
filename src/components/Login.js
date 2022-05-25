@@ -133,7 +133,7 @@ export default function Signup() {
 							</ul>
 						</div>
 
-						<span className="text-center darkerTextColor fw-bold">Login Form</span>
+						<span className="text-center darkerTextColor fw-bold">Patient Login Form</span>
 						<div className="form-outline mb-2">
 							<input
 								type="text"

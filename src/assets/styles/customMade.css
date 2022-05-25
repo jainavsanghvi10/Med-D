@@ -469,6 +469,19 @@ body {
     padding-left: 2vw !important;
     padding-right: 2vw !important;
   }
+  #slotContainer-bookPatient{
+    font-size: smaller;
+  }
+  #slotContainer-bookPatient .col-2{
+    width: 25% !important;
+  }
+  #slotContainer-bookPatient .col-8{
+    width: 75% !important;
+  }
+  #slotContainer-bookPatient button{
+    margin: 2px !important;
+    font-size: smaller;
+  }
 }
 
 @media only screen and (min-width: 600px) {

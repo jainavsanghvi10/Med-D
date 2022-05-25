@@ -111,7 +111,7 @@ export const OfflineBooking = () => {
               95%
             </button>
             <a className="text-black" href="">
-              XXX Paitent Stories
+              XXX Patient Stories
             </a>
           </div>
         </div>

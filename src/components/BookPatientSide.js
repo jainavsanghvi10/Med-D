@@ -163,21 +163,22 @@ export const BookPatientSide = () => {
           </div>
         </div> : <></>}
 
-      <h3 className="ms-5 ps-3 pt-3 darkerTextColor fw-bold "><u>Appointments</u></h3>
-      <div className="container mt-5">
+
+      <div className="container  mt-4 pt-3">
+        <h3 className="pb-3 darkerTextColor fw-bold "><u>Book Appointment:</u></h3>
         <nav>
-          <div className="nav nav-tabs" style={{flexWrap:'nowrap', fontSize:'x-small'}} id="nav-tab" role="tablist">
+          <div className="nav nav-tabs" style={{ flexWrap: 'nowrap', fontSize: 'x-small' }} id="nav-tab" role="tablist">
             {dateNavigation}
           </div>
         </nav>
-        <div className="tab-content" id="nav-tabContent">
+        <div className="tab-content " id="nav-tabContent">
           <div
             className="tab-pane fade show active"
             id="day-1"
             role="tabpanel"
             aria-labelledby="day-1-tab"
           >
-            <div className="container">
+            <div id='slotContainer-bookPatient' className="container">
               <div className="row my-2">
                 <div className="col-2 align-self-center">Morning</div>
                 <div className="col-8">{morningSlots.length != 0 ? morningSlots : <p className='my-2' style={{ color: "grey" }}>No Slots Available</p>}</div>
