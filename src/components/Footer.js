@@ -9,6 +9,7 @@ export const Footer = () => {
 
 
 		<>
+			<hr className="w-75 mx-auto"></hr>
 			<div className="py-4 pb-5 mt-0 bg-white darkerTextColor" id="footerInfo">
 				<div className="container">
 					<div className="row">
@@ -47,8 +48,8 @@ export const Footer = () => {
 							<ul className="list-unstyled text-small">
 								<li className="align-top"><a className="text-secondary" href="#">
 									<span className="material-icons  align-top">
-									email
-								</span>support@medd.com</a></li>
+										email
+									</span>support@medd.com</a></li>
 								<li className="align-top"><a className="text-secondary" href="#">
 									<span className="material-icons align-top">
 										phone

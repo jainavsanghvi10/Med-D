@@ -22,22 +22,6 @@ export default function Signup() {
 	const [show, setShow] = useState(true);
 	const [userValidate, setUserValidate] = useState(false);
 
-	// 	getAuth()
-	//   	.getUsers([
-	//     { phoneNumber: '+919413352325' }
-	//   ])
-	//   .then((getUsersResult) => {
-	//     console.log('Successfully fetched user data:');
-	//     getUsersResult.users.forEach((userRecord) => {
-	//       console.log(userRecord);
-	//     });
-
-	//     console.log('Unable to find users corresponding to these identifiers:');
-	//     getUsersResult.notFound.forEach((userIdentifier) => {
-	//       console.log(userIdentifier);
-	//     });
-	//   })
-
 	useEffect(() => {
 		if (userValidate) {
 			firebase
@@ -67,10 +51,10 @@ export default function Signup() {
 				console.log("Folder Created");
 			});
 		}
-		//eslint-disable-next-line
+
 	}, [userValidate]);
 
-	// Sent OTP
+
 	const signin = () => {
 		console.log("otp sending");
 		if (
@@ -92,7 +76,7 @@ export default function Signup() {
 				window.location.reload();
 			});
 	};
-	// Validate OTP
+
 	function ValidateOtp() {
 		if (UserOtpRef.current.value === null || final === null) return;
 		final
@@ -108,7 +92,7 @@ export default function Signup() {
 
 	const uploadFiles = (file) => {
 		console.log("Registering User");
-		// if (!file) return;
+
 		const storageRef = firebase
 			.storage()
 			.ref(storage, `/${currentUser.uid}/${file.name}`);
@@ -118,173 +102,102 @@ export default function Signup() {
 			.then((snapshot) => {
 				console.log("User Registered!");
 			});
-		// const uploadTask = uploadBytesResumable(sotrageRef, file);
-
-		// uploadTask.on(
-		// 	'state_changed',
-		// 	(snapshot) => {
-		// 		const prog = Math.round(
-		// 			(snapshot.bytesTransferred / snapshot.totalBytes) * 100
-		// 		);
-		// 		setProgress(prog);
-		// 	},
-		// 	(error) => console.log(error),
-		// );
 	};
 
 	async function handleSubmit(e) {
 		e.preventDefault();
-		// console.log("Helo there");
+
 
 		const form = document.getElementById("signup-form");
 		if (form.checkValidity()) {
-			// console.log("valid form")
+
 			ValidateOtp();
 		}
 
 		setLoading(false);
 	}
+	document.body.style.background = 'white';
 
 
 	return (
-		<div style={{ padding: '0px', margin: '0px', height: '90vh' }}>
-			<div className="container align-middle my-auto pe-0 darkerWebsiteColor roundedBottom" style={{ width: '70vw' }}>
-				<div className="row mt-0 pt-0">
-					<div className="col-6 px-5">
-						<h1 className="text-center fw-bold text-white mt-3">
-							Sign Up
-						</h1>
+		<>
+			<div style={{ height: '80vh' }}>
+				<div id='signupContainer' className="container h-100 mt-0 mb-0 d-flex align-items-center" style={{ width: '35vw' }}>
+					<div className="shadow-lg row mt-0 pt-0">
 						{error && (
 							<div className="console.log console.log-danger" role="console.log">
 								{error}
 							</div>
 						)}
-						<form
-							className="row g-3 needs-validation mt-3"
-							id="signup-form"
-							onSubmit={handleSubmit}
-							noValidate
-						>
-							<div className="col-md-6">
-								{/* <label htmlFor="validationCustom03" className="form-label text-white">
-								First Name
-							</label> */}
-								<input
-									type="text"
-									className="form-control rounded-pill"
-									id="fname"
-									ref={firstNameRef}
-									placeholder='First Name'
-									required
-								/>
+						<form className="row g-3 needs-validation mt-0 px-0 mx-0" id="signup-form" onSubmit={handleSubmit} noValidate>
+
+							{/* NavBar For Signup Login options */}
+
+
+							<div className="col-6 text-center border mt-0 py-3 darkerTextColor greyishColor fw-bold fs-4">
+								<Link to="/login"> <a type='button' className='w-100 darkerTextColor'>Login</a> </Link>
+							</div>
+							<div className="col-6 text-center border mt-0 py-3 btn-group dropdown darkerTextColor fw-bold fs-4">
+								<span type="button" className="dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false"><u>Sign Up</u></span>
+								<ul className="dropdown-menu">
+									<Link to="/signup"><button className="dropdown-item darkerTextColor" type="button">As Patient</button></Link>
+									<Link to="/signup-doctor"><button className="dropdown-item darkerTextColor" type="button">As Doctor</button></Link>
+								</ul>
+							</div>
+
+							<span className="text-center darkerTextColor fw-bold">Patient Sign Up Form</span>
+
+							<div className="col-6 pe-1 mt-4">
+								<input type="text" className="form-control rounded-pill" id="fname" ref={firstNameRef} placeholder='First Name' required />
 								<div className="valid-feedback">Looks Good!</div>
 							</div>
-							<div className="col-md-6">
-								{/* <label htmlFor="validationCustom03" className="form-label text-white">
-								Last Name
-							</label> */}
-								<input
-									type="text"
-									className="form-control rounded-pill"
-									id="lname"
-									ref={lastNameRef}
-									placeholder='Last Name'
-									required
-								/>
+							<div className="col-6 ps-1 mt-4">
+								<input type="text" className="form-control rounded-pill" id="lname" ref={lastNameRef} placeholder='Last Name' required />
 								<div className="valid-feedback">Looks Good!</div>
 							</div>
 
 							<div className="form-outline">
-								{/* <label htmlFor="validationCustomUsername" className="form-label">
-								Email
-							</label> */}
 								<div className="input-group has-validation">
-									<input
-										type="email"
-										className="form-control rounded-pill"
-										id="email"
-										ref={emailRef}
-										placeholder="Email"
-										aria-describedby="inputGroupPrepend"
-									/>
+									<input type="email" className="form-control rounded-pill" id="email" ref={emailRef} placeholder="Email" aria-describedby="inputGroupPrepend" />
 									<div className="invalid-feedback">Please choose a username.</div>
 								</div>
 							</div>
 							<div className="form-outline">
-								{/* <label htmlFor="validationCustom03" className="form-label">
-								Phone Number
-							</label> */}
-								<input
-									type="text"
-									className="form-control rounded-pill"
-									id="phonenumber"
-									ref={phoneNumberRef}
-									placeholder='Phone Number'
-									required
-								/>
+								<input type="text" className="form-control rounded-pill" id="phonenumber" ref={phoneNumberRef} placeholder='Phone Number' required />
 								<div className="invalid-feedback">
 									Please provide a valid phone number.
 								</div>
 							</div>
 							<div className="form-outline">
-								{/* <label htmlFor="validationCustom03" className="form-label">
-								OTP
-							</label> */}
-								<input
-									type="text"
-									className="form-control rounded-pill"
-									id="otp"
-									ref={UserOtpRef}
-									placeholder='Enter OTP'
-									// pattern="[0-9]{6}"
-									required
-								/>
+								<input type="text" className="form-control rounded-pill" id="otp" ref={UserOtpRef} placeholder='Enter OTP' required />
 								<div className="invalid-feedback">Please enter OTP.</div>
 							</div>
-							<div className="col-12" style={{textAlign:'center'}}>
-								<div className="form-check" style={{textAlign:'center'}} >
-									<input
-										className="form-check-input"
-										type="checkbox"
-										value=""
-										id="invalidCheck"
-										required
-									/>
-									<label className="form-check-label text-white" htmlFor="invalidCheck">
-										Agree to terms and conditions
-									</label>
-									<div className="invalid-feedback">
-										You must agree before submitting.
-									</div>
+
+							<div className="form-check d-flex justify-content-center" >
+								<input className="form-check-input me-2" type="checkbox" style={{ textAlign: 'center' }} value="" id="invalidCheck" required />
+								<label className="form-check-label" htmlFor="invalidCheck">
+									Agree to terms and conditions
+								</label>
+								<div className="invalid-feedback">
+									You must agree before submitting.
 								</div>
+
 							</div>
-							<div className="col-12" style={{textAlign:'center'}}>
+							<div className="col-12" style={{ textAlign: 'center' }}>
 								<>
-									<div
-										style={{ display: show ? "block" : "none" }}
-										id="recaptcha-container"
-									></div>
-									<button
-										className="btn btn-light fw-bold rounded-pill"
-										id="send-otp-btn"
-										onClick={signin}
-										style={{ marginBottom: "30px", marginRight: "20px", color: '#40B2C1' }}
-									>
+									<div style={{ display: show ? "block" : "none" }} id="recaptcha-container"></div>
+									<button className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill mb-1" id="send-otp-btn" onClick={signin} style={{ marginBottom: "30px", marginRight: "20px" }} >
 										Send OTP
 									</button>
 								</>
-								<button
-									className="btn btn-light fw-bold rounded-pill"
-									type="submit"
-									id="signup-btn"
-									style={{ marginBottom: "30px", color: '#40B2C1' }}
-								>
+								<button className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill mb-1" type="submit" id="signup-btn" style={{ marginBottom: "30px" }} >
 									Signup
 								</button>
 							</div>
 						</form>
+						<hr className="w-75 mx-auto my-auto mt-3"></hr>
 						<div className="d-flex justify-content-around align-items-center">
-							<p className="text-white">
+							<p className="mb-1 mt-2">
 								Already a User ? <Link to="/login"> Login </Link>
 							</p>
 						</div>
@@ -293,12 +206,10 @@ export default function Signup() {
 								<Link to="/signup-doctor"> Signup as Doctor </Link>
 							</p>
 						</div>
-					</div>
-					<div className="col-6" >
-						<img src={signUpImage} className='w-100' style={{ borderRadius: '0px 0px 50px 0px' }}></img>
+
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }

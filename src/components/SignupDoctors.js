@@ -141,123 +141,104 @@ export default function SignupDoctors() {
 		);
 	}
 	let specializationDropdown = [];
-	specializationDropdown.push(<option key={"nospecialization"} defaultValue>Select City</option>);
+	specializationDropdown.push(<option key={"nospecialization"} defaultValue>Select Specialization</option>);
 	for (let i = 0; i < cities.length; i++) {
 		specializationDropdown.push(
 			<option key={"special" + i}>{specialization[i]}</option>
 		);
 	}
 
+	document.body.style.background = 'white';
 
 	return (
-		<div
-			className='container-md'
-			style={{ maxWidth: '500px', position: 'relative', marginTop: '100px' }}>
-			<h1 className='mt-100 text-center' style={{ marginBottom: '50px' }}>
-				Sign Up As Doctor
-			</h1>
-			{error && (
-				<div className='console.log console.log-danger' role='console.log'>
-					{error}
-				</div>
-			)}
-			<form
-				className='row g-3 needs-validation'
-				id='signup-form'
-				onSubmit={handleSubmit}
-				noValidate>
-				<div className='col-md-6'>
-					<label htmlFor='validationCustom03' className='form-label'>
-						First Name
-					</label>
-					<input
-						type='text'
-						className='form-control'
-						id='fname'
-						ref={firstNameRef}
-						required
-					/>
-					<div className='valid-feedback'>Looks Good!</div>
-				</div>
-				<div className='col-md-6'>
-					<label htmlFor='validationCustom03' className='form-label'>
-						Last Name
-					</label>
-					<input
-						type='text'
-						className='form-control'
-						id='lname'
-						ref={lastNameRef}
-						required
-					/>
-					<div className='valid-feedback'>Looks Good!</div>
-				</div>
+		<div className='container my-5 ' style={{ maxWidth: '500px', position: 'relative' }}>
+			<div className="shadow-lg row mt-0 pt-0">
+				{/* <h1 className='mt-100 text-center' style={{ marginBottom: '50px' }}>
+					Sign Up As Doctor
+				</h1> */}
+				{error && (
+					<div className='console.log console.log-danger' role='console.log'>
+						{error}
+					</div>
+				)}
+				<form className='row g-3 needs-validation mt-0 px-0 mx-0' id='signup-form' onSubmit={handleSubmit} noValidate>
+					<div className="col-6 text-center border mt-0 py-3 darkerTextColor greyishColor fw-bold fs-4">
+						<Link to="/login"> <a type='button' className='w-100 darkerTextColor'>Login</a> </Link>
+					</div>
+					<div className="col-6 text-center border mt-0 py-3 btn-group dropdown darkerTextColor fw-bold fs-4">
+						<span type="button" className="dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false"><u>Sign Up</u></span>
+						<ul className="dropdown-menu">
+							<Link to="/signup"><button className="dropdown-item darkerTextColor" type="button">As Patient</button></Link>
+							<Link to="/signup-doctor"><button className="dropdown-item darkerTextColor" type="button">As Doctor</button></Link>
+						</ul>
+					</div>
 
-				<div className='form-outline mb-4'>
-					<label htmlFor='validationCustomUsername' className='form-label'>
-						Email
-					</label>
-					<div className='input-group has-validation'>
+					<span className="text-center darkerTextColor fw-bold">Doctor Sign Up Form</span>
+					<div className='col-6 pe-1 mt-4'>
+						<input type='text' className='form-control rounded-pill' placeholder='First Name' id='fname' ref={firstNameRef} required />
+						<div className='valid-feedback'>Looks Good!</div>
+					</div>
+					<div className='col-6 ps-1 mt-4'>
+						<input type='text' className='form-control rounded-pill' id='lname' ref={lastNameRef} placeholder='Last Name' required />
+						<div className='valid-feedback'>Looks Good!</div>
+					</div>
+
+					<div className='form-outline'>
+						<div className='input-group has-validation'>
+							<input type='email' className='form-control rounded-pill' id='email' ref={emailRef} placeholder='Email' aria-describedby='inputGroupPrepend' />
+							<div className='invalid-feedback'>Please choose a username.</div>
+						</div>
+					</div>
+					<div className='form-outline'>
 						<input
-							type='email'
-							className='form-control'
-							id='email'
-							ref={emailRef}
-							placeholder='abc@gmail.com (optional)'
-							aria-describedby='inputGroupPrepend'
+							type='text'
+							className='form-control rounded-pill'
+							id='phonenumber'
+							ref={phoneNumberRef}
+							placeholder='Enter Your Phone Number'
+							// pattern="[0-9]{10}"
+							required
 						/>
-						<div className='invalid-feedback'>Please choose a username.</div>
+						<div className='invalid-feedback'>
+							Please provide a valid phone number.
+						</div>
 					</div>
-				</div>
-				<div className='form-outline mb-4'>
-					<label htmlFor='validationCustom03' className='form-label'>
-						Phone Number
-					</label>
-					<input
-						type='text'
-						className='form-control'
-						id='phonenumber'
-						ref={phoneNumberRef}
-						// pattern="[0-9]{10}"
-						required
-					/>
-					<div className='invalid-feedback'>
-						Please provide a valid phone number.
+					<div className='form-outline'>
+						<select ref={stateRef} id="state-dropdown" className="rounded-pill mx-auto form-select" aria-label="Default select example">
+							{stateDropdown}
+						</select>
+
 					</div>
-				</div>
+					<div className='form-outline'>
+						<select ref={cityRef} id="city-dropdown" className="rounded-pill mx-auto form-select" aria-label="Default select example">
+							{cityDropdown}
+						</select>
+					</div>
 
-				<label htmlFor="state-dropdown">State</label>
-				<select ref={stateRef} id="state-dropdown" className="form-select" aria-label="Default select example">
-					{stateDropdown}
-				</select>
-				<label htmlFor="city-dropdown">City</label>
-				<select ref={cityRef} id="city-dropdown" className="form-select" aria-label="Default select example">
-					{cityDropdown}
-				</select>
-				<label htmlFor="specialization-dropdown">Specialization</label>
-				<select ref={specialityRef} id="specialization-dropdown" className="form-select" aria-label="Default select example">
-					{specializationDropdown}
-				</select>
+					<div className='form-outline'>
+						<select ref={specialityRef} id="specialization-dropdown" className="rounded-pill form-select" aria-label="Default select example">
+							{specializationDropdown}
+						</select>
+					</div>
 
-				<div className='form-outline mb-4'>
-					<label htmlFor='validationCustom03' className='form-label'>
-						OTP
-					</label>
-					<input
-						type='text'
-						className='form-control'
-						id='otp'
-						ref={UserOtpRef}
-						// pattern="[0-9]{6}"
-						required
-					/>
-					<div className='invalid-feedback'>Please enter OTP.</div>
-				</div>
-				<div className='col-12'>
-					<div className='form-check'>
+					<div className='form-outline mb-4'>
 						<input
-							className='form-check-input'
+							type='text'
+							className='form-control rounded-pill'
+							id='otp'
+							ref={UserOtpRef}
+							placeholder='Enter OTP'
+							// pattern="[0-9]{6}"
+							required
+						/>
+						<div className='invalid-feedback'>Please enter OTP.</div>
+					</div>
+
+					<div className='form-check d-flex justify-content-center'>
+						<input
+							className='form-check-input me-2'
 							type='checkbox'
+							style={{textAlign:'center'}}
 							value=''
 							id='invalidCheck'
 							required
@@ -269,33 +250,33 @@ export default function SignupDoctors() {
 							You must agree before submitting.
 						</div>
 					</div>
-				</div>
-				<div className='col-12'>
-					<>
-						<div
-							style={{ display: show ? 'block' : 'none' }}
-							id='recaptcha-container'></div>
+					<div className='col-12' style={{ textAlign: 'center' }}>
+						<>
+							<div
+								style={{ display: show ? 'block' : 'none' }}
+								id='recaptcha-container'></div>
+							<button
+								className='btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill'
+								id='send-otp-btn'
+								onClick={signin}
+								style={{ marginBottom: '30px', marginRight: '20px' }}>
+								Send OTP
+							</button>
+						</>
 						<button
-							className='btn btn-primary'
-							id='send-otp-btn'
-							onClick={signin}
-							style={{ marginBottom: '30px', marginRight: '20px' }}>
-							Send OTP
+							className='btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill'
+							type='submit'
+							id='signup-btn'
+							style={{ marginBottom: '30px' }}>
+							Signup
 						</button>
-					</>
-					<button
-						className='btn btn-primary'
-						type='submit'
-						id='signup-btn'
-						style={{ marginBottom: '30px' }}>
-						Signup
-					</button>
+					</div>
+				</form>
+				<div className='d-flex justify-content-around align-items-center mb-4'>
+					<p>
+						Already a Registered Doctor ? <Link to='/login-doctor'> Login </Link>
+					</p>
 				</div>
-			</form>
-			<div className='d-flex justify-content-around align-items-center mb-4'>
-				<p>
-					Already a Registered Doctor ? <Link to='/login-doctor'> Login </Link>
-				</p>
 			</div>
 		</div>
 	);

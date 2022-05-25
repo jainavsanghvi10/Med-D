@@ -410,6 +410,8 @@ export const MedRecords = () => {
 		setModalIsOpen(false);
 	}
 
+	document.body.style.background = '#eeeeee';
+
 // *******************************************************************************************************************************************************************
 
 	return (
@@ -457,17 +459,17 @@ export const MedRecords = () => {
 						</button>
 					</>
 				) : null}
-				<div class='btn-group dropright'>
+				<div className='btn-group dropright'>
 					<button
 						type='button'
-						class='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold dropdown-toggle'
+						className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold dropdown-toggle'
 						data-toggle='dropdown'
 						aria-haspopup='true'
 						aria-expanded='false'>
 						SORT
 						<span className='material-icons ms-2 align-middle'>sort</span>
 					</button>
-					<div class='dropdown-menu'>
+					<div className='dropdown-menu'>
 						<button
 							className='dropdown-item fw-bold'
 							onClick={sort_AtoZ}>

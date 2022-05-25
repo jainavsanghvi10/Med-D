@@ -11,7 +11,7 @@
 }
 
 .darkerTextColor {
-  color: #40B2C1
+  color: #40B2C1 !important;
 }
 
 .aestheticColor1 {
@@ -19,11 +19,11 @@
 }
 
 .greyishColor {
-  background-color: #eeeeee;
+  background-color: #eeeeee !important;
 }
 
 .darkGreyishColor {
-  background-color: #91b1d281;
+  background-color: #91b1d281 !important;
 }
 
 .bluishBlack {
@@ -66,6 +66,10 @@ html, body {
 
 .thickBorder {
   border: 37px solid #40B2C1!important
+}
+
+.thinBorder {
+  border: 7px solid #40B2C1!important
 }
 
 .dashboardSlogan {
@@ -235,6 +239,11 @@ body {
   fill: currentColor;
 }
 
+#signup-form > div{
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
 @media only screen and (max-width: 600px) {
   #dashboardSloganContainer{
     height: 60vh !important;
@@ -362,6 +371,9 @@ body {
 
   #carouselExampleIndicators{
     padding-top:0px !important ;
+  }
+  #signupContainer {
+    width: 100% !important;
   }
 }
 
