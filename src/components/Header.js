@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 
 export const Header = () => {
     const { currentUser } = useAuth();
-    console.log(currentUser);
     return (
 		<>
 			{currentUser ? <NavAfterLogin / > : <NavBeforeLogin/>}

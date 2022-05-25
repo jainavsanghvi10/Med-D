@@ -1,37 +1,36 @@
 import React, { useEffect, useRef, useState } from "react";
-import db from "../firebase";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import db from "../firebase";
 // import * as admin from 'firebase-admin'
 
 export const Test = () => {
-  const {currentUser} = useAuth();
-  const [docData, setDocData] = useState(null);
-
+  // const {currentUser} = useAuth();
+  // var docRef = db.collection("DoctorData").doc(`${currentUser.uid}`);
+  // docRef.get().then((doc) => {
+  //     if (doc.exists) {
+  //         console.log("YOU ARE A DOCTOR");
+  //         console.log("Document data:", doc.data());
+  //     } else {
+  //         // doc.data() will be undefined in this case
+  //         console.log("YOU ARE NOT A DOCTOR!!");
+  //     }
+  // }).catch((error) => {
+  //     console.log("Error getting document:", error);
+  // });
+  const {isDoctor} = useAuth();
+  const navigate = useNavigate();
   useEffect(() => {
-    if(docData === null){
-      call();
+    console.log(isDoctor);
+    if(isDoctor === false){
+      navigate("/");
     }
   });
 
-  async function call(){
-    const cityRef = db.collection('DoctorData').doc(`${currentUser.uid}`);
-    const doc = await cityRef.get();
-    if (!doc.exists) {
-      console.log('No such document!');
-    } else {
-      console.log('Document data:', doc.data());
-      setDocData(doc.data());
-    }
-  }
-  // if(docData===null)
-  //   call();
-
-  
   return (
     <div>
-      <h1> Test Pageblank</h1>
+      <h1> Test Page </h1>
       <div className="container pt-4">
-          <button onClick={call}>Call function</button>
       </div>
     </div>
   );
