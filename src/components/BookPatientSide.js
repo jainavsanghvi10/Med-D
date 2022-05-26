@@ -2,11 +2,32 @@ import React, { useRef, useState, useEffect } from "react";
 import db from "../firebase";
 import doctorProfile from "../assets/images/doctorProfile.svg";
 import firebase from "firebase";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export const BookPatientSide = () => {
+  const {currentUser} = useAuth();
+  const navigate = useNavigate();
+
   const [docData, setDocData] = useState(null);
   const [Did, setDid] = useState();
   const [slotInfo, setSlotInfo] = useState();
+  const [ddate, setDDate] = useState();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const DID = params.get("Did");
+    setDid(DID);
+
+    if (docData === null) {
+      fetchDocDetails();
+    }
+
+    // fetching today's slot details
+    if (slotInfo === null) {
+      fetchSlotWithDate(weekDates[1]);
+    }
+  });
 
   /* Setting dates of 7 days from today */
   const weekDates = [null];
@@ -35,23 +56,55 @@ export const BookPatientSide = () => {
     ref.on("value", (snapshot) => {
       const data = snapshot.val();
       setSlotInfo(data);
+      setDDate(DateToString(date));
     });
   }
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const DID = params.get("Did");
-    setDid(DID);
+  function updateSlot(time, maxPerson) {
+    if (!currentUser) {
+			navigate('/signup');
+		}
+    else{
+      var key = time + "_" + maxPerson;
 
-    if (docData === null) {
-      fetchDocDetails();
-    }
+      var ref = firebase
+        .database()
+        .ref(`Doctors/${Did}/${ddate}/${key}/AttendanceCount`);
 
-    // fetching today's slot details
-    if (slotInfo === null) {
-      fetchSlotWithDate(weekDates[1]);
+      ref.on("value", (snapshot) => {
+        const data = snapshot.val();
+        console.log("Attendance " + data);
+        if (data < maxPerson) {
+          console.log("Slots Avalaible !");
+          var xxx = data + 1;
+          firebase.database().ref(`Doctors/${Did}/${ddate}/${key}`).update({
+            AttendanceCount: xxx,
+          });
+          firebase.database().ref(`Doctors/${Did}/${ddate}/${key}/${xxx-1}`).update({
+            PatientId: currentUser.uid
+          });
+          console.log("Patient Booked SuccesFully!");
+        } else {
+          console.log("Slots Not Avalaible !");
+        }
+      });
+
+      ref.on("value", (snapshot) => {
+        const data = snapshot.val();
+        console.log("Attendance " + data);
+        if (data < maxPerson) {
+          console.log("Slots Avalaible !");
+          var xxx = data + 1;
+          firebase.database().ref(`Doctors/${Did}/${ddate}/${key}`).update({
+            AttendanceCount: xxx,
+          });
+          console.log("Patient Booked SuccesFully!");
+        } else {
+          console.log("Slots Not Avalaible !");
+        }
+      });
     }
-  });
+  }
 
   async function fetchDocDetails() {
     const doctorRef = db.collection("DoctorData").doc(`${Did}`);
@@ -67,22 +120,37 @@ export const BookPatientSide = () => {
   const morningSlots = [];
   const afternoonSlots = [];
   const eveningSlots = [];
+  let t=0;
   for (let s in slotInfo) {
     let time = s.split("_")[0];
     let totalSlotAtTime = s.split("_")[1];
+    let bookedslots = Object.values(slotInfo)[t].AttendanceCount;
+    t++;
 
     if (time.split(":")[0] < 12) {
+      if(bookedslots<totalSlotAtTime)
       morningSlots.push(
-        <button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>
+        <button className="btn btn-sm mx-2 my-2 btn-primary"
+        onClick={() => {
+          updateSlot(time, totalSlotAtTime);
+        }}>{time}</button>
       );
     } else {
       if (time.split(":")[0] < 17) {
+        if(bookedslots<totalSlotAtTime)
         afternoonSlots.push(
-          <button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>
+          <button className="btn btn-sm mx-2 my-2 btn-primary"
+          onClick={() => {
+            updateSlot(time, totalSlotAtTime);
+          }}>{time}</button>
         );
       } else {
+        if(bookedslots<totalSlotAtTime)
         eveningSlots.push(
-          <button className="btn btn-sm mx-2 my-2 btn-primary">{time}</button>
+          <button className="btn btn-sm mx-2 my-2 btn-primary"
+          onClick={() => {
+            updateSlot(time, totalSlotAtTime);
+          }}>{time}</button>
         );
       }
     }

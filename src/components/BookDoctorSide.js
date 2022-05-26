@@ -23,6 +23,33 @@ export const BookDoctorSide = () => {
   if(isDoctor === false){
     navigate("/");
   }
+  useEffect(() => {
+    if (currentUser == null) {
+      navigate("/signup");
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const DID = params.get("Did");
+    setDid(DID);
+    console.log(currentUser);
+    if (currentUser && DID == null) {
+      navigate({
+        pathname: "/book-doctor-side",
+        search: `?Did=${currentUser.uid}`,
+      });
+    }
+    //eslint-disable-next-line
+
+    // fetching today's slot details
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${DateToString(weekDates[1])}`);
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      setSlotInfo(data);
+    });
+  }, []);
+
 
   /* Setting dates of 7 days from today */
   const weekDates = [null];
@@ -55,100 +82,6 @@ export const BookDoctorSide = () => {
       setSlotInfo(data);
       setDDate(DateToString(date));
     });
-  }
-
-  function updateSlot(time, maxPerson) {
-    var key = time + "_" + maxPerson;
-
-    var ref = firebase
-      .database()
-      .ref(`Doctors/${Did}/${ddate}/${key}/AttendanceCount`);
-    ref.on("value", (snapshot) => {
-      const data = snapshot.val();
-      console.log("Attendance " + data);
-      if (data < maxPerson) {
-        console.log("Slots Avalaible !");
-        var xxx = data + 1;
-        firebase.database().ref(`Doctors/${Did}/${ddate}/${key}`).update({
-          AttendanceCount: xxx,
-        });
-        console.log("Patient Booked SuccesFully!");
-      } else {
-        console.log("Slots Not Avalaible !");
-      }
-    });
-  }
-
-  useEffect(() => {
-    if (currentUser == null) {
-      navigate("/signup");
-    }
-
-    const params = new URLSearchParams(window.location.search);
-    const DID = params.get("Did");
-    setDid(DID);
-    console.log(currentUser);
-    if (currentUser && DID == null) {
-      navigate({
-        pathname: "/book-doctor-side",
-        search: `?Did=${currentUser.uid}`,
-      });
-    }
-    //eslint-disable-next-line
-
-    // fetching today's slot details
-    var ref = firebase
-      .database()
-      .ref(`Doctors/${Did}/${DateToString(weekDates[1])}`);
-    ref.on("value", (snapshot) => {
-      const data = snapshot.val();
-      setSlotInfo(data);
-    });
-  }, []);
-
-  const morningSlots = [];
-  const afternoonSlots = [];
-  const eveningSlots = [];
-  for (let s in slotInfo) {
-    let time = s.split("_")[0];
-    let totalSlotAtTime = s.split("_")[1];
-
-    if (time.split(":")[0] < 12) {
-      morningSlots.push(
-        <button
-          className="btn btn-sm mx-2 my-2 btn-primary"
-          onClick={() => {
-            updateSlot(time, totalSlotAtTime);
-          }}
-        >
-          {time}
-        </button>
-      );
-    } else {
-      if (time.split(":")[0] < 17) {
-        afternoonSlots.push(
-          <button
-            className="btn btn-sm mx-2 my-2 btn-primary"
-            onClick={() => {
-              updateSlot(time, totalSlotAtTime);
-            }}
-          >
-            {time}
-          </button>
-        );
-      } else {
-        eveningSlots.push(
-          <button
-            className="btn btn-sm mx-2 my-2 btn-primary"
-            onClick={() => {
-              updateSlot(time, totalSlotAtTime);
-            }}
-          >
-            {time}
-          </button>
-        );
-      }
-    }
   }
 
   function createSlots(e) {
@@ -207,6 +140,47 @@ export const BookDoctorSide = () => {
       } else {
         tab.classList.remove("active");
         continue;
+      }
+    }
+  }
+
+  const morningSlots = [];
+  const afternoonSlots = [];
+  const eveningSlots = [];
+  let t=0;
+  console.log(slotInfo);
+  for (let s in slotInfo) {
+    let time = s.split("_")[0];
+    let totalSlotAtTime = s.split("_")[1];
+
+    let bookedslots = Object.values(slotInfo)[t].AttendanceCount;
+    t++;
+
+    if (time.split(":")[0] < 12) {
+      morningSlots.push(
+        <button
+          className={"btn btn-sm mx-2 my-2 " + `${bookedslots<totalSlotAtTime ? "btn-primary":"btn-secondary"}`}
+        >
+          {time}
+        </button>
+      );
+    } else {
+      if (time.split(":")[0] < 17) {
+        afternoonSlots.push(
+          <button
+          className={"btn btn-sm mx-2 my-2 " + `${bookedslots<totalSlotAtTime ? "btn-primary":"btn-secondary"}`}
+          >
+            {time}
+          </button>
+        );
+      } else {
+        eveningSlots.push(
+          <button
+          className={"btn btn-sm mx-2 my-2 " + `${bookedslots<totalSlotAtTime ? "btn-primary":"btn-secondary"}`}
+          >
+            {time}
+          </button>
+        );
       }
     }
   }
