@@ -12,23 +12,24 @@ export const OfflineBooking = () => {
   const [docData, setDocData] = useState(null);
 
   useEffect(() => {
-    if (docData === null) {
-      db.collection("DoctorData")
-        .get()
-        .then((querySnapshot) => {
-          const tempData = [];
-          querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
-            tempData.push([doc.id, doc.data()]);
-          });
-          console.log("available", tempData);
-          setDocData(tempData);
-        })
-        .catch((error) => {
-          console.log("Error getting documents: ", error);
-        });
-    }
+    /* To fetch all doctors at load */
+    // if (docData === null) {
+    //   db.collection("DoctorData")
+    //     .get()
+    //     .then((querySnapshot) => {
+    //       const tempData = [];
+    //       querySnapshot.forEach((doc) => {
+    //         // doc.data() is never undefined for query doc snapshots
+    //         console.log(doc.id, " => ", doc.data());
+    //         tempData.push([doc.id, doc.data()]);
+    //       });
+    //       console.log("available", tempData);
+    //       setDocData(tempData);
+    //     })
+    //     .catch((error) => {
+    //       console.log("Error getting documents: ", error);
+    //     });
+    // }
   });
 
   function SearchDoctors() {

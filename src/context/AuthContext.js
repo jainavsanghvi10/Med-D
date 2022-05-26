@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
+import db from "../firebase";
 
 const AuthContext = React.createContext();
 
@@ -10,6 +11,8 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
+
+  const [isDoctor, setIsDoctor] = useState(null);
 
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -27,11 +30,26 @@ export function AuthProvider({ children }) {
     return auth.sendPasswordResetEmail(email)
   }
 
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
-      setCurrentUser(user)
-      setLoading(false)
+      setCurrentUser(user);
+
+      // verify if user is doctor
+      if(user!=null){
+        var docRef = db.collection("DoctorData").doc(`${user.uid}`);
+        docRef.get().then((doc) => {
+            if (doc.exists) {
+                setIsDoctor(true);
+            } else {
+                setIsDoctor(false);
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+            setIsDoctor(false);
+        });
+      }
+
+      setLoading(false);
     })
 
     return unsubscribe
@@ -42,7 +60,8 @@ export function AuthProvider({ children }) {
     login,
     signup,
     logout,
-    resetPassword
+    resetPassword,
+    isDoctor
     // updateEmail,
     // updatePassword
   }
