@@ -90,7 +90,7 @@ export const MedRecords = () => {
 				console.log(error);
 			});
 	}, []);
-// *******************************************************************************************************************************************************************
+	// *******************************************************************************************************************************************************************
 	console.log('Getting all folder and file details from ' + id);
 	console.log('folders: ' + FolderNames + ' files: ' + FileNames);
 
@@ -101,7 +101,7 @@ export const MedRecords = () => {
 		const ele = FolderNames[index];
 		FolderList.push(
 			<div
-				className='col-xs-4 me-4'
+				className='col-xs-4 folderContainer'
 				id={'folder' + { index }}
 				style={{
 					width: '100px',
@@ -109,7 +109,7 @@ export const MedRecords = () => {
 					float: 'none',
 				}}>
 				<span
-					className='material-icons align-bottom'
+					className='material-icons align-bottom folderIcon'
 					style={{
 						fontSize: '100px',
 						cursor: 'pointer',
@@ -138,7 +138,7 @@ export const MedRecords = () => {
 					folder
 				</span>
 				<h6
-					className='align-text-top text-center text-dark font-'
+					className='align-text-top text-center text-dark folderIconName'
 					style={{
 						overflowX: 'hidden',
 						textOverflow: 'ellipsis',
@@ -153,7 +153,7 @@ export const MedRecords = () => {
 	for (let index = 0; index < FileNames.length; index++) {
 		const ele = FileNames[index];
 		FileList.push(
-			<div className='row mb-2'>
+			<div className='row mb-2' id='fileContainer'>
 				<button
 					className='btn btn-light styleCarousel fw-bold col-2 me-2'
 					style={{ cursor: 'default' }}>
@@ -185,7 +185,7 @@ export const MedRecords = () => {
 			</div>
 		);
 	}
-// *******************************************************************************************************************************************************************
+	// *******************************************************************************************************************************************************************
 
 	function search(word) {
 		if (word == '' || word == null) {
@@ -299,7 +299,7 @@ export const MedRecords = () => {
 		fileN.splice(j, 1);
 		setFileNames(fileN);
 
-		let AfileN =AllFileNames;
+		let AfileN = AllFileNames;
 		let r = -1;
 		for (let i = 0; i < AfileN.length; i++) {
 			if (AfileN[i] == filename) {
@@ -365,7 +365,7 @@ export const MedRecords = () => {
 		setModalIsOpen(true);
 	}
 	function AddFolder(folderName) {
-		console.log('adding: '+ folderName);
+		console.log('adding: ' + folderName);
 		let file = '';
 		const storageRef = firebase.storage().ref();
 		var uploadRef = storageRef.child(`${id}/${folderName}/userTest`);
@@ -377,13 +377,13 @@ export const MedRecords = () => {
 		let folderN = FolderNames;
 		folderN.push(folderName);
 		setFolderNames(folderN);
-		
+
 		// let AfolderN = AllFolderNames;
 		// AfolderN.push(folderName);
 		// setAllFolderNames(AfolderN);
 	}
 	function UploadFile(file) {
-		console.log('uploading: '+ file);
+		console.log('uploading: ' + file);
 		if (!file) return;
 		let storageRef;
 		if (currFolder != null) {
@@ -400,7 +400,7 @@ export const MedRecords = () => {
 		let fileN = FileNames;
 		fileN.push(file.name);
 		setFileNames(fileN);
-		
+
 		// let AfileN = AllFileNames;
 		// AfileN.push(file.name);
 		// setAllFileNames(AfileN);
@@ -412,16 +412,17 @@ export const MedRecords = () => {
 
 	document.body.style.background = '#eeeeee';
 
-// *******************************************************************************************************************************************************************
+	// *******************************************************************************************************************************************************************
 
 	return (
 		<>
-			<div className='container mt-3 w-75'>
-				<h2 className='fw-bold'>Save Your Medical Records</h2>
+			<div id='saveMedRecHeading' className='container mt-3 w-75'>
+				<h2 className='fw-bold' >Save Your Medical Records</h2>
 			</div>
 			<div
-				className='container mt-3 mb-5 w-75 websiteColor styleCarousel'
-				style={{ height: '560px' }}>
+				id='saveMedRecContainer'
+				className='container mt-3 mb-5 pb-4 w-75 border shadow-lg styleCarousel'
+				style={{ height: 'fit-content' }}>
 				{!currFolder ? null : (
 					<button
 						className='btn btn-outline-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-2 styleCarousel fw-bold'
@@ -432,8 +433,8 @@ export const MedRecords = () => {
 				<button
 					className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
 					onClick={ChooseFiles}>
-					<span className='material-icons me-2 align-middle'>file_upload</span>
-					Upload
+					<span className='material-icons me-2 align-middle d-inline'>file_upload</span>
+					<span id='hide_in_mobile' className='desktopView d-inline'>Upload</span>
 				</button>
 
 				{!currFolder ? (
@@ -466,8 +467,8 @@ export const MedRecords = () => {
 						data-toggle='dropdown'
 						aria-haspopup='true'
 						aria-expanded='false'>
-						SORT
-						<span className='material-icons ms-2 align-middle'>sort</span>
+						<span id='hide_in_mobile' className='desktopView d-inline'>SORT</span>
+						<span id='sort_span-medRec' className='material-icons ms-2 align-middle d-inline'>sort</span>
 					</button>
 					<div className='dropdown-menu'>
 						<button
@@ -495,13 +496,14 @@ export const MedRecords = () => {
 
 				<input
 					type='text'
+					className='mt-3 align-middle rounded-pill py-2 px-2 ms-3 text-center'
 					required
 					onChange={(e) => {
 						setFolderNames(AllFolderNames);
 						setFileNames(AllFileNames);
 						searchString = e.target.value;
 					}}
-					placeholder='Enter file/folder to search'
+					placeholder='Enter file/folder name'
 				/>
 				<button
 					className='btn btn-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold '
@@ -524,18 +526,18 @@ export const MedRecords = () => {
 							purpose == 'AddFolder'
 								? AddFolder
 								: purpose == 'DeleteFile'
-								? () => {
+									? () => {
 										console.log(deleteFileName);
 										deleteFile(deleteFileName);
-								  }
-								: purpose == 'DeleteFolder'
-								? () => {
-										console.log('Folders Selected: ', FoldersSelected);
-										FoldersSelected.forEach((fo) => deleteFolder(fo));
-										setModalIsOpen(false);
-										// window.location.reload();
-								  }
-								: UploadFile
+									}
+									: purpose == 'DeleteFolder'
+										? () => {
+											console.log('Folders Selected: ', FoldersSelected);
+											FoldersSelected.forEach((fo) => deleteFolder(fo));
+											setModalIsOpen(false);
+											// window.location.reload();
+										}
+										: UploadFile
 						}
 						task={purpose}
 					/>

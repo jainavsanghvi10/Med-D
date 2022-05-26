@@ -367,6 +367,9 @@ body {
   .desktopView {
     display: none !important;
   }
+  #hide_in_mobile {
+    display: none !important;
+  }
 
   #happyCircles>div {
     height: 15vh !important;
@@ -482,6 +485,66 @@ body {
     margin: 2px !important;
     font-size: smaller;
   }
+  #saveMedRecHeading {
+    width: 100% !important;
+    text-align: center;
+  }
+  #saveMedRecContainer{
+    width: 90% !important;
+    text-align: center;
+    height: fit-content !important;
+    padding-bottom: 20px;
+  }
+  #saveMedRecContainer button{
+    font-size: xx-small !important;
+  }
+
+  #saveMedRecContainer > button > span{
+    margin-right: 0px !important;
+  }
+  #sort_span-medRec{
+    margin-left: 0px !important;
+  }
+  .folderIcon{
+    font-size: 50px !important;
+  }
+  .folderContainer{
+    width: 70px !important;
+    margin-right: 10px !important;
+  }
+  .folderIconName{
+    font-size: 10px !important;
+    width: 70px !important;
+  }
+  #folderScroll{
+    height: fit-content !important;
+    margin-top: 25px !important;
+  }
+  #fileScroll{
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    height: 200px !important;
+  }
+  #fileContainer{
+    flex-wrap: nowrap !important;
+    margin-left: auto !important;
+  }
+  #fileContainer > button{
+    width: fit-content;
+  }
+  #fileContainer > button >span{
+    font-size: small;
+  }
+  #fileContainer > span{
+    margin-left: 10px !important;
+    width: 40% !important;
+    font-size: x-small !important;
+    align-self: center !important;
+    height: 100% !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+  }
+
 }
 
 @media only screen and (min-width: 600px) {
@@ -492,4 +555,14 @@ body {
   .desktopView {
     display: block;
   }
+
+  .folderContainer{
+    margin-left: 30px !important;
+  }
+  #fileScroll{
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    height: 250px !important;
+  }
+
 }
