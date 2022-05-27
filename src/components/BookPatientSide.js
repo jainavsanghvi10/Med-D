@@ -5,8 +5,10 @@ import firebase from "firebase";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+////////////////////////////////////////////////////////
+
 export const BookPatientSide = () => {
-  const {currentUser} = useAuth();
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
 
   const [docData, setDocData] = useState(null);
@@ -34,21 +36,24 @@ export const BookPatientSide = () => {
   // add Today's date
   weekDates.push(new Date(Date.now()));
   for (let i = 1; i <= 7; i++) {
-    let dateI = new Date((weekDates[1]));
+    let dateI = new Date(weekDates[1]);
     dateI.setDate(dateI.getDate() + i);
     weekDates.push(dateI);
   }
 
   /* function to convert from Date object to string */
   function DateToString(date) {
-    return (date.getFullYear() +
+    return (
+      date.getFullYear() +
       "-" +
       `${date.getMonth() < 10 ? "0" : ""}` +
       (date.getMonth() + 1) +
       "-" +
       `${date.getDate() < 10 ? "0" : ""}` +
-      date.getDate());
+      date.getDate()
+    );
   }
+  ////////////////////////////////////////////////////////
 
   /* function to fetch slot data of a date */
   function fetchSlotWithDate(date) {
@@ -59,52 +64,120 @@ export const BookPatientSide = () => {
       setDDate(DateToString(date));
     });
   }
+  ////////////////////////////////////////////////////////
 
-  function updateSlot(time, maxPerson) {
-    if (!currentUser) {
-			navigate('/signup');
-		}
-    else{
+  function updatePatientId(Did, date, key, i, Pid, isCheck) {
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${date}/${key}/${i}/PatientId`);
+    let count = "NULL";
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      count = data;
+    });
+
+    if (isCheck) {
+      return count;
+    }
+    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}/${i}`);
+    ref.update({
+      PatientId: Pid
+    });
+  }
+  ////////////////////////////////////////////////////////
+
+  function updateAttendance(Did, date, key, i, isPresent, isCheck) {
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${date}/${key}/${i}/Attendance`);
+    let count = false;
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      count = data;
+    });
+
+    if (isCheck) {
+      return count;
+    }
+
+    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}/${i}`);
+    ref.update({
+      Attendance: isPresent,
+    });
+  }
+  ////////////////////////////////////////////////////////
+
+  function increAttendanceCount(Did, date, key, isCheck) {
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${date}/${key}/AttendanceCount`);
+    let count = 99;
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      count = data;
+    });
+
+    if (isCheck) {
+      return count;
+    }
+
+    count = count + 1;
+    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}`);
+    ref.update({
+      AttendanceCount: count,
+    });
+  }
+  ////////////////////////////////////////////////////////
+
+  function decreAttendanceCount(Did, date, key) {
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${date}/${key}/AttendanceCount`);
+    let count = 99;
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      count = data;
+    });
+
+    count = count - 1;
+    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}`);
+    ref.update({
+      AttendanceCount: count,
+    });
+  }
+
+  ////////////////////////////////////////////////////////
+
+  function deleteSlot(Did, date, key) {
+    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}`);
+    ref.remove();
+  }
+  ////////////////////////////////////////////////////////
+
+  function updateSlot(time, maxPerson,i) {
+    if (!currentUser) navigate("/signup");
+    else {
       var key = time + "_" + maxPerson;
+      let data = increAttendanceCount(Did, ddate, key, true);
+      console.log("Data = "  + data)
+      if (data < maxPerson) {
+        let t = true;
+        for (let i = 0; i < maxPerson && t; i++) {
+          let id = updatePatientId(Did, ddate, key, i, "xxx", true);
+          console.log(i +  " "  + id)
 
-      var ref = firebase
-        .database()
-        .ref(`Doctors/${Did}/${ddate}/${key}/AttendanceCount`);
-
-      ref.on("value", (snapshot) => {
-        const data = snapshot.val();
-        console.log("Attendance " + data);
-        if (data < maxPerson) {
-          console.log("Slots Avalaible !");
-          var xxx = data + 1;
-          firebase.database().ref(`Doctors/${Did}/${ddate}/${key}`).update({
-            AttendanceCount: xxx,
-          });
-          firebase.database().ref(`Doctors/${Did}/${ddate}/${key}/${xxx-1}`).update({
-            PatientId: currentUser.uid
-          });
-          console.log("Patient Booked SuccesFully!");
-        } else {
-          console.log("Slots Not Avalaible !");
+          if (id === "NULL") {
+            updatePatientId(Did, ddate, key, i, currentUser.uid, false);
+            console.log("Slots Avalaible !");
+            console.log("Patient Booked SuccesFully!");
+            t = false;
+          }
         }
-      });
-
-      ref.on("value", (snapshot) => {
-        const data = snapshot.val();
-        console.log("Attendance " + data);
-        if (data < maxPerson) {
-          console.log("Slots Avalaible !");
-          var xxx = data + 1;
-          firebase.database().ref(`Doctors/${Did}/${ddate}/${key}`).update({
-            AttendanceCount: xxx,
-          });
-          console.log("Patient Booked SuccesFully!");
-        } else {
-          console.log("Slots Not Avalaible !");
-        }
-      });
+        increAttendanceCount(Did, ddate, key, false);
+      } else console.log("Sorry, Slots are full!");
     }
   }
+  ////////////////////////////////////////////////////////
 
   async function fetchDocDetails() {
     const doctorRef = db.collection("DoctorData").doc(`${Did}`);
@@ -120,7 +193,7 @@ export const BookPatientSide = () => {
   const morningSlots = [];
   const afternoonSlots = [];
   const eveningSlots = [];
-  let t=0;
+  let t = 0;
   for (let s in slotInfo) {
     let time = s.split("_")[0];
     let totalSlotAtTime = s.split("_")[1];
@@ -128,30 +201,42 @@ export const BookPatientSide = () => {
     t++;
 
     if (time.split(":")[0] < 12) {
-      if(bookedslots<totalSlotAtTime)
-      morningSlots.push(
-        <button className="btn btn-sm mx-2 my-2 btn-primary"
-        onClick={() => {
-          updateSlot(time, totalSlotAtTime);
-        }}>{time}</button>
-      );
+      if (bookedslots < totalSlotAtTime)
+        morningSlots.push(
+          <button
+            className="btn btn-sm mx-2 my-2 btn-primary"
+            onClick={() => {
+              updateSlot(time, totalSlotAtTime);
+            }}
+          >
+            {time}
+          </button>
+        );
     } else {
       if (time.split(":")[0] < 17) {
-        if(bookedslots<totalSlotAtTime)
-        afternoonSlots.push(
-          <button className="btn btn-sm mx-2 my-2 btn-primary"
-          onClick={() => {
-            updateSlot(time, totalSlotAtTime);
-          }}>{time}</button>
-        );
+        if (bookedslots < totalSlotAtTime)
+          afternoonSlots.push(
+            <button
+              className="btn btn-sm mx-2 my-2 btn-primary"
+              onClick={() => {
+                updateSlot(time, totalSlotAtTime);
+              }}
+            >
+              {time}
+            </button>
+          );
       } else {
-        if(bookedslots<totalSlotAtTime)
-        eveningSlots.push(
-          <button className="btn btn-sm mx-2 my-2 btn-primary"
-          onClick={() => {
-            updateSlot(time, totalSlotAtTime);
-          }}>{time}</button>
-        );
+        if (bookedslots < totalSlotAtTime)
+          eveningSlots.push(
+            <button
+              className="btn btn-sm mx-2 my-2 btn-primary"
+              onClick={() => {
+                updateSlot(time, totalSlotAtTime);
+              }}
+            >
+              {time}
+            </button>
+          );
       }
     }
   }
@@ -159,24 +244,31 @@ export const BookPatientSide = () => {
   const dateNavigation = [];
   for (let i = 1; i <= 7; i++) {
     dateNavigation.push(
-      <a className={"nav-item nav-link dateCSS " + `${i === 1 ? "active" : ""}`}
+      <a
+        className={"nav-item nav-link dateCSS " + `${i === 1 ? "active" : ""}`}
         id={"day-" + i + "-tab"}
         data-toggle="tab"
         href={"#day-" + i}
         role="tab"
         aria-controls={"day-" + i}
         aria-selected="true"
-        onClick={() => { fetchSlotWithDate(weekDates[i]) }}
+        onClick={() => {
+          fetchSlotWithDate(weekDates[i]);
+        }}
       >
-        {weekDates[i].getDate() + " /" + `${weekDates[i].getMonth() < 10 ? "0" : ""}` + weekDates[i].getMonth()}
-      </a>);
+        {weekDates[i].getDate() +
+          " /" +
+          `${weekDates[i].getMonth() < 10 ? "0" : ""}` +
+          weekDates[i].getMonth()}
+      </a>
+    );
   }
 
-  document.body.style.background = 'white';
+  document.body.style.background = "white";
 
   return (
     <div className="bg-white">
-      {docData != null ?
+      {docData != null ? (
         <div className="container pt-4">
           <div className="row" id="row-bookPatient">
             <div className="col-3 text-center">
@@ -188,37 +280,64 @@ export const BookPatientSide = () => {
             </div>
             <div className="col-6 mt-auto mb-auto">
               <div className="form-group row">
-                <label htmlFor="docName" className="col-sm-4 fieldName-bookPatient col-form-label">
+                <label
+                  htmlFor="docName"
+                  className="col-sm-4 fieldName-bookPatient col-form-label"
+                >
                   Doctor Name:
                 </label>
                 <div className="col-sm-6 fieldEntry-bookPatient">
-                  <h3 id="doc-name" type="text" readOnly className="form-control">
+                  <h3
+                    id="doc-name"
+                    type="text"
+                    readOnly
+                    className="form-control"
+                  >
                     {"Dr. " + docData.FirstName + " " + docData.LastName}
                   </h3>
                 </div>
               </div>
               <div className="form-group row">
-                <label htmlFor="experience" className="col-sm-4 fieldName-bookPatient col-form-label">
+                <label
+                  htmlFor="experience"
+                  className="col-sm-4 fieldName-bookPatient col-form-label"
+                >
                   Experience:
                 </label>
                 <div className="col-sm-6 fieldEntry-bookPatient">
-                  <h3 id="doc-exp" type="text" readOnly className="form-control">
+                  <h3
+                    id="doc-exp"
+                    type="text"
+                    readOnly
+                    className="form-control"
+                  >
                     blank
                   </h3>
                 </div>
               </div>
               <div className="form-group row">
-                <label htmlFor="specialisation" className="col-sm-4 fieldName-bookPatient col-form-label">
+                <label
+                  htmlFor="specialisation"
+                  className="col-sm-4 fieldName-bookPatient col-form-label"
+                >
                   Specialisation:
                 </label>
                 <div className="col-sm-6 fieldEntry-bookPatient">
-                  <h3 id="doc-splz" type="text" readOnly className="form-control">
+                  <h3
+                    id="doc-splz"
+                    type="text"
+                    readOnly
+                    className="form-control"
+                  >
                     {docData.Speciality}
                   </h3>
                 </div>
               </div>
               <div className="form-group row">
-                <label htmlFor="contact" className="col-sm-4 fieldName-bookPatient col-form-label">
+                <label
+                  htmlFor="contact"
+                  className="col-sm-4 fieldName-bookPatient col-form-label"
+                >
                   Contact:
                 </label>
                 <div className="col-sm-6 fieldEntry-bookPatient">
@@ -229,13 +348,22 @@ export const BookPatientSide = () => {
               </div>
             </div>
           </div>
-        </div> : <></>}
-
+        </div>
+      ) : (
+        <></>
+      )}
 
       <div className="container  mt-4 pt-3">
-        <h3 className="pb-3 darkerTextColor fw-bold "><u>Book Appointment:</u></h3>
+        <h3 className="pb-3 darkerTextColor fw-bold ">
+          <u>Book Appointment:</u>
+        </h3>
         <nav>
-          <div className="nav nav-tabs" style={{ flexWrap: 'nowrap', fontSize: 'x-small' }} id="nav-tab" role="tablist">
+          <div
+            className="nav nav-tabs"
+            style={{ flexWrap: "nowrap", fontSize: "x-small" }}
+            id="nav-tab"
+            role="tablist"
+          >
             {dateNavigation}
           </div>
         </nav>
@@ -246,20 +374,44 @@ export const BookPatientSide = () => {
             role="tabpanel"
             aria-labelledby="day-1-tab"
           >
-            <div id='slotContainer-bookPatient' className="container">
+            <div id="slotContainer-bookPatient" className="container">
               <div className="row my-2">
                 <div className="col-2 align-self-center">Morning</div>
-                <div className="col-8">{morningSlots.length != 0 ? morningSlots : <p className='my-2' style={{ color: "grey" }}>No Slots Available</p>}</div>
+                <div className="col-8">
+                  {morningSlots.length !== 0 ? (
+                    morningSlots
+                  ) : (
+                    <p className="my-2" style={{ color: "grey" }}>
+                      No Slots Available
+                    </p>
+                  )}
+                </div>
               </div>
               <hr></hr>
               <div className="row my-2">
                 <div className="col-2 align-self-center">Afternoon</div>
-                <div className="col-8">{afternoonSlots != 0 ? afternoonSlots : <p className='my-2' style={{ color: "grey" }}>No Slots Available</p>}</div>
+                <div className="col-8">
+                  {afternoonSlots !== 0 ? (
+                    afternoonSlots
+                  ) : (
+                    <p className="my-2" style={{ color: "grey" }}>
+                      No Slots Available
+                    </p>
+                  )}
+                </div>
               </div>
               <hr></hr>
               <div className="row my-2">
                 <div className="col-2 align-self-center">Evening</div>
-                <div className="col-8">{eveningSlots != 0 ? eveningSlots : <p className='my-2' style={{ color: "grey" }}>No Slots Available</p>}</div>
+                <div className="col-8">
+                  {eveningSlots !== 0 ? (
+                    eveningSlots
+                  ) : (
+                    <p className="my-2" style={{ color: "grey" }}>
+                      No Slots Available
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
