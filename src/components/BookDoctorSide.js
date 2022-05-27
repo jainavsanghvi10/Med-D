@@ -15,12 +15,12 @@ export const BookDoctorSide = () => {
   const [ddate, setDDate] = useState();
 
   const { currentUser } = useAuth();
-  const {isDoctor} = useAuth();
+  const { isDoctor } = useAuth();
   const navigate = useNavigate();
 
   // check if user is a doctor
   console.log(isDoctor);
-  if(isDoctor === false){
+  if (isDoctor === false) {
     navigate("/");
   }
   useEffect(() => {
@@ -147,7 +147,7 @@ export const BookDoctorSide = () => {
   const morningSlots = [];
   const afternoonSlots = [];
   const eveningSlots = [];
-  let t=0;
+  let t = 0;
   console.log(slotInfo);
   for (let s in slotInfo) {
     let time = s.split("_")[0];
@@ -158,28 +158,46 @@ export const BookDoctorSide = () => {
 
     if (time.split(":")[0] < 12) {
       morningSlots.push(
-        <button
-          className={"btn btn-sm mx-2 my-2 " + `${bookedslots<totalSlotAtTime ? "btn-primary":"btn-secondary"}`}
-        >
-          {time}
-        </button>
+        <>
+          <button className={"btn btn-sm mx-2 my-2 " + `${bookedslots < totalSlotAtTime ? "btn-primary" : "btn-secondary"}`} >
+            {time}
+          </button>
+          <button className='btn btn-outline-secondary btn-sm rounded '>+</button>
+          <button className='btn btn-outline-secondary btn-sm rounded '>-</button>
+        </>
       );
     } else {
       if (time.split(":")[0] < 17) {
         afternoonSlots.push(
-          <button
-          className={"btn btn-sm mx-2 my-2 " + `${bookedslots<totalSlotAtTime ? "btn-primary":"btn-secondary"}`}
-          >
-            {time}
-          </button>
+          <>
+            <button
+              className={"btn btn-sm mx-2 my-2 " + `${bookedslots < totalSlotAtTime ? "btn-primary" : "btn-secondary"}`}
+            >
+              {time}
+            </button>
+            <button className='btn btn-outline-secondary btn-sm rounded '>+</button>
+            <button className='btn btn-outline-secondary btn-sm rounded '>-</button>
+          </>
         );
       } else {
         eveningSlots.push(
-          <button
-          className={"btn btn-sm mx-2 my-2 " + `${bookedslots<totalSlotAtTime ? "btn-primary":"btn-secondary"}`}
-          >
-            {time}
-          </button>
+          <>
+          <div className="row">
+            <div className="col">
+              <span className="material-icons border rounded-pill align-middle">
+                delete
+              </span>
+              <button
+                className={"btn btn-sm mx-2 my-2 " + `${bookedslots < totalSlotAtTime ? "btn-primary" : "btn-secondary"}`}
+              >
+                {time}
+              </button>
+              <button className='btn btn-outline-secondary btn-sm rounded '>-</button>
+              <label>00</label>
+              <button className='btn btn-outline-secondary btn-sm rounded'>+</button>
+            </div>
+            </div>
+          </>
         );
       }
     }
@@ -207,6 +225,8 @@ export const BookDoctorSide = () => {
       </a>
     );
   }
+
+  document.body.style.background = 'white';
 
   return (
     <div className="bg-white mt-auto mb-2 pb-2">
