@@ -21,7 +21,7 @@ export const NavAfterLogin = (props) => {
 
   return (
       <nav className="navbar navbar-expand-lg navbar-dark p-0 headerColor px-2" style={{ height: '10vh' }}>
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           <img src={siteLogo} style={{ height: '10vh' }} alt="Med-D" />
         </a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">

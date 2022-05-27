@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Dashboard() {
 	const [id, setId] = useState();
 	const { currentUser } = useAuth();
+	const {isDoctor} = useAuth();
 	const navigate = useNavigate();
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
@@ -101,6 +102,25 @@ export default function Dashboard() {
 					<img className='col-6 me-0 p-0 borderRight desktopView' src={ConsultOfflineDoc} alt="Responsive image"></img>
 				</div>
 			</div>
+			{isDoctor ? 
+			<div className='greyishColor py-5'>
+			<div className='shadow-lg darkerWebsiteColor row col-10 pe-3 mx-auto styleCarousel' id='bookNowContainer'>
+				<img className='col-6 ms-0 p-0 borderLeft desktopView' src={SaveMedicalRecords} alt="Responsive image"></img>
+				<img className='roundedTop mx-auto ms-0 p-0 mobileView' src={SaveMedicalRecords} alt="Responsive image"></img>
+				<div className="jumbotron col-6 p-4 my-auto">
+					<h1 className="display-5 fw-bold text-white" style={{ fontSize: '4.7vh' }}>Create Appoinments</h1>
+					<p className="lead text-white pt-2" style={{ fontSize: '2.5vh' }}><br className='desktopBreak'></br>
+						Make appointments slots with ease<br className='desktopBreak'></br>
+						Edit and delete slots as per requirement<br className='desktopBreak'></br>
+					</p>
+					<hr style={{ marginTop: '1vw', marginBottom:'1vw' }}></hr>
+					<Link to="/book-doctor-side">
+						<button className="btn btn-light btn-outline-info rounded-pill fw-bold" style={{ fontSize: '1.5vw' }}>Make Slots</button>
+					</Link>
+					</div>
+				</div>
+			</div>
+			:
 			<div className='greyishColor py-5'>
 				<div className='shadow-lg darkerWebsiteColor row col-10 pe-3 mx-auto styleCarousel' id='bookNowContainer'>
 					<img className='col-6 ms-0 p-0 borderLeft desktopView' src={SaveMedicalRecords} alt="Responsive image"></img>
@@ -120,7 +140,7 @@ export default function Dashboard() {
 					</div>
 
 				</div>
-			</div>
+			</div>}
 			{/* <div className="greyishColor py-5">
 				<div id="carouselExampleCaptions" className="carousel slide carousel-dark" data-bs-ride="carousel" style={{height:'75vh'}}>
 					<div className="carousel-indicators">

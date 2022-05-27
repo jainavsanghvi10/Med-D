@@ -39,7 +39,10 @@ export function AuthProvider({ children }) {
         var docRef = db.collection("DoctorData").doc(`${user.uid}`);
         docRef.get().then((doc) => {
             if (doc.exists) {
+              if(doc.data().Approved)
                 setIsDoctor(true);
+              else
+                setIsDoctor(false);
             } else {
                 setIsDoctor(false);
             }

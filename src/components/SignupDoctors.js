@@ -37,7 +37,8 @@ export default function SignupDoctors() {
 					State: stateRef.current.value.toLowerCase(),
 					Speciality: specialityRef.current.value.toLowerCase(),
 					Email: emailRef.current.value.toLowerCase(),
-					Mobile: phoneNumberRef.current.value.toLowerCase()
+					Mobile: phoneNumberRef.current.value.toLowerCase(),
+					Approved: false
 				})
 				.then(() => {
 					console.log('User Added Succesfully!');

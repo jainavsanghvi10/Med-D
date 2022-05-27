@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import firebase from "firebase";
+import db from "../firebase";
 
 export const BookDoctorSide = () => {
   const dateRef = useRef();
@@ -23,6 +24,7 @@ export const BookDoctorSide = () => {
   if(isDoctor === false){
     navigate("/");
   }
+
   useEffect(() => {
     if (currentUser == null) {
       navigate("/signup");
@@ -49,7 +51,6 @@ export const BookDoctorSide = () => {
       setSlotInfo(data);
     });
   }, []);
-
 
   /* Setting dates of 7 days from today */
   const weekDates = [null];
@@ -82,6 +83,11 @@ export const BookDoctorSide = () => {
       setSlotInfo(data);
       setDDate(DateToString(date));
     });
+  }
+
+  /* To view patients who have booked the slots */
+  function viewPatients(time, maxPerson){
+    console.log("a prompt will come");
   }
 
   function createSlots(e) {
@@ -148,7 +154,6 @@ export const BookDoctorSide = () => {
   const afternoonSlots = [];
   const eveningSlots = [];
   let t=0;
-  console.log(slotInfo);
   for (let s in slotInfo) {
     let time = s.split("_")[0];
     let totalSlotAtTime = s.split("_")[1];
@@ -160,7 +165,9 @@ export const BookDoctorSide = () => {
       morningSlots.push(
         <button
           className={"btn btn-sm mx-2 my-2 " + `${bookedslots<totalSlotAtTime ? "btn-primary":"btn-secondary"}`}
-        >
+          onClick={() => {
+            viewPatients(time, totalSlotAtTime);
+          }}>
           {time}
         </button>
       );
@@ -169,7 +176,9 @@ export const BookDoctorSide = () => {
         afternoonSlots.push(
           <button
           className={"btn btn-sm mx-2 my-2 " + `${bookedslots<totalSlotAtTime ? "btn-primary":"btn-secondary"}`}
-          >
+          onClick={() => {
+            viewPatients(time, totalSlotAtTime);
+          }}>
             {time}
           </button>
         );
@@ -177,7 +186,9 @@ export const BookDoctorSide = () => {
         eveningSlots.push(
           <button
           className={"btn btn-sm mx-2 my-2 " + `${bookedslots<totalSlotAtTime ? "btn-primary":"btn-secondary"}`}
-          >
+          onClick={() => {
+            viewPatients(time, totalSlotAtTime);
+          }}>
             {time}
           </button>
         );

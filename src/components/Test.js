@@ -20,12 +20,13 @@ export const Test = () => {
   // });
   const {isDoctor} = useAuth();
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log(isDoctor);
-    if(isDoctor === false){
-      navigate("/");
-    }
-  });
+  console.log(isDoctor);
+  if(isDoctor === false){
+    navigate("/");
+  }
+  // useEffect(() => {
+
+  // });
 
   return (
     <div>

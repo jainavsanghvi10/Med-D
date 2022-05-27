@@ -65,44 +65,34 @@ export const BookPatientSide = () => {
 			navigate('/signup');
 		}
     else{
-      var key = time + "_" + maxPerson;
+      if(window.confirm("Confirm Booking")){
+        var key = time + "_" + maxPerson;
 
-      var ref = firebase
-        .database()
-        .ref(`Doctors/${Did}/${ddate}/${key}/AttendanceCount`);
+        var ref = firebase
+          .database()
+          .ref(`Doctors/${Did}/${ddate}/${key}/AttendanceCount`);
 
-      ref.on("value", (snapshot) => {
-        const data = snapshot.val();
-        console.log("Attendance " + data);
-        if (data < maxPerson) {
-          console.log("Slots Avalaible !");
-          var xxx = data + 1;
-          firebase.database().ref(`Doctors/${Did}/${ddate}/${key}`).update({
-            AttendanceCount: xxx,
-          });
-          firebase.database().ref(`Doctors/${Did}/${ddate}/${key}/${xxx-1}`).update({
-            PatientId: currentUser.uid
-          });
-          console.log("Patient Booked SuccesFully!");
-        } else {
-          console.log("Slots Not Avalaible !");
-        }
-      });
-
-      ref.on("value", (snapshot) => {
-        const data = snapshot.val();
-        console.log("Attendance " + data);
-        if (data < maxPerson) {
-          console.log("Slots Avalaible !");
-          var xxx = data + 1;
-          firebase.database().ref(`Doctors/${Did}/${ddate}/${key}`).update({
-            AttendanceCount: xxx,
-          });
-          console.log("Patient Booked SuccesFully!");
-        } else {
-          console.log("Slots Not Avalaible !");
-        }
-      });
+        ref.on("value", (snapshot) => {
+          const data = snapshot.val();
+          console.log("Attendance " + data);
+          if (data < maxPerson) {
+            console.log("Slots Avalaible !");
+            firebase.database().ref(`Doctors/${Did}/${ddate}/${key}/${data}`).update({
+              PatientId: currentUser.uid
+            }).then(()=>{
+              let xxx = data + 1;
+              firebase.database().ref(`Doctors/${Did}/${ddate}/${key}`).update({
+                AttendanceCount: xxx
+              });
+              console.log("Patient Booked SuccesFully!");
+            });
+            return;
+          } else {
+            console.log("Slots Not Avalaible !");
+            return;
+          }
+        });
+      }
     }
   }
 
