@@ -31,15 +31,25 @@ export const NavAfterLogin = (props) => {
         <div className="collapse navbar-collapse headerColor pb-2" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-2">
               <li className="nav-item active">
-                <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="#">About Us</a>
+                <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh'}} href="#">Who We Are</a>
               </li>
-              {isDoctor ? 
+              {isDoctor ?
+              <>
+                <li className="nav-item">
+                  <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="/book-doctor-side">Create Slots</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="/appointment-editor">Book For Patients</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="/patient-queue">Appointment Queue</a>
+                </li>
+              </>
+              :
               <li className="nav-item">
-                <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="/book-doctor-side">Make Slots</a>
-              </li> : 
-              <li className="nav-item">
-              <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="/offline-booking">Book Appointment</a>
-            </li>}
+                <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="/offline-booking">Book Appointment</a>
+              </li>
+            }
               <li className="nav-item">
                 <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="#">Customer Support</a>
               </li>

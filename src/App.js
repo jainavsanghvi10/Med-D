@@ -19,6 +19,8 @@ import {OfflineBooking} from "./components/OfflineBooking"
 import {BookPatientSide} from "./components/BookPatientSide"
 import {BookDoctorSide} from "./components/BookDoctorSide"
 import ForgotPassword from "./components/ForgotPassword"
+import {AppointmentEditor} from "./components/AppointmentEditor"
+import PatientQueue from "./components/PatientQueue"
 
 // Styles
 // import "./assets/styles/Style.css"
@@ -40,6 +42,8 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword/>}/>
             <Route path="/book-patient-side" element={<BookPatientSide/>}/>
             <Route path="/book-doctor-side" element={<BookDoctorSide/>}/>
+            <Route path="/appointment-editor" element={<AppointmentEditor/>}/>
+            <Route path="/patient-queue" element={<PatientQueue/>}/>
           </Routes>
         <Footer />
       </AuthProvider>

@@ -83,6 +83,64 @@ export default function Dashboard() {
 
 				</div>
 			</div>
+			{isDoctor ?
+			<>
+			<div className='greyishColor py-5'>
+				<div className='shadow-lg darkerWebsiteColor row col-10 pe-3 mx-auto styleCarousel' id='bookNowContainer'>
+					<img className='col-6 ms-0 p-0 borderLeft desktopView' src={SaveMedicalRecords} alt="Responsive image"></img>
+					<img className='roundedTop mx-auto ms-0 p-0 mobileView' src={SaveMedicalRecords} alt="Responsive image"></img>
+					<div className="jumbotron col-6 p-4 my-auto">
+						<h1 className="display-5 fw-bold text-white" style={{ fontSize: '4.7vh' }}>Create Appoinments</h1>
+						<p className="lead text-white pt-2" style={{ fontSize: '2.5vh' }}><br className='desktopBreak'></br>
+							Make appointments slots with ease<br className='desktopBreak'></br>
+							Edit and delete slots as per requirement<br className='desktopBreak'></br>
+						</p>
+						<hr style={{ marginTop: '1vw', marginBottom:'1vw' }}></hr>
+						<Link to="/book-doctor-side">
+							<button className="btn btn-light btn-outline-info rounded-pill fw-bold" style={{ fontSize: '1.5vw' }}>Make Slots</button>
+						</Link>
+					</div>
+				</div>
+			</div>
+			<div className='greyishColor py-5'>
+				<div className='shadow-lg darkerWebsiteColor row col-10 pe-3 mx-auto styleCarousel' id='bookNowContainer'>
+					<img className='col-6 ms-0 p-0 borderLeft desktopView' src={ConsultOfflineDoc} alt="Responsive image"></img>
+					<img className='roundedTop mx-auto ms-0 p-0 mobileView' src={ConsultOfflineDoc} alt="Responsive image"></img>
+					<div className="jumbotron col-6 p-4 my-auto">
+						<h1 className="display-5 fw-bold text-white" style={{ fontSize: '4.7vh' }}>Slot Booking For Patients</h1>
+						<p className="lead text-white pt-2" style={{ fontSize: '2.5vh' }}>No more standing in queues, sitting in the waiting area.<br className='desktopBreak'></br>
+							Skip the hassle and get your health checked up<br className='desktopBreak'></br>
+							quickly with live tracking system.<br className='desktopBreak'></br>
+						</p>
+						<hr style={{ marginTop: '1vw', marginBottom:'1vw' }}></hr>
+
+						<Link to={"/appointment-editor"}>
+							<button className="btn btn-light btn-outline-info rounded-pill fw-bold" style={{ fontSize: '1.5vw' }}>Book for Patients</button>
+						</Link>
+					</div>
+				</div>
+			</div>
+			<div className='greyishColor py-5'>
+				<div className='shadow-lg darkerWebsiteColor row col-10 pe-3 mx-auto styleCarousel' id='bookNowContainer'>
+					<img className='col-6 ms-0 p-0 borderLeft desktopView' src={ConsultOfflineDoc} alt="Responsive image"></img>
+					<img className='roundedTop mx-auto ms-0 p-0 mobileView' src={ConsultOfflineDoc} alt="Responsive image"></img>
+					<div className="jumbotron col-6 p-4 my-auto">
+						<h1 className="display-5 fw-bold text-white" style={{ fontSize: '4.7vh' }}>Patient Queue</h1>
+						<p className="lead text-white pt-2" style={{ fontSize: '2.5vh' }}>No more standing in queues, sitting in the waiting area.<br className='desktopBreak'></br>
+							Skip the hassle and get your health checked up<br className='desktopBreak'></br>
+							quickly with live tracking system.<br className='desktopBreak'></br>
+						</p>
+						<hr style={{ marginTop: '1vw', marginBottom:'1vw' }}></hr>
+
+						<Link to={"/appointment-editor"}>
+							<button className="btn btn-light btn-outline-info rounded-pill fw-bold" style={{ fontSize: '1.5vw' }}>Patient Queue</button>
+						</Link>
+					</div>
+				</div>
+			</div>
+			</>
+			:
+			<>
 			<div className='greyishColor pt-5'>
 				<div className='shadow darkerWebsiteColor row col-10 ps-3 mx-auto styleCarousel' id='bookNowContainer'>
 					<img className='roundedTop mx-auto ms-0 p-0 mobileView' src={ConsultOfflineDoc} alt="Responsive image"></img>
@@ -93,34 +151,13 @@ export default function Dashboard() {
 							quickly with live tracking system.<br className='desktopBreak'></br>
 						</p>
 						<hr style={{ marginTop: '1vw', marginBottom:'1vw' }}></hr>
-
 						<Link to="/offline-booking">
 							<button className="btn btn-light btn-outline-info rounded-pill fw-bold" style={{ fontSize: '1.5vw' }}>BOOK NOW</button>
 						</Link>
-
 					</div>
 					<img className='col-6 me-0 p-0 borderRight desktopView' src={ConsultOfflineDoc} alt="Responsive image"></img>
 				</div>
 			</div>
-			{isDoctor ? 
-			<div className='greyishColor py-5'>
-			<div className='shadow-lg darkerWebsiteColor row col-10 pe-3 mx-auto styleCarousel' id='bookNowContainer'>
-				<img className='col-6 ms-0 p-0 borderLeft desktopView' src={SaveMedicalRecords} alt="Responsive image"></img>
-				<img className='roundedTop mx-auto ms-0 p-0 mobileView' src={SaveMedicalRecords} alt="Responsive image"></img>
-				<div className="jumbotron col-6 p-4 my-auto">
-					<h1 className="display-5 fw-bold text-white" style={{ fontSize: '4.7vh' }}>Create Appoinments</h1>
-					<p className="lead text-white pt-2" style={{ fontSize: '2.5vh' }}><br className='desktopBreak'></br>
-						Make appointments slots with ease<br className='desktopBreak'></br>
-						Edit and delete slots as per requirement<br className='desktopBreak'></br>
-					</p>
-					<hr style={{ marginTop: '1vw', marginBottom:'1vw' }}></hr>
-					<Link to="/book-doctor-side">
-						<button className="btn btn-light btn-outline-info rounded-pill fw-bold" style={{ fontSize: '1.5vw' }}>Make Slots</button>
-					</Link>
-					</div>
-				</div>
-			</div>
-			:
 			<div className='greyishColor py-5'>
 				<div className='shadow-lg darkerWebsiteColor row col-10 pe-3 mx-auto styleCarousel' id='bookNowContainer'>
 					<img className='col-6 ms-0 p-0 borderLeft desktopView' src={SaveMedicalRecords} alt="Responsive image"></img>
@@ -136,11 +173,11 @@ export default function Dashboard() {
 						<Link to={"/medicalRecords?id=" + id}>
 							<button className="btn btn-light btn-outline-info rounded-pill fw-bold" style={{ fontSize: '1.5vw' }}>UPLOAD</button>
 						</Link>
-
 					</div>
-
 				</div>
-			</div>}
+			</div>
+			</>
+			}
 			{/* <div className="greyishColor py-5">
 				<div id="carouselExampleCaptions" className="carousel slide carousel-dark" data-bs-ride="carousel" style={{height:'75vh'}}>
 					<div className="carousel-indicators">

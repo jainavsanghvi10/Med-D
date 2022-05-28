@@ -1,37 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import db from "../firebase";
-// import * as admin from 'firebase-admin'
+import aes from "crypto-js/aes";
+import { enc, AES } from "crypto-js/core";
 
 export const Test = () => {
-  // const {currentUser} = useAuth();
-  // var docRef = db.collection("DoctorData").doc(`${currentUser.uid}`);
-  // docRef.get().then((doc) => {
-  //     if (doc.exists) {
-  //         console.log("YOU ARE A DOCTOR");
-  //         console.log("Document data:", doc.data());
-  //     } else {
-  //         // doc.data() will be undefined in this case
-  //         console.log("YOU ARE NOT A DOCTOR!!");
-  //     }
-  // }).catch((error) => {
-  //     console.log("Error getting document:", error);
-  // });
-  const {isDoctor} = useAuth();
-  const navigate = useNavigate();
-  console.log(isDoctor);
-  if(isDoctor === false){
-    navigate("/");
-  }
-  // useEffect(() => {
-
-  // });
-
+  var encrypted = AES.encrypt("Message", " Passphrase");
+  //U2FsdGVkX18ZUVvShFSES21qHsQEqZXMxQ9zgHy+bu0=
+  let en  = encrypted.toString();
+  var decrypted = AES.decrypt(en, " Passphrase");
+  //4d657373616765
+  console.log(decrypted.toString(enc.Utf8))
+  
   return (
     <div>
       <h1> Test Page </h1>
       <div className="container pt-4">
+        <h2>{encrypted.toString()}</h2>
+        <h2>{decrypted.toString()}</h2>
+        <h2>{decrypted.toString(enc.Utf8)}</h2>
       </div>
     </div>
   );
