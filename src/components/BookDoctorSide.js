@@ -159,24 +159,42 @@ export const BookDoctorSide = () => {
     if (time.split(":")[0] < 12) {
       morningSlots.push(
         <>
-          <button className={"btn btn-sm mx-2 my-2 " + `${bookedslots < totalSlotAtTime ? "btn-primary" : "btn-secondary"}`} >
-            {time}
-          </button>
-          <button className='btn btn-outline-secondary btn-sm rounded '>+</button>
-          <button className='btn btn-outline-secondary btn-sm rounded '>-</button>
+          <div className="row">
+            <div className="col">
+              <span className="material-icons border rounded-pill align-middle">
+                delete
+              </span>
+              <button
+                className={"btn btn-sm mx-2 my-2 " + `${bookedslots < totalSlotAtTime ? "btn-primary" : "btn-secondary"}`}
+              >
+                {time}
+              </button>
+              <button className='btn btn-outline-secondary btn-sm rounded '>-</button>
+              <label>00</label>
+              <button className='btn btn-outline-secondary btn-sm rounded'>+</button>
+            </div>
+            </div>
         </>
       );
     } else {
       if (time.split(":")[0] < 17) {
         afternoonSlots.push(
           <>
-            <button
-              className={"btn btn-sm mx-2 my-2 " + `${bookedslots < totalSlotAtTime ? "btn-primary" : "btn-secondary"}`}
-            >
-              {time}
-            </button>
-            <button className='btn btn-outline-secondary btn-sm rounded '>+</button>
-            <button className='btn btn-outline-secondary btn-sm rounded '>-</button>
+            <div className="row">
+            <div className="col">
+              <span className="material-icons border rounded-pill align-middle">
+                delete
+              </span>
+              <button
+                className={"btn btn-sm mx-2 my-2 " + `${bookedslots < totalSlotAtTime ? "btn-primary" : "btn-secondary"}`}
+              >
+                {time}
+              </button>
+              <button className='btn btn-outline-secondary btn-sm rounded '>-</button>
+              <label>00</label>
+              <button className='btn btn-outline-secondary btn-sm rounded'>+</button>
+            </div>
+            </div>
           </>
         );
       } else {
