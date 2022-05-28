@@ -95,7 +95,8 @@ export const AppointmentEditor = () => {
                     if (id === "NULL") {
                         let patientName = prompt("Please Enter Patient's Name");
                         let encrypted = AES.encrypt(patientName, currentUser.uid);
-                        let pid = "!@#$" + encrypted;
+                        const identificationKey = "!@#%";
+                        let pid = identificationKey + encrypted;
                         updatePatientId(Did, ddate, key, i, pid, false);
                         console.log("Slots Avalaible !");
                         console.log("Patient Booked SuccesFully!");

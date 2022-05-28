@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import firebase from "firebase";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import db from "../firebase";
+import { enc, AES } from "crypto-js/core";
 
 export default function AppointmentEditor() {
     const [slotInfo, setSlotInfo] = useState(null);
@@ -40,38 +40,6 @@ export default function AppointmentEditor() {
         date.getDate()
         );
     }
-
-    async function PatientNameWithId(id) {
-        const doctorRef = db.collection("UserData").doc(`${id}`);
-        const doc = await doctorRef.get();
-        if (!doc.exists) {
-          console.log("No such document!");
-        } else {
-          console.log("Document data:", doc.data());
-          return (doc.data().FirstName + " " + doc.data().LastName);
-        }
-    }
-
-    async function fillNameArray(){
-        const nameArray = [];
-        let t=0;
-        for(let s in slotInfo){
-            let time = s.split("_")[0];
-            let totalSlotAtTime = s.split("_")[1];
-            let slot = Object.values(slotInfo)[t];
-
-            for(let i=0;i<totalSlotAtTime;i++){
-                let id = slot[i].PatientId;
-                nameArray.push(await PatientNameWithId(id));
-            }
-            console.log(nameArray);
-        }
-        t++;
-        
-    }
-
-    fillNameArray();
-
     
     let slotData = [];
     let subSlotData = [];
@@ -81,17 +49,27 @@ export default function AppointmentEditor() {
             let time = s.split("_")[0];
             let totalSlotAtTime = s.split("_")[1];
             let slot = Object.values(slotInfo)[t];
-            console.log(time, totalSlotAtTime, slot.AttendanceCount);
-            console.log(slot[0].PatientId, slot[0].Attendance);
 
             const temp = [];
             for(let i=0;i<totalSlotAtTime;i++){
                 let id = slot[i].PatientId;
+                let patientName;
+                let decrypted;
 
-                if(!slot[i].Attendance){
+                if(!slot[i].Attendance && id != "NULL"){
+                    if(id.search("!@#%") != -1){
+                        decrypted = AES.decrypt(id.split("!@#%")[1], currentUser.uid);
+                    }
+                    else{
+                        decrypted = AES.decrypt(id, currentUser.uid);
+                    }
+
+                    patientName = decrypted.toString(enc.Utf8);
+                    console.log(patientName);
+
                     temp.push(
                         <li className="list-group-item d-flex justify-content-between align-items-center">
-                            {id}
+                            {patientName}
                             <div>
                                 <span className="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1">Completed</span>
                                 <span className="btn btn-sm fw-bold btn-warning rounded-pill mx-1">Postpone</span>
@@ -117,6 +95,7 @@ export default function AppointmentEditor() {
             t++;
         }
     }
+    makeQueue();
 
     document.body.style.background = 'white';
     return (
