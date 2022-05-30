@@ -251,6 +251,13 @@ body {
   font-weight: 700;
   padding-left: 10px;
 }
+#userProfile > .form-group{
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
+}
+#userProfile label{
+  font-weight: 700 ;
+}
 
 @media only screen and (max-width: 600px) {
   #dashboardSloganContainer {

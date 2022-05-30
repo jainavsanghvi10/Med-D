@@ -21,6 +21,7 @@ import {BookDoctorSide} from "./components/BookDoctorSide"
 import ForgotPassword from "./components/ForgotPassword"
 import {AppointmentEditor} from "./components/AppointmentEditor"
 import PatientQueue from "./components/PatientQueue"
+import {DoctorInfoForm} from "./components/DoctorInfoForm"
 
 // Styles
 // import "./assets/styles/Style.css"
@@ -44,6 +45,7 @@ function App() {
             <Route path="/book-doctor-side" element={<BookDoctorSide/>}/>
             <Route path="/appointment-editor" element={<AppointmentEditor/>}/>
             <Route path="/patient-queue" element={<PatientQueue/>}/>
+            <Route path="/doctor-info-form" element={<DoctorInfoForm/>}/>
           </Routes>
         <Footer />
       </AuthProvider>
