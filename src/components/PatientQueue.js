@@ -1,17 +1,107 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
-
-import { Link, useNavigate } from "react-router-dom";
-import { auth, db } from "../firebase";
 import firebase from "firebase";
-import { storage } from "../firebase";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { enc, AES } from "crypto-js/core";
 
 export default function AppointmentEditor() {
+    const [slotInfo, setSlotInfo] = useState(null);
+    const {currentUser} = useAuth();
+    const navigate = useNavigate();
+
+    let todayDate = new Date(Date.now())
+
+    useEffect(() => {
+        if (currentUser == null) {
+          navigate("/signup");
+        }
+    
+        // fetching today's slot details
+        if(slotInfo===null){
+            var ref = firebase
+            .database()
+            .ref(`Doctors/${currentUser.uid}/${DateToString(todayDate)}`);
+            ref.on("value", (snapshot) => {
+            const data = snapshot.val();
+            setSlotInfo(data);
+            });
+        }
+    }, []);
+
+    /* function to convert from Date object to string */
+    function DateToString(date) {
+        return (
+        date.getFullYear() +
+        "-" +
+        `${date.getMonth() < 10 ? "0" : ""}` +
+        (date.getMonth() + 1) +
+        "-" +
+        `${date.getDate() < 10 ? "0" : ""}` +
+        date.getDate()
+        );
+    }
+    
+    let slotData = [];
+    let subSlotData = [];
+    function makeQueue(){
+        let t=0;
+        for(let s in slotInfo){
+            let time = s.split("_")[0];
+            let totalSlotAtTime = s.split("_")[1];
+            let slot = Object.values(slotInfo)[t];
+
+            const temp = [];
+            for(let i=0;i<totalSlotAtTime;i++){
+                let id = slot[i].PatientId;
+                let patientName;
+                let decrypted;
+
+                if(!slot[i].Attendance && id != "NULL"){
+                    if(id.search("!@#%") != -1){
+                        decrypted = AES.decrypt(id.split("!@#%")[1], currentUser.uid);
+                    }
+                    else{
+                        decrypted = AES.decrypt(id, currentUser.uid);
+                    }
+
+                    patientName = decrypted.toString(enc.Utf8);
+                    console.log(patientName);
+
+                    temp.push(
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                            {patientName}
+                            <div>
+                                <span className="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1">Completed</span>
+                                <span className="btn btn-sm fw-bold btn-warning rounded-pill mx-1">Postpone</span>
+                            </div>
+                        </li>
+                    )
+                }
+            }
+            subSlotData.push(temp);
+
+            slotData.push(
+                <tr>
+                <th scope="row">{t+1}</th>
+                <td>{time}</td>
+                <td>
+                    <ul className="list-group mb-4">
+                        {subSlotData[t]}
+                    </ul>
+                </td>
+            </tr>
+            )
+
+            t++;
+        }
+    }
+    makeQueue();
+
     document.body.style.background = 'white';
     return (
         <>
             <div className="container border my-3">
-                <table class="table">
+                <table className="table">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -20,93 +110,7 @@ export default function AppointmentEditor() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>HH:MM</td>
-                            <td>
-                                <ul class="list-group mb-4">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Patient Name 1
-                                        <div>
-                                            <span class="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1">Completed</span>
-                                            <span class="btn btn-sm fw-bold btn-warning rounded-pill mx-1">Postpone</span>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Patient Name 2
-                                        <div>
-                                            <span class="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1">Completed</span>
-                                            <span class="btn btn-sm fw-bold btn-warning rounded-pill mx-1">Postpone</span>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Patient Name 3
-                                        <div>
-                                            <span class="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1">Completed</span>
-                                            <span class="btn btn-sm fw-bold btn-warning rounded-pill mx-1">Postpone</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>HH:MM</td>
-                            <td>
-                                <ul class="list-group mb-4">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Patient Name 1
-                                        <div>
-                                            <span class="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1">Completed</span>
-                                            <span class="btn btn-sm fw-bold btn-warning rounded-pill mx-1">Postpone</span>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Patient Name 2
-                                        <div>
-                                            <span class="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1">Completed</span>
-                                            <span class="btn btn-sm fw-bold btn-warning rounded-pill mx-1">Postpone</span>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Patient Name 3
-                                        <div>
-                                            <span class="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1">Completed</span>
-                                            <span class="btn btn-sm fw-bold btn-warning rounded-pill mx-1">Postpone</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>HH:MM</td>
-                            <td>
-                                <ul class="list-group mb-4">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Patient Name 1
-                                        <div>
-                                            <span class="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1">Completed</span>
-                                            <span class="btn btn-sm fw-bold btn-warning rounded-pill mx-1">Postpone</span>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Patient Name 2
-                                        <div>
-                                            <span class="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1">Completed</span>
-                                            <span class="btn btn-sm fw-bold btn-warning rounded-pill mx-1">Postpone</span>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Patient Name 3
-                                        <div>
-                                            <span class="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1">Completed</span>
-                                            <span class="btn btn-sm fw-bold btn-warning rounded-pill mx-1">Postpone</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
+                       {slotData}
                     </tbody>
                 </table>
             </div>

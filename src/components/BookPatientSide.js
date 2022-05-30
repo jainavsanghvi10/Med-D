@@ -4,6 +4,7 @@ import doctorProfile from "../assets/images/doctorProfile.svg";
 import firebase from "firebase";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import {AES} from "crypto-js/core";
 
 ////////////////////////////////////////////////////////
 
@@ -66,7 +67,7 @@ export const BookPatientSide = () => {
   }
   ////////////////////////////////////////////////////////
 
-  function updatePatientId(Did, date, key, i, Pid, isCheck) {
+  function updatePatientId(Did, date, key, i, Name, isCheck) {
     var ref = firebase
       .database()
       .ref(`Doctors/${Did}/${date}/${key}/${i}/PatientId`);
@@ -81,7 +82,7 @@ export const BookPatientSide = () => {
     }
     var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}/${i}`);
     ref.update({
-      PatientId: Pid
+      PatientId: Name
     });
   }
   ////////////////////////////////////////////////////////
@@ -154,27 +155,35 @@ export const BookPatientSide = () => {
   }
   ////////////////////////////////////////////////////////
 
-  function updateSlot(time, maxPerson,i) {
+  async function updateSlot(time, maxPerson,i) {
     if (!currentUser) navigate("/signup");
     else {
-      var key = time + "_" + maxPerson;
-      let data = increAttendanceCount(Did, ddate, key, true);
-      console.log("Data = "  + data)
-      if (data < maxPerson) {
-        let t = true;
-        for (let i = 0; i < maxPerson && t; i++) {
-          let id = updatePatientId(Did, ddate, key, i, "xxx", true);
-          console.log(i +  " "  + id)
-
-          if (id === "NULL") {
-            updatePatientId(Did, ddate, key, i, currentUser.uid, false);
-            console.log("Slots Avalaible !");
-            console.log("Patient Booked SuccesFully!");
-            t = false;
+      if(window.confirm("Do You Want To Confirm This Slot Booking")){
+        var key = time + "_" + maxPerson;
+        let data = increAttendanceCount(Did, ddate, key, true);
+        console.log("Data = "  + data)
+        if (data < maxPerson) {
+          let t = true;
+          for (let i = 0; i < maxPerson && t; i++) {
+            let id = updatePatientId(Did, ddate, key, i, "xxx", true);
+            console.log(i +  " "  + id)
+            
+            if (id === "NULL") {
+              const doctorRef = db.collection("UserData").doc(currentUser.uid);
+              const doc = await doctorRef.get();
+              if (doc.exists) {
+                let patientName  = doc.data().FirstName + " " + doc.data().LastName;
+                let encrypted = AES.encrypt(patientName, Did).toString();
+                updatePatientId(Did, ddate, key, i, encrypted, false);
+              }
+              console.log("Slots Avalaible !");
+              console.log("Patient Booked SuccesFully!");
+              t = false;
+            }
           }
-        }
-        increAttendanceCount(Did, ddate, key, false);
-      } else console.log("Sorry, Slots are full!");
+          increAttendanceCount(Did, ddate, key, false);
+        } else console.log("Sorry, Slots are full!");
+      }
     }
   }
   ////////////////////////////////////////////////////////

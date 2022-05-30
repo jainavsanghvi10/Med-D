@@ -19,7 +19,7 @@ import {OfflineBooking} from "./components/OfflineBooking"
 import {BookPatientSide} from "./components/BookPatientSide"
 import {BookDoctorSide} from "./components/BookDoctorSide"
 import ForgotPassword from "./components/ForgotPassword"
-import AppointmentEditor from "./components/AppointmentEditor"
+import {AppointmentEditor} from "./components/AppointmentEditor"
 import PatientQueue from "./components/PatientQueue"
 
 // Styles

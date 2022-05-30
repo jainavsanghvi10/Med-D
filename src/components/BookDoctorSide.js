@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import firebase from "firebase";
+import db from "../firebase";
 
 export const BookDoctorSide = () => {
   const dateRef = useRef();
@@ -9,7 +10,8 @@ export const BookDoctorSide = () => {
   const timetoRef = useRef();
   const peopleperslotRef = useRef();
   const slotdurationRef = useRef();
-
+  const modalTimeRef = useRef();
+  const modalNumRef = useRef();
   const [slotInfo, setSlotInfo] = useState();
   const [Did, setDid] = useState();
   const [ddate, setDDate] = useState();
@@ -23,6 +25,7 @@ export const BookDoctorSide = () => {
   if (isDoctor === false) {
     navigate("/");
   }
+
   useEffect(() => {
     if (currentUser == null) {
       navigate("/signup");
@@ -49,7 +52,6 @@ export const BookDoctorSide = () => {
       setSlotInfo(data);
     });
   }, []);
-
 
   /* Setting dates of 7 days from today */
   const weekDates = [null];
@@ -82,6 +84,165 @@ export const BookDoctorSide = () => {
       setSlotInfo(data);
       setDDate(DateToString(date));
     });
+  }
+
+  ////////////////////////////////////////////////////////
+
+  function updatePatientId(Did, date, key, i, Pid, isCheck) {
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${date}/${key}/${i}/PatientId`);
+    let count = "NULL";
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      count = data;
+    });
+
+    if (isCheck) {
+      return count;
+    }
+    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}/${i}`);
+    ref.update({
+      PatientId: Pid,
+    });
+  }
+  ////////////////////////////////////////////////////////
+
+  function updateAttendance(Did, date, key, i, isPresent, isCheck) {
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${date}/${key}/${i}/Attendance`);
+    let count = false;
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      count = data;
+    });
+
+    if (isCheck) {
+      return count;
+    }
+
+    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}/${i}`);
+    ref.update({
+      Attendance: isPresent,
+    });
+  }
+  ////////////////////////////////////////////////////////
+
+  function increAttendanceCount(Did, date, key, isCheck) {
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${date}/${key}/AttendanceCount`);
+    let count = 99;
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      count = data;
+    });
+
+    if (isCheck) {
+      return count;
+    }
+
+    count = count + 1;
+    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}`);
+    ref.update({
+      AttendanceCount: count,
+    });
+  }
+  ////////////////////////////////////////////////////////
+
+  function decreAttendanceCount(Did, date, key) {
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${date}/${key}/AttendanceCount`);
+    let count = 99;
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      count = data;
+    });
+
+    count = count - 1;
+    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}`);
+    ref.update({
+      AttendanceCount: count,
+    });
+  }
+
+  ////////////////////////////////////////////////////////
+
+  function deleteSlot(Did, date, key) {
+    console.log("hello Delete" + key);
+    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}`);
+    ref.remove();
+  }
+  ////////////////////////////////////////////////////////
+  function editSlot(Did, date, key, time, num) {
+    let timex = key.split("_")[0];
+    let totalSlotAtTimex = key.split("_")[1];
+    console.log("hello Edit " + key);
+    var newKey = time + "_" + num;
+
+    var Pid = [];
+    var attendance = [];
+    let count = 0;
+
+    if (num === totalSlotAtTimex) {
+      var ref = firebase.database().ref(`Doctors/${Did}/${date}`);
+      ref
+        .child(key)
+        .once("value")
+        .then(function (snap) {
+          var data = snap.val();
+          var update = {};
+          update[key] = null;
+          update[newKey] = data;
+          ref.update(update);
+        });
+    } else {
+      for (let i = 0; i < totalSlotAtTimex; i++) {
+        var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}/${i}`);
+        ref.on("value", (snapshot) => {
+          const data = snapshot.val();
+          attendance.push(data.Attendance);
+          Pid.push(data.PatientId);
+          if (data.PatientId !== "NULL") {
+            count = count + 1;
+          }
+        });
+      }
+      if (num > totalSlotAtTimex) {
+        for (let i = 0; i < totalSlotAtTimex; i++) {
+          firebase.database().ref(`Doctors/${Did}/${date}/${newKey}/${i}`).set({
+            PatientId: Pid[i],
+            Attendance: attendance[i],
+          });
+        }
+        for (let i = totalSlotAtTimex; i < num; i++) {
+          firebase.database().ref(`Doctors/${Did}/${date}/${newKey}/${i}`).set({
+            PatientId: "NULL",
+            Attendance: false,
+          });
+        }
+      } else {
+        console.log(num);
+        console.log(count);
+        if (num < count) {
+          window.alert(
+            "There are " + count + " patients already booked in the slot"
+          );
+        } else {
+          for (let i = 0; i < num; i++) {
+            firebase
+              .database()
+              .ref(`Doctors/${Did}/${date}/${newKey}/${i}`)
+              .set({
+                PatientId: Pid[i],
+                Attendance: attendance[i],
+              });
+          }
+        }
+      }
+    }
   }
 
   function createSlots(e) {
@@ -159,40 +320,152 @@ export const BookDoctorSide = () => {
     if (time.split(":")[0] < 12) {
       morningSlots.push(
         <>
-          <div className="row">
-            <div className="col">
-              <span className="material-icons border rounded-pill align-middle">
-                delete
-              </span>
-              <button
-                className={"btn btn-sm mx-2 my-2 " + `${bookedslots < totalSlotAtTime ? "btn-primary" : "btn-secondary"}`}
-              >
-                {time}
-              </button>
-              <button className='btn btn-outline-secondary btn-sm rounded '>-</button>
-              <label>00</label>
-              <button className='btn btn-outline-secondary btn-sm rounded'>+</button>
+          <button
+            type="button"
+            class="btn btn-info btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            data-bs-whatever="@mdo"
+          >
+            {time}
+          </button>
+
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Edit Slot
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="mb-3">
+                      <input
+                        type="time"
+                        class="form-control"
+                        ref={modalTimeRef}
+                      ></input>
+                      <input
+                        type="number"
+                        class="form-control"
+                        ref={modalNumRef}
+                        placeholder="Enter Max Number of Patient"
+                      ></input>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    className="btn btn-sm mx-2 my-2 btn-primary"
+                    onClick={() => {
+                      deleteSlot(Did, ddate, s);
+                    }}
+                  >
+                    Delete
+                  </button>
+
+                  <button
+                    className="btn btn-sm mx-2 my-2 btn-primary"
+                    onClick={() => {
+                      // console.log(modalTimeRef.current.value);
+                      editSlot(Did, ddate, s, "20:23", 5);
+                    }}
+                  >
+                    Edit
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </>
+
+        // </button>
       );
     } else {
       if (time.split(":")[0] < 17) {
         afternoonSlots.push(
           <>
-            <div className="row">
-              <div className="col">
-                <span className="material-icons border rounded-pill align-middle">
-                  delete
-                </span>
-                <button
-                  className={"btn btn-sm mx-2 my-2 " + `${bookedslots < totalSlotAtTime ? "btn-primary" : "btn-secondary"}`}
-                >
-                  {time}
-                </button>
-                <button className='btn btn-outline-secondary btn-sm rounded '>-</button>
-                <label>00</label>
-                <button className='btn btn-outline-secondary btn-sm rounded'>+</button>
+            <button
+              type="button"
+              class="btn btn-info btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              data-bs-whatever="@mdo"
+            >
+              {time}
+            </button>
+
+            <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Edit Slot
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="mb-3">
+                        <input
+                          type="time"
+                          class="form-control"
+                          ref={modalTimeRef}
+                        ></input>
+                        <input
+                          type="number"
+                          class="form-control"
+                          ref={modalNumRef}
+                          placeholder="Enter Max Number of Patient"
+                        ></input>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      className="btn btn-sm mx-2 my-2 btn-primary"
+                      onClick={() => {
+                        deleteSlot(Did, ddate, s);
+                      }}
+                    >
+                      Delete
+                    </button>
+
+                    <button
+                      className="btn btn-sm mx-2 my-2 btn-primary"
+                      onClick={() => {
+                        // console.log(modalTimeRef.current.value);
+                        editSlot(Did, ddate, s, "20:23", 1);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </>
@@ -200,19 +473,74 @@ export const BookDoctorSide = () => {
       } else {
         eveningSlots.push(
           <>
-            <div className="row">
-              <div className="col">
-                <span className="material-icons border rounded-pill align-middle">
-                  delete
-                </span>
-                <button
-                  className={"btn btn-sm mx-2 my-2 " + `${bookedslots < totalSlotAtTime ? "btn-primary" : "btn-secondary"}`}
-                >
-                  {time}
-                </button>
-                <button className='btn btn-outline-secondary btn-sm rounded '>-</button>
-                <label>00</label>
-                <button className='btn btn-outline-secondary btn-sm rounded'>+</button>
+            <button
+              type="button"
+              class="btn btn-info btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              data-bs-whatever="@mdo"
+            >
+              {time}
+            </button>
+
+            <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      Edit Slot
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="mb-3">
+                        <input
+                          type="time"
+                          class="form-control"
+                          ref={modalTimeRef}
+                        ></input>
+                        <input
+                          type="number"
+                          class="form-control"
+                          ref={modalNumRef}
+                          placeholder="Enter Max Number of Patient"
+                        ></input>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      className="btn btn-sm mx-2 my-2 btn-primary"
+                      onClick={() => {
+                        deleteSlot(Did, ddate, s);
+                      }}
+                    >
+                      Delete
+                    </button>
+
+                    <button
+                      className="btn btn-sm mx-2 my-2 btn-primary"
+                      onClick={() => {
+                        // console.log(modalTimeRef.current.value);
+                        editSlot(Did, ddate, s, "20:23", 5);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </>
@@ -243,8 +571,6 @@ export const BookDoctorSide = () => {
       </a>
     );
   }
-
-  document.body.style.background = 'white';
 
   return (
     <div className="bg-white mt-auto mb-2 pb-2">

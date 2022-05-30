@@ -1,82 +1,279 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
-
 import { Link, useNavigate } from "react-router-dom";
-import { auth, db } from "../firebase";
 import firebase from "firebase";
-import { storage } from "../firebase";
+import { enc, AES } from "crypto-js/core";
 
-export default function AppointmentEditor() {
+export const AppointmentEditor = () => {
 
-    document.body.style.background = 'white'
+  const [slotInfo, setSlotInfo] = useState();
+  const [Did, setDid] = useState();
+  const [ddate, setDDate] = useState();
+
+  const { currentUser } = useAuth();
+  const {isDoctor} = useAuth();
+  const navigate = useNavigate();
+
+  // check if user is a doctor
+  if(isDoctor === false){
+    navigate("/");
+  }
+
+  useEffect(() => {
+    if (currentUser == null) {
+      navigate("/signup");
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const DID = params.get("Did");
+    setDid(DID);
+    console.log(currentUser);
+    if (currentUser && DID == null) {
+      navigate({
+        pathname: "/appointment-editor",
+        search: `?Did=${currentUser.uid}`,
+      });
+    }
+    //eslint-disable-next-line
+
+    // fetching today's slot details
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${DateToString(weekDates[1])}`);
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      setSlotInfo(data);
+    });
+  }, []);
+
+  /* Setting dates of 7 days from today */
+  const weekDates = [null];
+  // add Today's date
+  weekDates.push(new Date(Date.now()));
+  for (let i = 1; i <= 7; i++) {
+    let dateI = new Date(weekDates[1]);
+    dateI.setDate(dateI.getDate() + i);
+    weekDates.push(dateI);
+  }
+
+  /* function to convert from Date object to string */
+  function DateToString(date) {
     return (
-        <>
-            <nav>
-                <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                    <button className="nav-link active" id="day-1-tab" data-bs-toggle="tab" data-bs-target="#day-1" type="button" role="tab" aria-controls="day-1" aria-selected="true">DAY1</button>
-                    <button className="nav-link" id="day-2-tab" data-bs-toggle="tab" data-bs-target="#day-2" type="button" role="tab" aria-controls="day-2" aria-selected="false">DAY2</button>
-                    <button className="nav-link" id="day-3-tab" data-bs-toggle="tab" data-bs-target="#day-3" type="button" role="tab" aria-controls="day-3" aria-selected="false">DAY3</button>
-                    <button className="nav-link" id="day-4-tab" data-bs-toggle="tab" data-bs-target="#day-4" type="button" role="tab" aria-controls="day-4" aria-selected="false">DAY4</button>
-                    <button className="nav-link" id="day-5-tab" data-bs-toggle="tab" data-bs-target="#day-5" type="button" role="tab" aria-controls="day-5" aria-selected="false">DAY5</button>
-                    <button className="nav-link" id="day-6-tab" data-bs-toggle="tab" data-bs-target="#day-6" type="button" role="tab" aria-controls="day-6" aria-selected="false">DAY6</button>
-                    <button className="nav-link" id="day-7-tab" data-bs-toggle="tab" data-bs-target="#day-7" type="button" role="tab" aria-controls="day-7" aria-selected="false">DAY7</button>
-                </div>
-            </nav>
-            <div className="tab-content" id="nav-tabContent">
-                <div className="tab-pane fade show active" id="day-1" role="tabpanel" aria-labelledby="day-1-tab">
-                    <div id='slotContainer-bookPatient' className="container">
-                        <div className="row my-2">
-                            <div className="col-2 align-self-center">Morning</div>
-                            <div className="col-8">
-                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">HH:MM</button>
-
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Add Offline Patient</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form>
-                                                    <div class="mb-3">
-                                                        {/* <label for="recipient-name" class="col-form-label">Recipient:</label> */}
-                                                        <input type="text" class="form-control" id="patient-name" placeholder="Enter Patient Name"></input>
-                                                    </div>
-                                                    {/* <div class="mb-3">
-                                                        <label for="message-text" class="col-form-label">Message:</label>
-                                                        <textarea class="form-control" id="message-text"></textarea>
-                                                    </div> */}
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Book Slot</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr></hr>
-                        <div className="row my-2">
-                            <div className="col-2 align-self-center">Afternoon</div>
-                            <div className="col-8"><p className='my-2' style={{ color: "grey" }}>No Slots Available</p></div>
-                        </div>
-                        <hr></hr>
-                        <div className="row my-2">
-                            <div className="col-2 align-self-center">Evening</div>
-                            <div className="col-8"><p className='my-2' style={{ color: "grey" }}>No Slots Available</p></div>
-                        </div>
-                    </div>
-                </div>
-                <div className="tab-pane fade" id="day-2" role="tabpanel" aria-labelledby="day-2-tab">ITS DAY 2</div>
-                <div className="tab-pane fade" id="day-3" role="tabpanel" aria-labelledby="day-3-tab">ITS DAY 3</div>
-                <div className="tab-pane fade" id="day-4" role="tabpanel" aria-labelledby="day-4-tab">ITS DAY 4</div>
-                <div className="tab-pane fade" id="day-5" role="tabpanel" aria-labelledby="day-5-tab">ITS DAY 5</div>
-                <div className="tab-pane fade" id="day-6" role="tabpanel" aria-labelledby="day-6-tab">ITS DAY 6</div>
-                <div className="tab-pane fade" id="day-7" role="tabpanel" aria-labelledby="day-7-tab">ITS DAY 7</div>
-            </div>
-        </>
+      date.getFullYear() +
+      "-" +
+      `${date.getMonth() < 10 ? "0" : ""}` +
+      (date.getMonth() + 1) +
+      "-" +
+      `${date.getDate() < 10 ? "0" : ""}` +
+      date.getDate()
     );
-}
+  }
+
+  /* function to fetch slot data of a date */
+  function fetchSlotWithDate(date) {
+    var ref = firebase.database().ref(`Doctors/${Did}/${DateToString(date)}`);
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      setSlotInfo(data);
+      setDDate(DateToString(date));
+    });
+  }
+
+  function updateSlot(time, maxPerson,i) {
+    if (!currentUser) navigate("/signup");
+    else {
+        if(window.confirm("Do You Want To Confirm This Slot Booking")){
+            var key = time + "_" + maxPerson;
+            let data = increAttendanceCount(Did, ddate, key, true);
+            console.log("Data = "  + data)
+            if (data < maxPerson) {
+                let t = true;
+                for (let i = 0; i < maxPerson && t; i++) {
+                    let id = updatePatientId(Did, ddate, key, i, "xxx", true);
+                    console.log(i +  " "  + id)
+
+                    if (id === "NULL") {
+                        let patientName = prompt("Please Enter Patient's Name");
+                        let encrypted = AES.encrypt(patientName, currentUser.uid);
+                        const identificationKey = "!@#%";
+                        let pid = identificationKey + encrypted;
+                        updatePatientId(Did, ddate, key, i, pid, false);
+                        console.log("Slots Avalaible !");
+                        console.log("Patient Booked SuccesFully!");
+                        t = false;
+                    }
+                }
+                increAttendanceCount(Did, ddate, key, false);
+            } else console.log("Sorry, Slots are full!");
+        }
+    }
+  }
+
+  function updatePatientId(Did, date, key, i, Pid, isCheck) {
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${date}/${key}/${i}/PatientId`);
+    let count = "NULL";
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      count = data;
+    });
+
+    if (isCheck) {
+      return count;
+    }
+    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}/${i}`);
+    ref.update({
+      PatientId: Pid
+    });
+  }
+
+  function increAttendanceCount(Did, date, key, isCheck) {
+    var ref = firebase
+      .database()
+      .ref(`Doctors/${Did}/${date}/${key}/AttendanceCount`);
+    let count = 99;
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      count = data;
+    });
+
+    if (isCheck) {
+      return count;
+    }
+
+    count = count + 1;
+    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}`);
+    ref.update({
+      AttendanceCount: count,
+    });
+  }
+
+  const morningSlots = [];
+  const afternoonSlots = [];
+  const eveningSlots = [];
+  let t=0;
+  for (let s in slotInfo) {
+    let time = s.split("_")[0];
+    let totalSlotAtTime = s.split("_")[1];
+
+    let bookedslots = Object.values(slotInfo)[t].AttendanceCount;
+    t++;
+
+    if (time.split(":")[0] < 12) {
+        if(bookedslots<totalSlotAtTime)
+        morningSlots.push(
+            <button
+            className="btn btn-sm mx-2 my-2 btn-primary"
+            onClick={() => {
+                updateSlot(time, totalSlotAtTime);
+            }}>
+            {time}
+            </button>
+        );
+    } else {
+      if (time.split(":")[0] < 17) {
+        if(bookedslots<totalSlotAtTime)
+        afternoonSlots.push(
+          <button
+          className="btn btn-sm mx-2 my-2 btn-primary"
+          onClick={() => {
+            updateSlot(time, totalSlotAtTime);
+          }}>
+            {time}
+          </button>
+        );
+      } else {
+        if(bookedslots<totalSlotAtTime)
+        eveningSlots.push(
+          <button
+          className="btn btn-sm mx-2 my-2 btn-primary"
+          onClick={() => {
+            updateSlot(time, totalSlotAtTime);
+          }}>
+            {time}
+          </button>
+        );
+      }
+    }
+  }
+
+  const dateNavigation = [];
+  for (let i = 1; i <= 7; i++) {
+    dateNavigation.push(
+      <a
+        className={"nav-item nav-link " + `${i === 1 ? "active" : ""}`}
+        id={"day-" + i + "-tab"}
+        data-toggle="tab"
+        href={"#day-" + i}
+        role="tab"
+        aria-controls={"day-" + i}
+        aria-selected="true"
+        onClick={() => {
+          fetchSlotWithDate(weekDates[i]);
+        }}
+      >
+        {weekDates[i].getDate() +
+          " / " +
+          `${weekDates[i].getMonth() < 10 ? "0" : ""}` +
+          weekDates[i].getMonth()}
+      </a>
+    );
+  }
+
+  return (
+    <div className="bg-white mt-auto mb-2 pb-2">
+      <h2 className="ms-5 ps-3 pt-3">Appointments</h2>
+      <div className="container mt-5">
+        <nav>
+          <div className="nav nav-tabs" id="nav-tab" role="tablist">
+            {dateNavigation}
+          </div>
+        </nav>
+        <div className="tab-content" id="nav-tabContent">
+          <div
+            className="tab-pane fade show active"
+            id="day-1"
+            role="tabpanel"
+            aria-labelledby="day-1-tab"
+          >
+            <div className="container">
+              <div className="row my-2">
+                <div className="col-2 align-self-center">Morning</div>
+                <div className="col-8">
+                  {morningSlots.length != 0 ? (
+                    morningSlots
+                  ) : (
+                    <h3 style={{ color: "grey" }}>No Slots Available</h3>
+                  )}
+                </div>
+              </div>
+              <hr></hr>
+              <div className="row my-2">
+                <div className="col-2 align-self-center">Afternoon</div>
+                <div className="col-8">
+                  {afternoonSlots != 0 ? (
+                    afternoonSlots
+                  ) : (
+                    <h3 style={{ color: "grey" }}>No Slots Available</h3>
+                  )}
+                </div>
+              </div>
+              <hr></hr>
+              <div className="row my-2">
+                <div className="col-2 align-self-center">Evening</div>
+                <div className="col-8">
+                  {eveningSlots != 0 ? (
+                    eveningSlots
+                  ) : (
+                    <h3 style={{ color: "grey" }}>No Slots Available</h3>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

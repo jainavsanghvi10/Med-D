@@ -20,7 +20,7 @@ export const NavBeforeLogin = () => {
                 <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="#">About Us</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="#">Book Appointment</a>
+                <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="/offline-booking">Book Appointment</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="#">Customer Support</a>
