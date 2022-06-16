@@ -3,7 +3,7 @@
 }
 
 .headerColor {
-  background: #102b2f;
+  background: linear-gradient(180deg, #028AD2 0%, #0070AC 100%);
 }
 
 .darkerWebsiteColor {

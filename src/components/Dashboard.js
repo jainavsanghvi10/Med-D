@@ -11,9 +11,16 @@ import uploadDocumentCardPic from '../assets/images/dashboard/macLappi.png';
 import whyDoctorsJoinCard from '../assets/images/dashboard/doctorHandDirecting.png';
 import whyPatientsJoinCard from '../assets/images/dashboard/womenLaptop.png';
 
-import Button from '@mui/material/Button';
+import { Accordion } from 'react-bootstrap';
+import Carousel from 'react-bootstrap/Carousel';
+import { Card } from 'react-bootstrap';
 
 export default function Dashboard() {
+	const [index, setIndex] = useState(0);
+
+	const handleSelect = (selectedIndex, e) => {
+		setIndex(selectedIndex);
+	};
 	return (
 		<>
 			<div className='dashboard-frame'>
@@ -174,6 +181,91 @@ export default function Dashboard() {
 
 			</div>
 
+			{/* Testimonials */}
+			<div className='container mt-5'>
+				<div className='row text-center'>
+					<h3>Testimonials</h3>
+					<Carousel className='testimonials' style={{ height: '400px' }} variant='dark' activeIndex={index} onSelect={handleSelect}>
+						<Carousel.Item className='testimonial-items'>
+							<Card className='testimonial-cards'>
+								<Card.Body>1.This is some text within a card body.</Card.Body>
+							</Card>
+						</Carousel.Item>
+
+						<Carousel.Item className='testimonial-items'>
+							<Card className='testimonial-cards'>
+								<Card.Body>2.This is some text within a card body.</Card.Body>
+							</Card>
+						</Carousel.Item>
+
+						<Carousel.Item className='testimonial-items'>
+							<Card className='testimonial-cards'>
+								<Card.Body>3.This is some text within a card body.</Card.Body>
+							</Card>
+						</Carousel.Item>
+					</Carousel>
+				</div>
+			</div>
+
+			<div className='container mt-5'>
+				<div className='row text-center'>
+					<h3>Frequently Asked Questions</h3>
+					{/* <span className='w-75 mx-auto'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor Lorem ipsum dolor sit amet consetetur sadipscing elitr</span> */}
+				</div>
+				<Accordion>
+					<Accordion.Item eventKey="0">
+						<Accordion.Header>Can I book appointment on behalf of someone else?</Accordion.Header>
+						<Accordion.Body>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+							veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+							commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+							cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+							est laborum.
+						</Accordion.Body>
+					</Accordion.Item>
+					<Accordion.Item eventKey="1">
+						<Accordion.Header>Do I need a referral to see a Physiotherapist?</Accordion.Header>
+						<Accordion.Body>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+							veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+							commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+							cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+							est laborum.
+						</Accordion.Body>
+					</Accordion.Item>
+					<Accordion.Item eventKey="3">
+						<Accordion.Header>Do you Have Venue Option for appointments?</Accordion.Header>
+						<Accordion.Body>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+							veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+							commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+							cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+							est laborum.
+						</Accordion.Body>
+					</Accordion.Item>
+					<Accordion.Item eventKey="4">
+						<Accordion.Header>What if I Have More questions that are not answered Here?</Accordion.Header>
+						<Accordion.Body>
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+							veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+							commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+							cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+							est laborum.
+						</Accordion.Body>
+					</Accordion.Item>
+				</Accordion>
+			</div>
+
 		</>
 	);
 }
+
+

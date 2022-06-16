@@ -136,7 +136,7 @@ html, body {
     border-radius: 20px !important;
 }
 .whyDoctor-reason-card{
-    background: linear-gradient(180deg, #A4EDFF 48.44%, rgba(164, 237, 255, 0.36) 100%);
+    background: linear-gradient(180deg, #B5E5E7 0%, #8CE7EB 100%);
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);  
     border-radius: 20px !important;
 }
@@ -149,7 +149,32 @@ html, body {
     font-size: xx-large;
     font-weight: bolder;
 }
+.testimonials{
 
+}
+.testimonial-items{
+    height: 100%;
+}
+.testimonial-cards{
+    height: 100%;
+    text-align: center;
+    background-color: #12253d !important;
+}
+.testimonial-cards > .card-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.carousel-inner{
+    height: 100% !important;
+    color: white !important;
+}
+.accordion-button{
+    /* background: #3DACDC !important;
+    color: white !important;
+    font-weight: 700; */
+}
+/* .accordion- */
 
 /* MEDIA QUERIES */
 
