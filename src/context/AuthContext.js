@@ -13,6 +13,8 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   const [isDoctor, setIsDoctor] = useState(null);
+  const [isApproved, setIsApproved] = useState(false);
+  const [isPatient, setIsPatient] = useState(null);
 
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -34,21 +36,32 @@ export function AuthProvider({ children }) {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user);
 
-      // verify if user is doctor
       if(user!=null){
+        // verify if user is doctor
         var docRef = db.collection("DoctorData").doc(`${user.uid}`);
         docRef.get().then((doc) => {
             if (doc.exists) {
+              setIsDoctor(true);
               if(doc.data().Approved)
-                setIsDoctor(true);
-              else
-                setIsDoctor(false);
+                setIsApproved(true);
             } else {
                 setIsDoctor(false);
             }
         }).catch((error) => {
             console.log("Error getting document:", error);
             setIsDoctor(false);
+        });
+        // verify if user is patient
+        var patientRef = db.collection("UserData").doc(`${user.uid}`);
+        patientRef.get().then((doc) => {
+            if (doc.exists) {
+                setIsPatient(true);
+            } else {
+                setIsPatient(false);
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+            setIsPatient(false);
         });
       }
 
@@ -64,7 +77,9 @@ export function AuthProvider({ children }) {
     signup,
     logout,
     resetPassword,
-    isDoctor
+    isDoctor,
+    isApproved,
+    isPatient
     // updateEmail,
     // updatePassword
   }

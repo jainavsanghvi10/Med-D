@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 
 import { Link, useNavigate } from "react-router-dom";
-import { auth, db } from "../firebase";
+import db, { auth } from "../firebase";
 import firebase from "firebase";
 import { storage } from "../firebase";
 
@@ -110,8 +110,24 @@ export default function Signup() {
 
 		const form = document.getElementById("signup-form");
 		if (form.checkValidity()) {
-
-			ValidateOtp();
+			db.collection("UserData").where("Mobile", "==", phoneNumberRef.current.value)
+			.get()
+			.then((querySnapshot) => {
+				let alreadyRegistered=false;
+				querySnapshot.forEach((doc) => {
+					console.log(doc.id, " => ", doc.data());
+					alreadyRegistered=true;
+				});
+				if(!alreadyRegistered)
+					ValidateOtp();
+				else{
+					console.log("The number is already registered!!")
+					setError("This User Already Exists!!");
+				}
+			})
+			.catch((error) => {
+				console.log("Error getting documents: ", error);
+			});
 		}
 
 		setLoading(false);
@@ -124,16 +140,8 @@ export default function Signup() {
 			<div className='FormsHeightMobile' style={{ height: '90vh' }}>
 				<div id='signupContainer' className="container h-100 mt-0 mb-0 d-flex align-items-center" style={{ width: '35vw' }}>
 					<div className="shadow-lg row mt-0 pt-0">
-						{error && (
-							<div className="console.log console.log-danger" role="console.log">
-								{error}
-							</div>
-						)}
 						<form className="row g-3 needs-validation mt-0 px-0 mx-0" id="signup-form" onSubmit={handleSubmit} noValidate>
-
 							{/* NavBar For Signup Login options */}
-
-
 							<div className="col-6 text-center border mt-0 py-3 darkerTextColor greyishColor fw-bold fs-4">
 								<Link to="/login"> <a type='button' className='w-100 darkerTextColor'>Login</a> </Link>
 							</div>
@@ -146,7 +154,10 @@ export default function Signup() {
 							</div>
 
 							<span className="text-center darkerTextColor fw-bold">Patient Sign Up Form</span>
-
+							{error &&
+							<div className="alert alert-danger" role="alert">
+							{error}
+							</div>}
 							<div className="col-6 pe-1 mt-4">
 								<input type="text" className="form-control rounded-pill" id="fname" ref={firstNameRef} placeholder='First Name' required />
 								<div className="valid-feedback">Looks Good!</div>

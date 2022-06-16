@@ -21,9 +21,9 @@ export const NavAfterLogin = (props) => {
 
   return (
       <nav className="navbar navbar-expand-lg navbar-dark p-0 headerColor px-2" style={{ height: '10vh' }}>
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
           <img src={siteLogo} style={{ height: '10vh' }} alt="Med-D" />
-        </a>
+        </Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -31,27 +31,28 @@ export const NavAfterLogin = (props) => {
         <div className="collapse navbar-collapse headerColor pb-2" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-2">
               <li className="nav-item active">
-                <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh'}} href="#">Who We Are</a>
+                <Link className="nav-link fw-bold text-light" style={{ fontSize: '2vh'}} to="#">Who We Are</Link>
               </li>
-              {isDoctor ?
+              {isDoctor===true ?
               <>
                 <li className="nav-item">
-                  <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="/book-doctor-side">Create Slots</a>
+                  <Link className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} to="/book-doctor-side">Create Slots</Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="/appointment-editor">Book For Patients</a>
+                  <Link className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} to="/appointment-editor">Book For Patients</Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="/patient-queue">Appointment Queue</a>
+                  <Link className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} to="/patient-queue">Appointment Queue</Link>
                 </li>
               </>
-              :
+              : <></>}
+              {isDoctor===false ?
               <li className="nav-item">
-                <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="/offline-booking">Book Appointment</a>
-              </li>
+                <Link className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} to="/offline-booking">Book Appointment</Link>
+              </li> : <></>
             }
               <li className="nav-item">
-                <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="#">Customer Support</a>
+                <Link className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} to="#">Customer Support</Link>
               </li>
             </ul>
             <form className="d-flex">
