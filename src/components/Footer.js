@@ -20,7 +20,7 @@ export const Footer = () => {
 			{/* <!-- Footer --> */}
 			<footer
 				className="text-center text-lg-start text-dark mt-5"
-				style={{ backgroundColor: "#ECEFF1" }}
+				style={{ backgroundColor: "#ECEFF1", alignSelf:'end' }}
 			>
 				{/* <!-- Section: Social media --> */}
 				<section
