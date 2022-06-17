@@ -23,6 +23,7 @@ import {AppointmentEditor} from "./components/AppointmentEditor"
 import PatientQueue from "./components/PatientQueue"
 import {DoctorInfoForm} from "./components/DoctorInfoForm"
 import DoctorCards from "./components/doctorCards"
+import CreateSlots from "./components/createSlotsPage"
 
 // Styles
 // import "./assets/styles/Style.css"
@@ -48,6 +49,7 @@ function App() {
             <Route path="/patient-queue" element={<PatientQueue/>}/>
             <Route path="/doctor-info-form" element={<DoctorInfoForm/>}/>
             <Route path="/doctor-cards" element={<DoctorCards/>} />
+            <Route path="/create-slots" element={<CreateSlots/>} />
           </Routes>
         <Footer />
       </AuthProvider>
