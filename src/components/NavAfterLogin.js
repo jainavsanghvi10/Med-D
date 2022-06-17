@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import siteLogo from '../assets/images/site-logo.png'
+import siteLogo from '../assets/images/dashboard/Med-D.png'
 
 export const NavAfterLogin = (props) => {
 

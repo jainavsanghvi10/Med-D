@@ -1,0 +1,309 @@
+html {
+    scroll-behavior: smooth;
+}
+
+html, body {
+    background: #ffffff !important;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif !important;
+}
+
+.dashboard-frame {
+    filter: drop-shadow(14px 13px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 30px;
+    max-height: 80vh;
+    height: fit-content;
+    margin-top: 5vh;
+    margin-bottom: 10vh;
+}
+
+.dashboard-rectangle {
+    background: #A4EDFF;
+    border-radius: 62px;
+}
+
+.amoeba {
+    display: block;
+    z-index: inherit;
+    vertical-align: bottom;
+    border-radius: 0px 62px 62px 0px;
+
+}
+
+.dashboard-doctor {
+    position: absolute;
+    margin-left: auto;
+    margin-right: 5%;
+    left: 0;
+    right: 0;
+    /* height: 85%; */
+    height: 40vw;
+    z-index: 100;
+    filter: drop-shadow(8px 0px 4px rgba(0, 0, 0, 0.25));
+}
+
+.dashboard-headline {
+    font-weight: 700;
+    /* font-style: italic; */
+    font-size: 4vw;
+    color: #1D2B4F;
+}
+
+.dashboard-content {
+    font-size: 1.5vw;
+    font-weight: 600;
+    /* font-style: italic; */
+    color: #12253d;
+}
+
+.dashboard-knowmore {
+    font-weight: 700;
+    color: #1D2B4F;
+}
+
+.button-color {
+    background: #284F8F !important;
+}
+
+.bookAppointment-card {
+    height: fit-content;
+    background: linear-gradient(179.77deg, #97E2EF 0.2%, #31B9D0 99.8%);
+    border-radius: 59px;
+    margin-bottom: 10vw !important;
+    width: 75% !important;
+}
+
+.uploadDocument-card{
+    background: linear-gradient(180deg, #9AD2FF 0%, #6ABDFF 100%);
+}
+
+.dashboard-card-headline {
+    font-weight: 700 !important;
+    /* font-style: italic; */
+    font-size: 3vw;
+    color: #1D2B4F;
+}
+
+.dashboard-card-content {
+    font-size: 1.5vw;
+    /* font-weight: 600; */
+    /* font-style: italic; */
+    color: #12253d;
+}
+
+.bookAppointmentCard-image {
+    margin-left: -7vw;
+    height: auto !important;
+}
+
+.uploadDocumentCard-image {
+    margin-top: -7vw;
+    margin-right: -7vw !important;
+    height: auto !important;
+}
+
+.uploadDocument-contentCol {
+    width: 80%;
+}
+
+.dashboard-card-button {
+    width: fit-content;
+}
+
+.why-us-container {
+    background: #EEF8FF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px -2px 4px rgba(0, 0, 0, 0.25);
+    /* margin-left: 0px !important;
+    margin-right: 0px !important; */
+    max-width: 100% !important;
+}
+
+.why-us-heading{
+    font-size: 3rem;
+    font-weight: bolder;
+    width: 70%;
+}
+
+.whyJoin-cards{
+    transform: scaleX(-1);
+    float: right;
+    height: 200px;
+}
+
+.whyPatient-reason-card{
+    background: linear-gradient(180deg, #846EB0 0%, #524273 100%);
+    color: white;
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 20px !important;
+}
+.whyDoctor-reason-card{
+    background: linear-gradient(180deg, #B5E5E7 0%, #8CE7EB 100%);
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);  
+    border-radius: 20px !important;
+}
+.siteGrowth-infoCards{
+    height: 77px;
+    justify-content: center;
+    /* box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);   */
+}
+.siteGrowth-infoCards-data{
+    font-size: xx-large;
+    font-weight: bolder;
+}
+.testimonials{
+
+}
+.testimonial-items{
+    height: 100%;
+}
+.testimonial-cards{
+    height: 100%;
+    text-align: center;
+    background-color: #12253d !important;
+}
+.testimonial-cards > .card-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.carousel-inner{
+    height: 100% !important;
+    color: white !important;
+}
+.accordion-button{
+    /* background: #3DACDC !important;
+    color: white !important;
+    font-weight: 700; */
+}
+/* .accordion- */
+
+/* MEDIA QUERIES */
+
+/* For Tablets */
+@media only screen and (max-width: 767px) {
+    .amoeba {
+        display: none;
+    }
+
+    .dashboard-doctor {
+        margin: auto;
+    }
+
+    /* .dashboard-headline{
+        font-size: 1.5rem;
+
+        text-align: center;
+        margin: auto;
+        margin-top: 10px;
+        width: 60%;
+    }
+    .dashboard-content{
+        font-size: .7rem;
+        text-align: center;
+
+    } */
+    /* .dashboard-knowmore{
+        align-self: center;
+        margin-bottom: 50px;
+    } */
+    .dashboard-frame {
+        margin-left: 10px;
+        margin-right: 10px;
+        height: fit-content;
+    }
+
+    .dashboard-rectangle {
+        height: fit-content;
+        border-radius: 10px;
+    }
+
+    .dashboard-doctor {
+        width: fit-content;
+        margin-right: 0px;
+    }
+    .bookAppointment-card{
+        width: 100% !important;
+        border-radius: 10px;
+        max-width: 90% !important;
+    }
+    .dashboard-card-content{
+        font-size: 0.7rem;
+    }
+    .dashboard-card-headline{
+        font-size: 1.2rem;
+    }
+    .dashboard-card-button {
+        font-size: xx-small !important;
+    }
+    
+}
+
+@media only screen and (max-width: 444px) {
+    .dashboard-headline {
+        font-size: 0.8rem;
+        /* text-align: center; */
+        width: 100%;
+    }
+
+    .dashboard-content {
+        display: none;
+        font-size: .7rem;
+        /* text-align: center; */
+    }
+
+    .dashboard-knowmore {
+        text-align: center;
+        /* align-self: center; */
+        font-size: xx-small !important;
+        /* margin-bottom: 30px; */
+    }
+
+    .dashboard-frame {
+        margin-left: 10px;
+        margin-right: 10px;
+        height: fit-content;
+        margin-top: 20px;
+        margin-bottom: 30px;
+    }
+
+    .dashboard-rectangle {
+        height: fit-content;
+    }
+
+    .dashboard-doctor {
+        height: 160px;
+    }
+
+    
+    .dashboard-card-content{
+        display: none;
+    }
+    .dashboard-card-headline{
+        font-size: 1rem;
+    }
+    .bookAppointment-contentCol{
+        padding: 0 !important;
+    }
+    .uploadDocument-contentCol{
+        padding-right: 0 !important;
+    }
+    .whyJoin-cards{
+        float: right;
+        height: 150px;
+    }
+    .whyjoin-doc-pat-container{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .siteGrowth-infoCards-data{
+        font-size: large;
+        font-weight: bolder;
+    }
+    .why-us-heading{
+        font-size: 2rem;
+        font-weight: bolder;
+        width: 100%;
+    }
+    .why-us-container{
+        text-align: center;
+    }
+}

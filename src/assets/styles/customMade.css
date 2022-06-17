@@ -3,7 +3,7 @@
 }
 
 .headerColor {
-  background: #102b2f;
+  background: linear-gradient(180deg, #028AD2 0%, #0070AC 100%);
 }
 
 .darkerWebsiteColor {
@@ -33,9 +33,7 @@
 }
 
 html, body {
-  background: rgb(255, 255, 255);
-  background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(5, 218, 238, 1) 100%);
-  margin: 0;
+  background: #EBFAFF !important;
 }
 
 .bigText {
@@ -125,10 +123,6 @@ html, body {
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Noto Sans JP', sans-serif;
-  background-color: #fef8f8;
-}
 
 .cards-custom {
   display: grid;
@@ -251,12 +245,14 @@ body {
   font-weight: 700;
   padding-left: 10px;
 }
-#userProfile > .form-group{
+
+#userProfile>.form-group {
   margin-top: 15px !important;
   margin-bottom: 15px !important;
 }
-#userProfile label{
-  font-weight: 700 ;
+
+#userProfile label {
+  font-weight: 700;
 }
 
 @media only screen and (max-width: 600px) {
@@ -374,6 +370,7 @@ body {
   .desktopView {
     display: none !important;
   }
+
   #hide_in_mobile {
     display: none !important;
   }
@@ -462,87 +459,109 @@ body {
   .doc-location {
     margin-bottom: 5px;
   }
-  #row-bookPatient > div{
+
+  #row-bookPatient>div {
     width: 100%;
   }
-  .fieldName-bookPatient{
+
+  .fieldName-bookPatient {
     width: 30% !important;
     font-size: smaller !important;
   }
-  .fieldEntry-bookPatient{
+
+  .fieldEntry-bookPatient {
     width: 70% !important;
   }
-  .fieldEntry-bookPatient h3{
+
+  .fieldEntry-bookPatient h3 {
     font-size: smaller !important;
   }
-  .dateCSS{
+
+  .dateCSS {
     padding-left: 2vw !important;
     padding-right: 2vw !important;
   }
-  #slotContainer-bookPatient{
+
+  #slotContainer-bookPatient {
     font-size: smaller;
   }
-  #slotContainer-bookPatient .col-2{
+
+  #slotContainer-bookPatient .col-2 {
     width: 25% !important;
   }
-  #slotContainer-bookPatient .col-8{
+
+  #slotContainer-bookPatient .col-8 {
     width: 75% !important;
   }
-  #slotContainer-bookPatient button{
+
+  #slotContainer-bookPatient button {
     margin: 2px !important;
     font-size: smaller;
   }
+
   #saveMedRecHeading {
     width: 100% !important;
     text-align: center;
   }
-  #saveMedRecContainer{
+
+  #saveMedRecContainer {
     width: 90% !important;
     text-align: center;
     height: fit-content !important;
     padding-bottom: 20px;
   }
-  #saveMedRecContainer button{
+
+  #saveMedRecContainer button {
     font-size: xx-small !important;
   }
 
-  #saveMedRecContainer > button > span{
+  #saveMedRecContainer>button>span {
     margin-right: 0px !important;
   }
-  #sort_span-medRec{
+
+  #sort_span-medRec {
     margin-left: 0px !important;
   }
-  .folderIcon{
+
+  .folderIcon {
     font-size: 50px !important;
   }
-  .folderContainer{
+
+  .folderContainer {
     width: 70px !important;
     margin-right: 10px !important;
   }
-  .folderIconName{
+
+  .folderIconName {
     font-size: 10px !important;
     width: 70px !important;
   }
-  #folderScroll{
+
+  #folderScroll {
     height: fit-content !important;
     margin-top: 25px !important;
   }
-  #fileScroll{
+
+  #fileScroll {
     padding-left: 10px !important;
     padding-right: 10px !important;
     height: 200px !important;
   }
-  #fileContainer{
+
+  #fileContainer {
     flex-wrap: nowrap !important;
     margin-left: auto !important;
   }
-  #fileContainer > button{
+
+  #fileContainer>button {
     width: fit-content;
   }
-  #fileContainer > button >span{
+
+  #fileContainer>button>span {
     font-size: small;
   }
-  #fileContainer > span{
+
+  #fileContainer>span {
     margin-left: 10px !important;
     width: 40% !important;
     font-size: x-small !important;
@@ -563,10 +582,11 @@ body {
     display: block;
   }
 
-  .folderContainer{
+  .folderContainer {
     margin-left: 30px !important;
   }
-  #fileScroll{
+
+  #fileScroll {
     padding-left: 10px !important;
     padding-right: 10px !important;
     height: 250px !important;

@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import '../assets/styles/customMade.css';
-import siteLogo from '../assets/images/site-logo.png'
+import siteLogo from '../assets/images/dashboard/Med-D.png'
 
 export const NavBeforeLogin = () => {
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark p-0 headerColor px-2" style={{ height: '10vh' }}>
         <a className="navbar-brand" href="#">
-          <img src={siteLogo} style={{ height: '10vh' }} alt="Med-D" />
+          <img src={siteLogo} style={{ height: '7vh' }} alt="Med-D" />
         </a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
