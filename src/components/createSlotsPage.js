@@ -3,25 +3,12 @@ import 'bootstrap/js/dist/carousel'
 import { Link } from 'react-router-dom';
 import '../assets/styles/newDesign.css';
 
-import TextField from '@mui/material/TextField';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
 export default function createSlotsPage() {
-    const [value, setValue] = React.useState(null);
-    return (
+    return(
         <>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                    label="Basic example"
-                    value={value}
-                    onChange={(newValue) => {
-                        setValue(newValue);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                />
-            </LocalizationProvider>
+            <input type='date'/>
+            <input type='time'/>
+            
         </>
     );
 }
