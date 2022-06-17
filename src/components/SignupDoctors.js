@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth, db } from '../firebase';
+import db, { auth } from '../firebase';
 import firebase from 'firebase';
 import { storage } from '../firebase';
 import { state, cities, specialization } from './Arrays';
@@ -121,7 +121,24 @@ export default function SignupDoctors() {
 		const form = document.getElementById('signup-form');
 		if (form.checkValidity()) {
 			// console.log("valid form")
-			ValidateOtp();
+			db.collection("DoctorData").where("Mobile", "==", phoneNumberRef.current.value)
+			.get()
+			.then((querySnapshot) => {
+				let alreadyRegistered=false;
+				querySnapshot.forEach((doc) => {
+					console.log(doc.id, " => ", doc.data());
+					alreadyRegistered=true;
+				});
+				if(!alreadyRegistered)
+					ValidateOtp();
+				else{
+					console.log("The number is already registered!!")
+					setError("This User Already Exists");
+				}
+			})
+			.catch((error) => {
+				console.log("Error getting documents: ", error);
+			});
 		}
 
 		setLoading(false);
@@ -157,11 +174,6 @@ export default function SignupDoctors() {
 				{/* <h1 className='mt-100 text-center' style={{ marginBottom: '50px' }}>
 					Sign Up As Doctor
 				</h1> */}
-				{error && (
-					<div className='console.log console.log-danger' role='console.log'>
-						{error}
-					</div>
-				)}
 				<form className='row g-3 needs-validation mt-0 px-0 mx-0' id='signup-form' onSubmit={handleSubmit} noValidate>
 					<div className="col-6 text-center border mt-0 py-3 darkerTextColor greyishColor fw-bold fs-4">
 						<Link to="/login"> <a type='button' className='w-100 darkerTextColor'>Login</a> </Link>
@@ -175,6 +187,10 @@ export default function SignupDoctors() {
 					</div>
 
 					<span className="text-center darkerTextColor fw-bold">Doctor Sign Up Form</span>
+					{error &&
+					<div className="alert alert-danger" role="alert">
+					{error}
+					</div>}
 					<div className='col-6 pe-1 mt-4'>
 						<input type='text' className='form-control rounded-pill' placeholder='First Name' id='fname' ref={firstNameRef} required />
 						<div className='valid-feedback'>Looks Good!</div>

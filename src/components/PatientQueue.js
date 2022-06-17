@@ -11,6 +11,7 @@ export default function AppointmentEditor() {
 
     let todayDate = new Date(Date.now());
     let firstPerson = null;
+    let slotNumber = 1;
 
     useEffect(() => {
         if (currentUser == null) {
@@ -96,16 +97,15 @@ export default function AppointmentEditor() {
                         <li className="list-group-item d-flex justify-content-between align-items-center">
                             {patientName}
                             <div>
-                                <span className="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1"
-                                onClick={
-                                    ()=>{appointmentComplete(s, i)}
-                                }>Completed</span>
                                 {firstPerson!=null ?
                                 <span className="btn btn-sm fw-bold btn-warning rounded-pill mx-1"
                                 onClick={()=>{
                                     reschedulePatient(s, i, id);
                                 }}>Swap</span> 
-                                : <></>}
+                                : <span className="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1"
+                                onClick={
+                                    ()=>{appointmentComplete(s, i)}
+                                }>Completed</span>}
                             </div>
                         </li>
                     )
@@ -118,17 +118,20 @@ export default function AppointmentEditor() {
             }
             subSlotData.push(temp);
 
-            slotData.push(
-                <tr>
-                <th scope="row">{t+1}</th>
-                <td>{time}</td>
-                <td>
-                    <ul className="list-group mb-4">
-                        {subSlotData[t]}
-                    </ul>
-                </td>
-            </tr>
-            )
+            if(subSlotData[t].length != 0){
+                slotData.push(
+                    <tr>
+                    <th scope="row">{slotNumber}</th>
+                    <td>{time}</td>
+                    <td>
+                        <ul className="list-group mb-4">
+                            {subSlotData[t]}
+                        </ul>
+                    </td>
+                </tr>
+                )
+                slotNumber++;
+            }
 
             t++;
         }
@@ -139,6 +142,7 @@ export default function AppointmentEditor() {
     return (
         <>
             <div className="container border my-3">
+                <h2>Today's Patient Queue</h2>
                 <table className="table">
                     <thead>
                         <tr>

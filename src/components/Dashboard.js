@@ -17,6 +17,23 @@ import { Card } from 'react-bootstrap';
 
 export default function Dashboard() {
 	const [index, setIndex] = useState(0);
+	const [id, setId] = useState();
+	const { currentUser } = useAuth();
+	const {isDoctor} = useAuth();
+	const navigate = useNavigate();
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+		const id = params.get('id');
+		setId(id);
+		console.log(currentUser);
+		if (currentUser && id == null) {
+			navigate({
+				pathname: '/',
+				search: `?id=${currentUser.uid}`
+			})
+		}
+		//eslint-disable-next-line
+	}, []);
 
 	const handleSelect = (selectedIndex, e) => {
 		setIndex(selectedIndex);
@@ -57,7 +74,9 @@ export default function Dashboard() {
 					<div className='col-4 col-sm-6 d-flex flex-column justify-content-evenly bookAppointment-contentCol'>
 						<span className='dashboard-card-headline mb-5`'>Book Offline Appointments</span>
 						<span className='dashboard-card-content'>No more standing in queues, sitting in the waiting area. Skip the hassle and get your health checked up quickly with live tracking system.</span>
+						<Link to="offline-booking">
 						<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Book Now</button>
+						</Link>
 					</div>
 				</div>
 			</div>
@@ -67,7 +86,9 @@ export default function Dashboard() {
 					<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
 						<span className='dashboard-card-headline'>Save Medical Records</span>
 						<span className='dashboard-card-content'>Save your medical records securely, so that you never misplace them again.Get 5GB of storage for free.</span>
+						<Link to="medicalRecords">
 						<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Upload</button>
+						</Link>
 					</div>
 					<div className='col-8 col-sm-6 offset-md-1 d-flex'>
 						<img src={uploadDocumentCardPic} className='uploadDocumentCard-image w-100'></img>

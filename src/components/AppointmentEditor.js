@@ -9,6 +9,7 @@ export const AppointmentEditor = () => {
   const [slotInfo, setSlotInfo] = useState();
   const [Did, setDid] = useState();
   const [ddate, setDDate] = useState();
+  const [error, setError] = useState("");
 
   const { currentUser } = useAuth();
   const {isDoctor} = useAuth();
@@ -82,6 +83,7 @@ export const AppointmentEditor = () => {
   function updateSlot(time, maxPerson,i) {
     if (!currentUser) navigate("/signup");
     else {
+        let patientName = prompt("Please Enter Patient's Name");
         if(window.confirm("Do You Want To Confirm This Slot Booking")){
             var key = time + "_" + maxPerson;
             let data = increAttendanceCount(Did, ddate, key, true);
@@ -93,13 +95,13 @@ export const AppointmentEditor = () => {
                     console.log(i +  " "  + id)
 
                     if (id === "NULL") {
-                        let patientName = prompt("Please Enter Patient's Name");
                         let encrypted = AES.encrypt(patientName, currentUser.uid);
                         const identificationKey = "!@#%";
                         let pid = identificationKey + encrypted;
                         updatePatientId(Did, ddate, key, i, pid, false);
                         console.log("Slots Avalaible !");
                         console.log("Patient Booked SuccesFully!");
+                        setError("Patient Booked Successfully");
                         t = false;
                     }
                 }
@@ -223,6 +225,10 @@ export const AppointmentEditor = () => {
 
   return (
     <div className="bg-white mt-auto mb-2 pb-2">
+      {error &&
+      <div className="alert alert-success" role="alert">
+      {error}
+      </div>}
       <h2 className="ms-5 ps-3 pt-3">Appointments</h2>
       <div className="container mt-5">
         <nav>
