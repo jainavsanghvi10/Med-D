@@ -23,7 +23,7 @@ import {AppointmentEditor} from "./components/AppointmentEditor"
 import PatientQueue from "./components/PatientQueue"
 import {DoctorInfoForm} from "./components/DoctorInfoForm"
 import DoctorCards from "./components/doctorCards"
-import CreateSlotsPage from "./components/CreateSlotsPage"
+import CreateSlotsPage from "./components/createSlotsPage"
 
 // Styles
 // import "./assets/styles/Style.css"

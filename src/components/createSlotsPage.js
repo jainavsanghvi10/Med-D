@@ -12,9 +12,17 @@ export default function CreateSlotsPage() {
     const [value, setValue] = useState(null);
     return (
         <>
-            <input type='date'/>
-            <input type='time'/>
-            
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                    label="Basic example"
+                    value={value}
+                    onChange={(newValue) => {
+                        setValue(newValue);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                />
+            </LocalizationProvider>
+
         </>
     );
 }
