@@ -174,7 +174,54 @@ html, body {
     color: white !important;
     font-weight: 700; */
 }
-/* .accordion- */
+.doctor-card{
+    /* width: 250px !important; */
+    height: 250px !important;
+}
+
+.doctor-card-thumbnail{
+    height: 70%;
+}
+
+.doctor-card-inner {
+    margin: auto;
+    position: relative;
+    width: 300px !important;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+  
+  /* Do an horizontal flip when you move the mouse over the flip box container */
+  .doctor-card:hover .doctor-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  /* Position the front and back side */
+  .doctor-card-front, .doctor-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+  }
+  
+  /* Style the front side (fallback if image is missing) */
+  .doctor-card-front {
+    background-color: rgb(250, 230, 233);
+    color: black;
+  }
+  
+  /* Style the back side */
+  .doctor-card-back {
+    background-color: whitesmoke;
+    transform: rotateY(180deg);
+  }
+
+  .doctor-card-info{
+    align-items: center;
+  }
 
 /* MEDIA QUERIES */
 

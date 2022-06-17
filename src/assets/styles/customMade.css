@@ -3,7 +3,8 @@
 }
 
 .headerColor {
-  background: linear-gradient(180deg, #028AD2 0%, #0070AC 100%);
+  /* background: linear-gradient(180deg, #028AD2 0%, #0070AC 100%); */
+  background: #15343c;
 }
 
 .darkerWebsiteColor {
