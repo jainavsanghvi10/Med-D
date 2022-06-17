@@ -22,6 +22,7 @@ import ForgotPassword from "./components/ForgotPassword"
 import {AppointmentEditor} from "./components/AppointmentEditor"
 import PatientQueue from "./components/PatientQueue"
 import {DoctorInfoForm} from "./components/DoctorInfoForm"
+import DoctorCards from "./components/doctorCards"
 
 // Styles
 // import "./assets/styles/Style.css"
@@ -46,6 +47,7 @@ function App() {
             <Route path="/appointment-editor" element={<AppointmentEditor/>}/>
             <Route path="/patient-queue" element={<PatientQueue/>}/>
             <Route path="/doctor-info-form" element={<DoctorInfoForm/>}/>
+            <Route path="/doctor-cards" element={<DoctorCards/>} />
           </Routes>
         <Footer />
       </AuthProvider>

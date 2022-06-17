@@ -17,6 +17,23 @@ import { Card } from 'react-bootstrap';
 
 export default function Dashboard() {
 	const [index, setIndex] = useState(0);
+	const [id, setId] = useState();
+	const { currentUser } = useAuth();
+	const {isDoctor} = useAuth();
+	const navigate = useNavigate();
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+		const id = params.get('id');
+		setId(id);
+		console.log(currentUser);
+		if (currentUser && id == null) {
+			navigate({
+				pathname: '/',
+				search: `?id=${currentUser.uid}`
+			})
+		}
+		//eslint-disable-next-line
+	}, []);
 
 	const handleSelect = (selectedIndex, e) => {
 		setIndex(selectedIndex);
