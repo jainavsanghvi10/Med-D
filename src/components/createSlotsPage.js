@@ -53,7 +53,7 @@ export default function CreateSlotsPage() {
 
     return (
         <>
-            <div style={{background:'#F6FCFF'}} className='container mt-4 p-5 border rounded'>
+            <div style={{background:'#F6FCFF'}} className='container mt-4 py-3 p-sm-5 border rounded'>
                 <div className='row d-flex justify-content-between'>
                     <TextField
                         className='col-12 my-2 px-1 col-sm-4 col-xl-2'

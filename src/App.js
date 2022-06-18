@@ -24,6 +24,7 @@ import PatientQueue from "./components/PatientQueue"
 import {DoctorInfoForm} from "./components/DoctorInfoForm"
 import DoctorCards from "./components/doctorCards"
 import CreateSlotsPage from "./components/createSlotsPage"
+import PatientSideBooking from "./components/patientSideBooking"
 
 // Styles
 // import "./assets/styles/Style.css"
@@ -34,7 +35,6 @@ function App() {
       <AuthProvider>
         <Header/>
           <Routes>
-            <Route path="/" element={<Dashboard/>} />
             <Route path="/signup" element={<Signup/>} />
             <Route path="/signup-doctor" element={<SignupDoctors/>} />
             <Route path="/login" element={<Login/>} />
@@ -48,8 +48,12 @@ function App() {
             <Route path="/appointment-editor" element={<AppointmentEditor/>}/>
             <Route path="/patient-queue" element={<PatientQueue/>}/>
             <Route path="/doctor-info-form" element={<DoctorInfoForm/>}/>
+
+            {/* New Pages Created */}
+            <Route path="/" element={<Dashboard/>} />
             <Route path="/doctor-cards" element={<DoctorCards/>} />
             <Route path="/create-slots" element={<CreateSlotsPage/>} />
+            <Route path="/patient-side-booking" element={<PatientSideBooking/>} />
           </Routes>
         <Footer />
       </AuthProvider>
