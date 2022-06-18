@@ -72,7 +72,7 @@ html, body {
     width: 75% !important;
 }
 
-.uploadDocument-card{
+.uploadDocument-card {
     background: linear-gradient(180deg, #9AD2FF 0%, #6ABDFF 100%);
 }
 
@@ -117,69 +117,77 @@ html, body {
     max-width: 100% !important;
 }
 
-.why-us-heading{
+.why-us-heading {
     font-size: 3rem;
     font-weight: bolder;
     width: 70%;
 }
 
-.whyJoin-cards{
+.whyJoin-cards {
     transform: scaleX(-1);
     float: right;
     height: 200px;
 }
 
-.whyPatient-reason-card{
+.whyPatient-reason-card {
     background: linear-gradient(180deg, #846EB0 0%, #524273 100%);
     color: white;
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
     border-radius: 20px !important;
 }
-.whyDoctor-reason-card{
+
+.whyDoctor-reason-card {
     background: linear-gradient(180deg, #B5E5E7 0%, #8CE7EB 100%);
-    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);  
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
     border-radius: 20px !important;
 }
-.siteGrowth-infoCards{
+
+.siteGrowth-infoCards {
     height: 77px;
     justify-content: center;
     /* box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);   */
 }
-.siteGrowth-infoCards-data{
+
+.siteGrowth-infoCards-data {
     font-size: xx-large;
     font-weight: bolder;
 }
-.testimonials{
 
-}
-.testimonial-items{
+.testimonials {}
+
+.testimonial-items {
     height: 100%;
 }
-.testimonial-cards{
+
+.testimonial-cards {
     height: 100%;
     text-align: center;
     background-color: #12253d !important;
 }
-.testimonial-cards > .card-body{
+
+.testimonial-cards>.card-body {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.carousel-inner{
+
+.carousel-inner {
     height: 100% !important;
     color: white !important;
 }
-.accordion-button{
+
+.accordion-button {
     /* background: #3DACDC !important;
     color: white !important;
     font-weight: 700; */
 }
-.doctor-card{
+
+.doctor-card {
     /* width: 250px !important; */
     height: 250px !important;
 }
 
-.doctor-card-thumbnail{
+.doctor-card-thumbnail {
     height: 70%;
 }
 
@@ -191,37 +199,51 @@ html, body {
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
-  }
-  
-  /* Do an horizontal flip when you move the mouse over the flip box container */
-  .doctor-card:hover .doctor-card-inner {
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.doctor-card:hover .doctor-card-inner {
     transform: rotateY(180deg);
-  }
-  
-  /* Position the front and back side */
-  .doctor-card-front, .doctor-card-back {
+}
+
+/* Position the front and back side */
+.doctor-card-front, .doctor-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden; /* Safari */
+    -webkit-backface-visibility: hidden;
+    /* Safari */
     backface-visibility: hidden;
-  }
-  
-  /* Style the front side (fallback if image is missing) */
-  .doctor-card-front {
+}
+
+/* Style the front side (fallback if image is missing) */
+.doctor-card-front {
     background-color: rgb(250, 230, 233);
     color: black;
-  }
-  
-  /* Style the back side */
-  .doctor-card-back {
+}
+
+/* Style the back side */
+.doctor-card-back {
     background-color: whitesmoke;
     transform: rotateY(180deg);
-  }
+}
 
-  .doctor-card-info{
+.doctor-card-info {
     align-items: center;
-  }
+}
+
+/* .modalStyle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400;
+    background-color: black;
+    border: 2px solid #000;
+    box-shadow: 24;
+    padding: 40px;
+    color: white;
+} */
 
 /* MEDIA QUERIES */
 
@@ -267,21 +289,25 @@ html, body {
         width: fit-content;
         margin-right: 0px;
     }
-    .bookAppointment-card{
+
+    .bookAppointment-card {
         width: 100% !important;
         border-radius: 10px;
         max-width: 90% !important;
     }
-    .dashboard-card-content{
+
+    .dashboard-card-content {
         font-size: 0.7rem;
     }
-    .dashboard-card-headline{
+
+    .dashboard-card-headline {
         font-size: 1.2rem;
     }
+
     .dashboard-card-button {
         font-size: xx-small !important;
     }
-    
+
 }
 
 @media only screen and (max-width: 444px) {
@@ -320,37 +346,53 @@ html, body {
         height: 160px;
     }
 
-    
-    .dashboard-card-content{
+
+    .dashboard-card-content {
         display: none;
     }
-    .dashboard-card-headline{
+
+    .dashboard-card-headline {
         font-size: 1rem;
     }
-    .bookAppointment-contentCol{
+
+    .bookAppointment-contentCol {
         padding: 0 !important;
     }
-    .uploadDocument-contentCol{
+
+    .uploadDocument-contentCol {
         padding-right: 0 !important;
     }
-    .whyJoin-cards{
+
+    .whyJoin-cards {
         float: right;
         height: 150px;
     }
-    .whyjoin-doc-pat-container{
+
+    .whyjoin-doc-pat-container {
         padding-left: 0px !important;
         padding-right: 0px !important;
     }
-    .siteGrowth-infoCards-data{
+
+    .siteGrowth-infoCards-data {
         font-size: large;
         font-weight: bolder;
     }
-    .why-us-heading{
+
+    .why-us-heading {
         font-size: 2rem;
         font-weight: bolder;
         width: 100%;
     }
-    .why-us-container{
+
+    .why-us-container {
         text-align: center;
+    }
+
+    .slotButton {
+        font-size: xx-small !important;
+        padding-left: 3px !important;
+        padding-right: 3px !important;
+        padding-top: 1px !important;
+        padding-bottom: 1px !important;
     }
 }
