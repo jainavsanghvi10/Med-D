@@ -53,7 +53,7 @@ export default function CreateSlotsPage() {
 
     return (
         <>
-            <div className='container mt-4'>
+            <div style={{background:'#F6FCFF'}} className='container mt-4 p-5 border rounded'>
                 <div className='row d-flex justify-content-between'>
                     <TextField
                         className='col-12 my-2 px-1 col-sm-4 col-xl-2'
@@ -109,7 +109,7 @@ export default function CreateSlotsPage() {
             <div className='container p-0 mt-4'>
                 <Box sx={{ width: '100%', bgcolor: 'primary.dark' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }} >
-                        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant='scrollable' scrollButtons="auto">
+                        <Tabs style={{background:'#C6E7FF'}} value={value} onChange={handleChange} aria-label="basic tabs example" variant='scrollable' scrollButtons="auto">
                             <Tab label="Item One" {...a11yProps(0)} />
                             <Tab label="Item Two" {...a11yProps(1)} />
                             <Tab label="Item Three" {...a11yProps(2)} />
@@ -120,7 +120,7 @@ export default function CreateSlotsPage() {
                             <Tab label="Item Three" />
                         </Tabs>
                     </Box>
-                    <TabPanel value={value} index={0}>
+                    <TabPanel style={{background:'#F6FCFF'}} value={value} index={0}>
                         <div>
                             <h4 className='fw-bold'>Morning</h4>
                             <div>
