@@ -576,11 +576,11 @@ html, body {
 
 @media only screen and (min-width: 600px) {
   .mobileView {
-    display: none;
+    display: none !important;
   }
 
   .desktopView {
-    display: block;
+    display: block !important;
   }
 
   .folderContainer {

@@ -4,6 +4,32 @@ import { Link, useNavigate } from "react-router-dom";
 import firebase from "firebase";
 import db from "../firebase";
 
+import TextField from '@mui/material/TextField';
+import { Box } from '@mui/system';
+import { Button, IconButton } from '@mui/material';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
+import { Chip } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
+import Divider from '@mui/material/Divider';
+import Badge from '@mui/material/Badge';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Modal from '@mui/material/Modal';
+
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import TimerIcon from '@mui/icons-material/Timer';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import WatchLaterIcon from '@mui/icons-material/WatchLater';
+import { People } from '@mui/icons-material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { weeksToDays } from "date-fns";
+
 export const BookDoctorSide = () => {
   const dateRef = useRef();
   const timefromRef = useRef();
@@ -14,11 +40,28 @@ export const BookDoctorSide = () => {
   const modalNumRef = useRef();
   const [slotInfo, setSlotInfo] = useState();
   const [Did, setDid] = useState();
-  const [ddate, setDDate] = useState();
 
   const { currentUser } = useAuth();
   const { isDoctor } = useAuth();
   const navigate = useNavigate();
+
+  const theme = useTheme();
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+      setValue(newValue);
+  };
+  const handleDelete = () => {
+      console.info('You clicked the delete icon.');
+  };
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+      setAnchorEl(null);
+  };
 
   // check if user is a doctor
   console.log(isDoctor);
@@ -31,6 +74,12 @@ export const BookDoctorSide = () => {
       navigate("/signup");
     }
 
+    var ref = firebase.database().ref(`Doctors/${currentUser.uid}/`);
+    ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      setSlotInfo(data);
+    });
+
     const params = new URLSearchParams(window.location.search);
     const DID = params.get("Did");
     setDid(DID);
@@ -41,17 +90,11 @@ export const BookDoctorSide = () => {
         search: `?Did=${currentUser.uid}`,
       });
     }
-    //eslint-disable-next-line
-
-    // fetching today's slot details
-    var ref = firebase
-      .database()
-      .ref(`Doctors/${Did}/${DateToString(weekDates[1])}`);
-    ref.on("value", (snapshot) => {
-      const data = snapshot.val();
-      setSlotInfo(data);
-    });
   }, []);
+
+  window.onload = (event) => {
+    fetchSlotData();
+  };
 
   /* Setting dates of 7 days from today */
   const weekDates = [null];
@@ -77,13 +120,13 @@ export const BookDoctorSide = () => {
   }
 
   /* function to fetch slot data of a date */
-  function fetchSlotWithDate(date) {
-    var ref = firebase.database().ref(`Doctors/${Did}/${DateToString(date)}`);
+  function fetchSlotData() {
+    var ref = firebase.database().ref(`Doctors/${currentUser.uid}/`);
     ref.on("value", (snapshot) => {
       const data = snapshot.val();
       setSlotInfo(data);
-      setDDate(DateToString(date));
     });
+    console.log("slot data fetched")
   }
 
   ////////////////////////////////////////////////////////
@@ -170,10 +213,11 @@ export const BookDoctorSide = () => {
 
   ////////////////////////////////////////////////////////
 
-  function deleteSlot(Did, date, key) {
-    console.log("hello Delete" + key);
-    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}`);
-    ref.remove();
+  function deleteSlot(date, time) {
+    var ref = firebase.database().ref(`Doctors/${currentUser.uid}/${date}/${time}`);
+    ref.remove().then(()=>{
+    console.log("delete successful");
+    });
   }
   ////////////////////////////////////////////////////////
   function editSlot(Did, date, key, time, num) {
@@ -291,431 +335,361 @@ export const BookDoctorSide = () => {
           AttendanceCount: 0,
         });
     }
-
-    for (let i = 1; i <= 7; i++) {
-      let tab = document.getElementById(`day-${i}-tab`);
-      if (!tab.classList.contains("active")) {
-        if (DateToString(weekDates[i]) === dateRef.current.value) {
-          tab.classList.add("active");
-        }
-      } else {
-        tab.classList.remove("active");
-        continue;
-      }
-    }
   }
 
-  const morningSlots = [];
-  const afternoonSlots = [];
-  const eveningSlots = [];
+
+  const allSlots = [];
+  const dateNavigation = [null];
+  const morningSlots = [null];
+  const afternoonSlots = [null];
+  const eveningSlots = [null];
   let t = 0;
-  console.log(slotInfo);
-  for (let s in slotInfo) {
-    let time = s.split("_")[0];
-    let totalSlotAtTime = s.split("_")[1];
-
-    let bookedslots = Object.values(slotInfo)[t].AttendanceCount;
-    t++;
-
-    if (time.split(":")[0] < 12) {
-      morningSlots.push(
-        <>
-          <button
-            type="button"
-            class="btn btn-info btn-sm"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            data-bs-whatever="@mdo"
-          >
-            {time}
-          </button>
-
-          <div
-            class="modal fade"
-            id="exampleModal"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">
-                    Edit Slot
-                  </h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="mb-3">
-                      <input
-                        type="time"
-                        class="form-control"
-                        ref={modalTimeRef}
-                      ></input>
-                      <input
-                        type="number"
-                        class="form-control"
-                        ref={modalNumRef}
-                        placeholder="Enter Max Number of Patient"
-                      ></input>
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    className="btn btn-sm mx-2 my-2 btn-primary"
-                    onClick={() => {
-                      deleteSlot(Did, ddate, s);
-                    }}
-                  >
-                    Delete
-                  </button>
-
-                  <button
-                    className="btn btn-sm mx-2 my-2 btn-primary"
-                    onClick={() => {
-                      // console.log(modalTimeRef.current.value);
-                      editSlot(Did, ddate, s, "20:23", 5);
-                    }}
-                  >
-                    Edit
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-
-        // </button>
+  if(slotInfo != undefined){
+    console.log(slotInfo);
+    for (let i = 1; i <= 7; i++) {
+      dateNavigation.push(
+        <Tab label={weekDates[i].getDate() + " / " +`${weekDates[i].getMonth() < 10 ? "0" : ""}` +
+              weekDates[i].getMonth()} 
+              {...a11yProps(i-1)} />
       );
-    } else {
-      if (time.split(":")[0] < 17) {
-        afternoonSlots.push(
-          <>
-            <button
-              type="button"
-              class="btn btn-info btn-sm"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              data-bs-whatever="@mdo"
-            >
-              {time}
-            </button>
 
-            <div
-              class="modal fade"
-              id="exampleModal"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                      Edit Slot
-                    </h5>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <form>
-                      <div class="mb-3">
-                        <input
-                          type="time"
-                          class="form-control"
-                          ref={modalTimeRef}
-                        ></input>
-                        <input
-                          type="number"
-                          class="form-control"
-                          ref={modalNumRef}
-                          placeholder="Enter Max Number of Patient"
-                        ></input>
+      let temp = slotInfo[DateToString(weekDates[i])];
+      const morningSlotsDayI = [];
+      const afternoonSlotsDayI = [];
+      const eveningSlotsDayI = [];
+      for (let s in temp) {
+        let time = s.split("_")[0];
+        // let totalSlotAtTime = s.split("_")[1];
+
+        // let bookedslots = Object.values(slotInfo)[t].AttendanceCount;
+        t++;
+
+        if (time.split(":")[0] < 12) {
+          morningSlotsDayI.push(
+            <ButtonGroup className='me-1 mb-2 me-sm-3 mb-sm-3' variant="contained" aria-label="outlined button group">
+          <Button className='text-black' disabled startIcon={<WatchLaterIcon fontSize='small' />}>{time}</Button>
+          <Button className='px-0 py-1 desktopView'>
+              <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                  <EditIcon fontSize='small' />
+              </IconButton>
+          </Button>
+          <Button 
+            onClick={()=>{  deleteSlot(DateToString(weekDates[i], s));
+                            console.log(DateToString(weekDates[i]),s)}}
+            className='px-0 py-1 desktopView'>
+              <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                  <DeleteIcon fontSize='small' />
+              </IconButton>
+          </Button>
+          <Button className='px-0 py-1 mobileView'
+              id="basic-button"
+              aria-controls={open ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+          >
+              <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                  <KeyboardArrowDownIcon fontSize='small' />
+              </IconButton>
+          </Button>
+          <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+              }}
+          >
+              <MenuItem onClick={handleClick}>Edit</MenuItem>
+              <MenuItem>Delete</MenuItem>
+          </Menu>
+          
+          {/* Modal That Opens When clicked on Pen Button */}
+          <div className="modal" tabindex="-1">
+              <div className="modal-dialog">
+                  <div className="modal-content">
+                      <div className="modal-header">
+                          <h5 className="modal-title">Modal title</h5>
+                          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      className="btn btn-sm mx-2 my-2 btn-primary"
-                      onClick={() => {
-                        deleteSlot(Did, ddate, s);
-                      }}
-                    >
-                      Delete
-                    </button>
-
-                    <button
-                      className="btn btn-sm mx-2 my-2 btn-primary"
-                      onClick={() => {
-                        // console.log(modalTimeRef.current.value);
-                        editSlot(Did, ddate, s, "20:23", 1);
-                      }}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        );
-      } else {
-        eveningSlots.push(
-          <>
-            <button
-              type="button"
-              class="btn btn-info btn-sm"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              data-bs-whatever="@mdo"
-            >
-              {time}
-            </button>
-
-            <div
-              class="modal fade"
-              id="exampleModal"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
-                      Edit Slot
-                    </h5>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <form>
-                      <div class="mb-3">
-                        <input
-                          type="time"
-                          class="form-control"
-                          ref={modalTimeRef}
-                        ></input>
-                        <input
-                          type="number"
-                          class="form-control"
-                          ref={modalNumRef}
-                          placeholder="Enter Max Number of Patient"
-                        ></input>
+                      <div className="modal-body">
+                          <p>Modal body text goes here.</p>
                       </div>
-                    </form>
+                      <div className="modal-footer">
+                          <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" className="btn btn-primary">Save changes</button>
+                      </div>
                   </div>
-                  <div class="modal-footer">
-                    <button
-                      className="btn btn-sm mx-2 my-2 btn-primary"
-                      onClick={() => {
-                        deleteSlot(Did, ddate, s);
-                      }}
-                    >
-                      Delete
-                    </button>
-
-                    <button
-                      className="btn btn-sm mx-2 my-2 btn-primary"
-                      onClick={() => {
-                        // console.log(modalTimeRef.current.value);
-                        editSlot(Did, ddate, s, "20:23", 5);
-                      }}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                </div>
               </div>
+          </div>
+            </ButtonGroup>
+          );
+        } else {
+          if (time.split(":")[0] < 17) {
+            afternoonSlotsDayI.push(
+              <ButtonGroup className='me-1 mb-2 me-sm-3 mb-sm-3' variant="contained" aria-label="outlined button group">
+            <Button className='text-black' disabled startIcon={<WatchLaterIcon fontSize='small' />}>{time}</Button>
+            <Button className='px-0 py-1 desktopView'>
+                <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                    <EditIcon fontSize='small' />
+                </IconButton>
+            </Button>
+            <Button className='px-0 py-1 desktopView'>
+                <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                    <DeleteIcon fontSize='small' />
+                </IconButton>
+            </Button>
+            <Button className='px-0 py-1 mobileView'
+                id="basic-button"
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+            >
+                <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                    <KeyboardArrowDownIcon fontSize='small' />
+                </IconButton>
+            </Button>
+            <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                }}
+            >
+                <MenuItem onClick={handleClick}>Edit</MenuItem>
+                <MenuItem onClick={handleClose}>Delete</MenuItem>
+            </Menu>
+            
+            {/* Modal That Opens When clicked on Pen Button */}
+            <div className="modal" tabindex="-1">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Modal title</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <p>Modal body text goes here.</p>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </>
-        );
+              </ButtonGroup>
+            );
+          } else {
+            eveningSlotsDayI.push(
+              <ButtonGroup className='me-1 mb-2 me-sm-3 mb-sm-3' variant="contained" aria-label="outlined button group">
+            <Button className='text-black' disabled startIcon={<WatchLaterIcon fontSize='small' />}>{time}</Button>
+            <Button className='px-0 py-1 desktopView'>
+                <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                    <EditIcon fontSize='small' />
+                </IconButton>
+            </Button>
+            <Button className='px-0 py-1 desktopView'>
+                <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                    <DeleteIcon fontSize='small' />
+                </IconButton>
+            </Button>
+            <Button className='px-0 py-1 mobileView'
+                id="basic-button"
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+            >
+                <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                    <KeyboardArrowDownIcon fontSize='small' />
+                </IconButton>
+            </Button>
+            <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                }}
+            >
+                <MenuItem onClick={handleClick}>Edit</MenuItem>
+                <MenuItem onClick={handleClose}>Delete</MenuItem>
+            </Menu>
+            
+            {/* Modal That Opens When clicked on Pen Button */}
+            <div className="modal" tabindex="-1">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Modal title</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <p>Modal body text goes here.</p>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              </ButtonGroup>
+            );
+          }
+        }
       }
-    }
-  }
+      morningSlots.push(morningSlotsDayI);
+      afternoonSlots.push(afternoonSlotsDayI);
+      eveningSlots.push(afternoonSlotsDayI);
 
-  const dateNavigation = [];
-  for (let i = 1; i <= 7; i++) {
-    dateNavigation.push(
-      <a
-        className={"nav-item nav-link " + `${i === 1 ? "active" : ""}`}
-        id={"day-" + i + "-tab"}
-        data-toggle="tab"
-        href={"#day-" + i}
-        role="tab"
-        aria-controls={"day-" + i}
-        aria-selected="true"
-        onClick={() => {
-          fetchSlotWithDate(weekDates[i]);
-        }}
-      >
-        {weekDates[i].getDate() +
-          " / " +
-          `${weekDates[i].getMonth() < 10 ? "0" : ""}` +
-          weekDates[i].getMonth()}
-      </a>
-    );
+      allSlots.push(
+        <TabPanel style={{background:'#F6FCFF'}} value={value} index={i-1}>
+          <div>
+              <h4 className='fw-bold'>Morning</h4>
+              <div>
+                  {morningSlots[i]}
+              </div>
+          </div>
+
+          <Divider className='my-4 my-md-5' />
+
+          <div>
+              <h4 className='fw-bold'>Afternoon</h4>
+              <div>
+                  {afternoonSlots[i]}
+              </div>
+          </div>
+
+          <Divider className='my-4 my-md-5' />
+
+          <div>
+              <h4 className='fw-bold'>Evening</h4>
+              <div>
+                  {eveningSlots[i]}
+              </div>
+          </div>
+        </TabPanel>
+      )
+    }
   }
 
   return (
     <div className="bg-white mt-auto mb-2 pb-2">
       <h2 className="ms-5 ps-3 pt-3">Doctors' ID</h2>
-      <form
-        onSubmit={createSlots}
-        id="create-slot-form"
-        className="container border border-5 mt-4 mb-4 rounded"
-      >
-        <div className="form-group col-2 mt-3">
-          <label htmlFor="SlotFrom" className="form-label">
-            Choose Date
-          </label>
-          <input
-            ref={dateRef}
-            type="date"
-            className="form-control"
-            id="SlotFrom"
-            aria-describedby="emailHelp"
-            placeholder="Enter email"
-            min={DateToString(weekDates[1])}
-            max={DateToString(weekDates[7])}
-            required
-          />
-        </div>
-        <div className="container border border-5 mt-4 mb-4 rounded">
-          <div className="row mt-3 mb-4">
-            <div className="form-group col-2">
-              <label htmlFor="SlotFrom" className="form-label">
-                From
-              </label>
-              <input
-                ref={timefromRef}
-                type="time"
-                className="form-control"
-                id="SlotFrom"
-                aria-describedby="emailHelp"
-                placeholder="Enter email"
-                required
-              />
-            </div>
+      <form onSubmit={createSlots}>
+        <div style={{background:'#F6FCFF'}} className='container mt-4 py-3 p-sm-5 border rounded'>
+            <div className='row d-flex justify-content-between'>
+                <TextField
+                    inputRef={dateRef}
+                    min={DateToString(weekDates[1])}
+                    max={DateToString(weekDates[7])}
+                    InputProps={{ inputProps: { min: DateToString(weekDates[1]), max: DateToString(weekDates[7]) } }}
+                    className='col-12 my-2 px-1 col-sm-4 col-xl-2'
+                    id="date"
+                    label="Choose Date"
+                    type="date"
+                    defaultValue="2022-05-19"
+                    required
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
+                <TextField
+                    inputRef={timefromRef}
+                    className='col-6 my-2 px-1 col-sm-4 col-xl-2'
+                    id="time1"
+                    label="From"
+                    type="time"
+                    defaultValue="07:30"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    inputProps={{
+                        step: 300, // 5 min
+                    }}
+                    required
+                />
+                <TextField
+                    inputRef={timetoRef}
+                    className='col-6 my-2 px-1 col-sm-4 col-xl-2'
+                    id="time2"
+                    label="To"
+                    type="time"
+                    defaultValue="08:30"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    inputProps={{
+                        step: 300, // 5 min
+                    }}
+                    required
+                />
+                <div className='col-6 my-2 col-sm-4 col-xl-2 d-flex flex-row align-items-end'>
+                    <PeopleAltIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                    <TextField inputRef={peopleperslotRef} type="number" className='w-100' id="input-with-sx" label="People Per Slot" variant="standard" required/>
+                </div>
 
-            <div className="form-group col-2">
-              <label htmlFor="SlotTo" className="form-label">
-                To
-              </label>
-              <input
-                ref={timetoRef}
-                type="time"
-                className="form-control"
-                id="SlotTo"
-                aria-describedby="emailHelp"
-                placeholder="Enter email"
-                required
-              />
+                <div className='col-6 my-2 px-1 col-sm-4 col-xl-2 d-flex flex-row align-items-end'>
+                    <TimerIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                    <TextField inputRef={slotdurationRef} type="number" className='w-100' id="input-with-sx" label="Duration Of Slot" variant="standard" required/>
+                </div>
+                <Button type="submit" className='col-6 mx-auto my-2 px-1 col-sm-4 col-xl-2' variant="contained" style={{ fontWeight: '700', backgroundColor: 'rgb(33, 209, 146)' }} size='small'>Make Slots</Button>
             </div>
-            <div className="form-group col-3">
-              <label htmlFor="PeoplePerSlot" className="form-label">
-                People per Slot
-              </label>
-              <div className="col-sm-10">
-                <input
-                  ref={peopleperslotRef}
-                  type="number"
-                  className="form-control"
-                  id="PeoplePerSlot"
-                  placeholder="Enter Number"
-                  required
-                />
-              </div>
-            </div>
-            <div className="form-group col-3">
-              <label htmlFor="SlotDuration" className="form-label">
-                Slot Duration {"( in minutes )"}
-              </label>
-              <div className="col-sm-10">
-                <input
-                  ref={slotdurationRef}
-                  type="number"
-                  className="form-control"
-                  id="SlotDuration"
-                  placeholder="Enter 1 Slot Time"
-                  required
-                />
-              </div>
-            </div>
-          </div>
-          <button type="submit" className="btn btn-dark mb-3">
-            Create Slot
-          </button>
-          <div className="col-3 mt-auto"></div>
         </div>
       </form>
 
       <h2 className="ms-5 ps-3 pt-3">Appointments</h2>
-      <div className="container mt-5">
-        <nav>
-          <div className="nav nav-tabs" id="nav-tab" role="tablist">
-            {dateNavigation}
-          </div>
-        </nav>
-        <div className="tab-content" id="nav-tabContent">
-          <div
-            className="tab-pane fade show active"
-            id="day-1"
-            role="tabpanel"
-            aria-labelledby="day-1-tab"
-          >
-            <div className="container">
-              <div className="row my-2">
-                <div className="col-2 align-self-center">Morning</div>
-                <div className="col-8">
-                  {morningSlots.length != 0 ? (
-                    morningSlots
-                  ) : (
-                    <h3 style={{ color: "grey" }}>No Slots Available</h3>
-                  )}
-                </div>
-              </div>
-              <hr></hr>
-              <div className="row my-2">
-                <div className="col-2 align-self-center">Afternoon</div>
-                <div className="col-8">
-                  {afternoonSlots != 0 ? (
-                    afternoonSlots
-                  ) : (
-                    <h3 style={{ color: "grey" }}>No Slots Available</h3>
-                  )}
-                </div>
-              </div>
-              <hr></hr>
-              <div className="row my-2">
-                <div className="col-2 align-self-center">Evening</div>
-                <div className="col-8">
-                  {eveningSlots != 0 ? (
-                    eveningSlots
-                  ) : (
-                    <h3 style={{ color: "grey" }}>No Slots Available</h3>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className='container p-0 mt-4'>
+          <Box sx={{ width: '100%', bgcolor: 'primary.dark' }}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }} >
+                  <Tabs style={{background:'#C6E7FF'}} value={value} onChange={handleChange} aria-label="basic tabs example" variant='scrollable' scrollButtons="auto">
+                      {dateNavigation}
+                  </Tabs>
+              </Box>
+              {allSlots}
+          </Box>
       </div>
     </div>
   );
 };
+
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+      <div
+          role="tabpanel"
+          hidden={value !== index}
+          id={`simple-tabpanel-${index}`}
+          aria-labelledby={`simple-tab-${index}`}
+          {...other}
+      >
+          {value === index && (
+              <Box sx={{ p: 3 }}>
+                  <Typography>{children}</Typography>
+              </Box>
+          )}
+      </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
