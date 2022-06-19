@@ -6,7 +6,7 @@ import siteLogo from '../assets/images/dashboard/Med-D.svg'
 export const NavBeforeLogin = () => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark p-0 px-2" style={{ height: '10vh', zIndex:'101',background:'steelblue'}}>
+      <nav className="navbar navbar-expand-lg navbar-dark p-0 px-2" style={{ height: '10vh', zIndex:'101',background:'black'}}>
         <a className="navbar-brand" href="#">
           <img src={siteLogo} style={{ height: '7vh' }} alt="Med-D" />
         </a>

@@ -244,6 +244,17 @@ body {
     padding-right: 0px !important ;
 }
 
+.infoButton{
+    background-color: #f3e5f5 !important;
+}
+.infoButton-icon{
+    background-color:  #ab47bc !important;
+}
+
+.editableButton{
+    background-color: #e3f2fd !important;
+}
+
 /* .modalStyle {
     position: absolute;
     top: 50%;
