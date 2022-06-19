@@ -122,7 +122,7 @@ export default function doctorCards() {
                                     className='my-2 mx-auto'
                                     alt="Doc Avatar"
                                     src={thumbnailDoc}
-                                    sx={{ width: 136, height: 136, bgcolor: 'pink' }}
+                                    sx={{ width: 136, height: 136, bgcolor: 'lightblue' }}
                                 />
                                 <span>Anna De Armas</span>
                                 <div className='row'>

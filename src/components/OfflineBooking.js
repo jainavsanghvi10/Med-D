@@ -3,11 +3,38 @@ import { Link, useNavigate } from "react-router-dom";
 import db from "../firebase";
 import doctorProfile from "../assets/images/doctorProfile.svg";
 import { state, cities, specialization } from "./Arrays";
+import 'bootstrap/js/dist/carousel'
+import '../assets/styles/newDesign.css';
+import thumbnailDoc from '../assets/images/thumbnailDoc.png'
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import { IconButton } from '@mui/material';
+import { Button } from '@mui/material';
+import { height } from '@mui/system';
+import { Avatar } from '@mui/material';
+import { Rating } from '@mui/material';
+import { Chip } from '@mui/material';
+
+import MedicationIcon from '@mui/icons-material/Medication';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import MapIcon from '@mui/icons-material/Map';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
+import LocationSearchingIcon from '@mui/icons-material/LocationSearching';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import WatchLaterIcon from '@mui/icons-material/WatchLater';
+// import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 export const OfflineBooking = () => {
-  const cityRef = useRef();
-  const stateRef = useRef();
-  const specialityRef = useRef();
+  const [stateVal, setStateVal] = useState();
+  const [cityVal, setCityVal] = useState();
+  const [specialityVal, setSpecialityVal] = useState();
+
 
   const [docData, setDocData] = useState(null);
 
@@ -34,7 +61,7 @@ export const OfflineBooking = () => {
 
   function SearchDoctors() {
     db.collection("DoctorData")
-      .where("State", "==", `${stateRef.current.value.toLowerCase()}`)
+      .where("State", "==", `${stateVal.toLowerCase()}`)
       .get()
       .then((querySnapshot) => {
         const tempData = [];
@@ -56,64 +83,98 @@ export const OfflineBooking = () => {
     for (let i = 0; i < docData.length; i++) {
       let doc = docData[i][1];
       docBox.push(
-        <div className="card text-left shadow-lg docCard-parent-offlineBooking">
-          <div className="card-body row docCard-offlineBooking">
-            <div className="col-2 text-center">
-              <img
-                src={doctorProfile}
-                className="img-thumbnail border-info"
-                alt="..."
-              />
-              <a className="text-info desktopView" href="">
-                <b>View Profile</b>
-              </a>
+        <div className='col my-3 doctor-card'>
+        <div className='doctor-card-inner'>
+            <div className='doctor-card-front'>
+                <Avatar
+                    className='my-2 mx-auto'
+                    alt="Doc Avatar"
+                    src={thumbnailDoc}
+                    sx={{ width: 136, height: 136, bgcolor: 'pink' }}
+                />
+                <span>{"Dr. " + doc.FirstName + " " + doc.LastName}</span>
+                <div className='row'>
+                    <div className='col'>
+                        <Rating name="read-only" value='4' readOnly />
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col'>
+                        <span>Experience: </span>
+                        <span className='text-muted'>5yrs</span>
+                    </div>
+                    <div className='col'>
+                        <span>Fee: </span>
+                        <span className='text-muted'>₹500</span>
+                    </div>
+                </div>
             </div>
-            <div className="col-8">
-              <h5 className="card-title text-info">
-                {"Dr. " + doc.FirstName + " " + doc.LastName}
-              </h5>
-              <span className="doc-speciality text-secondary">
-                {doc.Speciality}
-              </span>
-              <span> | </span>
-              <span className="doc-experience text-secondary">
-                31 Years of Experience
-              </span>
+            <div className='doctor-card-back'>
+                <div className='row my-1 doctor-card-info'>
+                    <div className='col'>
+                        <Chip icon={<MedicationIcon />} label="Specialization:" />
+                    </div>
+                    <div className='col'>
+                        <span>Dermatologist</span>
+                    </div>
+                </div>
 
-              <p className="doc-location">
-                <b>Koramangala 5 Block, Bangalore</b>
-              </p>
-              <p className="doc-location text-secondary">
-                ₹500 Consultation Fee at Clinic
-              </p>
-              <Link to={`/book-patient-side?Did=${docData[i][0]}`}>
-                <button
-                  id="book-now-btn"
-                  className="btn btn-info btn-outline-light"
-                >
-                  Book Appointment
-                </button>
-              </Link>
+                <div className='row my-1 doctor-card-info'>
+                    <div className='col'>
+                        <Chip icon={<LocationCityIcon />} label="Clinic Name:" />
+                    </div>
+                    <div className='col'>
+                        <span>Fortis</span>
+                    </div>
+                </div>
+
+                <div className='row my-1 doctor-card-info'>
+                    <div className='col-6'>
+                        <Chip size='small' icon={<MyLocationIcon />} label="Clinic Location:" />
+                    </div>
+                    <div className='col'>
+                        <span>32 Jump Street</span>
+                    </div>
+                </div>
+
+                <div className='row my-1 doctor-card-info'>
+                    <div className='col'>
+                        <Chip icon={<LocationSearchingIcon />} label="City:" />
+                    </div>
+                    <div className='col'>
+                        <span>Jaipur</span>
+                    </div>
+                </div>
+
+                <div className='row my-1 doctor-card-info'>
+                    <div className='col'>
+                        <Chip icon={<MapIcon />} label="State:" />
+                    </div>
+                    <div className='col'>
+                        <span>Rajasthan</span>
+                    </div>
+                </div>
+
+                <div className='row my-1 doctor-card-info'>
+                    <div className='col'>
+                        <Chip icon={<WatchLaterIcon />} label="Experience:" />
+                    </div>
+                    <div className='col'>
+                        <span>32 Jump Street</span>
+                    </div>
+                </div>
+                <Link to={`/book-patient-side?Did=${docData[i][0]}`}>
+                <div className='row my-1 doctor-card-info'>
+                    <div className='col'>
+                        <Chip icon={<CurrencyRupeeIcon />} label="Fees:" />
+                    </div>
+                    <div className='col'>
+                        <span>32 Jump Street</span>
+                    </div>
+                </div>
+                </Link>
             </div>
-          </div>
-          <div className="card-footer text-muted">
-            <button className="btn btn-success btn-sm me-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="bi bi-hand-thumbs-up-fill"
-                viewBox="0 0 16 16"
-              >
-                <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z" />
-              </svg>
-              95%
-            </button>
-            <a className="text-black" href="">
-              XXX Patient Stories
-            </a>
-          </div>
+        </div>
         </div>
       );
     }
@@ -121,106 +182,104 @@ export const OfflineBooking = () => {
 
   // Creating dropdown arrays
   let stateDropdown = [];
-  stateDropdown.push(
-    <option key={"nostate"} defaultValue>
-      Select State
-    </option>
-  );
   for (let i = 0; i < state.length; i++) {
-    stateDropdown.push(<option key={"state" + i}>{state[i]}</option>);
+    stateDropdown.push(<MenuItem onClick={()=>{setStateVal(state[i])}} value={state[i]}>{state[i]}</MenuItem>);
   }
   let cityDropdown = [];
-  cityDropdown.push(
-    <option key={"nocity"} defaultValue>
-      Select City
-    </option>
-  );
   for (let i = 0; i < cities.length; i++) {
-    cityDropdown.push(<option key={"city" + i}>{cities[i]}</option>);
+    cityDropdown.push(<MenuItem onClick={()=>{setCityVal(cities[i])}} value={cities[i]}>{cities[i]}</MenuItem>);
   }
   let specializationDropdown = [];
-  specializationDropdown.push(
-    <option key={"nospecialization"} defaultValue>
-      Select Specialization
-    </option>
-  );
   for (let i = 0; i < cities.length; i++) {
     specializationDropdown.push(
-      <option key={"special" + i}>{specialization[i]}</option>
+      <MenuItem onClick={()=>{setSpecialityVal(specialization[i])}} value={specialization[i]}>{specialization[i]}</MenuItem>
     );
+  }
+
+  function handleChange(){
+    console.log(stateVal);
   }
   document.body.style.background = 'white';
   return (
     <>
-      <div id='findDoc-offlineBooking' className="row container my-4 mx-0 pe-0">
-        <div className="col-3">
-          <label htmlFor="specialization-dropdown mobileView">Specialization</label>
-          <select
-            ref={specialityRef}
-            id="specialization-dropdown"
-            className="form-select"
-            aria-label="Default select example"
-          >
-            {specializationDropdown}
-          </select>
-          <div className="valid-feedback">Looks Good!</div>
-        </div>
-        <div className="col-3">
-          <label htmlFor="state-dropdown">State</label>
-          <select
-            ref={stateRef}
-            id="state-dropdown"
-            className="form-select"
-            aria-label="Default select example"
-          >
-            {stateDropdown}
-          </select>
-          <div className="valid-feedback">Looks Good!</div>
-        </div>
-        <div className="col-3">
-          <label htmlFor="city-dropdown">City</label>
-          <select
-            ref={cityRef}
-            id="city-dropdown"
-            className="form-select"
-            aria-label="Default select example"
-          >
-            {cityDropdown}
-          </select>
-          <div className="valid-feedback">Looks Good!</div>
-        </div>
+      <div className='text-center'>
+          <h1>Search Doctors, Make Appointments</h1>
+          <h3 className='text-secondary'>Discover the best doctors and clinics</h3>
+      </div>
+      <div className='container'>
+          <div className='row d-flex justify-content-center'>
+              <div className='col-6 col-md-3'>
+                  <FormControl className='w-100'>
+                      <InputLabel id="demo-simple-select-label">Speciality</InputLabel>
+                      <Select
+                          value=""
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          label="Age"
+                      >
+                          {specializationDropdown}
+                      </Select>
+                  </FormControl>
+              </div>
 
+              <div className='col-6 col-md-3'>
+                  <FormControl className='w-100'>
+                      <InputLabel id="demo-simple-select-label">State</InputLabel>
+                      <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          label="Age"
+                          onChange={handleChange}
+                      >
+                          {stateDropdown}
+                      </Select>
+                  </FormControl>
+              </div>
 
-        <div className="col-3 mt-auto button-offlineBooking">
-          <div class="input-group">
-            <select class="custom-select" id="inputGroupSelect04">
-              <option selected> Sort Result by...</option>
-              <option value="1">By Customer Rating  </option>
-              <option value="2">By Consultation Fees</option>
-            </select>
-            <div class="input-group-append">
-              <button
-                className="btn btn-light btn-outline-dark fw-bold"
-                type="submit"
-                id="search-btn"
-                onClick={SearchDoctors}
-              >
-                Search
-              </button>
-            </div>
+              <div className='col-6 col-md-3'>
+                  <FormControl className='w-100'>
+                      <InputLabel id="demo-simple-select-label">City</InputLabel>
+                      <Select
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select"
+                          label="Age"
+                      >
+                          {cityDropdown}
+                      </Select>
+                  </FormControl>
+              </div>
+
+              <div className='col-6 col-md-2'>
+                  <FormControl className='w-100'>
+                      <InputLabel id="demo-simple-select-helper-label">Sort By</InputLabel>
+                      <Select
+                          labelId="demo-simple-select-helper-label"
+                          id="demo-simple-select-helper"
+                          // value={age}
+                          label="Sort"
+                      >
+                          <MenuItem value="">
+                              <em>None</em>
+                          </MenuItem>
+                          <MenuItem value={10}>Rating</MenuItem>
+                          <MenuItem value={20}>Fee</MenuItem>
+                          <MenuItem value={30}>Experience</MenuItem>
+                      </Select>
+                  </FormControl>
+              </div>
+
+              <div className='col col-md-1 text-center'>
+                  <Button onClick={SearchDoctors}><PersonSearchIcon sx={{ fontSize: 50 }} /></Button>
+              </div>
           </div>
-          {/* <button
-            className="btn btn-light btn-outline-dark fw-bold"
-            type="submit"
-            id="search-btn"
-            onClick={SearchDoctors}
-          >
-            Search
-          </button> */}
-        </div>
+
       </div>
 
-      <div className="cards">{docBox}</div>
+      <div className='container border mt-5 py-4'>
+          <div className='row'>
+            {docBox}
+          </div>
+      </div>
     </>
   );
 };

@@ -3,47 +3,32 @@ import 'bootstrap/js/dist/carousel'
 import { Link } from 'react-router-dom';
 import '../assets/styles/newDesign.css';
 
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
 export default function CreateSlotsPage() {
+    const [value, setValue] = useState('1');
+
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
     return (
-        <Stack component="form" noValidate spacing={3}>
-            <TextField
-                id="date"
-                label="Birthday"
-                type="date"
-                defaultValue="2017-05-24"
-                sx={{ width: 220 }}
-                InputLabelProps={{
-                shrink: true,
-                }}
-            />
-            <TextField
-                id="time"
-                label="Alarm clock"
-                type="time"
-                defaultValue="07:30"
-                InputLabelProps={{
-                shrink: true,
-                }}
-                inputProps={{
-                step: 300, // 5 min
-                }}
-                sx={{ width: 150 }}
-            />
-            <TextField
-                id="datetime-local"
-                label="Next appointment"
-                type="datetime-local"
-                defaultValue="2017-05-24T10:30"
-                sx={{ width: 250 }}
-                InputLabelProps={{
-                shrink: true,
-                }}
-            />
-        </Stack>
+        <Box sx={{ width: '100%', typography: 'body1' }}>
+            <TabContext value={value}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <TabList onChange={handleChange} aria-label="lab API tabs example">
+                    <Tab label="Item One" value="1" />
+                    <Tab label="Item Two" value="2" />
+                    <Tab label="Item Three" value="3" />
+                </TabList>
+                </Box>
+                <TabPanel value="1">Item One</TabPanel>
+                <TabPanel value="2">Item Two</TabPanel>
+                <TabPanel value="3">Item Three</TabPanel>
+            </TabContext>
+        </Box>
     );
 }
-
-// https://mui.com/x/react-date-pickers/date-picker/#BasicDatePicker.js
