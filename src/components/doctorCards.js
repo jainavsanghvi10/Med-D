@@ -32,7 +32,7 @@ export default function doctorCards() {
 
     return (
         <>
-            <div className='text-center'>
+            <div className='text-center mt-3 mt-sm-4'>
                 <h1>Search Doctors, Make Appointments</h1>
                 <h3 className='text-secondary'>Discover the best doctors and clinics</h3>
             </div>
@@ -113,29 +113,27 @@ export default function doctorCards() {
 
             </div>
 
-            <div className='container border mt-5 py-4'>
+            <div className='container border mt-2 mt-sm-5 py-2 py-sm-4' style={{borderRadius:'25px', background:'rgb(12,25,41)'}}>
                 <div className='row'>
                     <div className='col my-3 doctor-card'>
                         <div className='doctor-card-inner'>
-                            <div className='doctor-card-front'>
+                            <div className='doctor-card-front d-flex flex-column justify-content-center'>
                                 <Avatar
                                     className='my-2 mx-auto'
                                     alt="Doc Avatar"
                                     src={thumbnailDoc}
                                     sx={{ width: 136, height: 136, bgcolor: 'lightblue' }}
                                 />
-                                <span>Anna De Armas</span>
-                                <div className='row'>
-                                    <div className='col'>
+                                <span className='fw-bold'>Anna De Armas</span>
+                                    <div>
                                         <Rating name="read-only" value='4' readOnly />
                                     </div>
-                                </div>
-                                <div className='row'>
-                                    <div className='col'>
+                                <div className='d-flex justify-content-around flex-column'>
+                                    <div>
                                         <span>Experience: </span>
                                         <span className='text-muted'>5yrs</span>
                                     </div>
-                                    <div className='col'>
+                                    <div>
                                         <span>Fee: </span>
                                         <span className='text-muted'>₹500</span>
                                     </div>
@@ -209,25 +207,23 @@ export default function doctorCards() {
                     </div>
                     <div className='col my-3 doctor-card'>
                         <div className='doctor-card-inner'>
-                            <div className='doctor-card-front'>
+                            <div className='doctor-card-front d-flex flex-column justify-content-center'>
                                 <Avatar
                                     className='my-2 mx-auto'
                                     alt="Doc Avatar"
                                     src={thumbnailDoc}
-                                    sx={{ width: 136, height: 136, bgcolor: 'pink' }}
+                                    sx={{ width: 136, height: 136, bgcolor: 'lightblue' }}
                                 />
-                                <span>Anna De Armas</span>
-                                <div className='row'>
-                                    <div className='col'>
+                                <span className='fw-bold'>Anna De Armas</span>
+                                    <div>
                                         <Rating name="read-only" value='4' readOnly />
                                     </div>
-                                </div>
-                                <div className='row'>
-                                    <div className='col'>
+                                <div className='d-flex justify-content-around flex-column'>
+                                    <div>
                                         <span>Experience: </span>
                                         <span className='text-muted'>5yrs</span>
                                     </div>
-                                    <div className='col'>
+                                    <div>
                                         <span>Fee: </span>
                                         <span className='text-muted'>₹500</span>
                                     </div>
@@ -301,25 +297,23 @@ export default function doctorCards() {
                     </div>
                     <div className='col my-3 doctor-card'>
                         <div className='doctor-card-inner'>
-                            <div className='doctor-card-front'>
+                            <div className='doctor-card-front d-flex flex-column justify-content-center'>
                                 <Avatar
                                     className='my-2 mx-auto'
                                     alt="Doc Avatar"
                                     src={thumbnailDoc}
-                                    sx={{ width: 136, height: 136, bgcolor: 'pink' }}
+                                    sx={{ width: 136, height: 136, bgcolor: 'lightblue' }}
                                 />
-                                <span>Anna De Armas</span>
-                                <div className='row'>
-                                    <div className='col'>
+                                <span className='fw-bold'>Anna De Armas</span>
+                                    <div>
                                         <Rating name="read-only" value='4' readOnly />
                                     </div>
-                                </div>
-                                <div className='row'>
-                                    <div className='col'>
+                                <div className='d-flex justify-content-around flex-column'>
+                                    <div>
                                         <span>Experience: </span>
                                         <span className='text-muted'>5yrs</span>
                                     </div>
-                                    <div className='col'>
+                                    <div>
                                         <span>Fee: </span>
                                         <span className='text-muted'>₹500</span>
                                     </div>
@@ -393,25 +387,23 @@ export default function doctorCards() {
                     </div>
                     <div className='col my-3 doctor-card'>
                         <div className='doctor-card-inner'>
-                            <div className='doctor-card-front'>
+                            <div className='doctor-card-front d-flex flex-column justify-content-center'>
                                 <Avatar
                                     className='my-2 mx-auto'
                                     alt="Doc Avatar"
                                     src={thumbnailDoc}
-                                    sx={{ width: 136, height: 136, bgcolor: 'pink' }}
+                                    sx={{ width: 136, height: 136, bgcolor: 'lightblue' }}
                                 />
-                                <span>Anna De Armas</span>
-                                <div className='row'>
-                                    <div className='col'>
+                                <span className='fw-bold'>Anna De Armas</span>
+                                    <div>
                                         <Rating name="read-only" value='4' readOnly />
                                     </div>
-                                </div>
-                                <div className='row'>
-                                    <div className='col'>
+                                <div className='d-flex justify-content-around flex-column'>
+                                    <div>
                                         <span>Experience: </span>
                                         <span className='text-muted'>5yrs</span>
                                     </div>
-                                    <div className='col'>
+                                    <div>
                                         <span>Fee: </span>
                                         <span className='text-muted'>₹500</span>
                                     </div>
@@ -485,25 +477,23 @@ export default function doctorCards() {
                     </div>
                     <div className='col my-3 doctor-card'>
                         <div className='doctor-card-inner'>
-                            <div className='doctor-card-front'>
+                            <div className='doctor-card-front d-flex flex-column justify-content-center'>
                                 <Avatar
                                     className='my-2 mx-auto'
                                     alt="Doc Avatar"
                                     src={thumbnailDoc}
-                                    sx={{ width: 136, height: 136, bgcolor: 'pink' }}
+                                    sx={{ width: 136, height: 136, bgcolor: 'lightblue' }}
                                 />
-                                <span>Anna De Armas</span>
-                                <div className='row'>
-                                    <div className='col'>
+                                <span className='fw-bold'>Anna De Armas</span>
+                                    <div>
                                         <Rating name="read-only" value='4' readOnly />
                                     </div>
-                                </div>
-                                <div className='row'>
-                                    <div className='col'>
+                                <div className='d-flex justify-content-around flex-column'>
+                                    <div>
                                         <span>Experience: </span>
                                         <span className='text-muted'>5yrs</span>
                                     </div>
-                                    <div className='col'>
+                                    <div>
                                         <span>Fee: </span>
                                         <span className='text-muted'>₹500</span>
                                     </div>
@@ -577,25 +567,23 @@ export default function doctorCards() {
                     </div>
                     <div className='col my-3 doctor-card'>
                         <div className='doctor-card-inner'>
-                            <div className='doctor-card-front'>
+                            <div className='doctor-card-front d-flex flex-column justify-content-center'>
                                 <Avatar
                                     className='my-2 mx-auto'
                                     alt="Doc Avatar"
                                     src={thumbnailDoc}
-                                    sx={{ width: 136, height: 136, bgcolor: 'pink' }}
+                                    sx={{ width: 136, height: 136, bgcolor: 'lightblue' }}
                                 />
-                                <span>Anna De Armas</span>
-                                <div className='row'>
-                                    <div className='col'>
+                                <span className='fw-bold'>Anna De Armas</span>
+                                    <div>
                                         <Rating name="read-only" value='4' readOnly />
                                     </div>
-                                </div>
-                                <div className='row'>
-                                    <div className='col'>
+                                <div className='d-flex justify-content-around flex-column'>
+                                    <div>
                                         <span>Experience: </span>
                                         <span className='text-muted'>5yrs</span>
                                     </div>
-                                    <div className='col'>
+                                    <div>
                                         <span>Fee: </span>
                                         <span className='text-muted'>₹500</span>
                                     </div>
@@ -667,6 +655,367 @@ export default function doctorCards() {
                             </div>
                         </div>
                     </div>
+                    <div className='col my-3 doctor-card'>
+                        <div className='doctor-card-inner'>
+                            <div className='doctor-card-front d-flex flex-column justify-content-center'>
+                                <Avatar
+                                    className='my-2 mx-auto'
+                                    alt="Doc Avatar"
+                                    src={thumbnailDoc}
+                                    sx={{ width: 136, height: 136, bgcolor: 'lightblue' }}
+                                />
+                                <span className='fw-bold'>Anna De Armas</span>
+                                    <div>
+                                        <Rating name="read-only" value='4' readOnly />
+                                    </div>
+                                <div className='d-flex justify-content-around flex-column'>
+                                    <div>
+                                        <span>Experience: </span>
+                                        <span className='text-muted'>5yrs</span>
+                                    </div>
+                                    <div>
+                                        <span>Fee: </span>
+                                        <span className='text-muted'>₹500</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='doctor-card-back'>
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<MedicationIcon />} label="Specialization:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Dermatologist</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<LocationCityIcon />} label="Clinic Name:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Fortis</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col-6'>
+                                        <Chip size='small' icon={<MyLocationIcon />} label="Clinic Location:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>32 Jump Street</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<LocationSearchingIcon />} label="City:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Jaipur</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<MapIcon />} label="State:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Rajasthan</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<WatchLaterIcon />} label="Experience:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>32 Jump Street</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<CurrencyRupeeIcon />} label="Fees:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>32 Jump Street</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col my-3 doctor-card'>
+                        <div className='doctor-card-inner'>
+                            <div className='doctor-card-front d-flex flex-column justify-content-center'>
+                                <Avatar
+                                    className='my-2 mx-auto'
+                                    alt="Doc Avatar"
+                                    src={thumbnailDoc}
+                                    sx={{ width: 136, height: 136, bgcolor: 'lightblue' }}
+                                />
+                                <span className='fw-bold'>Anna De Armas</span>
+                                    <div>
+                                        <Rating name="read-only" value='4' readOnly />
+                                    </div>
+                                <div className='d-flex justify-content-around flex-column'>
+                                    <div>
+                                        <span>Experience: </span>
+                                        <span className='text-muted'>5yrs</span>
+                                    </div>
+                                    <div>
+                                        <span>Fee: </span>
+                                        <span className='text-muted'>₹500</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='doctor-card-back'>
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<MedicationIcon />} label="Specialization:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Dermatologist</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<LocationCityIcon />} label="Clinic Name:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Fortis</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col-6'>
+                                        <Chip size='small' icon={<MyLocationIcon />} label="Clinic Location:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>32 Jump Street</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<LocationSearchingIcon />} label="City:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Jaipur</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<MapIcon />} label="State:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Rajasthan</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<WatchLaterIcon />} label="Experience:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>32 Jump Street</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<CurrencyRupeeIcon />} label="Fees:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>32 Jump Street</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col my-3 doctor-card'>
+                        <div className='doctor-card-inner'>
+                            <div className='doctor-card-front d-flex flex-column justify-content-center'>
+                                <Avatar
+                                    className='my-2 mx-auto'
+                                    alt="Doc Avatar"
+                                    src={thumbnailDoc}
+                                    sx={{ width: 136, height: 136, bgcolor: 'lightblue' }}
+                                />
+                                <span className='fw-bold'>Anna De Armas</span>
+                                    <div>
+                                        <Rating name="read-only" value='4' readOnly />
+                                    </div>
+                                <div className='d-flex justify-content-around flex-column'>
+                                    <div>
+                                        <span>Experience: </span>
+                                        <span className='text-muted'>5yrs</span>
+                                    </div>
+                                    <div>
+                                        <span>Fee: </span>
+                                        <span className='text-muted'>₹500</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='doctor-card-back'>
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<MedicationIcon />} label="Specialization:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Dermatologist</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<LocationCityIcon />} label="Clinic Name:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Fortis</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col-6'>
+                                        <Chip size='small' icon={<MyLocationIcon />} label="Clinic Location:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>32 Jump Street</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<LocationSearchingIcon />} label="City:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Jaipur</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<MapIcon />} label="State:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Rajasthan</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<WatchLaterIcon />} label="Experience:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>32 Jump Street</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<CurrencyRupeeIcon />} label="Fees:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>32 Jump Street</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='col my-3 doctor-card'>
+                        <div className='doctor-card-inner'>
+                            <div className='doctor-card-front d-flex flex-column justify-content-center'>
+                                <Avatar
+                                    className='my-2 mx-auto'
+                                    alt="Doc Avatar"
+                                    src={thumbnailDoc}
+                                    sx={{ width: 136, height: 136, bgcolor: 'lightblue' }}
+                                />
+                                <span className='fw-bold'>Anna De Armas</span>
+                                    <div>
+                                        <Rating name="read-only" value='4' readOnly />
+                                    </div>
+                                <div className='d-flex justify-content-around flex-column'>
+                                    <div>
+                                        <span>Experience: </span>
+                                        <span className='text-muted'>5yrs</span>
+                                    </div>
+                                    <div>
+                                        <span>Fee: </span>
+                                        <span className='text-muted'>₹500</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='doctor-card-back'>
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<MedicationIcon />} label="Specialization:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Dermatologist</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<LocationCityIcon />} label="Clinic Name:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Fortis</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col-6'>
+                                        <Chip size='small' icon={<MyLocationIcon />} label="Clinic Location:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>32 Jump Street</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<LocationSearchingIcon />} label="City:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Jaipur</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<MapIcon />} label="State:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>Rajasthan</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<WatchLaterIcon />} label="Experience:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>32 Jump Street</span>
+                                    </div>
+                                </div>
+
+                                <div className='row my-1 doctor-card-info'>
+                                    <div className='col'>
+                                        <Chip icon={<CurrencyRupeeIcon />} label="Fees:" />
+                                    </div>
+                                    <div className='col'>
+                                        <span>32 Jump Street</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

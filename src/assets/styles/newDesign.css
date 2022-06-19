@@ -2,49 +2,49 @@ html {
     scroll-behavior: smooth;
 }
 
-html, body {
+body {
     background: #ffffff !important;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif !important;
+    min-height: 100vh;
+    background-color: papayawhip; 
+    margin: 0 auto;
 }
 
 .dashboard-frame {
-    filter: drop-shadow(14px 13px 4px rgba(0, 0, 0, 0.25));
-    border-radius: 30px;
-    max-height: 80vh;
-    height: fit-content;
-    margin-top: 5vh;
+    /* filter: drop-shadow(14px 13px 4px rgba(0, 0, 0, 0.25)); */
+    /* border-radius: 30px; */
+    height: 87vh;
+    /* margin-top: 5vh; */
     margin-bottom: 10vh;
 }
 
 .dashboard-rectangle {
-    background: #A4EDFF;
-    border-radius: 62px;
-}
-
-.amoeba {
-    display: block;
-    z-index: inherit;
-    vertical-align: bottom;
-    border-radius: 0px 62px 62px 0px;
-
+    background: #a4edff3b;
+    /* border-radius: 62px; */
 }
 
 .dashboard-doctor {
     position: absolute;
     margin-left: auto;
     margin-right: 5%;
-    left: 0;
-    right: 0;
+    top: 15vh;
     /* height: 85%; */
     height: 40vw;
     z-index: 100;
-    filter: drop-shadow(8px 0px 4px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(8px 8px 4px rgba(0, 0, 0, 0.25));
+}
+
+.amoeba{
+    width:100%;
+    height:86vh;
 }
 
 .dashboard-headline {
     font-weight: 700;
     /* font-style: italic; */
-    font-size: 4vw;
+    /* font-size: 4vw; */
+    letter-spacing: normal !important;
+    line-height: 1.5 !important;
     color: #1D2B4F;
 }
 
@@ -57,6 +57,7 @@ html, body {
 
 .dashboard-knowmore {
     font-weight: 700;
+    font-size: xx-large !important;
     color: #1D2B4F;
 }
 
@@ -110,8 +111,8 @@ html, body {
 }
 
 .why-us-container {
-    background: #EEF8FF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px -2px 4px rgba(0, 0, 0, 0.25);
+    background: ghostwhite;
+    /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px -2px 4px rgba(0, 0, 0, 0.25); */
     /* margin-left: 0px !important;
     margin-right: 0px !important; */
     max-width: 100% !important;
@@ -125,25 +126,30 @@ html, body {
 
 .whyJoin-cards {
     transform: scaleX(-1);
-    float: right;
+    /* float:inherit; */
     height: 200px;
 }
 
 .whyPatient-reason-card {
-    background: linear-gradient(180deg, #846EB0 0%, #524273 100%);
-    color: white;
+    /* background: linear-gradient(180deg, #846EB0 0%, #524273 100%); */
+    background: mistyrose !important;
+    width: fit-content !important;
+    /* color: white; */
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
     border-radius: 20px !important;
 }
 
 .whyDoctor-reason-card {
-    background: linear-gradient(180deg, #B5E5E7 0%, #8CE7EB 100%);
+    /* background: linear-gradient(180deg, #B5E5E7 0%, #8CE7EB 100%); */
+    /* background: skyblue !important; */
+    background:lightsteelblue !important;
+    width: fit-content !important;
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
     border-radius: 20px !important;
 }
 
 .siteGrowth-infoCards {
-    height: 77px;
+    height: 107px;
     justify-content: center;
     /* box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);   */
 }
@@ -184,7 +190,7 @@ html, body {
 
 .doctor-card {
     /* width: 250px !important; */
-    height: 250px !important;
+    height: 270px !important;
 }
 
 .doctor-card-thumbnail {
@@ -194,7 +200,7 @@ html, body {
 .doctor-card-inner {
     margin: auto;
     position: relative;
-    width: 300px !important;
+    width: 280px !important;
     height: 100%;
     text-align: center;
     transition: transform 0.8s;
@@ -214,12 +220,13 @@ html, body {
     -webkit-backface-visibility: hidden;
     /* Safari */
     backface-visibility: hidden;
+    border-radius: 25px;
 }
 
 /* Style the front side (fallback if image is missing) */
 .doctor-card-front {
-    background-color: rgb(250, 230, 233);
-    color: black;
+    background-color: rgb(21,47,76);
+    color: white;
 }
 
 /* Style the back side */
@@ -254,12 +261,12 @@ html, body {
 
 /* For Tablets */
 @media only screen and (max-width: 767px) {
-    .amoeba {
-        display: none;
-    }
 
     .dashboard-doctor {
-        margin: auto;
+        /* width: 100%; */
+        height: auto;
+        width: inherit;
+        top: 75px;
     }
 
     /* .dashboard-headline{
@@ -275,10 +282,10 @@ html, body {
         text-align: center;
 
     } */
-    /* .dashboard-knowmore{
+    .dashboard-knowmore{
         align-self: center;
         margin-bottom: 50px;
-    } */
+    }
     .dashboard-frame {
         margin-left: 10px;
         margin-right: 10px;
@@ -288,12 +295,13 @@ html, body {
     .dashboard-rectangle {
         height: fit-content;
         border-radius: 10px;
+        text-align: center;
     }
 
-    .dashboard-doctor {
+    /* .dashboard-doctor {
         width: fit-content;
         margin-right: 0px;
-    }
+    } */
 
     .bookAppointment-card {
         width: 100% !important;
@@ -311,6 +319,10 @@ html, body {
 
     .dashboard-card-button {
         font-size: xx-small !important;
+    }
+    .amoeba{
+        width:100%;
+        height:fit-content;
     }
 
 }
@@ -330,26 +342,26 @@ html, body {
 
     .dashboard-knowmore {
         text-align: center;
-        /* align-self: center; */
-        font-size: xx-small !important;
-        /* margin-bottom: 30px; */
+        font-size:large !important;
     }
 
     .dashboard-frame {
-        margin-left: 10px;
-        margin-right: 10px;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
         height: fit-content;
-        margin-top: 20px;
+        /* margin-top: 20px; */
         margin-bottom: 30px;
     }
 
     .dashboard-rectangle {
         height: fit-content;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
 
-    .dashboard-doctor {
+    /* .dashboard-doctor {
         height: 160px;
-    }
+    } */
 
 
     .dashboard-card-content {
@@ -369,7 +381,7 @@ html, body {
     }
 
     .whyJoin-cards {
-        float: right;
+        /* float: right; */
         height: 150px;
     }
 

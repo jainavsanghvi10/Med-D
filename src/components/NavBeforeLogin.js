@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import '../assets/styles/customMade.css';
-import siteLogo from '../assets/images/dashboard/Med-D.png'
+import siteLogo from '../assets/images/dashboard/Med-D.svg'
 
 export const NavBeforeLogin = () => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark p-0 headerColor px-2" style={{ height: '10vh', zIndex:'101' }}>
+      <nav className="navbar navbar-expand-lg navbar-dark p-0 px-2" style={{ height: '10vh', zIndex:'101',background:'steelblue'}}>
         <a className="navbar-brand" href="#">
           <img src={siteLogo} style={{ height: '7vh' }} alt="Med-D" />
         </a>
@@ -14,7 +14,7 @@ export const NavBeforeLogin = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse headerColor pb-2" id="navbarTogglerDemo02">
+        <div className="collapse navbar-collapse pb-2" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-2">
               <li className="nav-item active">
                 <a className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} href="#">About Us</a>

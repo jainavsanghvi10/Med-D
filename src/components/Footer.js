@@ -25,7 +25,7 @@ export const Footer = () => {
 				{/* <!-- Section: Social media --> */}
 				<section
 					className="d-flex justify-content-between p-4 text-white"
-					style={{ backgroundColor: "#21D192" }}
+					style={{ backgroundColor: "steelblue" }}
 				>
 					{/* <!-- Left --> */}
 					<div className="me-5">
