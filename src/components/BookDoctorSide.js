@@ -51,9 +51,7 @@ export const BookDoctorSide = () => {
   const handleChange = (event, newValue) => {
       setValue(newValue);
   };
-  const handleDelete = () => {
-      console.info('You clicked the delete icon.');
-  };
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -343,7 +341,6 @@ export const BookDoctorSide = () => {
   const morningSlots = [null];
   const afternoonSlots = [null];
   const eveningSlots = [null];
-  let t = 0;
   if(slotInfo != undefined){
     console.log(slotInfo);
     for (let i = 1; i <= 7; i++) {
@@ -357,12 +354,14 @@ export const BookDoctorSide = () => {
       const morningSlotsDayI = [];
       const afternoonSlotsDayI = [];
       const eveningSlotsDayI = [];
+      let t = 0;
       for (let s in temp) {
         let time = s.split("_")[0];
-        // let totalSlotAtTime = s.split("_")[1];
+        let totalSlotAtTime = s.split("_")[1];
 
-        // let bookedslots = Object.values(slotInfo)[t].AttendanceCount;
+        let bookedslots = Object.values(temp)[t].AttendanceCount;
         t++;
+        console.log(totalSlotAtTime, bookedslots);
 
         if (time.split(":")[0] < 12) {
           morningSlotsDayI.push(
@@ -373,7 +372,7 @@ export const BookDoctorSide = () => {
                   <EditIcon fontSize='small' />
               </IconButton>
           </Button>
-          <Button 
+          <Button
             onClick={()=>{  deleteSlot(DateToString(weekDates[i], s));
                             console.log(DateToString(weekDates[i]),s)}}
             className='px-0 py-1 desktopView'>
