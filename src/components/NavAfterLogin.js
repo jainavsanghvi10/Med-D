@@ -20,7 +20,7 @@ export const NavAfterLogin = (props) => {
   }
 
   return (
-      <nav className="navbar navbar-expand-lg navbar-dark p-0 px-2" style={{ height: '10vh',background:'black' }}>
+      <nav className="navbar navbar-expand-lg navbar-loght p-0 px-2" style={{ height: '10vh',background:'white' }}>
         <Link className="navbar-brand" to="/">
           <img src={siteLogo} style={{ height: '10vh' }} alt="Med-D" />
         </Link>
@@ -31,28 +31,28 @@ export const NavAfterLogin = (props) => {
         <div className="collapse navbar-collapse pb-2" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-2">
               <li className="nav-item active">
-                <Link className="nav-link fw-bold text-light" style={{ fontSize: '2vh'}} to="#">Who We Are</Link>
+                <Link className="nav-link fw-bold text-dark" style={{ fontSize: '2vh'}} to="#">Who We Are</Link>
               </li>
               {isDoctor===true ?
               <>
                 <li className="nav-item">
-                  <Link className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} to="/book-doctor-side">Create Slots</Link>
+                  <Link className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} to="/book-doctor-side">Create Slots</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} to="/appointment-editor">Book For Patients</Link>
+                  <Link className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} to="/appointment-editor">Book For Patients</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} to="/patient-queue">Appointment Queue</Link>
+                  <Link className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} to="/patient-queue">Appointment Queue</Link>
                 </li>
               </>
               : <></>}
               {isDoctor===false ?
               <li className="nav-item">
-                <Link className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} to="/offline-booking">Book Appointment</Link>
+                <Link className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} to="/offline-booking">Book Appointment</Link>
               </li> : <></>
             }
               <li className="nav-item">
-                <Link className="nav-link fw-bold text-light" style={{ fontSize: '2vh' }} to="#">Customer Support</Link>
+                <Link className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} to="#">Customer Support</Link>
               </li>
             </ul>
             <form className="d-flex">

@@ -10,10 +10,14 @@ import bookAppointmentCardPic from '../assets/images/dashboard/docAndKidConsulta
 import uploadDocumentCardPic from '../assets/images/dashboard/macLappi.png';
 import whyDoctorsJoinCard from '../assets/images/dashboard/docWithTab.png';
 import whyPatientsJoinCard from '../assets/images/dashboard/womenLaptop.png';
+import thumbnailDoc from '../assets/images/thumbnailDoc.png'
+
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 
 import { Accordion } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
 import { Card } from 'react-bootstrap';
+import Avatar from '@mui/material/Avatar';
 
 export default function Dashboard() {
 	const [index, setIndex] = useState(0);
@@ -64,7 +68,7 @@ export default function Dashboard() {
 								</defs>
 							</svg> */}
 
-							<svg className='amoeba' viewBox="0 0 3222 2639" fill="none" xmlns="http://www.w3.org/2000/svg">
+							{/* <svg className='amoeba' viewBox="0 0 3222 2639" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path fill-rule="evenodd" clip-rule="evenodd" d="M2782.8 1037.52C2906.13 1254.29 3198.06 1386.27 3219.87 1634.72C3240.4 1868.67 3073.64 2102.86 2889.04 2248.09C2705.53 2392.47 2448.12 2380.07 2218.51 2422.55C2051.64 2453.42 1876.32 2407.18 1716.76 2464.95C1517.73 2537.01 1417.07 2663.16 1207.47 2633.66C1007.88 2605.57 669.527 2579.94 504 2464.95C326.621 2341.72 340.897 2279.53 201.341 2114.7C67.7495 1956.92 134.142 1713.58 102.481 1509.28C68.5243 1290.17 -25.6632 1077.76 6.64679 858.393C40.8518 626.164 117.977 380.595 291.942 222.966C465.757 65.4727 717.85 -13.5511 951.897 1.90528C1180.31 16.99 1331.19 283.323 1558.91 306.637C1764.08 327.641 1940.71 83.4054 2142.95 123.839C2336 162.436 2467.54 349.624 2580.46 510.873C2689.53 666.618 2688.77 872.254 2782.8 1037.52Z" fill="url(#paint0_linear_557_249)" />
 								<defs>
 									<linearGradient id="paint0_linear_557_249" x1="1122.76" y1="-105.454" x2="1912.05" y2="2604.57" gradientUnits="userSpaceOnUse">
@@ -72,7 +76,18 @@ export default function Dashboard() {
 										<stop offset="1" stop-color="#6DD5ED" />
 									</linearGradient>
 								</defs>
+							</svg> */}
+							<svg className='amoeba' viewBox="0 0 3255 2520" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd" d="M2815.43 918.52C2938.76 1135.29 3230.69 1267.27 3252.5 1515.72C3273.03 1749.67 3106.27 1983.86 2921.67 2129.09C2738.16 2273.47 2480.75 2261.07 2251.14 2303.55C2084.27 2334.42 1908.95 2288.18 1749.39 2345.95C1550.36 2418.01 1449.69 2544.16 1240.09 2514.66C1040.5 2486.57 702.154 2460.94 536.627 2345.95C359.248 2222.72 178.831 2220.83 39.2747 2056C-94.3166 1898.22 166.769 1594.58 135.108 1390.28C101.151 1171.17 6.96386 958.76 39.2738 739.393C73.4789 507.164 230.663 345.265 404.628 187.636C578.443 30.1436 723.581 88.5091 957.628 103.966C1186.04 119.05 1363.82 164.322 1591.54 187.636C1796.71 208.64 1973.34 -35.5948 2175.58 4.83832C2368.63 43.4353 2500.17 230.623 2613.09 391.872C2722.16 547.617 2721.4 753.253 2815.43 918.52Z" fill="url(#paint0_linear_557_249)" />
+								<defs>
+									<linearGradient id="paint0_linear_557_249" x1="1105.76" y1="-224.455" x2="2037" y2="2777" gradientUnits="userSpaceOnUse">
+										<stop offset="0.328125" stop-color="#4682B4" />
+										<stop offset="0.84375" />
+									</linearGradient>
+								</defs>
 							</svg>
+
+
 						</div>
 					</div>
 				</div>
@@ -107,7 +122,13 @@ export default function Dashboard() {
 					</div>
 				</div>
 			</div>
+			
+			
+			{/* Promotion */}
+			{/*   */}
 
+
+			{/* Why Choose us */}
 			<div className='container why-us-container py-4 py-md-5 ps-4'>
 				<div className='row w-100 mx-0'>
 					<div className='col-md-6 d-flex flex-column align-self-center h-100'>
@@ -134,7 +155,7 @@ export default function Dashboard() {
 						</div>
 					</div>
 					<div className='col-md-6 d-flex flex-column mt-4 my-md-auto whyjoin-doc-pat-container'>
-						<div className='row d-flex flex-row mb-2'>
+						<div className='row d-flex flex-row mb-2 mx-auto'>
 							<div className='row' style={{ alignItems: 'center' }}>
 								<div className='col h-100'>
 									<div className="card mx-auto h-100 whyPatient-reason-card">
@@ -151,7 +172,7 @@ export default function Dashboard() {
 								</div> */}
 							</div>
 						</div>
-						<div className='row d-flex flex-row mt-2'>
+						<div className='row d-flex flex-row mt-2 mx-auto'>
 							<div className='row' style={{ alignItems: 'center' }}>
 								<div className='col h-100'>
 									<div className="card mx-auto h-100 whyDoctor-reason-card">
@@ -173,35 +194,101 @@ export default function Dashboard() {
 
 			</div>
 
+			
+
 			{/* Testimonials */}
-			<div className='container mt-5'>
+			<div className='container py-4 pb-5 px-0' style={{maxWidth:'100%', background:'#f4fdff'}}>
 				<div className='row text-center'>
-					<h3>Testimonials</h3>
-					<Carousel className='testimonials' style={{ height: '400px' }} variant='dark' activeIndex={index} onSelect={handleSelect}>
+					<h2 className='pt-5 pb-2'>Customer Reviews</h2>
+					<Carousel id='testimonials' className='testimonials mb-5' variant='dark' activeIndex={index} onSelect={handleSelect}>
 						<Carousel.Item className='testimonial-items'>
-							<Card className='testimonial-cards'>
-								<Card.Body>1.This is some text within a card body.</Card.Body>
+							<Card className='testimonial-cards mx-auto'>
+								<FormatQuoteIcon className='opening-quote' />
+								<FormatQuoteIcon className='closing-quote'/>
+								<Card.Body>
+									<Avatar
+										className='mb-2 mx-auto desktopView'
+										alt="Doc Avatar"
+										src={thumbnailDoc}
+										sx={{ width: 186, height: 186, bgcolor: 'lightblue' }}
+									/>
+									<Avatar
+										className='mb-2 mx-auto mobileView'
+										alt="Doc Avatar"
+										src={thumbnailDoc}
+										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
+									/>
+									<Card.Title className='fw-bold testimonial-title' style={{color:'#0d47a1'}}>
+										Josh Brollins
+									</Card.Title>
+									<Card.Text className='text-black testimonial-content'>
+										Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusame
+									</Card.Text>
+								</Card.Body>
 							</Card>
 						</Carousel.Item>
 
 						<Carousel.Item className='testimonial-items'>
-							<Card className='testimonial-cards'>
-								<Card.Body>2.This is some text within a card body.</Card.Body>
+							<Card className='testimonial-cards mx-auto'>
+								<FormatQuoteIcon className='opening-quote' />
+								<FormatQuoteIcon className='closing-quote'/>
+								<Card.Body>
+									<Avatar
+										className='mb-2 mx-auto desktopView'
+										alt="Doc Avatar"
+										src={thumbnailDoc}
+										sx={{ width: 186, height: 186, bgcolor: 'lightblue' }}
+									/>
+									<Avatar
+										className='mb-2 mx-auto mobileView'
+										alt="Doc Avatar"
+										src={thumbnailDoc}
+										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
+									/>
+									<Card.Title className='fw-bold testimonial-title' style={{color:'#0d47a1'}}>
+										Josh Brollins
+									</Card.Title>
+									<Card.Text className='text-black testimonial-content'>
+										Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusame
+									</Card.Text>
+								</Card.Body>
 							</Card>
 						</Carousel.Item>
 
 						<Carousel.Item className='testimonial-items'>
-							<Card className='testimonial-cards'>
-								<Card.Body>3.This is some text within a card body.</Card.Body>
+							<Card className='testimonial-cards mx-auto'>
+								<FormatQuoteIcon className='opening-quote' />
+								<FormatQuoteIcon className='closing-quote'/>
+								<Card.Body>
+									<Avatar
+										className='mb-2 mx-auto desktopView'
+										alt="Doc Avatar"
+										src={thumbnailDoc}
+										sx={{ width: 186, height: 186, bgcolor: 'lightblue' }}
+									/>
+									<Avatar
+										className='mb-2 mx-auto mobileView'
+										alt="Doc Avatar"
+										src={thumbnailDoc}
+										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
+									/>
+									<Card.Title className='fw-bold testimonial-title' style={{color:'#0d47a1'}}>
+										Josh Brollins
+									</Card.Title>
+									<Card.Text className='text-black testimonial-content'>
+										Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusame
+									</Card.Text>
+								</Card.Body>
 							</Card>
 						</Carousel.Item>
+						
 					</Carousel>
 				</div>
 			</div>
 
 			<div className='container mt-5'>
 				<div className='row text-center'>
-					<h3>Frequently Asked Questions</h3>
+					<h2>Frequently Asked Questions</h2>
 					{/* <span className='w-75 mx-auto'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor Lorem ipsum dolor sit amet consetetur sadipscing elitr</span> */}
 				</div>
 				<Accordion>
