@@ -4,6 +4,8 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { enc, AES } from "crypto-js/core";
 
+import { Button } from "@mui/material";
+
 export default function AppointmentEditor() {
     const [slotInfo, setSlotInfo] = useState(null);
     const {currentUser} = useAuth();
@@ -94,18 +96,19 @@ export default function AppointmentEditor() {
                     console.log(patientName);
 
                     temp.push(
-                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                        <li className="list-group-item patient-list d-flex justify-content-between align-items-center me-2" style={{background:'mintcream'}}>
                             {patientName}
-                            <div>
+                            <div style={{width:'120px'}}>
                                 {firstPerson!=null ?
-                                <span className="btn btn-sm fw-bold btn-warning rounded-pill mx-1"
+                                <button className="btn fw-bold rounded-0" style={{width:'120px',background:'#FFDBA5'}}
                                 onClick={()=>{
                                     reschedulePatient(s, i, id);
-                                }}>Swap</span> 
-                                : <span className="btn btn-sm fw-bold btn-outline-success rounded-pill mx-1"
+                                }}>SWAP</button> 
+                                : <button className="btn fw-bold rounded-0" style={{width:'120px',background:'#95F9B7'}}
                                 onClick={
                                     ()=>{appointmentComplete(s, i)}
-                                }>Completed</span>}
+                                }>COMPLETE</button>}
+                                {/* <Button className='col-6 px-1 py-2 col-sm-4 col-xl-2' variant="contained" style={{ fontWeight: '700', backgroundColor: 'rgb(33, 209, 146)',borderRadius:'0px', width:'150px' }}>Mark Complete</Button> */}
                             </div>
                         </li>
                     )
@@ -120,11 +123,11 @@ export default function AppointmentEditor() {
 
             if(subSlotData[t].length != 0){
                 slotData.push(
-                    <tr>
+                    <tr style={{verticalAlign:'middle'}}>
                     <th scope="row">{slotNumber}</th>
                     <td>{time}</td>
                     <td>
-                        <ul className="list-group mb-4">
+                        <ul className="list-group my-2">
                             {subSlotData[t]}
                         </ul>
                     </td>
@@ -138,13 +141,13 @@ export default function AppointmentEditor() {
     }
     makeQueue();
 
-    document.body.style.background = 'white';
+    // document.body.style.fontFamily
     return (
         <>
-            <div className="container border my-3">
-                <h2>Today's Patient Queue</h2>
-                <table className="table">
-                    <thead>
+            <div className="container rounded my-3">
+                <h2 className="text-center">Today's Patient Queue</h2>
+                <table className="table border" style={{background: 'linear-gradient(270deg, #C7EDF5 0%, rgba(199, 237, 245, 0.5) 103.29%)'}}>
+                    <thead className="text-white" style={{background:'black'}}>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Slot Time</th>

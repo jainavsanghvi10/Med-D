@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import siteLogo from '../assets/images/dashboard/Med-D.png'
+import siteLogo from '../assets/images/dashboard/Med-D.svg'
 
 export const NavAfterLogin = (props) => {
 
@@ -20,7 +20,7 @@ export const NavAfterLogin = (props) => {
   }
 
   return (
-      <nav className="navbar navbar-expand-lg navbar-dark p-0 headerColor px-2" style={{ height: '10vh' }}>
+      <nav className="navbar navbar-expand-lg navbar-dark p-0 px-2" style={{ height: '10vh',background:'black' }}>
         <Link className="navbar-brand" to="/">
           <img src={siteLogo} style={{ height: '10vh' }} alt="Med-D" />
         </Link>
@@ -28,7 +28,7 @@ export const NavAfterLogin = (props) => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse headerColor pb-2" id="navbarTogglerDemo02">
+        <div className="collapse navbar-collapse pb-2" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-2">
               <li className="nav-item active">
                 <Link className="nav-link fw-bold text-light" style={{ fontSize: '2vh'}} to="#">Who We Are</Link>
