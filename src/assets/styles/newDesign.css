@@ -317,6 +317,12 @@ body {
     color: lightblue;
 }
 
+.hospitalSeatsImg{
+    background: url('../images/whoWeAre/hospitalSeats.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 /* .modalStyle {
     position: absolute;
     top: 50%;
