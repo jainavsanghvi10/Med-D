@@ -53,17 +53,6 @@ export default function Dashboard() {
 						</div>
 						<div className='order-1 order-md-2 col-sm-12 col-md-7 d-flex align-items-end'>
 							<img className='dashboard-doctor' src={dashboardDoctor}></img>
-							{/* <svg className='amoeba' viewBox="0 0 4104 3475" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path fill-rule="evenodd" clip-rule="evenodd" d="M742.664 881.814C527.884 1099.64 140.178 1163.59 35.6782 1451.1C-62.721 1721.81 60.7418 2052.11 233.497 2282.65C405.239 2511.83 714.187 2578.64 972.814 2701.67C1160.77 2791.08 1383.15 2791.79 1553.94 2910.76C1766.96 3059.16 1822.62 3441.79 2080.32 3473.2C2325.73 3503.11 2445.24 3131.58 2677.79 3047.73C2926.99 2957.87 3242.97 3126.66 3460.53 2975.53C3668.78 2830.86 3667.15 2521.5 3769.35 2289.43C3878.96 2040.55 4057.82 1818.67 4088.98 1548.5C4121.97 1262.49 4108.33 947.088 3952.1 705.227C3796 463.575 3522.3 290.122 3240.07 234.337C2964.63 179.893 2701.53 447.718 2424.31 403.244C2174.54 363.176 2042.57 17.8478 1790.13 1.73004C1549.15 -13.6563 1334.02 166.508 1149.16 321.828C970.609 471.847 906.401 715.755 742.664 881.814Z" fill="url(#paint0_linear_534_232)" />
-								<defs>
-									<linearGradient id="paint0_linear_534_232" x1="3593.03" y1="3349.94" x2="1799.76" y2="6311.3" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#00D1FF" />
-										<stop offset="1" stop-color="#4000FF" />
-										<stop offset="1" stop-color="white" />
-									</linearGradient>
-								</defs>
-							</svg> */}
-
 							<svg className='amoeba' viewBox="0 0 3222 2639" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path fill-rule="evenodd" clip-rule="evenodd" d="M2782.8 1037.52C2906.13 1254.29 3198.06 1386.27 3219.87 1634.72C3240.4 1868.67 3073.64 2102.86 2889.04 2248.09C2705.53 2392.47 2448.12 2380.07 2218.51 2422.55C2051.64 2453.42 1876.32 2407.18 1716.76 2464.95C1517.73 2537.01 1417.07 2663.16 1207.47 2633.66C1007.88 2605.57 669.527 2579.94 504 2464.95C326.621 2341.72 340.897 2279.53 201.341 2114.7C67.7495 1956.92 134.142 1713.58 102.481 1509.28C68.5243 1290.17 -25.6632 1077.76 6.64679 858.393C40.8518 626.164 117.977 380.595 291.942 222.966C465.757 65.4727 717.85 -13.5511 951.897 1.90528C1180.31 16.99 1331.19 283.323 1558.91 306.637C1764.08 327.641 1940.71 83.4054 2142.95 123.839C2336 162.436 2467.54 349.624 2580.46 510.873C2689.53 666.618 2688.77 872.254 2782.8 1037.52Z" fill="url(#paint0_linear_557_249)" />
 								<defs>
@@ -78,6 +67,50 @@ export default function Dashboard() {
 				</div>
 			</div>
 
+			{isDoctor ? <>
+			<div className='container bookAppointment-card'>
+				<div className='row'>
+					<div className='col-8 col-sm-6 d-flex'>
+						<img src={bookAppointmentCardPic} className='bookAppointmentCard-image w-100'></img>
+					</div>
+					<div className='col-4 col-sm-6 d-flex flex-column justify-content-evenly bookAppointment-contentCol'>
+						<span className='dashboard-card-headline mb-5`'>Make Appointment Slots</span>
+						<span className='dashboard-card-content'>No more standing in queues, sitting in the waiting area. Skip the hassle and get your health checked up quickly with live tracking system.</span>
+						<Link to="book-doctor-side">
+							<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Create Slots</button>
+						</Link>
+					</div>
+				</div>
+			</div>
+			<div className='container bookAppointment-card uploadDocument-card'>
+				<div className='row'>
+					<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
+						<span className='dashboard-card-headline'>Book Appointment For Patients</span>
+						<span className='dashboard-card-content'>Save your medical records securely, so that you never misplace them again.Get 5GB of storage for free.</span>
+						<Link to="appointment-editor">
+							<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Book Appointment</button>
+						</Link>
+					</div>
+					<div className='col-8 col-sm-6 offset-md-1 d-flex'>
+						<img src={uploadDocumentCardPic} className='uploadDocumentCard-image w-100'></img>
+					</div>
+				</div>
+			</div>
+			<div className='container bookAppointment-card uploadDocument-card'>
+				<div className='row'>
+					<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
+						<span className='dashboard-card-headline'>Patient Queue</span>
+						<span className='dashboard-card-content'>Save your medical records securely, so that you never misplace them again.Get 5GB of storage for free.</span>
+						<Link to="patient-queue">
+							<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Patient Queue</button>
+						</Link>
+					</div>
+					<div className='col-8 col-sm-6 offset-md-1 d-flex'>
+						<img src={uploadDocumentCardPic} className='uploadDocumentCard-image w-100'></img>
+					</div>
+				</div>
+			</div>
+			</> : <>
 			<div className='container bookAppointment-card'>
 				<div className='row'>
 					<div className='col-8 col-sm-6 d-flex'>
@@ -92,7 +125,6 @@ export default function Dashboard() {
 					</div>
 				</div>
 			</div>
-
 			<div className='container bookAppointment-card uploadDocument-card'>
 				<div className='row'>
 					<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
@@ -107,6 +139,7 @@ export default function Dashboard() {
 					</div>
 				</div>
 			</div>
+			</>}
 
 			<div className='container why-us-container py-4 py-md-5 ps-4'>
 				<div className='row w-100 mx-0'>
