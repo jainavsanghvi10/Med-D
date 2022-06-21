@@ -236,7 +236,7 @@ export const AppointmentEditor = () => {
       }
       morningSlots.push(morningSlotsDayI);
       afternoonSlots.push(afternoonSlotsDayI);
-      eveningSlots.push(afternoonSlotsDayI);
+      eveningSlots.push(eveningSlotsDayI);
 
       allSlots.push(
         <TabPanel style={{background:'#F6FCFF'}} value={value} index={i-1}>
@@ -272,8 +272,11 @@ export const AppointmentEditor = () => {
   return (
     <div className="bg-white mt-auto mb-2 pb-2">
       {error &&
-      <div className="alert alert-success" role="alert">
-      {error}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {error}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>}
       <h2 className="ms-5 ps-3 pt-3">Appointments</h2>
       <div className='container p-0 mt-4'>

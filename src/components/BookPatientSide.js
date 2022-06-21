@@ -25,6 +25,7 @@ export const BookPatientSide = () => {
   const [docData, setDocData] = useState(null);
   const [Did, setDid] = useState();
   const [slotInfo, setSlotInfo] = useState(null);
+  const [error, setError] = useState();
 
 
   const theme = useTheme();
@@ -164,6 +165,7 @@ export const BookPatientSide = () => {
               }
               console.log("Slots Avalaible !");
               console.log("Patient Booked SuccesFully!");
+              setError("Patient Booked Successfully");
               t = false;
             }
           }
@@ -245,7 +247,7 @@ export const BookPatientSide = () => {
       }
       morningSlots.push(morningSlotsDayI);
       afternoonSlots.push(afternoonSlotsDayI);
-      eveningSlots.push(afternoonSlotsDayI);
+      eveningSlots.push(eveningSlotsDayI);
 
       allSlots.push(
         <TabPanel style={{background:'#F6FCFF'}} value={value} index={i-1}>
@@ -366,7 +368,13 @@ export const BookPatientSide = () => {
       ) : (
         <></>
       )}
-
+      {error &&
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {error}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>}
       <div className='container p-0 mt-4'>
           <Box sx={{ width: '100%', bgcolor: 'primary.dark' }}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }} >

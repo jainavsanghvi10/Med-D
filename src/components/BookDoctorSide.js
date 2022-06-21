@@ -546,7 +546,7 @@ export const BookDoctorSide = () => {
       }
       morningSlots.push(morningSlotsDayI);
       afternoonSlots.push(afternoonSlotsDayI);
-      eveningSlots.push(afternoonSlotsDayI);
+      eveningSlots.push(eveningSlotsDayI);
 
       allSlots.push(
         <TabPanel style={{background:'#F6FCFF'}} value={value} index={i-1}>
