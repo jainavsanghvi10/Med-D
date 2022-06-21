@@ -25,6 +25,7 @@ import {DoctorInfoForm} from "./components/DoctorInfoForm"
 import DoctorCards from "./components/doctorCards"
 import CreateSlotsPage from "./components/createSlotsPage"
 import PatientSideBooking from "./components/patientSideBooking"
+import WhoWeAre from "./components/whoWeAre"
 
 // Styles
 // import "./assets/styles/Style.css"
@@ -54,6 +55,7 @@ function App() {
             <Route path="/doctor-cards" element={<DoctorCards/>} />
             <Route path="/create-slots" element={<CreateSlotsPage/>} />
             <Route path="/patient-side-booking" element={<PatientSideBooking/>} />
+            <Route path="/who-we-are" element={<WhoWeAre/>} />
           </Routes>
         <Footer />
       </AuthProvider>

@@ -159,7 +159,33 @@ body {
     font-weight: bolder;
 }
 
-.testimonials {}
+/* Promotional Content  */
+.promotion {}
+
+.promotion-items {
+    height: 100%;
+}
+
+.promotion-cards {
+    height: 100%;
+    text-align: center;
+    background-color: #12253d !important;
+}
+
+.promotion-cards>.card-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Testiomonials */
+.testimonials {
+    width: 1100px !important;
+    margin: auto;
+    background-color: paleturquoise;
+    min-height: fit-content !important;
+    height: 400px !important;
+}
 
 .testimonial-items {
     height: 100%;
@@ -168,18 +194,28 @@ body {
 .testimonial-cards {
     height: 100%;
     text-align: center;
-    background-color: #12253d !important;
+    background-color: #E3FAFF !important;
+    width: 800px !important;
+    max-width: fit-content !important;
 }
 
 .testimonial-cards>.card-body {
     display: flex;
-    justify-content: center;
+    justify-content:baseline;
     align-items: center;
+    flex-direction: column;
+}
+
+.testimonial-title{
+    font-size: 30px !important;
+}
+.testimonial-content{
+    font-size: 20px !important;
 }
 
 .carousel-inner {
     height: 100% !important;
-    color: white !important;
+    color: black !important;
 }
 
 .accordion-button {
@@ -261,6 +297,32 @@ body {
     /* border-color: white !important; */
 }
 
+.opening-quote{
+    position: absolute;
+    /* top: -20px; */
+    margin-top: -25px !important;
+    transform: scale(-1);
+    font-size: 100px !important;
+    z-index: 10 !important;
+    color: lightblue;
+}
+.closing-quote{
+    position: absolute;
+    /* bottom: 0px; */
+    right: 0px;
+    transform: scaleY(-1);
+    font-size: 100px !important;
+    margin-top: -25px !important;
+    z-index: 10 !important;
+    color: lightblue;
+}
+
+.hospitalSeatsImg{
+    background: url('../images/whoWeAre/hospitalSeats.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 /* .modalStyle {
     position: absolute;
     top: 50%;
@@ -286,19 +348,6 @@ body {
         top: 75px;
     }
 
-    /* .dashboard-headline{
-        font-size: 1.5rem;
-
-        text-align: center;
-        margin: auto;
-        margin-top: 10px;
-        width: 60%;
-    }
-    .dashboard-content{
-        font-size: .7rem;
-        text-align: center;
-
-    } */
     .dashboard-knowmore{
         align-self: center;
         margin-bottom: 50px;
@@ -313,6 +362,11 @@ body {
         height: fit-content;
         border-radius: 10px;
         text-align: center;
+    }
+    .dashboard-rectangle {
+        height: fit-content;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
 
     /* .dashboard-doctor {
@@ -370,11 +424,7 @@ body {
         margin-bottom: 30px;
     }
 
-    .dashboard-rectangle {
-        height: fit-content;
-        padding-top: 20px;
-        padding-bottom: 20px;
-    }
+    
 
     /* .dashboard-doctor {
         height: 160px;
@@ -429,4 +479,15 @@ body {
         padding-top: 1px !important;
         padding-bottom: 1px !important;
     }
+    .testimonials{
+        height: 320px !important;
+    }
+
+    .testimonial-title{
+        font-size: 20px !important;
+    }
+    .testimonial-content{
+        font-size: 13px !important;
+    }
+
 }

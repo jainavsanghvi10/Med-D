@@ -58,7 +58,19 @@ export const Footer = () => {
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
 								<p>
-									Med D makes booking offline doctor appointments easier and more flexible so that you never have to wait for your turn when visiting a doctor.
+									<a href="#!" className="text-dark">Who We Are</a>
+								</p>
+								<p>
+									<a href="#!" className="text-dark">Careers</a>
+								</p>
+								<p>
+									<a href="#!" className="text-dark">Contact Us</a>
+								</p>
+								<p>
+									<a href="#!" className="text-dark">Privacy Policy</a>
+								</p>
+								<p>
+									<a href="#!" className="text-dark">Terms & Conditions </a>
 								</p>
 							</div>
 							{/* <!-- Grid column --> */}
