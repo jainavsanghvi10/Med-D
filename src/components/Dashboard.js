@@ -10,7 +10,10 @@ import bookAppointmentCardPic from '../assets/images/dashboard/docAndKidConsulta
 import uploadDocumentCardPic from '../assets/images/dashboard/macLappi.png';
 import whyDoctorsJoinCard from '../assets/images/dashboard/docWithTab.png';
 import whyPatientsJoinCard from '../assets/images/dashboard/womenLaptop.png';
-import thumbnailDoc from '../assets/images/thumbnailDoc.png'
+import thumbnailDoc from '../assets/images/thumbnailDoc.png';
+import promo1 from '../assets/images/dashboard/promo1.png';
+import promo2 from '../assets/images/dashboard/promo2.png';
+import promo3 from '../assets/images/dashboard/promo3.png';
 
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 
@@ -122,10 +125,32 @@ export default function Dashboard() {
 					</div>
 				</div>
 			</div>
-			
-			
+
+
 			{/* Promotion */}
-			{/*   */}
+			<Carousel className='border py-5' variant="dark" style={{}}>
+				<Carousel.Item>
+					<img
+						className="d-block w-100"
+						src={promo1}
+						alt="First slide"
+					/>
+				</Carousel.Item>
+				<Carousel.Item>
+					<img
+						className="d-block w-100"
+						src={promo2}
+						alt="Second slide"
+					/>
+				</Carousel.Item>
+				<Carousel.Item>
+					<img
+						className="d-block w-100"
+						src={promo3}
+						alt="Third slide"
+					/>
+				</Carousel.Item>
+			</Carousel>
 
 
 			{/* Why Choose us */}
@@ -194,17 +219,17 @@ export default function Dashboard() {
 
 			</div>
 
-			
+
 
 			{/* Testimonials */}
-			<div className='container py-4 pb-5 px-0' style={{maxWidth:'100%', background:'#f4fdff'}}>
+			<div className='container py-4 pb-5 px-0' style={{ maxWidth: '100%', background: '#f4fdff' }}>
 				<div className='row text-center'>
 					<h2 className='pt-5 pb-2'>Customer Reviews</h2>
 					<Carousel id='testimonials' className='testimonials mb-5' variant='dark' activeIndex={index} onSelect={handleSelect}>
 						<Carousel.Item className='testimonial-items'>
 							<Card className='testimonial-cards mx-auto'>
 								<FormatQuoteIcon className='opening-quote' />
-								<FormatQuoteIcon className='closing-quote'/>
+								<FormatQuoteIcon className='closing-quote' />
 								<Card.Body>
 									<Avatar
 										className='mb-2 mx-auto desktopView'
@@ -218,7 +243,7 @@ export default function Dashboard() {
 										src={thumbnailDoc}
 										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
 									/>
-									<Card.Title className='fw-bold testimonial-title' style={{color:'#0d47a1'}}>
+									<Card.Title className='fw-bold testimonial-title' style={{ color: '#0d47a1' }}>
 										Josh Brollins
 									</Card.Title>
 									<Card.Text className='text-black testimonial-content'>
@@ -231,7 +256,7 @@ export default function Dashboard() {
 						<Carousel.Item className='testimonial-items'>
 							<Card className='testimonial-cards mx-auto'>
 								<FormatQuoteIcon className='opening-quote' />
-								<FormatQuoteIcon className='closing-quote'/>
+								<FormatQuoteIcon className='closing-quote' />
 								<Card.Body>
 									<Avatar
 										className='mb-2 mx-auto desktopView'
@@ -245,7 +270,7 @@ export default function Dashboard() {
 										src={thumbnailDoc}
 										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
 									/>
-									<Card.Title className='fw-bold testimonial-title' style={{color:'#0d47a1'}}>
+									<Card.Title className='fw-bold testimonial-title' style={{ color: '#0d47a1' }}>
 										Josh Brollins
 									</Card.Title>
 									<Card.Text className='text-black testimonial-content'>
@@ -258,7 +283,7 @@ export default function Dashboard() {
 						<Carousel.Item className='testimonial-items'>
 							<Card className='testimonial-cards mx-auto'>
 								<FormatQuoteIcon className='opening-quote' />
-								<FormatQuoteIcon className='closing-quote'/>
+								<FormatQuoteIcon className='closing-quote' />
 								<Card.Body>
 									<Avatar
 										className='mb-2 mx-auto desktopView'
@@ -272,7 +297,7 @@ export default function Dashboard() {
 										src={thumbnailDoc}
 										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
 									/>
-									<Card.Title className='fw-bold testimonial-title' style={{color:'#0d47a1'}}>
+									<Card.Title className='fw-bold testimonial-title' style={{ color: '#0d47a1' }}>
 										Josh Brollins
 									</Card.Title>
 									<Card.Text className='text-black testimonial-content'>
@@ -281,7 +306,7 @@ export default function Dashboard() {
 								</Card.Body>
 							</Card>
 						</Carousel.Item>
-						
+
 					</Carousel>
 				</div>
 			</div>
