@@ -6,7 +6,7 @@ body {
     background: #ffffff !important;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif !important;
     min-height: 100vh;
-    background-color: papayawhip; 
+    background-color: papayawhip;
     margin: 0 auto;
 }
 
@@ -34,9 +34,9 @@ body {
     filter: drop-shadow(8px 8px 4px rgba(0, 0, 0, 0.25));
 }
 
-.amoeba{
-    width:100%;
-    height:86vh;
+.amoeba {
+    width: 100%;
+    height: 86vh;
 }
 
 .dashboard-headline {
@@ -142,7 +142,7 @@ body {
 .whyDoctor-reason-card {
     /* background: linear-gradient(180deg, #B5E5E7 0%, #8CE7EB 100%); */
     /* background: skyblue !important; */
-    background:lightsteelblue !important;
+    background: lightsteelblue !important;
     width: fit-content !important;
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
     border-radius: 20px !important;
@@ -159,7 +159,9 @@ body {
     font-weight: bolder;
 }
 
+
 /* Promotional Content  */
+
 .promotion {}
 
 .promotion-items {
@@ -178,7 +180,9 @@ body {
     align-items: center;
 }
 
+
 /* Testiomonials */
+
 .testimonials {
     width: 1100px !important;
     margin: auto;
@@ -201,15 +205,16 @@ body {
 
 .testimonial-cards>.card-body {
     display: flex;
-    justify-content:baseline;
+    justify-content: baseline;
     align-items: center;
     flex-direction: column;
 }
 
-.testimonial-title{
+.testimonial-title {
     font-size: 30px !important;
 }
-.testimonial-content{
+
+.testimonial-content {
     font-size: 20px !important;
 }
 
@@ -243,13 +248,18 @@ body {
     transform-style: preserve-3d;
 }
 
+
 /* Do an horizontal flip when you move the mouse over the flip box container */
+
 .doctor-card:hover .doctor-card-inner {
     transform: rotateY(180deg);
 }
 
+
 /* Position the front and back side */
-.doctor-card-front, .doctor-card-back {
+
+.doctor-card-front,
+.doctor-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -259,15 +269,19 @@ body {
     border-radius: 25px;
 }
 
+
 /* Style the front side (fallback if image is missing) */
+
 .doctor-card-front {
-    background-color: rgb(21,47,76);
-    color: white;
+    background-color: rgb(231 250 255);
+    color: black;
 }
 
+
 /* Style the back side */
+
 .doctor-card-back {
-    background-color: whitesmoke;
+    background-color: rgb(200 244 255);
     transform: rotateY(180deg);
 }
 
@@ -275,29 +289,30 @@ body {
     align-items: center;
 }
 
-.css-19kzrtu{
+.css-19kzrtu {
     padding-left: 0px !important;
-    padding-right: 0px !important ;
+    padding-right: 0px !important;
 }
 
-.infoButton{
+.infoButton {
     background-color: #f3e5f5 !important;
 }
-.infoButton-icon{
-    background-color:  #ab47bc !important;
+
+.infoButton-icon {
+    background-color: #ab47bc !important;
 }
 
-.editableButton{
+.editableButton {
     background-color: #e3f2fd !important;
 }
 
-.patient-list{
+.patient-list {
     padding: 0px !important;
     padding-left: 16px !important;
     /* border-color: white !important; */
 }
 
-.opening-quote{
+.opening-quote {
     position: absolute;
     /* top: -20px; */
     margin-top: -25px !important;
@@ -306,7 +321,8 @@ body {
     z-index: 10 !important;
     color: lightblue;
 }
-.closing-quote{
+
+.closing-quote {
     position: absolute;
     /* bottom: 0px; */
     right: 0px;
@@ -317,11 +333,12 @@ body {
     color: lightblue;
 }
 
-.hospitalSeatsImg{
+.hospitalSeatsImg {
     background: url('../images/whoWeAre/hospitalSeats.jpg');
     background-repeat: no-repeat;
     background-size: cover;
 }
+
 
 /* .modalStyle {
     position: absolute;
@@ -336,19 +353,20 @@ body {
     color: white;
 } */
 
+
 /* MEDIA QUERIES */
 
-/* For Tablets */
-@media only screen and (max-width: 767px) {
 
+/* For Tablets */
+
+@media only screen and (max-width: 767px) {
     .dashboard-doctor {
         /* width: 100%; */
         height: auto;
         width: inherit;
         top: 75px;
     }
-
-    .dashboard-knowmore{
+    .dashboard-knowmore {
         align-self: center;
         margin-bottom: 50px;
     }
@@ -357,7 +375,6 @@ body {
         margin-right: 10px;
         height: fit-content;
     }
-
     .dashboard-rectangle {
         height: fit-content;
         border-radius: 10px;
@@ -368,34 +385,28 @@ body {
         padding-top: 20px;
         padding-bottom: 20px;
     }
-
     /* .dashboard-doctor {
         width: fit-content;
         margin-right: 0px;
     } */
-
     .bookAppointment-card {
         width: 100% !important;
         border-radius: 10px;
         max-width: 90% !important;
     }
-
     .dashboard-card-content {
         font-size: 0.7rem;
     }
-
     .dashboard-card-headline {
         font-size: 1.2rem;
     }
-
     .dashboard-card-button {
         font-size: xx-small !important;
     }
-    .amoeba{
-        width:100%;
-        height:fit-content;
+    .amoeba {
+        width: 100%;
+        height: fit-content;
     }
-
 }
 
 @media only screen and (max-width: 444px) {
@@ -404,18 +415,15 @@ body {
         /* text-align: center; */
         width: 100%;
     }
-
     .dashboard-content {
         display: none;
         font-size: .7rem;
         /* text-align: center; */
     }
-
     .dashboard-knowmore {
         text-align: center;
-        font-size:large !important;
+        font-size: large !important;
     }
-
     .dashboard-frame {
         margin-left: 0px !important;
         margin-right: 0px !important;
@@ -423,55 +431,41 @@ body {
         /* margin-top: 20px; */
         margin-bottom: 30px;
     }
-
-    
-
     /* .dashboard-doctor {
         height: 160px;
     } */
-
-
     .dashboard-card-content {
         display: none;
     }
-
     .dashboard-card-headline {
         font-size: 1rem;
     }
-
     .bookAppointment-contentCol {
         padding: 0 !important;
     }
-
     .uploadDocument-contentCol {
         padding-right: 0 !important;
     }
-
     .whyJoin-cards {
         /* float: right; */
         height: 150px;
     }
-
     .whyjoin-doc-pat-container {
         padding-left: 0px !important;
         padding-right: 0px !important;
     }
-
     .siteGrowth-infoCards-data {
         font-size: large;
         font-weight: bolder;
     }
-
     .why-us-heading {
         font-size: 2rem;
         font-weight: bolder;
         width: 100%;
     }
-
     .why-us-container {
         text-align: center;
     }
-
     .slotButton {
         font-size: xx-small !important;
         padding-left: 3px !important;
@@ -479,15 +473,13 @@ body {
         padding-top: 1px !important;
         padding-bottom: 1px !important;
     }
-    .testimonials{
+    .testimonials {
         height: 320px !important;
     }
-
-    .testimonial-title{
+    .testimonial-title {
         font-size: 20px !important;
     }
-    .testimonial-content{
+    .testimonial-content {
         font-size: 13px !important;
     }
-
 }

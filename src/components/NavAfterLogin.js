@@ -48,7 +48,7 @@ export const NavAfterLogin = (props) => {
               : <></>}
               {isDoctor===false ?
               <li className="nav-item">
-                <Link className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} to="/offline-booking">Book Appointment</Link>
+                <Link className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} to="/book-appointment-info">Book Appointment</Link>
               </li> : <></>
             }
               <li className="nav-item">

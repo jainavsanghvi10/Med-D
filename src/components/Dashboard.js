@@ -10,7 +10,10 @@ import bookAppointmentCardPic from '../assets/images/dashboard/docAndKidConsulta
 import uploadDocumentCardPic from '../assets/images/dashboard/macLappi.png';
 import whyDoctorsJoinCard from '../assets/images/dashboard/docWithTab.png';
 import whyPatientsJoinCard from '../assets/images/dashboard/womenLaptop.png';
-import thumbnailDoc from '../assets/images/thumbnailDoc.png'
+import thumbnailDoc from '../assets/images/thumbnailDoc.png';
+import promo1 from '../assets/images/dashboard/promo1.png';
+import promo2 from '../assets/images/dashboard/promo2.png';
+import promo3 from '../assets/images/dashboard/promo3.png';
 
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 
@@ -167,6 +170,33 @@ export default function Dashboard() {
 			</div>
 			</>}
 
+
+			{/* Promotion */}
+			<Carousel className='border py-5' variant="dark" style={{}}>
+				<Carousel.Item>
+					<img
+						className="d-block w-100"
+						src={promo1}
+						alt="First slide"
+					/>
+				</Carousel.Item>
+				<Carousel.Item>
+					<img
+						className="d-block w-100"
+						src={promo2}
+						alt="Second slide"
+					/>
+				</Carousel.Item>
+				<Carousel.Item>
+					<img
+						className="d-block w-100"
+						src={promo3}
+						alt="Third slide"
+					/>
+				</Carousel.Item>
+			</Carousel>
+
+
 			{/* Why Choose us */}
 			<div className='container why-us-container py-4 py-md-5 ps-4'>
 				<div className='row w-100 mx-0'>
@@ -233,17 +263,17 @@ export default function Dashboard() {
 
 			</div>
 
-			
+
 
 			{/* Testimonials */}
-			<div className='container py-4 pb-5 px-0' style={{maxWidth:'100%', background:'#f4fdff'}}>
+			<div className='container py-4 pb-5 px-0' style={{ maxWidth: '100%', background: '#f4fdff' }}>
 				<div className='row text-center'>
 					<h2 className='pt-5 pb-2'>Customer Reviews</h2>
 					<Carousel id='testimonials' className='testimonials mb-5' variant='dark' activeIndex={index} onSelect={handleSelect}>
 						<Carousel.Item className='testimonial-items'>
 							<Card className='testimonial-cards mx-auto'>
 								<FormatQuoteIcon className='opening-quote' />
-								<FormatQuoteIcon className='closing-quote'/>
+								<FormatQuoteIcon className='closing-quote' />
 								<Card.Body>
 									<Avatar
 										className='mb-2 mx-auto desktopView'
@@ -257,7 +287,7 @@ export default function Dashboard() {
 										src={thumbnailDoc}
 										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
 									/>
-									<Card.Title className='fw-bold testimonial-title' style={{color:'#0d47a1'}}>
+									<Card.Title className='fw-bold testimonial-title' style={{ color: '#0d47a1' }}>
 										Josh Brollins
 									</Card.Title>
 									<Card.Text className='text-black testimonial-content'>
@@ -270,7 +300,7 @@ export default function Dashboard() {
 						<Carousel.Item className='testimonial-items'>
 							<Card className='testimonial-cards mx-auto'>
 								<FormatQuoteIcon className='opening-quote' />
-								<FormatQuoteIcon className='closing-quote'/>
+								<FormatQuoteIcon className='closing-quote' />
 								<Card.Body>
 									<Avatar
 										className='mb-2 mx-auto desktopView'
@@ -284,7 +314,7 @@ export default function Dashboard() {
 										src={thumbnailDoc}
 										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
 									/>
-									<Card.Title className='fw-bold testimonial-title' style={{color:'#0d47a1'}}>
+									<Card.Title className='fw-bold testimonial-title' style={{ color: '#0d47a1' }}>
 										Josh Brollins
 									</Card.Title>
 									<Card.Text className='text-black testimonial-content'>
@@ -297,7 +327,7 @@ export default function Dashboard() {
 						<Carousel.Item className='testimonial-items'>
 							<Card className='testimonial-cards mx-auto'>
 								<FormatQuoteIcon className='opening-quote' />
-								<FormatQuoteIcon className='closing-quote'/>
+								<FormatQuoteIcon className='closing-quote' />
 								<Card.Body>
 									<Avatar
 										className='mb-2 mx-auto desktopView'
@@ -311,7 +341,7 @@ export default function Dashboard() {
 										src={thumbnailDoc}
 										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
 									/>
-									<Card.Title className='fw-bold testimonial-title' style={{color:'#0d47a1'}}>
+									<Card.Title className='fw-bold testimonial-title' style={{ color: '#0d47a1' }}>
 										Josh Brollins
 									</Card.Title>
 									<Card.Text className='text-black testimonial-content'>
@@ -320,68 +350,10 @@ export default function Dashboard() {
 								</Card.Body>
 							</Card>
 						</Carousel.Item>
-						
+
 					</Carousel>
 				</div>
 			</div>
-
-			<div className='container mt-5'>
-				<div className='row text-center'>
-					<h2>Frequently Asked Questions</h2>
-					{/* <span className='w-75 mx-auto'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor Lorem ipsum dolor sit amet consetetur sadipscing elitr</span> */}
-				</div>
-				<Accordion>
-					<Accordion.Item eventKey="0">
-						<Accordion.Header>Can I book appointment on behalf of someone else?</Accordion.Header>
-						<Accordion.Body>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-							veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-							commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-							cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-							est laborum.
-						</Accordion.Body>
-					</Accordion.Item>
-					<Accordion.Item eventKey="1">
-						<Accordion.Header>Do I need a referral to see a Physiotherapist?</Accordion.Header>
-						<Accordion.Body>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-							veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-							commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-							cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-							est laborum.
-						</Accordion.Body>
-					</Accordion.Item>
-					<Accordion.Item eventKey="3">
-						<Accordion.Header>Do you Have Venue Option for appointments?</Accordion.Header>
-						<Accordion.Body>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-							veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-							commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-							cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-							est laborum.
-						</Accordion.Body>
-					</Accordion.Item>
-					<Accordion.Item eventKey="4">
-						<Accordion.Header>What if I Have More questions that are not answered Here?</Accordion.Header>
-						<Accordion.Body>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-							veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-							commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-							cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-							est laborum.
-						</Accordion.Body>
-					</Accordion.Item>
-				</Accordion>
-			</div>
-
 		</>
 	);
 }

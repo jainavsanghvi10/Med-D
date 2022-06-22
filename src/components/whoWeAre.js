@@ -12,10 +12,18 @@ import whoWeAre_doc1 from "../assets/images/whoWeAre/doc1.jpg";
 import whoWeAre_doc2 from "../assets/images/whoWeAre/doc2.jpg";
 import whoWeAre_doc3 from "../assets/images/whoWeAre/doc3.jpg";
 
+import section1 from "../assets/images/whoWeAre/section1.png"
+import section2 from "../assets/images/whoWeAre/section2.png"
+import section3 from "../assets/images/whoWeAre/section3.png"
+import section4 from "../assets/images/whoWeAre/section4.png"
+import section5 from "../assets/images/whoWeAre/section5.png"
+import section6 from "../assets/images/whoWeAre/section6.png"
+import section7 from "../assets/images/whoWeAre/section7.png"
+
 export default function whoWeAre() {
     return (
         <>
-            <div id='whoWeAre-container' className='container mb-5'>
+            {/* <div id='whoWeAre-container' className='container mb-5'>
                 <div className='row h-100'>
                     <div className='col-12 col-md-6 ps-0 d-flex align-items-center'>
                         <h1 id='whoWeAre-heading' className='display-4 ps-5 fw-bold'>Who We Are</h1>
@@ -57,7 +65,14 @@ export default function whoWeAre() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
+            <img className='w-100' src={section1} />
+            <img className='w-100' src={section2} />
+            <img className='w-100' src={section3} />
+            <img className='w-100' src={section4} />
+            <img className='w-100' src={section5} />
+            <img className='w-100' src={section6} />
+            <img className='w-100' src={section7} />
 
 
 
