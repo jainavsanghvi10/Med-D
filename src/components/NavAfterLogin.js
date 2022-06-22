@@ -31,7 +31,7 @@ export const NavAfterLogin = (props) => {
         <div className="collapse navbar-collapse pb-2 bg-white" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-2">
               <li className="nav-item active">
-                <Link className="nav-link fw-bold text-dark" style={{ fontSize: '2vh'}} to="#">Who We Are</Link>
+                <Link className="nav-link fw-bold text-dark" style={{ fontSize: '2vh'}} to="/who-we-are">Who We Are</Link>
               </li>
               {isDoctor===true ?
               <>
@@ -48,7 +48,7 @@ export const NavAfterLogin = (props) => {
               : <></>}
               {isDoctor===false ?
               <li className="nav-item">
-                <Link className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} to="/offline-booking">Book Appointment</Link>
+                <Link className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} to="/book-appointment-info">Book Appointment</Link>
               </li> : <></>
             }
               <li className="nav-item">

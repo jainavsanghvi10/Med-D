@@ -20,7 +20,9 @@ export default function BookAppointmentBuffer() {
                             quickly with our system
 
                         </h3>
-                        <button className='btn btn-light btn-lg fw-bold bufferCardTextColor'>BOOK NOW</button>
+                        <Link to="/offline-booking">
+                            <button className='btn btn-light btn-lg fw-bold bufferCardTextColor'>BOOK NOW</button>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -55,7 +57,9 @@ export default function BookAppointmentBuffer() {
             <h5 className='text-center text-decoration-underline'>More Offers</h5>
 
             <div className='container text-center my-4'>
-                <button className='btn btn-lg btn-dark'>Book Now</button>
+                <Link to="/offline-booking">
+                    <button className='btn btn-lg btn-dark'>Book Now</button>
+                </Link>
             </div>
         </>
     );

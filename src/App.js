@@ -58,8 +58,8 @@ function App() {
           <Route path="/create-slots" element={<CreateSlotsPage />} />
           <Route path="/patient-side-booking" element={<PatientSideBooking />} />
           <Route path="/who-we-are" element={<WhoWeAre />} />
-          <Route path="/save-records-buffer" element={<SaveRecordsBuffer />} />
-          <Route path="/book-appointment-buffer" element={<BookAppointmentBuffer />} />
+          <Route path="/save-records-info" element={<SaveRecordsBuffer />} />
+          <Route path="/book-appointment-info" element={<BookAppointmentBuffer />} />
         </Routes>
         <Footer />
       </AuthProvider>

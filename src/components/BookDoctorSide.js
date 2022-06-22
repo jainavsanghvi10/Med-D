@@ -25,6 +25,7 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import TimerIcon from "@mui/icons-material/Timer";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import InfoIcon from '@mui/icons-material/Info';
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import { People } from "@mui/icons-material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -214,11 +215,13 @@ export const BookDoctorSide = () => {
   ////////////////////////////////////////////////////////
 
   function deleteSlot(date, key) {
-    console.log("Rakshit is great !" + date + key);
-    var anu = firebase
-      .database()
-      .ref(`Doctors/${currentUser.uid}/${date}/${key}`);
-    anu.remove();
+    console.log(date + key);
+    if(window.confirm("Do You Want To Delete This Slot")){
+      var ref = firebase
+        .database()
+        .ref(`Doctors/${currentUser.uid}/${date}/${key}`);
+      ref.remove();
+    }
   }
   ////////////////////////////////////////////////////////
   function editSlot(Did, date, key, time, num) {
@@ -363,281 +366,141 @@ export const BookDoctorSide = () => {
       const morningSlotsDayI = [];
       const afternoonSlotsDayI = [];
       const eveningSlotsDayI = [];
+      let t = 0;
       for (let s in temp) {
         let time = s.split("_")[0];
-        // let totalSlotAtTime = s.split("_")[1];
+        let totalSlotAtTime = s.split("_")[1];
 
-        // let bookedslots = Object.values(slotInfo)[t].AttendanceCount;
+        let bookedslots = Object.values(temp)[t].AttendanceCount;
         t++;
+        console.log(totalSlotAtTime, bookedslots);
 
-        if (time.split(":")[0] < 12) {
-          morningSlotsDayI.push(
-            <ButtonGroup
-              className="me-1 mb-2 me-sm-3 mb-sm-3"
-              variant="contained"
-              aria-label="outlined button group"
-            >
-              <Button
-                className="text-black"
-                disabled
-                startIcon={<WatchLaterIcon fontSize="small" />}
-              >
-                {time}
-              </Button>
-              <Button className="px-0 py-1 desktopView">
-                <IconButton sx={{ borderRadius: "0px", color: "white" }}>
-                  <EditIcon fontSize="small" />
-                </IconButton>
-              </Button>
-              <Button
-                onClick={() => {
+        let notbookedElement = (
+        <ButtonGroup className='me-1 mb-2 me-sm-3 mb-sm-3' variant="contained" aria-label="outlined button group">
+        <Button className='text-black editableButton' disabled startIcon={<WatchLaterIcon fontSize='small' />}>{time}</Button>
+        <Button className='px-0 py-1 desktopView editableButton-icon'>
+            <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                <EditIcon fontSize='small' />
+            </IconButton>
+        </Button>
+        <Button onClick={() => {
                   deleteSlot(DateToString(weekDates[i]), s);
                 }}
-                className="px-0 py-1 desktopView"
-              >
-                <IconButton sx={{ borderRadius: "0px", color: "white" }}>
-                  <DeleteIcon fontSize="small" />
-                </IconButton>
+                className='px-0 py-1 desktopView'>
+            <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                <DeleteIcon fontSize='small' />
+            </IconButton>
+        </Button>
+        <Button className='px-0 py-1 mobileView'
+            id="basic-button"
+            aria-controls={open ? 'basic-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+        >
+            <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                <KeyboardArrowDownIcon fontSize='small' />
+            </IconButton>
+        </Button>
+        <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+                'aria-labelledby': 'basic-button',
+            }}
+        >
+            <MenuItem onClick={handleClick}>Edit</MenuItem>
+            <MenuItem onClick={handleClose}>Delete</MenuItem>
+        </Menu>
+        
+        {/* Modal That Opens When clicked on Pen Button */}
+        <div class="modal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </ButtonGroup>);
+        let bookedElement = (
+          <ButtonGroup className='me-1 mb-2 me-sm-3 mb-sm-3' variant="contained" aria-label="outlined button group">
+              <Button className='text-black infoButton' disabled startIcon={<WatchLaterIcon fontSize='small' />}>{time}</Button>
+              <Button className='px-0 py-1 desktopView infoButton-icon'>
+                  <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                      <InfoIcon fontSize='small' />
+                  </IconButton>
               </Button>
-              <Button
-                className="px-0 py-1 mobileView"
-                id="basic-button"
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
+              <Button className='px-0 py-1 mobileView'
+                  id="basic-button"
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleClick}
               >
-                <IconButton sx={{ borderRadius: "0px", color: "white" }}>
-                  <KeyboardArrowDownIcon fontSize="small" />
-                </IconButton>
+                  <IconButton sx={{ borderRadius: '0px', color: 'white' }}>
+                      <KeyboardArrowDownIcon fontSize='small' />
+                  </IconButton>
               </Button>
               <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                      'aria-labelledby': 'basic-button',
+                  }}
               >
-                <MenuItem onClick={handleClick}>Edit</MenuItem>
-                <MenuItem>Delete</MenuItem>
+                  <MenuItem onClick={handleClick}>Edit</MenuItem>
+                  <MenuItem onClick={handleClose}>Delete</MenuItem>
               </Menu>
-
+              
               {/* Modal That Opens When clicked on Pen Button */}
-              <div className="modal" tabindex="-1">
-                <div className="modal-dialog">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title">Modal title</h5>
-                      <button
-                        type="button"
-                        className="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div className="modal-body">
-                      <p>Modal body text goes here.</p>
-                    </div>
-                    <div className="modal-footer">
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                      >
-                        Close
-                      </button>
-                      <button type="button" className="btn btn-primary">
-                        Save changes
-                      </button>
-                    </div>
+              <div class="modal" tabindex="-1">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title">Modal title</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <p>Modal body text goes here.</p>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
+                      </div>
                   </div>
-                </div>
               </div>
-            </ButtonGroup>
-          );
+          </ButtonGroup>
+        )
+
+        let selectedElement = (totalSlotAtTime > bookedslots ? notbookedElement : bookedElement);
+        if (time.split(":")[0] < 12) {
+          morningSlotsDayI.push(selectedElement);
         } else {
           if (time.split(":")[0] < 17) {
-            afternoonSlotsDayI.push(
-              <ButtonGroup
-                className="me-1 mb-2 me-sm-3 mb-sm-3"
-                variant="contained"
-                aria-label="outlined button group"
-              >
-                <Button
-                  className="text-black"
-                  disabled
-                  startIcon={<WatchLaterIcon fontSize="small" />}
-                >
-                  {time}
-                </Button>
-                <Button className="px-0 py-1 desktopView">
-                  <IconButton sx={{ borderRadius: "0px", color: "white" }}>
-                    <EditIcon fontSize="small" />
-                  </IconButton>
-                </Button>
-                <Button
-                  className="px-0 py-1 desktopView"
-                  onClick={() => {
-                    deleteSlot(DateToString(weekDates[i]), s);
-                  }}
-                >
-                  <IconButton sx={{ borderRadius: "0px", color: "white" }}>
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
-                </Button>
-                <Button
-                  className="px-0 py-1 mobileView"
-                  id="basic-button"
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                >
-                  <IconButton sx={{ borderRadius: "0px", color: "white" }}>
-                    <KeyboardArrowDownIcon fontSize="small" />
-                  </IconButton>
-                </Button>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  <MenuItem onClick={handleClick}>Edit</MenuItem>
-                  <MenuItem onClick={handleClose}>Delete</MenuItem>
-                </Menu>
-
-                {/* Modal That Opens When clicked on Pen Button */}
-                <div className="modal" tabindex="-1">
-                  <div className="modal-dialog">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title">Modal title</h5>
-                        <button
-                          type="button"
-                          className="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <div className="modal-body">
-                        <p>Modal body text goes here.</p>
-                      </div>
-                      <div className="modal-footer">
-                        <button
-                          type="button"
-                          className="btn btn-secondary"
-                          data-bs-dismiss="modal"
-                        >
-                          Close
-                        </button>
-                        <button type="button" className="btn btn-primary">
-                          Save changes
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </ButtonGroup>
-            );
+            afternoonSlotsDayI.push(selectedElement);
           } else {
-            eveningSlotsDayI.push(
-              <ButtonGroup
-                className="me-1 mb-2 me-sm-3 mb-sm-3"
-                variant="contained"
-                aria-label="outlined button group"
-              >
-                <Button
-                  className="text-black"
-                  disabled
-                  startIcon={<WatchLaterIcon fontSize="small" />}
-                >
-                  {time}
-                </Button>
-                <Button className="px-0 py-1 desktopView">
-                  <IconButton sx={{ borderRadius: "0px", color: "white" }}>
-                    <EditIcon fontSize="small" />
-                  </IconButton>
-                </Button>
-                <Button
-                  className="px-0 py-1 desktopView"
-                  onClick={() => {
-                    deleteSlot(DateToString(weekDates[i]), s);
-                  }}
-                >
-                  <IconButton sx={{ borderRadius: "0px", color: "white" }}>
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
-                </Button>
-                <Button
-                  className="px-0 py-1 mobileView"
-                  id="basic-button"
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                >
-                  <IconButton sx={{ borderRadius: "0px", color: "white" }}>
-                    <KeyboardArrowDownIcon fontSize="small" />
-                  </IconButton>
-                </Button>
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                  }}
-                >
-                  <MenuItem onClick={handleClick}>Edit</MenuItem>
-                  <MenuItem onClick={handleClose}>Delete</MenuItem>
-                </Menu>
-
-                {/* Modal That Opens When clicked on Pen Button */}
-                <div className="modal" tabindex="-1">
-                  <div className="modal-dialog">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title">Modal title</h5>
-                        <button
-                          type="button"
-                          className="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <div className="modal-body">
-                        <p>Modal body text goes here.</p>
-                      </div>
-                      <div className="modal-footer">
-                        <button
-                          type="button"
-                          className="btn btn-secondary"
-                          data-bs-dismiss="modal"
-                        >
-                          Close
-                        </button>
-                        <button type="button" className="btn btn-primary">
-                          Save changes
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </ButtonGroup>
-            );
+            eveningSlotsDayI.push(selectedElement);
           }
         }
       }
       morningSlots.push(morningSlotsDayI);
       afternoonSlots.push(afternoonSlotsDayI);
-      eveningSlots.push(afternoonSlotsDayI);
+      eveningSlots.push(eveningSlotsDayI);
 
       allSlots.push(
         <TabPanel style={{ background: "#F6FCFF" }} value={value} index={i - 1}>

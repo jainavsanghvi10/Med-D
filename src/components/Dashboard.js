@@ -96,6 +96,50 @@ export default function Dashboard() {
 				</div>
 			</div>
 
+			{isDoctor ? <>
+			<div className='container bookAppointment-card'>
+				<div className='row'>
+					<div className='col-8 col-sm-6 d-flex'>
+						<img src={bookAppointmentCardPic} className='bookAppointmentCard-image w-100'></img>
+					</div>
+					<div className='col-4 col-sm-6 d-flex flex-column justify-content-evenly bookAppointment-contentCol'>
+						<span className='dashboard-card-headline mb-5`'>Make Appointment Slots</span>
+						<span className='dashboard-card-content'>No more standing in queues, sitting in the waiting area. Skip the hassle and get your health checked up quickly with live tracking system.</span>
+						<Link to="book-doctor-side">
+							<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Create Slots</button>
+						</Link>
+					</div>
+				</div>
+			</div>
+			<div className='container bookAppointment-card uploadDocument-card'>
+				<div className='row'>
+					<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
+						<span className='dashboard-card-headline'>Book Appointment For Patients</span>
+						<span className='dashboard-card-content'>Save your medical records securely, so that you never misplace them again.Get 5GB of storage for free.</span>
+						<Link to="appointment-editor">
+							<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Book Appointment</button>
+						</Link>
+					</div>
+					<div className='col-8 col-sm-6 offset-md-1 d-flex'>
+						<img src={uploadDocumentCardPic} className='uploadDocumentCard-image w-100'></img>
+					</div>
+				</div>
+			</div>
+			<div className='container bookAppointment-card uploadDocument-card'>
+				<div className='row'>
+					<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
+						<span className='dashboard-card-headline'>Patient Queue</span>
+						<span className='dashboard-card-content'>Save your medical records securely, so that you never misplace them again.Get 5GB of storage for free.</span>
+						<Link to="patient-queue">
+							<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Patient Queue</button>
+						</Link>
+					</div>
+					<div className='col-8 col-sm-6 offset-md-1 d-flex'>
+						<img src={uploadDocumentCardPic} className='uploadDocumentCard-image w-100'></img>
+					</div>
+				</div>
+			</div>
+			</> : <>
 			<div className='container bookAppointment-card'>
 				<div className='row'>
 					<div className='col-8 col-sm-6 d-flex'>
@@ -110,7 +154,6 @@ export default function Dashboard() {
 					</div>
 				</div>
 			</div>
-
 			<div className='container bookAppointment-card uploadDocument-card'>
 				<div className='row'>
 					<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
@@ -125,6 +168,7 @@ export default function Dashboard() {
 					</div>
 				</div>
 			</div>
+			</>}
 
 
 			{/* Promotion */}
@@ -310,64 +354,6 @@ export default function Dashboard() {
 					</Carousel>
 				</div>
 			</div>
-
-			<div className='container mt-5'>
-				<div className='row text-center'>
-					<h2>Frequently Asked Questions</h2>
-					{/* <span className='w-75 mx-auto'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor Lorem ipsum dolor sit amet consetetur sadipscing elitr</span> */}
-				</div>
-				<Accordion>
-					<Accordion.Item eventKey="0">
-						<Accordion.Header>Can I book appointment on behalf of someone else?</Accordion.Header>
-						<Accordion.Body>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-							veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-							commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-							cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-							est laborum.
-						</Accordion.Body>
-					</Accordion.Item>
-					<Accordion.Item eventKey="1">
-						<Accordion.Header>Do I need a referral to see a Physiotherapist?</Accordion.Header>
-						<Accordion.Body>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-							veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-							commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-							cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-							est laborum.
-						</Accordion.Body>
-					</Accordion.Item>
-					<Accordion.Item eventKey="3">
-						<Accordion.Header>Do you Have Venue Option for appointments?</Accordion.Header>
-						<Accordion.Body>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-							veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-							commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-							cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-							est laborum.
-						</Accordion.Body>
-					</Accordion.Item>
-					<Accordion.Item eventKey="4">
-						<Accordion.Header>What if I Have More questions that are not answered Here?</Accordion.Header>
-						<Accordion.Body>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-							veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-							commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-							velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-							cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-							est laborum.
-						</Accordion.Body>
-					</Accordion.Item>
-				</Accordion>
-			</div>
-
 		</>
 	);
 }

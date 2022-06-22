@@ -19,7 +19,9 @@ export default function SaveRecordsBuffer() {
                             never forget them and get amazing discounts
                             on booking appointments
                         </h3>
-                        <button className='btn btn-light btn-lg fw-bold bufferCardTextColor'>UPLOAD</button>
+                        <Link to="/medicalRecords">
+                            <button className='btn btn-light btn-lg fw-bold bufferCardTextColor'>UPLOAD</button>
+                        </Link>
                     </div>
                 </div>
             </div>

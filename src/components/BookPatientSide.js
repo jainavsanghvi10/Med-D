@@ -5,6 +5,16 @@ import firebase from "firebase";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import {AES} from "crypto-js/core";
+import { Box } from '@mui/system';
+import { Button, IconButton } from '@mui/material';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
+import Divider from '@mui/material/Divider';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import WatchLaterIcon from '@mui/icons-material/WatchLater';
 
 ////////////////////////////////////////////////////////
 
@@ -14,8 +24,25 @@ export const BookPatientSide = () => {
 
   const [docData, setDocData] = useState(null);
   const [Did, setDid] = useState();
-  const [slotInfo, setSlotInfo] = useState();
-  const [ddate, setDDate] = useState();
+  const [slotInfo, setSlotInfo] = useState(null);
+  const [error, setError] = useState();
+
+
+  const theme = useTheme();
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+      setValue(newValue);
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+      setAnchorEl(null);
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -25,12 +52,19 @@ export const BookPatientSide = () => {
     if (docData === null) {
       fetchDocDetails();
     }
-
-    // fetching today's slot details
-    if (slotInfo === null) {
-      fetchSlotWithDate(weekDates[1]);
+    if(slotInfo === null){
+      var ref = firebase.database().ref(`Doctors/${Did}/`);
+      ref.on("value", (snapshot) => {
+        const data = snapshot.val();
+        setSlotInfo(data);
+      });
     }
+
   });
+
+  window.onload = (event) => {
+    fetchSlotData();
+  };
 
   /* Setting dates of 7 days from today */
   const weekDates = [null];
@@ -57,17 +91,17 @@ export const BookPatientSide = () => {
   ////////////////////////////////////////////////////////
 
   /* function to fetch slot data of a date */
-  function fetchSlotWithDate(date) {
-    var ref = firebase.database().ref(`Doctors/${Did}/${DateToString(date)}`);
+  function fetchSlotData() {
+    var ref = firebase.database().ref(`Doctors/${Did}/`);
     ref.on("value", (snapshot) => {
       const data = snapshot.val();
       setSlotInfo(data);
-      setDDate(DateToString(date));
     });
+    console.log("slot data fetched")
   }
   ////////////////////////////////////////////////////////
 
-  function updatePatientId(Did, date, key, i, Name, isCheck) {
+  function updatePatientId(Did, date, key, i, Pid, isCheck) {
     var ref = firebase
       .database()
       .ref(`Doctors/${Did}/${date}/${key}/${i}/PatientId`);
@@ -80,33 +114,12 @@ export const BookPatientSide = () => {
     if (isCheck) {
       return count;
     }
+    console.log(Pid);
     var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}/${i}`);
     ref.update({
-      PatientId: Name
+      PatientId: Pid
     });
   }
-  ////////////////////////////////////////////////////////
-
-  function updateAttendance(Did, date, key, i, isPresent, isCheck) {
-    var ref = firebase
-      .database()
-      .ref(`Doctors/${Did}/${date}/${key}/${i}/Attendance`);
-    let count = false;
-    ref.on("value", (snapshot) => {
-      const data = snapshot.val();
-      count = data;
-    });
-
-    if (isCheck) {
-      return count;
-    }
-
-    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}/${i}`);
-    ref.update({
-      Attendance: isPresent,
-    });
-  }
-  ////////////////////////////////////////////////////////
 
   function increAttendanceCount(Did, date, key, isCheck) {
     var ref = firebase
@@ -128,34 +141,8 @@ export const BookPatientSide = () => {
       AttendanceCount: count,
     });
   }
-  ////////////////////////////////////////////////////////
 
-  function decreAttendanceCount(Did, date, key) {
-    var ref = firebase
-      .database()
-      .ref(`Doctors/${Did}/${date}/${key}/AttendanceCount`);
-    let count = 99;
-    ref.on("value", (snapshot) => {
-      const data = snapshot.val();
-      count = data;
-    });
-
-    count = count - 1;
-    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}`);
-    ref.update({
-      AttendanceCount: count,
-    });
-  }
-
-  ////////////////////////////////////////////////////////
-
-  function deleteSlot(Did, date, key) {
-    var ref = firebase.database().ref(`Doctors/${Did}/${date}/${key}`);
-    ref.remove();
-  }
-  ////////////////////////////////////////////////////////
-
-  async function updateSlot(time, maxPerson,i) {
+  async function updateSlot(ddate, time, maxPerson) {
     if (!currentUser) navigate("/signup");
     else {
       if(window.confirm("Do You Want To Confirm This Slot Booking")){
@@ -178,9 +165,11 @@ export const BookPatientSide = () => {
               }
               console.log("Slots Avalaible !");
               console.log("Patient Booked SuccesFully!");
+              setError("Patient Booked Successfully");
               t = false;
             }
           }
+          console.log("count incremented")
           increAttendanceCount(Did, ddate, key, false);
         } else console.log("Sorry, Slots are full!");
       }
@@ -199,78 +188,96 @@ export const BookPatientSide = () => {
     }
   }
 
-  const morningSlots = [];
-  const afternoonSlots = [];
-  const eveningSlots = [];
-  let t = 0;
-  for (let s in slotInfo) {
-    let time = s.split("_")[0];
-    let totalSlotAtTime = s.split("_")[1];
-    let bookedslots = Object.values(slotInfo)[t].AttendanceCount;
-    t++;
+  const allSlots = [];
+  const dateNavigation = [null];
+  const morningSlots = [null];
+  const afternoonSlots = [null];
+  const eveningSlots = [null];
+  if(slotInfo != null){
+    console.log(slotInfo);
+    for (let i = 1; i <= 7; i++) {
+      dateNavigation.push(
+        <Tab label={weekDates[i].getDate() + " / " +`${weekDates[i].getMonth() < 10 ? "0" : ""}` +
+              weekDates[i].getMonth()} 
+              {...a11yProps(i-1)} />
+      );
 
-    if (time.split(":")[0] < 12) {
-      if (bookedslots < totalSlotAtTime)
-        morningSlots.push(
-          <button
-            className="btn btn-sm mx-2 my-2 btn-primary"
-            onClick={() => {
-              updateSlot(time, totalSlotAtTime);
-            }}
-          >
-            {time}
-          </button>
-        );
-    } else {
-      if (time.split(":")[0] < 17) {
-        if (bookedslots < totalSlotAtTime)
-          afternoonSlots.push(
-            <button
-              className="btn btn-sm mx-2 my-2 btn-primary"
-              onClick={() => {
-                updateSlot(time, totalSlotAtTime);
-              }}
-            >
-              {time}
-            </button>
+      let temp = slotInfo[DateToString(weekDates[i])];
+      const morningSlotsDayI = [];
+      const afternoonSlotsDayI = [];
+      const eveningSlotsDayI = [];
+      let t = 0;
+      for (let s in temp) {
+        let time = s.split("_")[0];
+        let totalSlotAtTime = s.split("_")[1];
+
+        let bookedslots = Object.values(temp)[t].AttendanceCount;
+        t++;
+
+        if (time.split(":")[0] < 12) {
+          if(totalSlotAtTime > bookedslots)
+          morningSlotsDayI.push(
+            <ButtonGroup
+            onClick={()=>{updateSlot(DateToString(weekDates[i]),time, totalSlotAtTime);}}
+            style={{ background: '#C6E7FF' }} className='me-1 mb-2 me-sm-3 mb-sm-3' variant="outlined" aria-label="outlined button group">
+                <Button className='text-black' startIcon={<WatchLaterIcon fontSize='small' />}>{time}</Button>
+            </ButtonGroup>
           );
-      } else {
-        if (bookedslots < totalSlotAtTime)
-          eveningSlots.push(
-            <button
-              className="btn btn-sm mx-2 my-2 btn-primary"
-              onClick={() => {
-                updateSlot(time, totalSlotAtTime);
-              }}
-            >
-              {time}
-            </button>
-          );
+        } else {
+          if (time.split(":")[0] < 17) {
+            if(totalSlotAtTime > bookedslots)
+            afternoonSlotsDayI.push(
+              <ButtonGroup
+              onClick={()=>{updateSlot(DateToString(weekDates[i]),time, totalSlotAtTime);}}
+              style={{ background: '#C6E7FF' }} className='me-1 mb-2 me-sm-3 mb-sm-3' variant="outlined" aria-label="outlined button group">
+                <Button className='text-black' startIcon={<WatchLaterIcon fontSize='small' />}>{time}</Button>
+              </ButtonGroup>
+            );
+          } else {
+            if(totalSlotAtTime > bookedslots)
+            eveningSlotsDayI.push(
+              <ButtonGroup
+              onClick={()=>{updateSlot(DateToString(weekDates[i]),time, totalSlotAtTime);}}
+              style={{ background: '#C6E7FF' }} className='me-1 mb-2 me-sm-3 mb-sm-3' variant="outlined" aria-label="outlined button group">
+                <Button className='text-black' startIcon={<WatchLaterIcon fontSize='small' />}>{time}</Button>
+              </ButtonGroup>
+            );
+          }
+        }
       }
-    }
-  }
+      morningSlots.push(morningSlotsDayI);
+      afternoonSlots.push(afternoonSlotsDayI);
+      eveningSlots.push(eveningSlotsDayI);
 
-  const dateNavigation = [];
-  for (let i = 1; i <= 7; i++) {
-    dateNavigation.push(
-      <a
-        className={"nav-item nav-link dateCSS " + `${i === 1 ? "active" : ""}`}
-        id={"day-" + i + "-tab"}
-        data-toggle="tab"
-        href={"#day-" + i}
-        role="tab"
-        aria-controls={"day-" + i}
-        aria-selected="true"
-        onClick={() => {
-          fetchSlotWithDate(weekDates[i]);
-        }}
-      >
-        {weekDates[i].getDate() +
-          " /" +
-          `${weekDates[i].getMonth() < 10 ? "0" : ""}` +
-          weekDates[i].getMonth()}
-      </a>
-    );
+      allSlots.push(
+        <TabPanel style={{background:'#F6FCFF'}} value={value} index={i-1}>
+          <div>
+              <h4 className='fw-bold'>Morning</h4>
+              <div>
+                  {morningSlots[i]}
+              </div>
+          </div>
+
+          <Divider className='my-4 my-md-5' />
+
+          <div>
+              <h4 className='fw-bold'>Afternoon</h4>
+              <div>
+                  {afternoonSlots[i]}
+              </div>
+          </div>
+
+          <Divider className='my-4 my-md-5' />
+
+          <div>
+              <h4 className='fw-bold'>Evening</h4>
+              <div>
+                  {eveningSlots[i]}
+              </div>
+          </div>
+        </TabPanel>
+      )
+    }
   }
 
   document.body.style.background = "white";
@@ -361,71 +368,56 @@ export const BookPatientSide = () => {
       ) : (
         <></>
       )}
-
-      <div className="container  mt-4 pt-3">
-        <h3 className="pb-3 darkerTextColor fw-bold ">
-          <u>Book Appointment:</u>
-        </h3>
-        <nav>
-          <div
-            className="nav nav-tabs"
-            style={{ flexWrap: "nowrap", fontSize: "x-small" }}
-            id="nav-tab"
-            role="tablist"
-          >
-            {dateNavigation}
-          </div>
-        </nav>
-        <div className="tab-content " id="nav-tabContent">
-          <div
-            className="tab-pane fade show active"
-            id="day-1"
-            role="tabpanel"
-            aria-labelledby="day-1-tab"
-          >
-            <div id="slotContainer-bookPatient" className="container">
-              <div className="row my-2">
-                <div className="col-2 align-self-center">Morning</div>
-                <div className="col-8">
-                  {morningSlots.length !== 0 ? (
-                    morningSlots
-                  ) : (
-                    <p className="my-2" style={{ color: "grey" }}>
-                      No Slots Available
-                    </p>
-                  )}
-                </div>
-              </div>
-              <hr></hr>
-              <div className="row my-2">
-                <div className="col-2 align-self-center">Afternoon</div>
-                <div className="col-8">
-                  {afternoonSlots !== 0 ? (
-                    afternoonSlots
-                  ) : (
-                    <p className="my-2" style={{ color: "grey" }}>
-                      No Slots Available
-                    </p>
-                  )}
-                </div>
-              </div>
-              <hr></hr>
-              <div className="row my-2">
-                <div className="col-2 align-self-center">Evening</div>
-                <div className="col-8">
-                  {eveningSlots !== 0 ? (
-                    eveningSlots
-                  ) : (
-                    <p className="my-2" style={{ color: "grey" }}>
-                      No Slots Available
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      {error &&
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {error}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>}
+      <div className='container p-0 mt-4'>
+          <Box sx={{ width: '100%', bgcolor: 'primary.dark' }}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }} >
+                  <Tabs style={{background:'#C6E7FF'}} value={value} onChange={handleChange} aria-label="basic tabs example" variant='scrollable' scrollButtons="auto">
+                      {dateNavigation}
+                  </Tabs>
+              </Box>
+              {allSlots}
+          </Box>
       </div>
     </div>
   );
 };
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+      <div
+          role="tabpanel"
+          hidden={value !== index}
+          id={`simple-tabpanel-${index}`}
+          aria-labelledby={`simple-tab-${index}`}
+          {...other}
+      >
+          {value === index && (
+              <Box sx={{ p: 3 }}>
+                  <Typography>{children}</Typography>
+              </Box>
+          )}
+      </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+  };
+}

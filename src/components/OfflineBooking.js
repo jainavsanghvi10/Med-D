@@ -40,23 +40,23 @@ export const OfflineBooking = () => {
 
   useEffect(() => {
     /* To fetch all doctors at load */
-    // if (docData === null) {
-    //   db.collection("DoctorData")
-    //     .get()
-    //     .then((querySnapshot) => {
-    //       const tempData = [];
-    //       querySnapshot.forEach((doc) => {
-    //         // doc.data() is never undefined for query doc snapshots
-    //         console.log(doc.id, " => ", doc.data());
-    //         tempData.push([doc.id, doc.data()]);
-    //       });
-    //       console.log("available", tempData);
-    //       setDocData(tempData);
-    //     })
-    //     .catch((error) => {
-    //       console.log("Error getting documents: ", error);
-    //     });
-    // }
+    if (docData === null) {
+      db.collection("DoctorData")
+        .get()
+        .then((querySnapshot) => {
+          const tempData = [];
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            tempData.push([doc.id, doc.data()]);
+          });
+          console.log("available", tempData);
+          setDocData(tempData);
+        })
+        .catch((error) => {
+          console.log("Error getting documents: ", error);
+        });
+    }
   });
 
   function SearchDoctors() {
@@ -83,99 +83,102 @@ export const OfflineBooking = () => {
     for (let i = 0; i < docData.length; i++) {
       let doc = docData[i][1];
       docBox.push(
+        
         <div className='col my-3 doctor-card'>
-        <div className='doctor-card-inner'>
-            <div className='doctor-card-front'>
-                <Avatar
-                    className='my-2 mx-auto'
-                    alt="Doc Avatar"
-                    src={thumbnailDoc}
-                    sx={{ width: 136, height: 136, bgcolor: 'pink' }}
-                />
-                <span>{"Dr. " + doc.FirstName + " " + doc.LastName}</span>
-                <div className='row'>
-                    <div className='col'>
-                        <Rating name="read-only" value='4' readOnly />
+            <Link to={`/book-patient-side?Did=${docData[i][0]}`}>
+                <div className='doctor-card-inner'>
+                    <div className='doctor-card-front'>
+                        <Avatar
+                            className='my-2 mx-auto'
+                            alt="Doc Avatar"
+                            src={thumbnailDoc}
+                            sx={{ width: 136, height: 136, bgcolor: 'pink' }}
+                        />
+                        <span><b>{"Dr. " + doc.FirstName + " " + doc.LastName}</b></span>
+                        <div className='row'>
+                            <div className='col'>
+                                <Rating name="read-only" value='4' readOnly />
+                            </div>
+                        </div>
+                        <div className='row'>
+                            <div className='col'>
+                                <span>Experience: </span>
+                                <span className='text-muted'>5yrs</span>
+                            </div>
+                            <div className='col'>
+                                <span>Fee: </span>
+                                <span className='text-muted'>₹500</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div className='row'>
-                    <div className='col'>
-                        <span>Experience: </span>
-                        <span className='text-muted'>5yrs</span>
-                    </div>
-                    <div className='col'>
-                        <span>Fee: </span>
-                        <span className='text-muted'>₹500</span>
-                    </div>
-                </div>
-            </div>
-            <div className='doctor-card-back'>
-                <div className='row my-1 doctor-card-info'>
-                    <div className='col'>
-                        <Chip icon={<MedicationIcon />} label="Specialization:" />
-                    </div>
-                    <div className='col'>
-                        <span>Dermatologist</span>
-                    </div>
-                </div>
+                    <div className='doctor-card-back'>
+                    
+                        <div className='row my-1 doctor-card-info'>
+                            <div className='col'>
+                                <Chip icon={<MedicationIcon />} label="Specialization:" />
+                            </div>
+                            <div className='col'>
+                                <span>{doc.Speciality}</span>
+                            </div>
+                        </div>
 
-                <div className='row my-1 doctor-card-info'>
-                    <div className='col'>
-                        <Chip icon={<LocationCityIcon />} label="Clinic Name:" />
-                    </div>
-                    <div className='col'>
-                        <span>Fortis</span>
-                    </div>
-                </div>
+                        <div className='row my-1 doctor-card-info'>
+                            <div className='col'>
+                                <Chip icon={<LocationCityIcon />} label="Clinic Name:" />
+                            </div>
+                            <div className='col'>
+                                <span>Fortis</span>
+                            </div>
+                        </div>
 
-                <div className='row my-1 doctor-card-info'>
-                    <div className='col-6'>
-                        <Chip size='small' icon={<MyLocationIcon />} label="Clinic Location:" />
-                    </div>
-                    <div className='col'>
-                        <span>32 Jump Street</span>
-                    </div>
-                </div>
+                        <div className='row my-1 doctor-card-info'>
+                            <div className='col-6'>
+                                <Chip size='small' icon={<MyLocationIcon />} label="Clinic Location:" />
+                            </div>
+                            <div className='col'>
+                                <span>32 Jump Street</span>
+                            </div>
+                        </div>
 
-                <div className='row my-1 doctor-card-info'>
-                    <div className='col'>
-                        <Chip icon={<LocationSearchingIcon />} label="City:" />
-                    </div>
-                    <div className='col'>
-                        <span>Jaipur</span>
-                    </div>
-                </div>
+                        <div className='row my-1 doctor-card-info'>
+                            <div className='col'>
+                                <Chip icon={<LocationSearchingIcon />} label="City:" />
+                            </div>
+                            <div className='col'>
+                                <span>Jaipur</span>
+                            </div>
+                        </div>
 
-                <div className='row my-1 doctor-card-info'>
-                    <div className='col'>
-                        <Chip icon={<MapIcon />} label="State:" />
-                    </div>
-                    <div className='col'>
-                        <span>Rajasthan</span>
-                    </div>
-                </div>
+                        <div className='row my-1 doctor-card-info'>
+                            <div className='col'>
+                                <Chip icon={<MapIcon />} label="State:" />
+                            </div>
+                            <div className='col'>
+                                <span>Rajasthan</span>
+                            </div>
+                        </div>
 
-                <div className='row my-1 doctor-card-info'>
-                    <div className='col'>
-                        <Chip icon={<WatchLaterIcon />} label="Experience:" />
-                    </div>
-                    <div className='col'>
-                        <span>32 Jump Street</span>
+                        <div className='row my-1 doctor-card-info'>
+                            <div className='col'>
+                                <Chip icon={<WatchLaterIcon />} label="Experience:" />
+                            </div>
+                            <div className='col'>
+                                <span>32 Jump Street</span>
+                            </div>
+                        </div>
+                        <div className='row my-1 doctor-card-info'>
+                            <div className='col'>
+                                <Chip icon={<CurrencyRupeeIcon />} label="Fees:" />
+                            </div>
+                            <div className='col'>
+                                <span>32 Jump Street</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <Link to={`/book-patient-side?Did=${docData[i][0]}`}>
-                <div className='row my-1 doctor-card-info'>
-                    <div className='col'>
-                        <Chip icon={<CurrencyRupeeIcon />} label="Fees:" />
-                    </div>
-                    <div className='col'>
-                        <span>32 Jump Street</span>
-                    </div>
-                </div>
-                </Link>
-            </div>
+            </Link>
         </div>
-        </div>
+        
       );
     }
   }

@@ -66,15 +66,13 @@ export default function whoWeAre() {
                     </div>
                 </div>
             </div> */}
-            <div className='container'>
-                <img className='w-100' src={section1} />
-                <img className='w-100' src={section2} />
-                <img className='w-100' src={section3} />
-                <img className='w-100' src={section4} />
-                <img className='w-100' src={section5} />
-                <img className='w-100' src={section6} />
-                <img className='w-100' src={section7} />
-            </div>
+            <img className='w-100' src={section1} />
+            <img className='w-100' src={section2} />
+            <img className='w-100' src={section3} />
+            <img className='w-100' src={section4} />
+            <img className='w-100' src={section5} />
+            <img className='w-100' src={section6} />
+            <img className='w-100' src={section7} />
 
 
 

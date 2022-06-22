@@ -7,7 +7,7 @@ export const NavBeforeLogin = () => {
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light p-0 px-2" style={{ height: '10vh', zIndex:'101',background:'white'}}>
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           <img src={siteLogo} style={{ height: '7vh' }} alt="Med-D" />
         </a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,10 +17,10 @@ export const NavBeforeLogin = () => {
         <div className="collapse navbar-collapse pb-2 bg-white" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-2">
               <li className="nav-item active">
-                <a className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} href="#">About Us</a>
+                <a className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} href="/who-we-are">Who We Are</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} href="/offline-booking">Book Appointment</a>
+                <a className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} href="/book-appointment-info">Book Appointment</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} href="#">Customer Support</a>
