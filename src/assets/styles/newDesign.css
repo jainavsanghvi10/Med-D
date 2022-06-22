@@ -26,8 +26,9 @@ body {
 .dashboard-doctor {
     position: absolute;
     margin-left: auto;
-    margin-right: 5%;
+    /* margin-right: 5%; */
     top: 15vh;
+    /* left: 0px; */
     /* height: 85%; */
     height: 40vw;
     z-index: 100;
@@ -346,6 +347,7 @@ body {
         height: auto;
         width: inherit;
         top: 75px;
+        left: 0px;
     }
 
     .dashboard-knowmore{

@@ -52,7 +52,7 @@ export default function Dashboard() {
 		<>
 			<div className='dashboard-frame'>
 				<div className='px-0 dashboard-rectangle h-100'>
-					<div className='row h-100'>
+					<div className='row h-100 mx-0'>
 						<div className='order-2 order-md-1 ps-0 col-sm-12 col-md-5 ps-md-5 pe-0 d-flex flex-column justify-content-around align-items-start h-100'>
 							<span className='px-2 dashboard-headline display-4 mt-3 mt-md-4'>Book Offline Appointments Directly From Your Home</span>
 							<span className='mx-3 dashboard-content h5 mt-3'>Med D makes booking offline doctor appointments easier and more flexible so that you never have to wait for your turn when visiting a doctor.</span>
@@ -223,7 +223,7 @@ export default function Dashboard() {
 
 			{/* Testimonials */}
 			<div className='container py-4 pb-5 px-0' style={{ maxWidth: '100%', background: '#f4fdff' }}>
-				<div className='row text-center'>
+				<div className='row text-center mx-0'>
 					<h2 className='pt-5 pb-2'>Customer Reviews</h2>
 					<Carousel id='testimonials' className='testimonials mb-5' variant='dark' activeIndex={index} onSelect={handleSelect}>
 						<Carousel.Item className='testimonial-items'>

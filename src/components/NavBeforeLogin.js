@@ -14,7 +14,7 @@ export const NavBeforeLogin = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse pb-2" id="navbarTogglerDemo02">
+        <div className="collapse navbar-collapse pb-2 bg-white" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-2">
               <li className="nav-item active">
                 <a className="nav-link fw-bold text-dark" style={{ fontSize: '2vh' }} href="#">About Us</a>
