@@ -54,8 +54,8 @@ export default function Dashboard() {
 				<div className='px-0 dashboard-rectangle h-100'>
 					<div className='row h-100 mx-0'>
 						<div className='order-2 order-md-1 ps-0 col-sm-12 col-md-5 ps-md-5 pe-0 d-flex flex-column justify-content-around align-items-start h-100'>
-							<span className='px-2 dashboard-headline display-4 mt-3 mt-md-4'>Book Offline Appointments Directly From Your Home</span>
-							<span className='mx-3 dashboard-content h5 mt-3'>Med D makes booking offline doctor appointments easier and more flexible so that you never have to wait for your turn when visiting a doctor.</span>
+							<span className='px-2 dashboard-headline display-5 mt-3 mt-md-4'>Book Offline Appointments Directly From Your Home</span>
+							<span className='mx-3 dashboard-content h5 mt-3'>Friska makes booking offline doctor appointments easier and more flexible so that you never have to wait for your turn when visiting a doctor.</span>
 							<button className='dashboard-knowmore mt-3 mb-3 mb-md-5 btn btn-outline-dark text-white button-color rounded-pill'>Know More</button>
 						</div>
 						<div className='order-1 order-md-2 col-sm-12 col-md-7 d-flex align-items-end'>
@@ -202,7 +202,9 @@ export default function Dashboard() {
 				<div className='row w-100 mx-0'>
 					<div className='col-md-6 d-flex flex-column align-self-center h-100'>
 						<span className='why-us-heading'>Why Choose Our Clinic?</span>
-						<span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor Lorem ipsum dolor sit amet consetetur sadipscing elitr</span>
+						<span>
+							We strive to provide our customers with a simple platform to book, modify and track appointments with their doctors, thereby saving their time at discounted prices.
+						</span>
 
 						<div class="row justify-content-center">
 							<div className='rounded mt-md-4 col-5 text-center border text-white bg-dark d-flex flex-column siteGrowth-infoCards'>
@@ -291,7 +293,7 @@ export default function Dashboard() {
 										Josh Brollins
 									</Card.Title>
 									<Card.Text className='text-black testimonial-content'>
-										Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusame
+										Helped me save my time from the queue.
 									</Card.Text>
 								</Card.Body>
 							</Card>
@@ -318,7 +320,7 @@ export default function Dashboard() {
 										Josh Brollins
 									</Card.Title>
 									<Card.Text className='text-black testimonial-content'>
-										Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusame
+										Perfect for people who have to take hours from their work just for a consulation with doctor.
 									</Card.Text>
 								</Card.Body>
 							</Card>
@@ -345,7 +347,7 @@ export default function Dashboard() {
 										Josh Brollins
 									</Card.Title>
 									<Card.Text className='text-black testimonial-content'>
-										Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusame
+										Very Helpful. Easy to take an appointment and manage medical records.
 									</Card.Text>
 								</Card.Body>
 							</Card>

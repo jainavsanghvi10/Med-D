@@ -52,7 +52,7 @@ export const Footer = () => {
 							{/* <!-- Grid column --> */}
 							<div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
 								{/* <!-- Content --> */}
-								<h6 className="text-uppercase fw-bold">Med-D</h6>
+								<h6 className="text-uppercase fw-bold">Friska</h6>
 								<hr
 									className="mb-4 mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
@@ -117,7 +117,7 @@ export const Footer = () => {
 									className="mb-4 mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
-								<p><EmailIcon />support@medd.com</p>
+								<p><EmailIcon />support@friskanow.com</p>
 								<p><LocalPhoneIcon />+91 8983176450</p>
 								{/* <p><i className="fas fa-home mr-3"></i> New York, NY 10012, US</p>
 									<p><i className="fas fa-envelope mr-3"></i> info@example.com</p>

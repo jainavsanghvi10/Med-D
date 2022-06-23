@@ -58,7 +58,7 @@ body {
 
 .dashboard-knowmore {
     font-weight: 700;
-    font-size: xx-large !important;
+    font-size: x-large !important;
     color: #1D2B4F;
 }
 
@@ -201,7 +201,7 @@ body {
     text-align: center;
     background-color: #E3FAFF !important;
     width: 800px !important;
-    max-width: fit-content !important;
+    min-width: fit-content !important;
 }
 
 .testimonial-cards>.card-body {
@@ -408,6 +408,9 @@ body {
     .amoeba {
         width: 100%;
         height: fit-content;
+    }
+    .testimonial-cards {
+        max-width: 100% !important;
     }
 }
 
