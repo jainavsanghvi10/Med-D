@@ -21,6 +21,7 @@ import { Accordion } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
 import { Card } from 'react-bootstrap';
 import Avatar from '@mui/material/Avatar';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function Dashboard() {
 	const [index, setIndex] = useState(0);
@@ -286,14 +287,14 @@ export default function Dashboard() {
 			{/* Testimonials */}
 			<div className='container py-4 pb-5 px-0' style={{ maxWidth: '100%', background: '#f4fdff' }}>
 				<div className='row text-center mx-0'>
-					<h2 className='pt-5 pb-2'>Customer Reviews</h2>
+					<h2 className='pt-5 pb-2'>Our Happy Customers</h2>
 					<Carousel id='testimonials' className='testimonials mb-5' variant='dark' activeIndex={index} onSelect={handleSelect}>
 						<Carousel.Item interval={10000} className='testimonial-items'>
 							<Card className='testimonial-cards mx-auto'>
 								<FormatQuoteIcon className='opening-quote' />
 								<FormatQuoteIcon className='closing-quote' />
-								<Card.Body>
-									<Avatar
+								<Card.Body className='d-flex justify-content-center'>
+									{/* <Avatar
 										className='mb-2 mx-auto desktopView'
 										alt="Doc Avatar"
 										src={thumbnailDoc}
@@ -304,12 +305,12 @@ export default function Dashboard() {
 										alt="Doc Avatar"
 										src={thumbnailDoc}
 										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
-									/>
+									/> */}
 									<Card.Title className='fw-bold testimonial-title' style={{ color: '#0d47a1' }}>
-										Anurag Singh Naruka
-									</Card.Title>
-									<Card.Text className='text-black testimonial-content'>
 										Helped me save my time from the queue.
+									</Card.Title>
+									<Card.Text className='mt-3 text-black testimonial-content d-flex flex-row justify-content-center align-items-center'>
+										<AccountCircleIcon className='me-1' /> Anurag Singh Naruka
 									</Card.Text>
 								</Card.Body>
 							</Card>
@@ -319,24 +320,12 @@ export default function Dashboard() {
 							<Card className='testimonial-cards mx-auto'>
 								<FormatQuoteIcon className='opening-quote' />
 								<FormatQuoteIcon className='closing-quote' />
-								<Card.Body>
-									<Avatar
-										className='mb-2 mx-auto desktopView'
-										alt="Doc Avatar"
-										src={thumbnailDoc}
-										sx={{ width: 186, height: 186, bgcolor: 'lightblue' }}
-									/>
-									<Avatar
-										className='mb-2 mx-auto mobileView'
-										alt="Doc Avatar"
-										src={thumbnailDoc}
-										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
-									/>
+								<Card.Body className='d-flex justify-content-center'>
 									<Card.Title className='fw-bold testimonial-title' style={{ color: '#0d47a1' }}>
-										Jainav Sanghvi
-									</Card.Title>
-									<Card.Text className='text-black testimonial-content'>
 										Perfect for people who have to take hours from their work just for a consulation with doctor.
+									</Card.Title>
+									<Card.Text className='mt-3 text-black testimonial-content d-flex flex-row justify-content-center align-items-center'>
+										<AccountCircleIcon className='me-1' /> Jainav Sanghvi
 									</Card.Text>
 								</Card.Body>
 							</Card>
@@ -346,8 +335,8 @@ export default function Dashboard() {
 							<Card className='testimonial-cards mx-auto'>
 								<FormatQuoteIcon className='opening-quote' />
 								<FormatQuoteIcon className='closing-quote' />
-								<Card.Body>
-									<Avatar
+								<Card.Body className='d-flex justify-content-center'>
+									{/* <Avatar
 										className='mb-2 mx-auto desktopView'
 										alt="Doc Avatar"
 										src={thumbnailDoc}
@@ -358,12 +347,12 @@ export default function Dashboard() {
 										alt="Doc Avatar"
 										src={thumbnailDoc}
 										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
-									/>
+									/> */}
 									<Card.Title className='fw-bold testimonial-title' style={{ color: '#0d47a1' }}>
-										Rakshit Bang
-									</Card.Title>
-									<Card.Text className='text-black testimonial-content'>
 										Very Helpful. Easy to take an appointment and manage medical records.
+									</Card.Title>
+									<Card.Text className='mt-3 text-black testimonial-content d-flex flex-row justify-content-center align-items-center'>
+										<AccountCircleIcon className='me-1' /> Rakshit Bang
 									</Card.Text>
 								</Card.Body>
 							</Card>

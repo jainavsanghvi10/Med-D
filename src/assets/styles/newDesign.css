@@ -2,6 +2,8 @@ html {
     scroll-behavior: smooth;
 }
 
+/* <style>body{font-family:'TruenoRound'}</style> */
+
 body {
     background: #ffffff !important;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif !important;
@@ -262,7 +264,7 @@ body {
     text-align: center;
     background-color: #E3FAFF !important;
     width: 800px !important;
-    min-width: fit-content !important;
+    /* min-width: fit-content !important; */
 }
 
 .testimonial-cards>.card-body {
@@ -540,7 +542,7 @@ body {
         padding-bottom: 1px !important;
     }
     .testimonials {
-        height: 320px !important;
+        height: 300px !important;
     }
     .testimonial-title {
         font-size: 20px !important;

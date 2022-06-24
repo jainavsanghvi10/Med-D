@@ -11,6 +11,11 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import EmailIcon from '@mui/icons-material/Email';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
+import fb_icon from '../assets/images/social_icons/fb.png'
+import insta_icon from '../assets/images/social_icons/insta.png'
+import twitter_icon from '../assets/images/social_icons/twitter.png'
+import linkedin_icon from '../assets/images/social_icons/linkedin.png'
+
 export const Footer = () => {
 	return (
 
@@ -113,10 +118,14 @@ export const Footer = () => {
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
 								<p>
-									<InstagramIcon className="me-1" color='primary' />
+									{/* <InstagramIcon className="me-1" color='primary' />
 									<TwitterIcon className="me-1" color='primary' />
 									<FacebookIcon className="me-1" color='primary' />
-									<LinkedInIcon className="me-1" color='primary' />
+									<LinkedInIcon className="me-1" color='primary' /> */}
+									<img height={30} width={30} src={fb_icon}></img>
+									<img height={30} width={30} src={twitter_icon}></img>
+									<img height={30} width={30} src={insta_icon}></img>
+									<img height={30} width={30} src={linkedin_icon}></img>
 								</p>
 
 								<span className="text-secondary">
