@@ -37,19 +37,19 @@ export const Footer = () => {
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
 								<p>
-									<a href="#!" className="text-dark">Who We Are</a>
+									<a href="/who-we-are" className="text-dark">Who We Are</a>
 								</p>
 								<p>
-									<a href="#!" className="text-dark">Careers</a>
+									<a href="#" className="text-dark">Careers</a>
 								</p>
 								<p>
 									<a href="#!" className="text-dark">Contact Us</a>
 								</p>
 								<p>
-									<a href="#!" className="text-dark">Privacy Policy</a>
+									<a href="#" className="text-dark">Privacy Policy</a>
 								</p>
 								<p>
-									<a href="#!" className="text-dark">Terms & Conditions </a>
+									<a href="#" className="text-dark">Terms & Conditions </a>
 								</p>
 							</div>
 							{/* <!-- Grid column --> */}
@@ -63,10 +63,10 @@ export const Footer = () => {
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
 								<p>
-									<a href="#!" className="text-dark">Login</a>
+									<a href="/login" className="text-dark">Login</a>
 								</p>
 								<p>
-									<a href="#!" className="text-dark">SignUp</a>
+									<a href="/signup" className="text-dark">SignUp</a>
 								</p>
 							</div>
 							{/* <!-- Grid column --> */}
@@ -80,10 +80,10 @@ export const Footer = () => {
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
 								<p>
-									<a href="#!" className="text-dark">Login</a>
+									<a href="/login-doctor" className="text-dark">Login</a>
 								</p>
 								<p>
-									<a href="#!" className="text-dark">SignUp</a>
+									<a href="/signup-doctor" className="text-dark">SignUp</a>
 								</p>
 							</div>
 							{/* <!-- Grid column --> */}
