@@ -28,6 +28,7 @@ import PatientSideBooking from "./components/patientSideBooking"
 import WhoWeAre from "./components/whoWeAre"
 import SaveRecordsBuffer from "./components/SaveRecordsBuffer"
 import BookAppointmentBuffer from "./components/BookAppointmentBuffer"
+import CustomerSupport from "./components/customerSupport"
 
 // Styles
 // import "./assets/styles/Style.css"
@@ -60,6 +61,7 @@ function App() {
           <Route path="/who-we-are" element={<WhoWeAre />} />
           <Route path="/save-records-info" element={<SaveRecordsBuffer />} />
           <Route path="/book-appointment-info" element={<BookAppointmentBuffer />} />
+          <Route path='/customer-support' element={<CustomerSupport/> } />
         </Routes>
         <Footer />
       </AuthProvider>

@@ -10,11 +10,10 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import EmailIcon from '@mui/icons-material/Email';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
 	return (
-
-
 		<>
 			{/* <!-- Remove the container if you want to extend the Footer to full width. --> */}
 			{/* <!-- Footer --> */}
@@ -31,86 +30,97 @@ export const Footer = () => {
 							{/* <!-- Grid column --> */}
 							<div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
 								{/* <!-- Content --> */}
-								<h6 className="text-uppercase fw-bold">About</h6>
+								<h6 className="fw-bold">About Us</h6>
 								<hr
-									className="mb-4 mt-0 d-inline-block mx-auto"
+									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
-								<p>
-									<a href="/who-we-are" className="text-dark">Who We Are</a>
-								</p>
-								<p>
-									<a href="#" className="text-dark">Careers</a>
-								</p>
-								<p>
-									<a href="#!" className="text-dark">Contact Us</a>
-								</p>
-								<p>
-									<a href="#" className="text-dark">Privacy Policy</a>
-								</p>
-								<p>
-									<a href="#" className="text-dark">Terms & Conditions </a>
-								</p>
+								<ul className="m-0 p-0" style={{ listStyleType: 'none', fontSize: '15px' }}>
+									<li className="mb-sm-2">
+										<Link to="/who-we-are" className="text-secondary">Who We Are</Link>
+									</li>
+									<li className="mb-sm-2">
+										<Link to="#!" className="text-secondary">Careers</Link>
+									</li>
+									<li className="mb-sm-2">
+										<Link to="#!" className="text-secondary">Contact Us</Link>
+									</li>
+									<li className="mb-sm-2">
+										<Link to="#!" className="text-secondary">Privacy Policy</Link>
+									</li>
+									<li className="mb-sm-2">
+										<Link to="#!" className="text-secondary">Terms & Conditions </Link>
+									</li>
+								</ul>
 							</div>
 							{/* <!-- Grid column --> */}
 
 							{/* <!-- Grid column --> */}
 							<div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
 								{/* <!-- Links --> */}
-								<h6 className="text-uppercase fw-bold">For Patients</h6>
+								<h6 className="fw-bold">For Patients</h6>
 								<hr
-									className="mb-4 mt-0 d-inline-block mx-auto"
+									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
-								<p>
-									<a href="/login" className="text-dark">Login</a>
-								</p>
-								<p>
-									<a href="/signup" className="text-dark">SignUp</a>
-								</p>
-							</div>
-							{/* <!-- Grid column --> */}
+								<ul className="m-0 p-0" style={{ listStyleType: 'none', fontSize: '15px' }}>
+									<li>
+										<Link to="/login" className="text-secondary">Login</Link>
+									</li>
+									<li>
+										<Link to="/signup" className="text-secondary">SignUp</Link>
+									</li>
+								</ul>
 
-							{/* <!-- Grid column --> */}
-							<div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-								{/* <!-- Links --> */}
-								<h6 className="text-uppercase fw-bold">For Doctors</h6>
+								<h6 className="fw-bold mt-4">For Doctors</h6>
 								<hr
-									className="mb-4 mt-0 d-inline-block mx-auto"
+									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
-								<p>
-									<a href="/login-doctor" className="text-dark">Login</a>
-								</p>
-								<p>
-									<a href="/signup-doctor" className="text-dark">SignUp</a>
-								</p>
+								<ul className="m-0 p-0" style={{ listStyleType: 'none', fontSize: '15px' }}>
+									<li>
+										<Link to="/login-doctor" className="text-secondary">Login</Link>
+									</li>
+									<li>
+										<Link to="/signup-doctor" className="text-secondary">SignUp</Link>
+									</li>
+								</ul>
 							</div>
 							{/* <!-- Grid column --> */}
 
 							{/* <!-- Grid column --> */}
 							<div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
 								{/* <!-- Links --> */}
-								<h6 className="text-uppercase fw-bold">Customer Support</h6>
+								<h6 className="fw-bold">Customer Support</h6>
 								<hr
-									className="mb-4 mt-0 d-inline-block mx-auto"
-									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
+									className="mt-0 d-inline-block mx-auto"
+									style={{ width: "120px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
-								<p><EmailIcon />support@friskanow.com</p>
-								<p><LocalPhoneIcon />+91 8983176450</p>
+								<br/>
+								<span className="text-secondary"><EmailIcon/> support@friskanow.com</span>
+								<br/>
+								<span className="text-secondary"><LocalPhoneIcon/> +91 8983176450</span>
+							</div>
+							{/* <!-- Grid column --> */}
 
-
-								<h6 className="text-uppercase fw-bold mt-4">Socials</h6>
+							{/* <!-- Grid column --> */}
+							<div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+								{/* <!-- Links --> */}
+								<h6 className="fw-bold">Socials</h6>
 								<hr
-									className="mb-2 mt-0 d-inline-block mx-auto"
+									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
 								<p>
-									<InstagramIcon />
-									<TwitterIcon />
-									<FacebookIcon />
-									<LinkedInIcon />
+									<InstagramIcon className="me-1" color='primary' />
+									<TwitterIcon className="me-1" color='primary' />
+									<FacebookIcon className="me-1" color='primary' />
+									<LinkedInIcon className="me-1" color='primary' />
 								</p>
+
+								<span className="text-secondary">
+									© Friska Technologies Private Limited
+								</span>
 
 							</div>
 							{/* <!-- Grid column --> */}

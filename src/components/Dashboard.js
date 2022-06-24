@@ -56,7 +56,7 @@ export default function Dashboard() {
 						<div className='order-2 order-md-1 ps-0 col-sm-12 col-md-5 ps-md-5 pe-0 d-flex flex-column justify-content-around align-items-start h-100'>
 							<span className='px-2 dashboard-headline display-5 mt-3 mt-md-4'>Book Offline Appointments Directly From Your Home</span>
 							<span className='mx-3 dashboard-content h5 mt-3'>Friska makes booking offline doctor appointments easier and more flexible so that you never have to wait for your turn when visiting a doctor.</span>
-							<Link to="/who-we-are" className='dashboard-knowmore mt-3 mb-3 mb-md-5 btn btn-outline-dark text-white button-color rounded-pill'>Know More</Link>
+							<Link to="/who-we-are" className='dashboard-knowmore mt-3 mb-3 mb-md-5 btn btn-outline-dark text-white button-color rounded-pill'>Learn More</Link>
 						</div>
 						<div className='order-1 order-md-2 col-sm-12 col-md-7 d-flex align-items-end'>
 							<img className='dashboard-doctor' src={dashboardDoctor}></img>
@@ -97,167 +97,183 @@ export default function Dashboard() {
 			</div>
 
 			{isDoctor ? <>
-			<div className='container bookAppointment-card'>
-				<div className='row'>
-					<div className='col-8 col-sm-6 d-flex'>
-						<img src={bookAppointmentCardPic} className='bookAppointmentCard-image w-100'></img>
-					</div>
-					<div className='col-4 col-sm-6 d-flex flex-column justify-content-evenly bookAppointment-contentCol'>
-						<span className='dashboard-card-headline mb-5`'>Make Appointment Slots</span>
-						<span className='dashboard-card-content'>No more standing in queues, sitting in the waiting area. Skip the hassle and get your health checked up quickly with live tracking system.</span>
-						<Link to="book-doctor-side">
-							<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Create Slots</button>
-						</Link>
-					</div>
-				</div>
-			</div>
-			<div className='container bookAppointment-card uploadDocument-card'>
-				<div className='row'>
-					<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
-						<span className='dashboard-card-headline'>Book Appointment For Patients</span>
-						<span className='dashboard-card-content'>Save your medical records securely, so that you never misplace them again.Get 5GB of storage for free.</span>
-						<Link to="appointment-editor">
-							<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Book Appointment</button>
-						</Link>
-					</div>
-					<div className='col-8 col-sm-6 offset-md-1 d-flex'>
-						<img src={uploadDocumentCardPic} className='uploadDocumentCard-image w-100'></img>
+				<div className='container bookAppointment-card'>
+					<div className='row'>
+						<div className='col-8 col-sm-6 d-flex'>
+							<img src={bookAppointmentCardPic} className='bookAppointmentCard-image w-100'></img>
+						</div>
+						<div className='col-4 col-sm-6 d-flex flex-column justify-content-evenly bookAppointment-contentCol'>
+							<span className='dashboard-card-headline mb-5`'>Make Appointment Slots</span>
+							<span className='dashboard-card-content'>No more standing in queues, sitting in the waiting area. Skip the hassle and get your health checked up quickly with live tracking system.</span>
+							<Link to="book-doctor-side">
+								<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Create Slots</button>
+							</Link>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div className='container bookAppointment-card uploadDocument-card'>
-				<div className='row'>
-					<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
-						<span className='dashboard-card-headline'>Patient Queue</span>
-						<span className='dashboard-card-content'>Save your medical records securely, so that you never misplace them again.Get 5GB of storage for free.</span>
-						<Link to="patient-queue">
-							<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Patient Queue</button>
-						</Link>
-					</div>
-					<div className='col-8 col-sm-6 offset-md-1 d-flex'>
-						<img src={uploadDocumentCardPic} className='uploadDocumentCard-image w-100'></img>
+				<div className='container bookAppointment-card uploadDocument-card'>
+					<div className='row'>
+						<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
+							<span className='dashboard-card-headline'>Book Appointment For Patients</span>
+							<span className='dashboard-card-content'>Save your medical records securely, so that you never misplace them again.Get 5GB of storage for free.</span>
+							<Link to="appointment-editor">
+								<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Book Appointment</button>
+							</Link>
+						</div>
+						<div className='col-8 col-sm-6 offset-md-1 d-flex'>
+							<img src={uploadDocumentCardPic} className='uploadDocumentCard-image w-100'></img>
+						</div>
 					</div>
 				</div>
-			</div>
+				<div className='container bookAppointment-card uploadDocument-card'>
+					<div className='row'>
+						<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
+							<span className='dashboard-card-headline'>Patient Queue</span>
+							<span className='dashboard-card-content'>Save your medical records securely, so that you never misplace them again.Get 5GB of storage for free.</span>
+							<Link to="patient-queue">
+								<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Patient Queue</button>
+							</Link>
+						</div>
+						<div className='col-8 col-sm-6 offset-md-1 d-flex'>
+							<img src={uploadDocumentCardPic} className='uploadDocumentCard-image w-100'></img>
+						</div>
+					</div>
+				</div>
 			</> : <>
-			<div className='container bookAppointment-card'>
-				<div className='row'>
-					<div className='col-8 col-sm-6 d-flex'>
-						<img src={bookAppointmentCardPic} className='bookAppointmentCard-image w-100'></img>
-					</div>
-					<div className='col-4 col-sm-6 d-flex flex-column justify-content-evenly bookAppointment-contentCol'>
-						<span className='dashboard-card-headline mb-5`'>Book Offline Appointments</span>
-						<span className='dashboard-card-content'>No more standing in queues, sitting in the waiting area. Skip the hassle and get your health checked up quickly with live tracking system.</span>
-						<Link to="offline-booking">
-							<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Book Now</button>
-						</Link>
-					</div>
-				</div>
-			</div>
-			<div className='container bookAppointment-card uploadDocument-card'>
-				<div className='row'>
-					<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
-						<span className='dashboard-card-headline'>Save Medical Records</span>
-						<span className='dashboard-card-content'>Save your medical records securely, so that you never misplace them again.Get 5GB of storage for free.</span>
-						<Link to="medicalRecords">
-							<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Upload</button>
-						</Link>
-					</div>
-					<div className='col-8 col-sm-6 offset-md-1 d-flex'>
-						<img src={uploadDocumentCardPic} className='uploadDocumentCard-image w-100'></img>
+				<div className='container bookAppointment-card'>
+					<div className='row'>
+						<div className='col-8 col-sm-6 d-flex'>
+							<img src={bookAppointmentCardPic} className='bookAppointmentCard-image w-100'></img>
+						</div>
+						<div className='col-4 col-sm-6 d-flex flex-column justify-content-evenly bookAppointment-contentCol'>
+							<span className='dashboard-card-headline mb-5`'>Book Offline Appointments</span>
+							<span className='dashboard-card-content'>No more standing in queues, sitting in the waiting area. Skip the hassle and get your health checked up quickly with live tracking system.</span>
+							<Link to="offline-booking">
+								<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Book Now</button>
+							</Link>
+						</div>
 					</div>
 				</div>
-			</div>
+				<div className='container bookAppointment-card uploadDocument-card'>
+					<div className='row'>
+						<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
+							<span className='dashboard-card-headline'>Save Medical Records</span>
+							<span className='dashboard-card-content'>Save your medical records here securely so that you never forget them and get amazing discounts on booking appointments.</span>
+							<Link to="medicalRecords">
+								<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Upload</button>
+							</Link>
+						</div>
+						<div className='col-8 col-sm-6 offset-md-1 d-flex'>
+							<img src={uploadDocumentCardPic} className='uploadDocumentCard-image w-100'></img>
+						</div>
+					</div>
+				</div>
 			</>}
 
 
 			{/* Promotion */}
-			<Carousel className='border py-5' variant="dark" style={{}}>
-				<Carousel.Item>
-					<img
-						className="d-block w-100"
-						src={promo1}
-						alt="First slide"
-					/>
-				</Carousel.Item>
-				<Carousel.Item>
-					<img
-						className="d-block w-100"
-						src={promo2}
-						alt="Second slide"
-					/>
-				</Carousel.Item>
-				<Carousel.Item>
-					<img
-						className="d-block w-100"
-						src={promo3}
-						alt="Third slide"
-					/>
-				</Carousel.Item>
-			</Carousel>
+			<div className='container mb-5'>
+				<Carousel className='border py-5' variant="dark" style={{}}>
+					<Carousel.Item>
+						<img
+							className="d-block w-100"
+							src={promo1}
+							alt="First slide"
+						/>
+					</Carousel.Item>
+					<Carousel.Item>
+						<img
+							className="d-block w-100"
+							src={promo2}
+							alt="Second slide"
+						/>
+					</Carousel.Item>
+					<Carousel.Item>
+						<img
+							className="d-block w-100"
+							src={promo3}
+							alt="Third slide"
+						/>
+					</Carousel.Item>
+				</Carousel>
+			</div>
 
 
 			{/* Why Choose us */}
 			<div className='container why-us-container py-4 py-md-5 ps-4'>
 				<div className='row w-100 mx-0'>
-					<div className='col-md-6 d-flex flex-column align-self-center h-100'>
-						<span className='why-us-heading'>Why Choose Our Clinic?</span>
+					<div className='col-md-6 d-flex flex-column align-self-center h-100 text-center'>
+						<span className='why-us-heading mb-3'>Why Choose Us?</span>
 						<span>
-							We strive to provide our customers with a simple platform to book, modify and track appointments with their doctors, thereby saving their time at discounted prices.
+							Friska is a technology startup that makes booking offline doctor appointments easier and more flexible so that our customers don’t have to wait for their turn when visiting a doctor. We promise to deliver the best experience between our customers and doctors.
 						</span>
 
-						<div class="row justify-content-center">
+						<div class="row justify-content-center mt-3 mt-sm-0">
 							<div className='rounded mt-md-4 col-5 text-center border text-white bg-dark d-flex flex-column siteGrowth-infoCards'>
 								<span className='siteGrowth-infoCards-data'>25</span>
 								<span>Certified Doctors</span>
 							</div>
 							<div className='rounded mt-md-4 offset-md-1 col-5 text-center border text-white bg-dark d-flex flex-column siteGrowth-infoCards'>
-								<span className='siteGrowth-infoCards-data'>3</span>
-								<span>Cities</span>
+								<span className='siteGrowth-infoCards-data'>1</span>
+								<span>City</span>
 							</div>
 							<div className='rounded mt-md-4 col-5 text-center border text-white bg-dark d-flex flex-column siteGrowth-infoCards'>
 								<span className='siteGrowth-infoCards-data'>1500+</span>
 								<span>Happy Patients</span>
 							</div>
-							<div className='rounded mt-md-4 offset-md-1 col-5 text-center border text-white bg-dark d-flex flex-column siteGrowth-infoCards'>
+							{/* <div className='rounded mt-md-4 offset-md-1 col-5 text-center border text-white bg-dark d-flex flex-column siteGrowth-infoCards'>
 								<span className='siteGrowth-infoCards-data'>1900+</span>
 								<span>Patients Cured</span>
-							</div>
+							</div> */}
 						</div>
 					</div>
 					<div className='col-md-6 d-flex flex-column mt-4 my-md-auto whyjoin-doc-pat-container'>
 						<div className='row d-flex flex-row mb-2 mx-auto'>
 							<div className='row' style={{ alignItems: 'center' }}>
 								<div className='col h-100'>
-									<div className="card mx-auto h-100 whyPatient-reason-card">
+									{/* <div className="card mx-auto h-100 whyPatient-reason-card">
 										<div className="card-body">
 											<h4 className="card-title text-center">Patients</h4>
 											<img className='whyJoin-cards' src={whyPatientsJoinCard}></img>
-											{/* <p className="card-text text-white" >Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.</p> */}
-											{/* <a href="#" className="btn btn-primary">Go somewhere</a> */}
+										</div>
+									</div> */}
+									<div class="flip-card">
+										<div class="flip-card-inner">
+											<div class="flip-card-front-patient">
+												<h4>Patients</h4>
+												<img className='whyJoin-cards' src={whyPatientsJoinCard}></img>
+											</div>
+											<div class="flip-card-back-patient">
+												<h1 className='mb-sm-3'>Patients</h1>
+												<span>We strive to provide our customers with a simple platform to book, modify and track appointments with their doctors thereby saving their time at discounted prices.</span>
+											</div>
 										</div>
 									</div>
 								</div>
-								{/* <div className='col-6'>
-									<img className='whyJoin-cards' src={whyPatientsJoinCard}></img>
-								</div> */}
 							</div>
 						</div>
 						<div className='row d-flex flex-row mt-2 mx-auto'>
 							<div className='row' style={{ alignItems: 'center' }}>
 								<div className='col h-100'>
-									<div className="card mx-auto h-100 whyDoctor-reason-card">
+									{/* <div className="card mx-auto h-100 whyDoctor-reason-card">
 										<div className="card-body why-front">
 											<h4 className="card-title text-center">Doctors</h4>
 											<img className='whyJoin-cards' src={whyDoctorsJoinCard}></img>
-											{/* <p className="card-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.</p> */}
-											{/* <a href="#" className="btn btn-primary">Go somewhere</a> */}
+										</div>
+									</div> */}
+									<div class="flip-card">
+										<div class="flip-card-inner">
+											<div class="flip-card-front-doctor">
+												<h4>Doctors</h4>
+												<img className='whyJoin-cards' src={whyDoctorsJoinCard}></img>
+											</div>
+											<div class="flip-card-back-doctor">
+												<h1 className='mb-sm-3'>Doctors</h1>
+												<span>We support our doctors with the simplicity of our technology so that, they can operate with ease, multiply their earnings and establish their digital presence.</span>
+											</div>
 										</div>
 									</div>
 								</div>
-								{/* <div className='col-6'>
-									<img className='whyJoin-cards' src={whyDoctorsJoinCard}></img>
-								</div> */}
 							</div>
 						</div>
 					</div>
@@ -272,7 +288,7 @@ export default function Dashboard() {
 				<div className='row text-center mx-0'>
 					<h2 className='pt-5 pb-2'>Customer Reviews</h2>
 					<Carousel id='testimonials' className='testimonials mb-5' variant='dark' activeIndex={index} onSelect={handleSelect}>
-						<Carousel.Item className='testimonial-items'>
+						<Carousel.Item interval={10000} className='testimonial-items'>
 							<Card className='testimonial-cards mx-auto'>
 								<FormatQuoteIcon className='opening-quote' />
 								<FormatQuoteIcon className='closing-quote' />
@@ -290,7 +306,7 @@ export default function Dashboard() {
 										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
 									/>
 									<Card.Title className='fw-bold testimonial-title' style={{ color: '#0d47a1' }}>
-										Josh Brollins
+										Shahrukh Khan
 									</Card.Title>
 									<Card.Text className='text-black testimonial-content'>
 										Helped me save my time from the queue.
@@ -299,7 +315,7 @@ export default function Dashboard() {
 							</Card>
 						</Carousel.Item>
 
-						<Carousel.Item className='testimonial-items'>
+						<Carousel.Item interval={3000} className='testimonial-items'>
 							<Card className='testimonial-cards mx-auto'>
 								<FormatQuoteIcon className='opening-quote' />
 								<FormatQuoteIcon className='closing-quote' />
@@ -317,7 +333,7 @@ export default function Dashboard() {
 										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
 									/>
 									<Card.Title className='fw-bold testimonial-title' style={{ color: '#0d47a1' }}>
-										Josh Brollins
+										Akshay Kumar
 									</Card.Title>
 									<Card.Text className='text-black testimonial-content'>
 										Perfect for people who have to take hours from their work just for a consulation with doctor.
@@ -326,7 +342,7 @@ export default function Dashboard() {
 							</Card>
 						</Carousel.Item>
 
-						<Carousel.Item className='testimonial-items'>
+						<Carousel.Item interval={3000} className='testimonial-items'>
 							<Card className='testimonial-cards mx-auto'>
 								<FormatQuoteIcon className='opening-quote' />
 								<FormatQuoteIcon className='closing-quote' />
@@ -344,7 +360,7 @@ export default function Dashboard() {
 										sx={{ width: 146, height: 146, bgcolor: 'lightblue' }}
 									/>
 									<Card.Title className='fw-bold testimonial-title' style={{ color: '#0d47a1' }}>
-										Josh Brollins
+										Amir Khan
 									</Card.Title>
 									<Card.Text className='text-black testimonial-content'>
 										Very Helpful. Easy to take an appointment and manage medical records.
