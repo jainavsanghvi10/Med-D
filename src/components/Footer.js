@@ -19,40 +19,19 @@ export const Footer = () => {
 			{/* <!-- Remove the container if you want to extend the Footer to full width. --> */}
 			{/* <!-- Footer --> */}
 			<footer
-				className="text-center text-lg-start text-dark mt-5"
-				style={{ backgroundColor: "#ECEFF1", alignSelf:'end' }}
+				className="text-center text-lg-start text-dark mt-0"
+				style={{ backgroundColor: "#ECEFF1", alignSelf: 'end' }}
 			>
-				{/* <!-- Section: Social media --> */}
-				<section
-					className="d-flex justify-content-between p-4 text-white"
-					style={{ backgroundColor: "steelblue" }}
-				>
-					{/* <!-- Left --> */}
-					<div className="me-5">
-						<span>Get connected with us on social networks:</span>
-					</div>
-					{/* <!-- Left --> */}
-
-					{/* <!-- Right --> */}
-					<div>
-						<FacebookIcon className="mx-1" />
-						<TwitterIcon className="mx-1" />
-						<InstagramIcon className="mx-1" />
-						<LinkedInIcon className="mx-1" />
-					</div>
-					{/* <!-- Right --> */}
-				</section>
-				{/* <!-- Section: Social media --> */}
 
 				{/* <!-- Section: Links  --> */}
 				<section className="">
-					<div className="container text-center text-md-start mt-5">
+					<div className="container text-center text-md-start mt-0">
 						{/* <!-- Grid row --> */}
-						<div className="row mt-3">
+						<div className="row pt-5">
 							{/* <!-- Grid column --> */}
 							<div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
 								{/* <!-- Content --> */}
-								<h6 className="text-uppercase fw-bold">Friska</h6>
+								<h6 className="text-uppercase fw-bold">About</h6>
 								<hr
 									className="mb-4 mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
@@ -119,10 +98,20 @@ export const Footer = () => {
 								/>
 								<p><EmailIcon />support@friskanow.com</p>
 								<p><LocalPhoneIcon />+91 8983176450</p>
-								{/* <p><i className="fas fa-home mr-3"></i> New York, NY 10012, US</p>
-									<p><i className="fas fa-envelope mr-3"></i> info@example.com</p>
-									<p><i className="fas fa-phone mr-3"></i> + 01 234 567 88</p>
-									<p><i className="fas fa-print mr-3"></i> + 01 234 567 89</p> */}
+
+
+								<h6 className="text-uppercase fw-bold mt-4">Socials</h6>
+								<hr
+									className="mb-2 mt-0 d-inline-block mx-auto"
+									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
+								/>
+								<p>
+									<InstagramIcon />
+									<TwitterIcon />
+									<FacebookIcon />
+									<LinkedInIcon />
+								</p>
+
 							</div>
 							{/* <!-- Grid column --> */}
 						</div>
