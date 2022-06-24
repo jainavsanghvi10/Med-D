@@ -19,6 +19,7 @@ import section4 from "../assets/images/whoWeAre/section4.png"
 import section5 from "../assets/images/whoWeAre/section5.png"
 import section6 from "../assets/images/whoWeAre/section6.png"
 import section7 from "../assets/images/whoWeAre/section7.png"
+import section8 from "../assets/images/whoWeAre/section8.png"
 
 export default function whoWeAre() {
     return (
@@ -66,13 +67,16 @@ export default function whoWeAre() {
                     </div>
                 </div>
             </div> */}
-            <img className='w-100' src={section1} />
-            <img className='w-100' src={section2} />
-            <img className='w-100' src={section3} />
-            <img className='w-100' src={section4} />
-            <img className='w-100' src={section5} />
-            <img className='w-100' src={section6} />
-            <img className='w-100' src={section7} />
+            <div className='container'>
+                <img className='w-100' src={section1} />
+                <img className='w-100' src={section2} />
+                <img className='w-100' src={section3} />
+                <img className='w-100' src={section4} />
+                <img className='w-100' src={section5} />
+                <img className='w-100' src={section6} />
+                <img className='w-100' src={section7} />
+                <img className='w-100' src={section8} />
+            </div>
 
 
 

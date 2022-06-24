@@ -31,86 +31,97 @@ export const Footer = () => {
 							{/* <!-- Grid column --> */}
 							<div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
 								{/* <!-- Content --> */}
-								<h6 className="text-uppercase fw-bold">About</h6>
+								<h6 className="fw-bold">About Us</h6>
 								<hr
-									className="mb-4 mt-0 d-inline-block mx-auto"
+									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
-								<p>
-									<a href="#!" className="text-dark">Who We Are</a>
-								</p>
-								<p>
-									<a href="#!" className="text-dark">Careers</a>
-								</p>
-								<p>
-									<a href="#!" className="text-dark">Contact Us</a>
-								</p>
-								<p>
-									<a href="#!" className="text-dark">Privacy Policy</a>
-								</p>
-								<p>
-									<a href="#!" className="text-dark">Terms & Conditions </a>
-								</p>
+								<ul className="m-0 p-0" style={{ listStyleType: 'none', fontSize: '15px' }}>
+									<li className="mb-sm-2">
+										<a href="#!" className="text-secondary">Who We Are</a>
+									</li>
+									<li className="mb-sm-2">
+										<a href="#!" className="text-secondary">Careers</a>
+									</li>
+									<li className="mb-sm-2">
+										<a href="#!" className="text-secondary">Contact Us</a>
+									</li>
+									<li className="mb-sm-2">
+										<a href="#!" className="text-secondary">Privacy Policy</a>
+									</li>
+									<li className="mb-sm-2">
+										<a href="#!" className="text-secondary">Terms & Conditions </a>
+									</li>
+								</ul>
 							</div>
 							{/* <!-- Grid column --> */}
 
 							{/* <!-- Grid column --> */}
 							<div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
 								{/* <!-- Links --> */}
-								<h6 className="text-uppercase fw-bold">For Patients</h6>
+								<h6 className="fw-bold">For Patients</h6>
 								<hr
-									className="mb-4 mt-0 d-inline-block mx-auto"
+									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
-								<p>
-									<a href="#!" className="text-dark">Login</a>
-								</p>
-								<p>
-									<a href="#!" className="text-dark">SignUp</a>
-								</p>
-							</div>
-							{/* <!-- Grid column --> */}
+								<ul className="m-0 p-0" style={{ listStyleType: 'none', fontSize: '15px' }}>
+									<li>
+										<a href="#!" className="text-secondary">Login</a>
+									</li>
+									<li>
+										<a href="#!" className="text-secondary">SignUp</a>
+									</li>
+								</ul>
 
-							{/* <!-- Grid column --> */}
-							<div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-								{/* <!-- Links --> */}
-								<h6 className="text-uppercase fw-bold">For Doctors</h6>
+								<h6 className="fw-bold mt-4">For Doctors</h6>
 								<hr
-									className="mb-4 mt-0 d-inline-block mx-auto"
+									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
-								<p>
-									<a href="#!" className="text-dark">Login</a>
-								</p>
-								<p>
-									<a href="#!" className="text-dark">SignUp</a>
-								</p>
+								<ul className="m-0 p-0" style={{ listStyleType: 'none', fontSize: '15px' }}>
+									<li>
+										<a href="#!" className="text-secondary">Login</a>
+									</li>
+									<li>
+										<a href="#!" className="text-secondary">SignUp</a>
+									</li>
+								</ul>
 							</div>
 							{/* <!-- Grid column --> */}
 
 							{/* <!-- Grid column --> */}
 							<div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
 								{/* <!-- Links --> */}
-								<h6 className="text-uppercase fw-bold">Customer Support</h6>
+								<h6 className="fw-bold">Customer Support</h6>
 								<hr
-									className="mb-4 mt-0 d-inline-block mx-auto"
-									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
+									className="mt-0 d-inline-block mx-auto"
+									style={{ width: "120px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
-								<p><EmailIcon />support@friskanow.com</p>
-								<p><LocalPhoneIcon />+91 8983176450</p>
+								<br/>
+								<span className="text-secondary"><EmailIcon/> support@friskanow.com</span>
+								<br/>
+								<span className="text-secondary"><LocalPhoneIcon/> +91 8983176450</span>
+							</div>
+							{/* <!-- Grid column --> */}
 
-
-								<h6 className="text-uppercase fw-bold mt-4">Socials</h6>
+							{/* <!-- Grid column --> */}
+							<div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+								{/* <!-- Links --> */}
+								<h6 className="fw-bold">Socials</h6>
 								<hr
-									className="mb-2 mt-0 d-inline-block mx-auto"
+									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
 								<p>
-									<InstagramIcon />
-									<TwitterIcon />
-									<FacebookIcon />
-									<LinkedInIcon />
+									<InstagramIcon className="me-1" color='primary' />
+									<TwitterIcon className="me-1" color='primary' />
+									<FacebookIcon className="me-1" color='primary' />
+									<LinkedInIcon className="me-1" color='primary' />
 								</p>
+
+								<span className="text-secondary">
+									© Friska Technologies Private Limited
+								</span>
 
 							</div>
 							{/* <!-- Grid column --> */}
