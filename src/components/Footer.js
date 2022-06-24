@@ -20,31 +20,10 @@ export const Footer = () => {
 			{/* <!-- Footer --> */}
 			<footer
 				className="text-center text-lg-start text-dark mt-5"
-				style={{ backgroundColor: "#ECEFF1", alignSelf:'end' }}
+				style={{ backgroundColor: "#ECEFF1", alignSelf:'end', padding: "20px"}}
 			>
-				{/* <!-- Section: Social media --> */}
-				<section
-					className="d-flex justify-content-between p-4 text-white"
-					style={{ backgroundColor: "steelblue" }}
-				>
-					{/* <!-- Left --> */}
-					<div className="me-5">
-						<span>Get connected with us on social networks:</span>
-					</div>
-					{/* <!-- Left --> */}
 
-					{/* <!-- Right --> */}
-					<div>
-						<FacebookIcon className="mx-1" />
-						<TwitterIcon className="mx-1" />
-						<InstagramIcon className="mx-1" />
-						<LinkedInIcon className="mx-1" />
-					</div>
-					{/* <!-- Right --> */}
-				</section>
-				{/* <!-- Section: Social media --> */}
-
-				{/* <!-- Section: Links  --> */}
+				{/* <!-- Section: Links  --> */}"
 				<section className="">
 					<div className="container text-center text-md-start mt-5">
 						{/* <!-- Grid row --> */}
