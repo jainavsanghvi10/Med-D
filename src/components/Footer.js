@@ -102,9 +102,13 @@ export const Footer = () => {
 									style={{ width: "120px", backgroundColor: "#7c4dff", height: "2px" }}
 								/>
 								<br/>
-								<span className="text-secondary"><EmailIcon/> support@friskanow.com</span>
+								<a href="mailto:support@friskanow.com">
+									<span className="text-secondary"><EmailIcon/> support@friskanow.com</span>
+								</a>
 								<br/>
-								<span className="text-secondary"><LocalPhoneIcon/> +91 8983176450</span>
+								<a href="tel:+91-898-317-6450">
+									<span className="text-secondary"><LocalPhoneIcon/> +91 8983176450</span>
+								</a>
 							</div>
 							{/* <!-- Grid column --> */}
 
