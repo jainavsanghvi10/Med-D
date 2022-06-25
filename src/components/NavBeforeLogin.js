@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 export const NavBeforeLogin = () => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light p-0 px-lg-2" style={{ height: '10vh', zIndex:'101',background:'white'}}>
+      <nav className="navbar navbar-expand-lg navbar-light p-0 px-lg-2" style={{ height: '40px', zIndex:'101',background:'white'}}>
         <a className="navbar-brand ms-3 ps-md-5" href="/">
           <img src={siteLogo} style={{ height: '4vh' }} alt="Med-D" />
         </a>
@@ -34,7 +34,7 @@ export const NavBeforeLogin = () => {
             <form className="d-flex mb-3 ms-2 m-sm-0">
               <Link to="/login">
                 <Button variant='contained' className="mx-2 fw-bold" style={{ fontSize: '2vh'}}>
-                    <PersonIcon/> Login</Button>
+                    <PersonIcon className='me-1'/> Login</Button>
               </Link>
               <Link to="/signup">
                 {/* <button type="button"

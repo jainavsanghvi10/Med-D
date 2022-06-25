@@ -60,7 +60,7 @@ body {
 
 .dashboard-knowmore {
     font-weight: 700;
-    font-size: x-large !important;
+    font-size: large !important;
     color: #1D2B4F;
 }
 
@@ -85,6 +85,7 @@ body {
     /* font-style: italic; */
     font-size: 3vw;
     color: #1D2B4F;
+    line-height: normal;
 }
 
 .dashboard-card-content {
@@ -184,6 +185,10 @@ body {
     -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
   }
+
+  /* .flip-card-back-patient span, .flip-card-back-doctor span{
+    padding:;
+  } */
   
  /* Style the back side */
  .flip-card-back-patient {
@@ -428,7 +433,7 @@ body {
         /* width: 100%; */
         height: auto;
         width: inherit;
-        top: 75px;
+        top: 50px;
         left: 0px;
     }
     .dashboard-knowmore {
@@ -499,14 +504,14 @@ body {
         /* margin-top: 20px; */
         margin-bottom: 30px;
     }
-    /* .dashboard-doctor {
-        height: 160px;
-    } */
+    .dashboard-doctor {
+        top:50px;
+    }
     .dashboard-card-content {
         display: none;
     }
     .dashboard-card-headline {
-        font-size: 1rem;
+        font-size: 15px;
     }
     .bookAppointment-contentCol {
         padding: 0 !important;

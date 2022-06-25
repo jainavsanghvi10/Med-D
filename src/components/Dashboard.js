@@ -55,9 +55,9 @@ export default function Dashboard() {
 				<div className='px-0 dashboard-rectangle h-100'>
 					<div className='row h-100 mx-0'>
 						<div className='order-2 order-md-1 ps-0 col-sm-12 col-md-5 ps-md-5 pe-0 d-flex flex-column justify-content-around align-items-start h-100'>
-							<span className='px-2 dashboard-headline display-5 mt-3 mt-md-4'>Book Offline Appointments Directly From Your Home</span>
+							<span className='px-2 dashboard-headline display-5 mt-3 mt-md-4'>Book Offline Appointments Directly From Your Phone</span>
 							<span className='mx-3 dashboard-content h5 mt-3'>Friska makes booking offline doctor appointments easier and more flexible so that you never have to wait for your turn when visiting a doctor.</span>
-							<Link to="/who-we-are" className='dashboard-knowmore mt-3 mb-3 mb-md-5 btn btn-outline-dark text-white button-color rounded-pill'>Learn More</Link>
+							<Link to="/who-we-are" className='dashboard-knowmore mt-3 mb-3 mb-md-5 btn btn-outline-dark text-white button-color rounded-pill mx-3'>Learn More</Link>
 						</div>
 						<div className='order-1 order-md-2 col-sm-12 col-md-7 d-flex align-items-end'>
 							<img className='dashboard-doctor' src={dashboardDoctor}></img>
@@ -158,7 +158,7 @@ export default function Dashboard() {
 				<div className='container bookAppointment-card uploadDocument-card'>
 					<div className='row'>
 						<div className='col-4 col-sm-6 col-md-4 offset-md-1 d-flex flex-column justify-content-evenly uploadDocument-contentCol'>
-							<span className='dashboard-card-headline'>Save Medical Records</span>
+							<span className='dashboard-card-headline'>Save Your Medical Records</span>
 							<span className='dashboard-card-content'>Save your medical records here securely so that you never forget them and get amazing discounts on booking appointments.</span>
 							<Link to="medicalRecords">
 								<button className='dashboard-card-button btn btn-dark text-white rounded-pill'>Upload</button>
@@ -175,25 +175,28 @@ export default function Dashboard() {
 			{/* Promotion */}
 			<div className='container mb-5'>
 				<Carousel className='border py-5' variant="dark" style={{}}>
-					<Carousel.Item>
+					<Carousel.Item interval={3000}>
 						<img
-							className="d-block w-100"
+							className="d-block mx-auto"
 							src={promo1}
 							alt="First slide"
+							style={{width:'80%'}}
 						/>
 					</Carousel.Item>
-					<Carousel.Item>
+					<Carousel.Item interval={3000}>
 						<img
-							className="d-block w-100"
+							className="d-block mx-auto"
 							src={promo2}
 							alt="Second slide"
+							style={{width:'80%'}}
 						/>
 					</Carousel.Item>
-					<Carousel.Item>
+					<Carousel.Item interval={3000}>
 						<img
-							className="d-block w-100"
+							className="d-block mx-auto"
 							src={promo3}
 							alt="Third slide"
+							style={{width:'80%' }}
 						/>
 					</Carousel.Item>
 				</Carousel>
@@ -246,7 +249,7 @@ export default function Dashboard() {
 											</div>
 											<div class="flip-card-back-patient">
 												<h1 className='mb-sm-3'>Patients</h1>
-												<span>We strive to provide our customers with a simple platform to book, modify and track appointments with their doctors thereby saving their time at discounted prices.</span>
+												<span className='px-3'>We strive to provide our customers with a simple platform to book, modify and track appointments with their doctors thereby saving their time at discounted prices.</span>
 											</div>
 										</div>
 									</div>
@@ -270,7 +273,7 @@ export default function Dashboard() {
 											</div>
 											<div class="flip-card-back-doctor">
 												<h1 className='mb-sm-3'>Doctors</h1>
-												<span>We support our doctors with the simplicity of our technology so that, they can operate with ease, multiply their earnings and establish their digital presence.</span>
+												<span className='px-3'>We support our doctors with the simplicity of our technology so that, they can operate with ease, multiply their earnings and establish their digital presence.</span>
 											</div>
 										</div>
 									</div>
@@ -289,7 +292,7 @@ export default function Dashboard() {
 				<div className='row text-center mx-0'>
 					<h2 className='pt-5 pb-2'>Our Happy Customers</h2>
 					<Carousel id='testimonials' className='testimonials mb-5' variant='dark' activeIndex={index} onSelect={handleSelect}>
-						<Carousel.Item interval={10000} className='testimonial-items'>
+						<Carousel.Item interval={3000} className='testimonial-items'>
 							<Card className='testimonial-cards mx-auto'>
 								<FormatQuoteIcon className='opening-quote' />
 								<FormatQuoteIcon className='closing-quote' />
@@ -310,7 +313,7 @@ export default function Dashboard() {
 										Helped me save my time from the queue.
 									</Card.Title>
 									<Card.Text className='mt-3 text-black testimonial-content d-flex flex-row justify-content-center align-items-center'>
-										<AccountCircleIcon className='me-1' /> Akshay Kumar
+										<AccountCircleIcon className='me-1' /> Anurag Singh Naruka
 									</Card.Text>
 								</Card.Body>
 							</Card>
@@ -325,7 +328,7 @@ export default function Dashboard() {
 										Perfect for people who have to take hours from their work just for a consulation with doctor.
 									</Card.Title>
 									<Card.Text className='mt-3 text-black testimonial-content d-flex flex-row justify-content-center align-items-center'>
-										<AccountCircleIcon className='me-1' /> Amir Khan
+										<AccountCircleIcon className='me-1' /> Rakshit Bang
 									</Card.Text>
 								</Card.Body>
 							</Card>
@@ -352,7 +355,7 @@ export default function Dashboard() {
 										Very Helpful. Easy to take an appointment and manage medical records.
 									</Card.Title>
 									<Card.Text className='mt-3 text-black testimonial-content d-flex flex-row justify-content-center align-items-center'>
-										<AccountCircleIcon className='me-1' /> Shahrukh Khan
+										<AccountCircleIcon className='me-1' /> Jainav Sanghvi
 									</Card.Text>
 								</Card.Body>
 							</Card>
