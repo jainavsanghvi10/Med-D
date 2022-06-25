@@ -19,7 +19,7 @@ import section4 from "../assets/images/whoWeAre/section4.png"
 import section5 from "../assets/images/whoWeAre/section5.png"
 import section6 from "../assets/images/whoWeAre/section6.png"
 import section7 from "../assets/images/whoWeAre/section7.png"
-import section8 from "../assets/images/whoWeAre/section8.png"
+import section8 from "../assets/images/whoWeAre/section8Alt.png"
 
 export default function whoWeAre() {
     return (

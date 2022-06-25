@@ -131,8 +131,8 @@
     }
 
     .bufferBubbles{
-        width: 150px ;
-        height: 150px ;
+        width: 100px ;
+        height: 100px ;
         text-align: center !important;
         font-size: small;
         margin-bottom: 10px;

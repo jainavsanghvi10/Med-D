@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 export const NavBeforeLogin = () => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light p-0 px-lg-2" style={{ height: '40px', zIndex:'101',background:'white'}}>
+      <nav id='navBeforeLogin' className="navbar navbar-expand-lg navbar-light p-0 px-lg-2" style={{ zIndex:'101',background:'white'}}>
         <a className="navbar-brand ms-3 ps-md-5" href="/">
           <img src={siteLogo} style={{ height: '4vh' }} alt="Med-D" />
         </a>

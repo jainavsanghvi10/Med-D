@@ -180,7 +180,7 @@ export default function Dashboard() {
 							className="d-block mx-auto"
 							src={promo1}
 							alt="First slide"
-							style={{width:'80%'}}
+							style={{ width: '80%' }}
 						/>
 					</Carousel.Item>
 					<Carousel.Item interval={3000}>
@@ -188,7 +188,7 @@ export default function Dashboard() {
 							className="d-block mx-auto"
 							src={promo2}
 							alt="Second slide"
-							style={{width:'80%'}}
+							style={{ width: '80%' }}
 						/>
 					</Carousel.Item>
 					<Carousel.Item interval={3000}>
@@ -196,7 +196,7 @@ export default function Dashboard() {
 							className="d-block mx-auto"
 							src={promo3}
 							alt="Third slide"
-							style={{width:'80%' }}
+							style={{ width: '80%' }}
 						/>
 					</Carousel.Item>
 				</Carousel>
@@ -209,17 +209,17 @@ export default function Dashboard() {
 					<div className='col-md-6 d-flex flex-column align-self-center h-100 text-center'>
 						<span className='why-us-heading mb-3'>Why Choose Us?</span>
 						<span>
-							Friska is a technology startup that makes booking offline doctor appointments easier and more flexible so that our customers don’t have to wait for their turn when visiting a doctor. We promise to deliver the best experience between our customers and doctors.
+							Friska makes booking offline doctor appointments easier and more flexible so that our customers don’t have to wait for their turn when visiting a doctor. We promise to deliver the best experience between our customers and doctors.
 						</span>
 
 						<div class="row justify-content-center mt-3 mt-sm-0">
 							<div className='rounded mt-md-4 col-5 text-center border text-white bg-dark d-flex flex-column siteGrowth-infoCards'>
-								<span className='siteGrowth-infoCards-data'>25</span>
+								<span className='siteGrowth-infoCards-data'>100+</span>
 								<span>Certified Doctors</span>
 							</div>
 							<div className='rounded mt-md-4 offset-md-1 col-5 text-center border text-white bg-dark d-flex flex-column siteGrowth-infoCards'>
-								<span className='siteGrowth-infoCards-data'>1</span>
-								<span>City</span>
+								<span className='siteGrowth-infoCards-data'>2</span>
+								<span>Cities</span>
 							</div>
 							<div className='rounded mt-md-4 col-5 text-center border text-white bg-dark d-flex flex-column siteGrowth-infoCards'>
 								<span className='siteGrowth-infoCards-data'>1500+</span>
@@ -248,8 +248,10 @@ export default function Dashboard() {
 												<img className='whyJoin-cards' src={whyPatientsJoinCard}></img>
 											</div>
 											<div class="flip-card-back-patient">
-												<h1 className='mb-sm-3'>Patients</h1>
-												<span className='px-3'>We strive to provide our customers with a simple platform to book, modify and track appointments with their doctors thereby saving their time at discounted prices.</span>
+												<div className='mx-auto' style={{ width: '75%' }}>
+													<h1 className='mb-3'>Patients</h1>
+													<span className='px-3'>We strive to provide our customers with a simple platform to book, modify and track appointments with their doctors thereby saving their time at discounted prices.</span>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -272,8 +274,10 @@ export default function Dashboard() {
 												<img className='whyJoin-cards' src={whyDoctorsJoinCard}></img>
 											</div>
 											<div class="flip-card-back-doctor">
-												<h1 className='mb-sm-3'>Doctors</h1>
-												<span className='px-3'>We support our doctors with the simplicity of our technology so that, they can operate with ease, multiply their earnings and establish their digital presence.</span>
+												<div className='mx-auto' style={{ width: '75%' }}>
+													<h1 className='mb-3'>Doctors</h1>
+													<span className='px-3'>We support our doctors with the simplicity of our technology so that, they can operate with ease, multiply their earnings and establish their digital presence.</span>
+												</div>
 											</div>
 										</div>
 									</div>

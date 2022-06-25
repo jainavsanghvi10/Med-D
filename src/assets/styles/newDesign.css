@@ -12,6 +12,16 @@ body {
     margin: 0 auto;
 }
 
+#footer ul>li>a{
+    text-decoration: unset;
+}
+#navAfterLogin{
+    height: 10vh;
+}
+#navBeforeLogin{
+    height: 10vh;
+}
+
 .dashboard-frame {
     /* filter: drop-shadow(14px 13px 4px rgba(0, 0, 0, 0.25)); */
     /* border-radius: 30px; */
@@ -429,11 +439,18 @@ body {
 /* For Tablets */
 
 @media only screen and (max-width: 767px) {
+    #navAfterLogin{
+        height: 6vh;
+    }
+    #navBeforeLogin{
+        height: 6vh;
+    }
+
     .dashboard-doctor {
         /* width: 100%; */
         height: auto;
         width: inherit;
-        top: 50px;
+        top: 6vh;
         left: 0px;
     }
     .dashboard-knowmore {
@@ -503,9 +520,6 @@ body {
         height: fit-content;
         /* margin-top: 20px; */
         margin-bottom: 30px;
-    }
-    .dashboard-doctor {
-        top:50px;
     }
     .dashboard-card-content {
         display: none;
