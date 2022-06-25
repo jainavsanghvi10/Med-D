@@ -17,11 +17,13 @@ export default function SignupDoctors() {
 	const UserOtpRef = useRef();
 	const { signup } = useAuth();
 	const { currentUser } = useAuth();
-	const [error, setError] = useState('');
+	const [errorMsg, setErrorMsg] = useState("");
+	const [successMsg, setSuccessMsg] = useState("");
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const [final, setfinal] = useState('');
 	const [show, setShow] = useState(true);
+	const [otpDisplay, setOtpDisplay] = useState(false);
 	const [userValidate, setUserValidate] = useState(false);
 
 	useEffect(() => {
@@ -52,26 +54,40 @@ export default function SignupDoctors() {
 	}, [userValidate]);
 
 	// Sent OTP
-	const signin = () => {
-		console.log('otp sending');
-		if (
-			phoneNumberRef.current.value === '' ||
-			phoneNumberRef.current.value.length < 10
-		)
-			return;
+	const signin = (e) => {
+		console.log("....")
+		e.preventDefault();
+		const form = document.getElementById("signup-form");
+		if (form.checkValidity()) {
+			if (
+				phoneNumberRef.current.value === "" ||
+				phoneNumberRef.current.value.length != 10
+			){
+				setErrorMsg("Enter a valid mobile number");
+				return;
+			}
 
-		let verify = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-		auth
-			.signInWithPhoneNumber("+91" + phoneNumberRef.current.value, verify)
-			.then((result) => {
-				setfinal(result);
-				console.log('code sent');
-				setShow(false);
-			})
-			.catch((err) => {
-				console.log(err, 'er');
-				window.location.reload();
-			});
+			console.log("otp sending");
+			let verify = new firebase.auth.RecaptchaVerifier("recaptcha-container");
+			auth
+				.signInWithPhoneNumber("+91" + phoneNumberRef.current.value, verify)
+				.then((result) => {
+					setfinal(result);
+					console.log("code sent");
+					setOtpDisplay(true);
+					setShow(false);
+					setErrorMsg("");
+					setSuccessMsg("Otp Sent Successfully");
+				})
+				.catch((err) => {
+					console.log(err, "er");
+					window.location.reload();
+				});
+		}
+		else{
+			console.log("Invalid Form");
+			setErrorMsg("Please Fill the required fields");
+		}
 	};
 	// Validate OTP
 	function ValidateOtp() {
@@ -84,6 +100,8 @@ export default function SignupDoctors() {
 			})
 			.catch((err) => {
 				console.log('Wrong code');
+				setSuccessMsg("");
+				setErrorMsg("Incorrect Otp")
 			});
 	}
 
@@ -133,7 +151,7 @@ export default function SignupDoctors() {
 					ValidateOtp();
 				else{
 					console.log("The number is already registered!!")
-					setError("This User Already Exists");
+					setErrorMsg("This User Already Exists");
 				}
 			})
 			.catch((error) => {
@@ -145,21 +163,21 @@ export default function SignupDoctors() {
 	}
 
 	let stateDropdown = [];
-	stateDropdown.push(<option key={"nostate"} defaultValue>Select State</option>);
+	stateDropdown.push(<option key={"nostate"} value="" disabled selected>Select State</option>);
 	for (let i = 0; i < state.length; i++) {
 		stateDropdown.push(
 			<option key={"state" + i}>{state[i]}</option>
 		);
 	}
 	let cityDropdown = [];
-	cityDropdown.push(<option key={"nocity"} defaultValue>Select City</option>);
+	cityDropdown.push(<option key={"nocity"} value="" disabled selected>Select City</option>);
 	for (let i = 0; i < cities.length; i++) {
 		cityDropdown.push(
 			<option key={"city" + i}>{cities[i]}</option>
 		);
 	}
 	let specializationDropdown = [];
-	specializationDropdown.push(<option key={"nospecialization"} defaultValue>Select Specialization</option>);
+	specializationDropdown.push(<option key={"nospecialization"} value="" disabled selected>Select Specialization</option>);
 	for (let i = 0; i < cities.length; i++) {
 		specializationDropdown.push(
 			<option key={"special" + i}>{specialization[i]}</option>
@@ -174,7 +192,7 @@ export default function SignupDoctors() {
 				{/* <h1 className='mt-100 text-center' style={{ marginBottom: '50px' }}>
 					Sign Up As Doctor
 				</h1> */}
-				<form className='row g-3 needs-validation mt-0 px-0 mx-0' id='signup-form' onSubmit={handleSubmit} noValidate>
+				<form className='row g-3 needs-validation mt-0 px-0 mx-0' id='signup-form' onSubmit={otpDisplay ? handleSubmit: signin} noValidate>
 					<div className="col-6 text-center border mt-0 py-3 darkerTextColor greyishColor fw-bold fs-4">
 						<Link to="/login"> <a type='button' className='w-100 darkerTextColor'>Login</a> </Link>
 					</div>
@@ -187,9 +205,13 @@ export default function SignupDoctors() {
 					</div>
 
 					<span className="text-center darkerTextColor fw-bold">Doctor Sign Up Form</span>
-					{error &&
+					{errorMsg &&
 					<div className="alert alert-danger" role="alert">
-					{error}
+						{errorMsg}
+					</div>}
+					{successMsg &&
+					<div className="alert alert-success" role="alert">
+						{successMsg}
 					</div>}
 					<div className='col-6 pe-1 mt-4'>
 						<input type='text' className='form-control rounded-pill' placeholder='First Name' id='fname' ref={firstNameRef} required />
@@ -206,38 +228,50 @@ export default function SignupDoctors() {
 							<div className='invalid-feedback'>Please choose a username.</div>
 						</div>
 					</div>
+					{!otpDisplay ?
+						<div className="form-outline mb-2">
+							<input
+								type="text"
+								className="form-control rounded-pill"
+								placeholder="Enter Your Phone Number"
+								id="phonenumber"
+								ref={phoneNumberRef}
+								required
+							/>
+							<div className="invalid-feedback">
+								Please provide a valid phone number.
+							</div>
+						</div> :
+						<div className="form-outline mb-2">
+							<input
+								type="text"
+								className="form-control rounded-pill"
+								placeholder="Enter Your Phone Number"
+								id="phonenumber"
+								ref={phoneNumberRef}
+								value={phoneNumberRef.current.value}
+								disabled
+							/>
+						</div>}
 					<div className='form-outline'>
-						<input
-							type='text'
-							className='form-control rounded-pill'
-							id='phonenumber'
-							ref={phoneNumberRef}
-							placeholder='Enter Your Phone Number'
-							// pattern="[0-9]{10}"
-							required
-						/>
-						<div className='invalid-feedback'>
-							Please provide a valid phone number.
-						</div>
-					</div>
-					<div className='form-outline'>
-						<select ref={stateRef} id="state-dropdown" className="rounded-pill mx-auto form-select" aria-label="Default select example">
+						<select ref={stateRef} id="state-dropdown" className="rounded-pill mx-auto form-select" required>
 							{stateDropdown}
 						</select>
 
 					</div>
 					<div className='form-outline'>
-						<select ref={cityRef} id="city-dropdown" className="rounded-pill mx-auto form-select" aria-label="Default select example">
+						<select ref={cityRef} id="city-dropdown" className="rounded-pill mx-auto form-select" required>
 							{cityDropdown}
 						</select>
 					</div>
 
 					<div className='form-outline'>
-						<select ref={specialityRef} id="specialization-dropdown" className="rounded-pill form-select" aria-label="Default select example">
+						<select ref={specialityRef} id="specialization-dropdown" className="rounded-pill form-select" required>
 							{specializationDropdown}
 						</select>
 					</div>
-
+					
+					{otpDisplay ?
 					<div className='form-outline mb-4'>
 						<input
 							type='text'
@@ -249,7 +283,7 @@ export default function SignupDoctors() {
 							required
 						/>
 						<div className='invalid-feedback'>Please enter OTP.</div>
-					</div>
+					</div> : null}
 
 					<div className='form-check d-flex justify-content-center'>
 						<input
@@ -267,26 +301,21 @@ export default function SignupDoctors() {
 							You must agree before submitting.
 						</div>
 					</div>
-					<div className='col-12' style={{ textAlign: 'center' }}>
+					<div className="col-12" style={{ textAlign: 'center' }}>
 						<>
-							<div
-								style={{ display: show ? 'block' : 'none' }}
-								id='recaptcha-container'></div>
-							<button
-								className='btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill'
-								id='send-otp-btn'
-								onClick={signin}
-								style={{ marginBottom: '30px', marginRight: '20px' }}>
+							<div style={{ display: show ? "block" : "none" }} id="recaptcha-container"></div>
+							{!otpDisplay ?
+							<button className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill mb-1" 
+								id="send-otp-btn" 
+								style={{ marginBottom: "30px", marginRight: "20px" }} 
+								type={otpDisplay ? "button" : "submit"}>
 								Send OTP
-							</button>
+							</button> : null}
 						</>
-						<button
-							className='btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill'
-							type='submit'
-							id='signup-btn'
-							style={{ marginBottom: '30px' }}>
+						{otpDisplay ?
+						<button className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill mb-1" type="submit" id="signup-btn" style={{ marginBottom: "30px" }} >
 							Signup
-						</button>
+						</button> : null}
 					</div>
 				</form>
 				<div className='d-flex justify-content-around align-items-center mb-4'>
