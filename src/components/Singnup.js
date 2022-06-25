@@ -226,16 +226,6 @@ export default function Signup() {
 								<div className="invalid-feedback">Please enter OTP.</div>
 							</div> : null}
 
-							<div className="form-check d-flex justify-content-center" >
-								<input className="form-check-input me-2" type="checkbox" style={{ textAlign: 'center' }} value="" id="invalidCheck" required />
-								<label className="form-check-label" htmlFor="invalidCheck">
-									Agree to terms and conditions
-								</label>
-								<div className="invalid-feedback">
-									You must agree before submitting.
-								</div>
-
-							</div>
 							<div className="col-12" style={{ textAlign: 'center' }}>
 								<>
 									<div style={{ display: show ? "block" : "none" }} id="recaptcha-container"></div>
@@ -261,7 +251,7 @@ export default function Signup() {
 						</div>
 						<div className="d-flex justify-content-around align-items-center">
 							<p>
-								<Link to="/signup-doctor"> Signup as Doctor </Link>
+								<Link to="/signup-doctor"> Signup as a Health Care Professional </Link>
 							</p>
 						</div>
 

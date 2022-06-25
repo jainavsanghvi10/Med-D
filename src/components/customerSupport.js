@@ -25,7 +25,7 @@ export default function customerSupport() {
                             <h3 className='m-0 fw-bold' style={{ width: 'fit-content' }}>Call Us</h3>
                             <hr
                                 className="mt-0 d-inline-block mx-auto mt-2"
-                                style={{ width: "200px", backgroundColor: "white", height: "3px" }}
+                                style={{ width: "200px", backgroundColor: "white", height: "3px",opacity:'.8' }}
                             />
                             <h5 className='w-50 desktopView'>Call us at +91 8983176450
                                 to speak to our support representative
@@ -40,7 +40,7 @@ export default function customerSupport() {
                             <h3 className='m-0 fw-bold' style={{ width: 'fit-content' }}>Drop a mail</h3>
                             <hr
                                 className="mt-0 d-inline-block mx-auto mt-2"
-                                style={{ width: "200px", backgroundColor: "white", height: "3px" }}
+                                style={{ width: "200px",backgroundColor: "white", height: "3px", opacity:'.8' }}
                             />
                             <h5 className='w-50 desktopView'>Send us an email to support@friskanow.com
                             </h5>

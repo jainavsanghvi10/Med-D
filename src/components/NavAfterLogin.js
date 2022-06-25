@@ -21,7 +21,7 @@ export const NavAfterLogin = (props) => {
   }
 
   return (
-      <nav className="navbar navbar-expand-lg navbar-light p-0 px-lg-2" style={{ height: '10vh',background:'white', zIndex:'101' }}>
+      <nav id='navAfterLogin' className="navbar navbar-expand-lg navbar-light p-0 px-lg-2" style={{ background:'white', zIndex:'101' }}>
         <Link className="navbar-brand ms-3 px-lg-5" to="/">
           <img src={siteLogo} style={{ height: '4vh' }} alt="Med-D" />
         </Link>

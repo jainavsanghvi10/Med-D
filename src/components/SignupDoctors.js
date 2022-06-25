@@ -10,9 +10,9 @@ export default function SignupDoctors() {
 	const firstNameRef = useRef();
 	const lastNameRef = useRef();
 	const emailRef = useRef();
-	const cityRef = useRef();
-	const stateRef = useRef();
-	const specialityRef = useRef();
+	// const cityRef = useRef();
+	// const stateRef = useRef();
+	// const specialityRef = useRef();
 	const phoneNumberRef = useRef();
 	const UserOtpRef = useRef();
 	const { signup } = useAuth();
@@ -35,9 +35,6 @@ export default function SignupDoctors() {
 				.set({
 					FirstName: firstNameRef.current.value.toLowerCase(),
 					LastName: lastNameRef.current.value.toLowerCase(),
-					City: cityRef.current.value.toLowerCase(),
-					State: stateRef.current.value.toLowerCase(),
-					Speciality: specialityRef.current.value.toLowerCase(),
 					Email: emailRef.current.value.toLowerCase(),
 					Mobile: phoneNumberRef.current.value.toLowerCase(),
 					Approved: false
@@ -134,7 +131,7 @@ export default function SignupDoctors() {
 	async function handleSubmit(e) {
 		e.preventDefault();
 		// console.log("Helo there");
-		console.log(stateRef.current.value, cityRef.current.value, specialityRef.current.value);
+		// console.log(stateRef.current.value, cityRef.current.value, specialityRef.current.value);
 
 		const form = document.getElementById('signup-form');
 		if (form.checkValidity()) {
@@ -204,7 +201,7 @@ export default function SignupDoctors() {
 						</ul>
 					</div>
 
-					<span className="text-center darkerTextColor fw-bold">Doctor Sign Up Form</span>
+					<span className="text-center darkerTextColor fw-bold">Signup as a Health Care Professional</span>
 					{errorMsg &&
 					<div className="alert alert-danger" role="alert">
 						{errorMsg}
@@ -253,7 +250,7 @@ export default function SignupDoctors() {
 								disabled
 							/>
 						</div>}
-					<div className='form-outline'>
+					{/* <div className='form-outline'>
 						<select ref={stateRef} id="state-dropdown" className="rounded-pill mx-auto form-select" required>
 							{stateDropdown}
 						</select>
@@ -269,7 +266,7 @@ export default function SignupDoctors() {
 						<select ref={specialityRef} id="specialization-dropdown" className="rounded-pill form-select" required>
 							{specializationDropdown}
 						</select>
-					</div>
+					</div> */}
 					
 					{otpDisplay ?
 					<div className='form-outline mb-4'>
@@ -285,22 +282,6 @@ export default function SignupDoctors() {
 						<div className='invalid-feedback'>Please enter OTP.</div>
 					</div> : null}
 
-					<div className='form-check d-flex justify-content-center'>
-						<input
-							className='form-check-input me-2'
-							type='checkbox'
-							style={{textAlign:'center'}}
-							value=''
-							id='invalidCheck'
-							required
-						/>
-						<label className='form-check-label' htmlFor='invalidCheck'>
-							Agree to terms and conditions
-						</label>
-						<div className='invalid-feedback'>
-							You must agree before submitting.
-						</div>
-					</div>
 					<div className="col-12" style={{ textAlign: 'center' }}>
 						<>
 							<div style={{ display: show ? "block" : "none" }} id="recaptcha-container"></div>
@@ -320,7 +301,7 @@ export default function SignupDoctors() {
 				</form>
 				<div className='d-flex justify-content-around align-items-center mb-4'>
 					<p>
-						Already a Registered Doctor ? <Link to='/login-doctor'> Login </Link>
+						Already a Registered Health Care Professional ? <Link to='/login-doctor'> Login </Link>
 					</p>
 				</div>
 			</div>

@@ -23,6 +23,7 @@ export const Footer = () => {
 			{/* <!-- Remove the container if you want to extend the Footer to full width. --> */}
 			{/* <!-- Footer --> */}
 			<footer
+				id="footer"
 				className="text-center text-lg-start text-dark mt-0"
 				style={{ backgroundColor: "#ECEFF1", alignSelf: 'end' }}
 			>
@@ -36,10 +37,10 @@ export const Footer = () => {
 							<div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
 								{/* <!-- Content --> */}
 								<h6 className="fw-bold">About Us</h6>
-								<hr
+								{/* <hr
 									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
-								/>
+								/> */}
 								<ul className="m-0 p-0" style={{ listStyleType: 'none', fontSize: '15px' }}>
 									<li className="mb-sm-2">
 										<Link to="/who-we-are" className="text-secondary">Who We Are</Link>
@@ -64,10 +65,10 @@ export const Footer = () => {
 							<div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
 								{/* <!-- Links --> */}
 								<h6 className="fw-bold">For Patients</h6>
-								<hr
+								{/* <hr
 									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
-								/>
+								/> */}
 								<ul className="m-0 p-0" style={{ listStyleType: 'none', fontSize: '15px' }}>
 									<li>
 										<Link to="/login" className="text-secondary">Login</Link>
@@ -78,10 +79,10 @@ export const Footer = () => {
 								</ul>
 
 								<h6 className="fw-bold mt-4">For Doctors</h6>
-								<hr
+								{/* <hr
 									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
-								/>
+								/> */}
 								<ul className="m-0 p-0" style={{ listStyleType: 'none', fontSize: '15px' }}>
 									<li>
 										<Link to="/login-doctor" className="text-secondary">Login</Link>
@@ -97,10 +98,10 @@ export const Footer = () => {
 							<div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
 								{/* <!-- Links --> */}
 								<h6 className="fw-bold">Customer Support</h6>
-								<hr
+								{/* <hr
 									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "120px", backgroundColor: "#7c4dff", height: "2px" }}
-								/>
+								/> */}
 								<br/>
 								<a href="mailto:support@friskanow.com">
 									<span className="text-secondary"><EmailIcon/> support@friskanow.com</span>
@@ -113,26 +114,26 @@ export const Footer = () => {
 							{/* <!-- Grid column --> */}
 
 							{/* <!-- Grid column --> */}
-							<div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+							<div className="col-md-3 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
 								{/* <!-- Links --> */}
 								<h6 className="fw-bold">Socials</h6>
-								<hr
+								{/* <hr
 									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "60px", backgroundColor: "#7c4dff", height: "2px" }}
-								/>
+								/> */}
 								<p>
 									{/* <InstagramIcon className="me-1" color='primary' />
 									<TwitterIcon className="me-1" color='primary' />
 									<FacebookIcon className="me-1" color='primary' />
 									<LinkedInIcon className="me-1" color='primary' /> */}
-									<img height={30} width={30} src={fb_icon}></img>
-									<img height={30} width={30} src={twitter_icon}></img>
-									<img height={30} width={30} src={insta_icon}></img>
-									<img height={30} width={30} src={linkedin_icon}></img>
+									<img className="me-2" height={30} width={30} src={fb_icon}></img>
+									<img className="me-2" height={30} width={30} src={twitter_icon}></img>
+									<img className="me-2" height={30} width={30} src={insta_icon}></img>
+									<img className="me-2" height={30} width={30} src={linkedin_icon}></img>
 								</p>
 
 								<span className="text-secondary">
-									© Friska Technologies Private Limited
+									© Friska Technologies
 								</span>
 
 							</div>
