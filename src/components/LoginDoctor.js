@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 
 import { Link, useNavigate } from "react-router-dom";
-import { auth, db } from "../firebase";
+import db, { auth } from "../firebase";
 import firebase from "firebase";
 import { storage } from "../firebase";
 
@@ -12,12 +12,14 @@ export default function Signup() {
 	const emailRef = useRef();
 	const phoneNumberRef = useRef();
 	const UserOtpRef = useRef();
-	const [error, setError] = useState("");
+	const [errorMsg, setErrorMsg] = useState("");
+	const [successMsg, setSuccessMsg] = useState("");
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const { currentUser } = useAuth();
 	const [final, setfinal] = useState("");
 	const [show, setShow] = useState(true);
+	const [otpDisplay, setOtpDisplay] = useState(false);
 	const [userValidate, setUserValidate] = useState(false);
 
 	useEffect(() => {
@@ -28,26 +30,40 @@ export default function Signup() {
 	}, [userValidate]);
 
 	// Sent OTP
-	const signin = () => {
-		console.log("otp sending");
-		if (
-			phoneNumberRef.current.value === "" ||
-			phoneNumberRef.current.value.length < 10
-		)
-			return;
+	const signin = (e) => {
+		console.log("....")
+		e.preventDefault();
+		const form = document.getElementById("signup-form");
+		if (form.checkValidity()) {
+			if (
+				phoneNumberRef.current.value === "" ||
+				phoneNumberRef.current.value.length != 10
+			){
+				setErrorMsg("Enter a valid mobile number");
+				return;
+			}
 
-		let verify = new firebase.auth.RecaptchaVerifier("recaptcha-container");
-		auth
-			.signInWithPhoneNumber("+91" + phoneNumberRef.current.value, verify)
-			.then((result) => {
-				setfinal(result);
-				console.log("code sent");
-				setShow(false);
-			})
-			.catch((err) => {
-				console.log(err, "er");
-				window.location.reload();
-			});
+			console.log("otp sending");
+			let verify = new firebase.auth.RecaptchaVerifier("recaptcha-container");
+			auth
+				.signInWithPhoneNumber("+91" + phoneNumberRef.current.value, verify)
+				.then((result) => {
+					setfinal(result);
+					console.log("code sent");
+					setOtpDisplay(true);
+					setShow(false);
+					setErrorMsg("");
+					setSuccessMsg("Otp Sent Successfully");
+				})
+				.catch((err) => {
+					console.log(err, "er");
+					window.location.reload();
+				});
+		}
+		else{
+			console.log("Invalid Form");
+			setErrorMsg("Please Fill the required fields");
+		}
 	};
 	// Validate OTP
 	function ValidateOtp() {
@@ -60,6 +76,8 @@ export default function Signup() {
 			})
 			.catch((err) => {
 				console.log("Wrong code");
+				setSuccessMsg("");
+				setErrorMsg("Incorrect Otp");
 			});
 	}
 
@@ -92,10 +110,27 @@ export default function Signup() {
 	async function handleSubmit(e) {
 		e.preventDefault();
 
+
 		const form = document.getElementById("signup-form");
 		if (form.checkValidity()) {
-			// console.log("valid form")
-			ValidateOtp();
+			db.collection("DoctorData").where("Mobile", "==", phoneNumberRef.current.value)
+			.get()
+			.then((querySnapshot) => {
+				let alreadyRegistered=false;
+				querySnapshot.forEach((doc) => {
+					console.log(doc.id, " => ", doc.data());
+					alreadyRegistered=true;
+				});
+				if(alreadyRegistered)
+					ValidateOtp();
+				else{
+					console.log("User does not exist")
+					setErrorMsg("User Does Not Exist");
+				}
+			})
+			.catch((error) => {
+				console.log("Error getting documents: ", error);
+			});
 		}
 
 		setLoading(false);
@@ -107,18 +142,10 @@ export default function Signup() {
 		<div className='FormsHeightMobile' style={{ height: '90vh' }}>
 			<div id='loginContainer' className="container h-100 mt-0 mb-0 d-flex align-items-center" style={{ width: '35vw' }}>
 				<div className="shadow-lg row mt-0 pt-0">
-					{/* <h1 className="mt-100 text-center" style={{ marginBottom: "50px" }}>
-						Sign Up
-					</h1> */}
-					{error && (
-						<div className="console.log console.log-danger" role="console.log">
-							{error}
-						</div>
-					)}
 					<form
 						className="row g-3 needs-validation mt-0 px-0 mx-0"
 						id="signup-form"
-						onSubmit={handleSubmit}
+						onSubmit={otpDisplay ? handleSubmit: signin}
 						noValidate
 					>
 						<div className="col-6 text-center border mt-0 py-3 darkerTextColor fw-bold fs-4">
@@ -133,6 +160,15 @@ export default function Signup() {
 						</div>
 
 						<span className="text-center darkerTextColor fw-bold">Doctor Login Form</span>
+						{errorMsg &&
+						<div className="alert alert-danger" role="alert">
+							{errorMsg}
+						</div>}
+						{successMsg &&
+						<div className="alert alert-success" role="alert">
+							{successMsg}
+						</div>}
+						{!otpDisplay ?
 						<div className="form-outline mb-2">
 							<input
 								type="text"
@@ -145,7 +181,19 @@ export default function Signup() {
 							<div className="invalid-feedback">
 								Please provide a valid phone number.
 							</div>
-						</div>
+						</div> :
+						<div className="form-outline mb-2">
+							<input
+								type="text"
+								className="form-control rounded-pill"
+								placeholder="Enter Your Phone Number"
+								id="phonenumber"
+								ref={phoneNumberRef}
+								value={phoneNumberRef.current.value}
+								disabled
+							/>
+						</div>}
+						{otpDisplay ?
 						<div className="form-outline mb-4">
 							<input
 								type="text"
@@ -157,45 +205,22 @@ export default function Signup() {
 								required
 							/>
 							<div className="invalid-feedback">Please enter OTP.</div>
-						</div>
-						<div className="form-check  d-flex justify-content-center">
-							<input
-								className="form-check-input me-2"
-								type="checkbox"
-								value=""
-								id="invalidCheck"
-								required
-							/>
-							<label className="form-check-label" htmlFor="invalidCheck">
-								Agree to terms and conditions
-							</label>
-							<div className="invalid-feedback">
-								You must agree before submitting.
-							</div>
-						</div>
+						</div> : null}
 						<div className="col-12" style={{ textAlign: 'center' }}>
 							<>
-								<div
-									style={{ display: show ? "block" : "none" }}
-									id="recaptcha-container"
-								></div>
-								<button
-									className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill"
-									id="send-otp-btn"
-									onClick={signin}
-									style={{ marginBottom: "20px", marginRight: "20px" }}
-								>
+								<div style={{ display: show ? "block" : "none" }} id="recaptcha-container"></div>
+								{!otpDisplay ?
+								<button className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill mb-1" 
+									id="send-otp-btn" 
+									style={{ marginBottom: "30px", marginRight: "20px" }} 
+									type={otpDisplay ? "button" : "submit"}>
 									Send OTP
-								</button>
+								</button> : null}
 							</>
-							<button
-								className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill"
-								type="submit"
-								id="signup-btn"
-								style={{ marginBottom: "20px" }}
-							>
+							{otpDisplay ?
+							<button className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill mb-1" type="submit" id="signup-btn" style={{ marginBottom: "30px" }} >
 								Login
-							</button>
+							</button> : null}
 						</div>
 					</form>
 					<hr className="w-75 mx-auto my-auto mt-3"></hr>

@@ -14,12 +14,14 @@ export default function Signup() {
 	const emailRef = useRef();
 	const phoneNumberRef = useRef();
 	const UserOtpRef = useRef();
-	const [error, setError] = useState("");
+	const [errorMsg, setErrorMsg] = useState("");
+	const [successMsg, setSuccessMsg] = useState("");
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const { currentUser } = useAuth();
 	const [final, setfinal] = useState("");
 	const [show, setShow] = useState(true);
+	const [otpDisplay, setOtpDisplay] = useState(false);
 	const [userValidate, setUserValidate] = useState(false);
 
 	useEffect(() => {
@@ -55,26 +57,40 @@ export default function Signup() {
 	}, [userValidate]);
 
 
-	const signin = () => {
-		console.log("otp sending");
-		if (
-			phoneNumberRef.current.value === "" ||
-			phoneNumberRef.current.value.length < 10
-		)
-			return;
+	const signin = (e) => {
+		console.log("....")
+		e.preventDefault();
+		const form = document.getElementById("signup-form");
+		if (form.checkValidity()) {
+			if (
+				phoneNumberRef.current.value === "" ||
+				phoneNumberRef.current.value.length != 10
+			){
+				setErrorMsg("Enter a valid mobile number");
+				return;
+			}
 
-		let verify = new firebase.auth.RecaptchaVerifier("recaptcha-container");
-		auth
-			.signInWithPhoneNumber("+91" + phoneNumberRef.current.value, verify)
-			.then((result) => {
-				setfinal(result);
-				console.log("code sent");
-				setShow(false);
-			})
-			.catch((err) => {
-				console.log(err, "er");
-				window.location.reload();
-			});
+			console.log("otp sending");
+			let verify = new firebase.auth.RecaptchaVerifier("recaptcha-container");
+			auth
+				.signInWithPhoneNumber("+91" + phoneNumberRef.current.value, verify)
+				.then((result) => {
+					setfinal(result);
+					console.log("code sent");
+					setOtpDisplay(true);
+					setShow(false);
+					setErrorMsg("");
+					setSuccessMsg("Otp Sent Successfully");
+				})
+				.catch((err) => {
+					console.log(err, "er");
+					window.location.reload();
+				});
+		}
+		else{
+			console.log("Invalid Form");
+			setErrorMsg("Please Fill the required fields");
+		}
 	};
 
 	function ValidateOtp() {
@@ -87,6 +103,8 @@ export default function Signup() {
 			})
 			.catch((err) => {
 				console.log("Wrong code");
+				setSuccessMsg("");
+				setErrorMsg("Incorrect Otp");
 			});
 	}
 
@@ -122,7 +140,7 @@ export default function Signup() {
 					ValidateOtp();
 				else{
 					console.log("The number is already registered!!")
-					setError("This User Already Exists!!");
+					setErrorMsg("This User Already Exists!!");
 				}
 			})
 			.catch((error) => {
@@ -140,7 +158,7 @@ export default function Signup() {
 			<div className='FormsHeightMobile' style={{ height: '90vh' }}>
 				<div id='signupContainer' className="container h-100 mt-0 mb-0 d-flex align-items-center" style={{ width: '35vw' }}>
 					<div className="shadow-lg row mt-0 pt-0">
-						<form className="row g-3 needs-validation mt-0 px-0 mx-0" id="signup-form" onSubmit={handleSubmit} noValidate>
+						<form className="row g-3 needs-validation mt-0 px-0 mx-0" id="signup-form" onSubmit={otpDisplay ? handleSubmit: signin} noValidate>
 							{/* NavBar For Signup Login options */}
 							<div className="col-6 text-center border mt-0 py-3 darkerTextColor greyishColor fw-bold fs-4">
 								<Link to="/login"> <a type='button' className='w-100 darkerTextColor'>Login</a> </Link>
@@ -154,9 +172,13 @@ export default function Signup() {
 							</div>
 
 							<span className="text-center darkerTextColor fw-bold">Patient Sign Up Form</span>
-							{error &&
+							{errorMsg &&
 							<div className="alert alert-danger" role="alert">
-							{error}
+								{errorMsg}
+							</div>}
+							{successMsg &&
+							<div className="alert alert-success" role="alert">
+								{successMsg}
 							</div>}
 							<div className="col-6 pe-1 mt-4">
 								<input type="text" className="form-control rounded-pill" id="fname" ref={firstNameRef} placeholder='First Name' required />
@@ -169,20 +191,40 @@ export default function Signup() {
 
 							<div className="form-outline">
 								<div className="input-group has-validation">
-									<input type="email" className="form-control rounded-pill" id="email" ref={emailRef} placeholder="Email" aria-describedby="inputGroupPrepend" />
+									<input type="email" className="form-control rounded-pill" id="email" ref={emailRef} placeholder="Email (optional)" aria-describedby="inputGroupPrepend" />
 									<div className="invalid-feedback">Please choose a username.</div>
 								</div>
 							</div>
-							<div className="form-outline">
-								<input type="text" className="form-control rounded-pill" id="phonenumber" ref={phoneNumberRef} placeholder='Phone Number' required />
-								<div className="invalid-feedback">
-									Please provide a valid phone number.
-								</div>
+							{!otpDisplay ?
+						<div className="form-outline mb-2">
+							<input
+								type="text"
+								className="form-control rounded-pill"
+								placeholder="Enter Your Phone Number"
+								id="phonenumber"
+								ref={phoneNumberRef}
+								required
+							/>
+							<div className="invalid-feedback">
+								Please provide a valid phone number.
 							</div>
+						</div> :
+						<div className="form-outline mb-2">
+							<input
+								type="text"
+								className="form-control rounded-pill"
+								placeholder="Enter Your Phone Number"
+								id="phonenumber"
+								ref={phoneNumberRef}
+								value={phoneNumberRef.current.value}
+								disabled
+							/>
+						</div>}
+							{otpDisplay ? 
 							<div className="form-outline">
 								<input type="text" className="form-control rounded-pill" id="otp" ref={UserOtpRef} placeholder='Enter OTP' required />
 								<div className="invalid-feedback">Please enter OTP.</div>
-							</div>
+							</div> : null}
 
 							<div className="form-check d-flex justify-content-center" >
 								<input className="form-check-input me-2" type="checkbox" style={{ textAlign: 'center' }} value="" id="invalidCheck" required />
@@ -197,13 +239,18 @@ export default function Signup() {
 							<div className="col-12" style={{ textAlign: 'center' }}>
 								<>
 									<div style={{ display: show ? "block" : "none" }} id="recaptcha-container"></div>
-									<button className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill mb-1" id="send-otp-btn" onClick={signin} style={{ marginBottom: "30px", marginRight: "20px" }} >
+									{!otpDisplay ?
+									<button className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill mb-1" 
+										id="send-otp-btn" 
+										style={{ marginBottom: "30px", marginRight: "20px" }} 
+										type={otpDisplay ? "button" : "submit"}>
 										Send OTP
-									</button>
+									</button> : null}
 								</>
+								{otpDisplay ?
 								<button className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill mb-1" type="submit" id="signup-btn" style={{ marginBottom: "30px" }} >
 									Signup
-								</button>
+								</button> : null}
 							</div>
 						</form>
 						<hr className="w-75 mx-auto my-auto mt-3"></hr>
