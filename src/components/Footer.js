@@ -10,7 +10,6 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import EmailIcon from '@mui/icons-material/Email';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import { Link } from "react-router-dom";
 
 import fb_icon from '../assets/images/social_icons/fb.png'
 import insta_icon from '../assets/images/social_icons/insta.png'
@@ -45,19 +44,19 @@ export const Footer = () => {
 								/> */}
 								<ul className="m-0 p-0" style={{ listStyleType: 'none', fontSize: '15px' }}>
 									<li className="mb-sm-2">
-										<Link to="/who-we-are" className="text-secondary">Who We Are</Link>
+										<a href="/who-we-are" className="text-secondary">Who We Are</a>
 									</li>
 									<li className="mb-sm-2">
-										<Link to="#!" className="text-secondary">Careers</Link>
+										<a href="#!" className="text-secondary">Careers</a>
 									</li>
 									<li className="mb-sm-2">
-										<Link to="#!" className="text-secondary">Contact Us</Link>
+										<a href="#!" className="text-secondary">Contact Us</a>
 									</li>
 									<li className="mb-sm-2">
-										<Link to="#!" className="text-secondary">Privacy Policy</Link>
+										<a href="#!" className="text-secondary">Privacy Policy</a>
 									</li>
 									<li className="mb-sm-2">
-										<Link to="#!" className="text-secondary">Terms & Conditions </Link>
+										<a href="#!" className="text-secondary">Terms & Conditions </a>
 									</li>
 								</ul>
 							</div>
@@ -73,10 +72,10 @@ export const Footer = () => {
 								/> */}
 								<ul className="m-0 p-0" style={{ listStyleType: 'none', fontSize: '15px' }}>
 									<li>
-										<Link to="/login" className="text-secondary">Login</Link>
+										<a href="/login" className="text-secondary">Login</a>
 									</li>
 									<li>
-										<Link to="/signup" className="text-secondary">SignUp</Link>
+										<a href="/signup" className="text-secondary">SignUp</a>
 									</li>
 								</ul>
 
@@ -87,10 +86,10 @@ export const Footer = () => {
 								/> */}
 								<ul className="m-0 p-0" style={{ listStyleType: 'none', fontSize: '15px' }}>
 									<li>
-										<Link to="/login-doctor" className="text-secondary">Login</Link>
+										<a href="/login-doctor" className="text-secondary">Login</a>
 									</li>
 									<li>
-										<Link to="/signup-doctor" className="text-secondary">SignUp</Link>
+										<a href="/signup-doctor" className="text-secondary">SignUp</a>
 									</li>
 								</ul>
 							</div>
