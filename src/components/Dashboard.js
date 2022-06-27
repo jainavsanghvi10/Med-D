@@ -14,6 +14,7 @@ import thumbnailDoc from '../assets/images/thumbnailDoc.png';
 import promo1 from '../assets/images/dashboard/promo1.png';
 import promo2 from '../assets/images/dashboard/promo2.png';
 import promo3 from '../assets/images/dashboard/promo3.png';
+import microsoftTemplate from '../assets/images/dashboard/microsoft_template.jpeg';
 
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 
@@ -329,7 +330,7 @@ export default function Dashboard() {
 								<FormatQuoteIcon className='closing-quote' />
 								<Card.Body className='d-flex justify-content-center'>
 									<Card.Title className='fw-bold testimonial-title' style={{ color: '#0d47a1' }}>
-										Perfect for people who have to take hours from their work just for a consulation with doctor.
+										Perfect for people who have to take hours from their work just for a consultation with doctor.
 									</Card.Title>
 									<Card.Text className='mt-3 text-black testimonial-content d-flex flex-row justify-content-center align-items-center'>
 										<AccountCircleIcon className='me-1' /> Rakshit Bang
@@ -367,6 +368,10 @@ export default function Dashboard() {
 
 					</Carousel>
 				</div>
+			</div>
+
+			<div className='container'>
+				<img className='w-100 my-5' src={microsoftTemplate}/>
 			</div>
 		</>
 	);

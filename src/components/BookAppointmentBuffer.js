@@ -10,6 +10,8 @@ import pic1 from '../assets/images/bufferPage/pic1.png';
 import pic2 from '../assets/images/bufferPage/pic2.png';
 import pic3 from '../assets/images/bufferPage/pic3.png';
 import howItWorks from '../assets/images/bufferPage/howItWorks.png'
+import howIt1 from '../assets/images/bufferPage/howit1.png'
+import howIt2 from '../assets/images/bufferPage/howit2.png'
 
 export default function BookAppointmentBuffer() {
     return (
@@ -19,13 +21,13 @@ export default function BookAppointmentBuffer() {
                     <img className='col-lg-4 leftBorderedBufferImg' src={saveRecordsImg} />
                     <div className='col-lg-8 d-flex flex-column justify-content-center p-4 p-sm-5 py-lg-0 px-lg-5'>
                         <h1 className='mb-lg-5 fw-bold'>Book Offline Appointments</h1>
-                        <h5 className='w-75 mb-lg-3'>No more standing in queues, sitting in the waiting area.
+                        <h5 className='w-75 mb-lg-5'>No more standing in queues, sitting in the waiting area.
                             Skip the hassle and get your health checked up
                             quickly with our system
 
                         </h5>
                         <Link to="/offline-booking">
-                            <button className='btn btn-light btn-lg fw-bold bufferCardTextColor rounded-pill'>BOOK NOW</button>
+                            <button className='btn btn-light fw-bold bufferCardTextColor rounded-pill'>BOOK NOW</button>
                         </Link>
                     </div>
                 </div>
@@ -58,13 +60,13 @@ export default function BookAppointmentBuffer() {
                     <h5 className='col-2 text-end mb-0' style={{ textDecoration: 'underline' }}>T&C</h5>
                 </div>
             </div>
-            <h5 className='text-center text-decoration-underline'>More Offers</h5>
+            <h5 className='text-center text-decoration-underline pb-4'>More Offers</h5>
 
-            <div className='container text-center my-4'>
+            {/* <div className='container text-center my-4'>
                 <Link to="/offline-booking">
                     <button className='btn btn-lg btn-dark'>Book Now</button>
                 </Link>
-            </div>
+            </div> */}
 
             <div className='container mt-5'>
                 {/* <h2 className='text-center fw-bold'>HOW IT WORKS ?</h2>
@@ -107,6 +109,8 @@ export default function BookAppointmentBuffer() {
                     </div>
                 </div> */}
                 <img className='w-100' src={howItWorks}/>
+                {/* <img className='w-100' src={howIt1}/> */}
+                {/* <img className='w-100 mt-3' src={howIt2}/> */}
             </div>
         </>
     );

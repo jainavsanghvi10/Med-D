@@ -16,6 +16,8 @@ import fb_icon from '../assets/images/social_icons/fb.png'
 import insta_icon from '../assets/images/social_icons/insta.png'
 import twitter_icon from '../assets/images/social_icons/twitter.png'
 import linkedin_icon from '../assets/images/social_icons/linkedin.png'
+import microsoftBadgeDark from '../assets/images/footer/microsoftBadgeDark.png'
+import microsoftBadgeLight from '../assets/images/footer/microsoftBadgeLight.png'
 
 export const Footer = () => {
 	return (
@@ -102,14 +104,20 @@ export const Footer = () => {
 									className="mt-0 d-inline-block mx-auto"
 									style={{ width: "120px", backgroundColor: "#7c4dff", height: "2px" }}
 								/> */}
-								<br/>
+								{/* <br/>
 								<a href="mailto:support@friskanow.com">
 									<span className="text-secondary"><EmailIcon/> support@friskanow.com</span>
 								</a>
 								<br/>
 								<a href="tel:+91-898-317-6450">
 									<span className="text-secondary"><LocalPhoneIcon/> +91 8983176450</span>
-								</a>
+								</a> */}
+								<ul className="m-0 p-0" style={{ listStyleType: 'none', fontSize: '15px' }}>
+									<a href="mailto:support@friskanow.com" style={{ textDecoration: 'unset' }}><li className="text-secondary my-sm-3"><EmailIcon style={{ fontSize: '18px' }} /> support@friskanow.com </li></a>
+									<a href="tel:+91-898-317-6450" style={{ textDecoration: 'unset' }}><li className="text-secondary"><LocalPhoneIcon style={{ fontSize: '18px' }} /> +91 8983176450</li></a>
+								</ul>
+
+								
 							</div>
 							{/* <!-- Grid column --> */}
 
@@ -132,9 +140,16 @@ export const Footer = () => {
 									<img className="me-2" height={30} width={30} src={linkedin_icon}></img>
 								</p>
 
+								<img style={{width:'55%'}} src={microsoftBadgeDark}/>
+								<br/>
+								<br/>
+
 								<span className="text-secondary">
 									© Friska Technologies
 								</span>
+								
+
+
 
 							</div>
 							{/* <!-- Grid column --> */}

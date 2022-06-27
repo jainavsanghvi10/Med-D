@@ -67,9 +67,9 @@ export default function whoWeAre() {
                     </div>
                 </div>
             </div> */}
-            <div className='container'>
                 <img className='w-100' src={section1} />
                 <img className='w-100' src={section2} />
+            <div className='container'>
                 <img className='w-100' src={section3} />
                 <img className='w-100' src={section4} />
                 <img className='w-100' src={section5} />

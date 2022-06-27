@@ -21,13 +21,13 @@ export const NavBeforeLogin = () => {
 
         <div className="collapse navbar-collapse bg-white" id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-2">
-              <li className="nav-item active ms-2 mx-lg-3">
+              <li className="nav-item active ms-2 mx-lg-2">
                 <a className="nav-link fw-bold text-dark" style={{ fontSize: '2.3vh' }} href="/who-we-are">Who We Are</a>
               </li>
-              <li className="nav-item ms-2 mx-lg-3">
+              <li className="nav-item ms-2 mx-lg-2">
                 <a className="nav-link fw-bold text-dark" style={{ fontSize: '2.3vh' }} href="/book-appointment-info">Book Appointment</a>
               </li>
-              <li className="nav-item ms-2 mx-lg-3">
+              <li className="nav-item ms-2 mx-lg-2">
                 <a className="nav-link fw-bold text-dark" style={{ fontSize: '2.3vh' }} href="/customer-support">Customer Support</a>
               </li>
             </ul>
