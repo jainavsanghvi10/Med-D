@@ -38,7 +38,7 @@ export default function Modal(props) {
       <div className='modal_up'>
         {console.log(props.task)}
         {props.task=='AddFolder' ? FolderTask() : props.task =='UploadFiles' ? FileTask(props.prog): <h4>Are you sure you want to delete</h4>}
-        <button className='btn_up' onClick={confirmHandler}>
+        <button className='btn_up mb-2' onClick={confirmHandler}>
           Confirm
         </button>
         <button className='btn_up btn_up--alt' onClick={cancelHandler}>

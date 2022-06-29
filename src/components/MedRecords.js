@@ -430,8 +430,9 @@ export const MedRecords = () => {
 				{!currFolder ? null : (
 					<button
 						className='btn btn-outline-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-2 styleCarousel fw-bold'
+						style={{borderColor:'cornflowerblue'}}
 						onClick={goBack}>
-						<span className='material-icons align-middle'>arrow_back_ios</span>
+						<span className='material-icons align-middle text-dark'>arrow_back_ios</span>
 					</button>
 				)}
 				<button
