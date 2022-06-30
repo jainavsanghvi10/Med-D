@@ -153,11 +153,12 @@ export default function Signup() {
 							<Link to="/login" style={{textDecoration:'none'}}> <a type='button' className='w-100 darkerTextColor' style={{textDecoration:'none'}}>Login</a> </Link>
 						</div>
 						<div className="col-6 text-center border mt-0 py-3 btn-group dropdown greyishColor darkerTextColor fw-bold fs-4">
-							<span type="button" className="dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false" style={{textDecoration:'none'}}><u style={{textDecoration:'none'}}>Sign Up</u></span>
+							{/* <span type="button" className="dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false" style={{textDecoration:'none'}}><u style={{textDecoration:'none'}}>Sign Up</u></span>
 							<ul className="dropdown-menu">
 								<Link to="/signup" style={{textDecoration:'none'}}><button className="dropdown-item darkerTextColor" type="button" style={{textDecoration:'none'}}>As User</button></Link>
 								<Link to="/signup-doctor" style={{textDecoration:'none'}}><button className="dropdown-item darkerTextColor" type="button" style={{textDecoration:'none'}}>As Doctor</button></Link>
-							</ul>
+							</ul> */}
+							<Link to="/signup"> <a type='button' className='w-100 darkerTextColor'>Signup</a> </Link>
 						</div>
 
 						<span className="text-center darkerTextColor fw-bold">User Login Form</span>
@@ -219,9 +220,13 @@ export default function Signup() {
 								</button> : null}
 							</>
 							{otpDisplay ?
+							<>
+							<button onClick={()=>{window.reload()}} className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill mb-1" type="submit" id="signup-btn" style={{ marginBottom: "30px" }} >
+								Resend Otp
+							</button>
 							<button className="btn btn-outline-info greyishColor darkerTextColor fw-bold rounded-pill mb-1" type="submit" id="signup-btn" style={{ marginBottom: "30px" }} >
 								Login
-							</button> : null}
+							</button></> : null}
 						</div>
 					</form>
 					<hr className="w-75 mx-auto my-auto mt-3"></hr>

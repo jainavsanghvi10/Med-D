@@ -194,11 +194,12 @@ export default function SignupDoctors() {
 						<Link to="/login"> <a type='button' className='w-100 darkerTextColor'>Login</a> </Link>
 					</div>
 					<div className="col-6 text-center border mt-0 py-3 btn-group dropdown darkerTextColor fw-bold fs-4">
-						<span type="button" className="dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false"><u>Sign Up</u></span>
+						{/* <span type="button" className="dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false"><u>Sign Up</u></span>
 						<ul className="dropdown-menu">
 							<Link to="/signup"><button className="dropdown-item darkerTextColor" type="button">As Patient</button></Link>
 							<Link to="/signup-doctor"><button className="dropdown-item darkerTextColor" type="button">As Doctor</button></Link>
-						</ul>
+						</ul> */}
+						<Link to="/signup"> <a type='button' className='w-100 darkerTextColor'>Signup</a> </Link>
 					</div>
 
 					<span className="text-center darkerTextColor fw-bold">Signup as a Health Care Professional</span>
@@ -299,9 +300,15 @@ export default function SignupDoctors() {
 						</button> : null}
 					</div>
 				</form>
-				<div className='d-flex justify-content-around align-items-center mb-4'>
+				<hr className="w-75 mx-auto my-auto mt-3"></hr>
+				<div className="d-flex justify-content-around align-items-center">
+					<p className="mb-1 mt-2">
+						Already a Registered Health Care Professional ? <Link to="/login-doctor"> Login </Link>
+					</p>
+				</div>
+				<div className="d-flex justify-content-around align-items-center">
 					<p>
-						Already a Registered Health Care Professional ? <Link to='/login-doctor'> Login </Link>
+						<Link to="/signup"> Signup as a User </Link>
 					</p>
 				</div>
 			</div>

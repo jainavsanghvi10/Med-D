@@ -164,14 +164,15 @@ export default function Signup() {
 								<Link to="/login"> <a type='button' className='w-100 darkerTextColor'>Login</a> </Link>
 							</div>
 							<div className="col-6 text-center border mt-0 py-3 btn-group dropdown darkerTextColor fw-bold fs-4">
-								<span type="button" className="dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false"><u>Sign Up</u></span>
+								{/* <span type="button" className="dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false"><u>Sign Up</u></span>
 								<ul className="dropdown-menu">
 									<Link to="/signup"><button className="dropdown-item darkerTextColor" type="button">As Patient</button></Link>
 									<Link to="/signup-doctor"><button className="dropdown-item darkerTextColor" type="button">As Doctor</button></Link>
-								</ul>
+								</ul> */}
+								<Link to="/signup"> <a type='button' className='w-100 darkerTextColor'>Signup</a> </Link>
 							</div>
 
-							<span className="text-center darkerTextColor fw-bold">Patient Sign Up Form</span>
+							<span className="text-center darkerTextColor fw-bold">User Sign Up Form</span>
 							{errorMsg &&
 							<div className="alert alert-danger" role="alert">
 								{errorMsg}

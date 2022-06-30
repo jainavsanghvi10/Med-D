@@ -133,10 +133,12 @@ export const Footer = () => {
 									<TwitterIcon className="me-1" color='primary' />
 									<FacebookIcon className="me-1" color='primary' />
 									<LinkedInIcon className="me-1" color='primary' /> */}
-									<img className="me-2" height={30} width={30} src={fb_icon}></img>
+									{/* <img className="me-2" height={30} width={30} src={fb_icon}></img>
 									<img className="me-2" height={30} width={30} src={twitter_icon}></img>
-									<img className="me-2" height={30} width={30} src={insta_icon}></img>
-									<img className="me-2" height={30} width={30} src={linkedin_icon}></img>
+									<img className="me-2" height={30} width={30} src={insta_icon}></img> */}
+									<a href="https://www.linkedin.com/company/friskanow">
+										<img className="me-2" height={30} width={30} src={linkedin_icon}></img>
+									</a>
 								</p>
 
 								<img style={{width:'55%'}} src={microsoftBadgeDark}/>
