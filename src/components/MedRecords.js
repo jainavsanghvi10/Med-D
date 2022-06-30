@@ -5,10 +5,8 @@ import firebase from 'firebase';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modal from './Modal';
 import Backdrop from './Backdrop';
-// import { Viewer } from '@react-pdf-viewer/core';
 import '../assets/styles/modal.css';
-
-// import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+// import {uploadBytesResumable} from "firebase/storage"
 
 export const MedRecords = () => {
 	const { currentUser } = useAuth();
@@ -23,7 +21,7 @@ export const MedRecords = () => {
 	const [FileLinks, setFileLinks] = useState([]);
 	const [deleteFileName, setDeleteFileName] = useState('');
 	const [FoldersSelected, setFolderSelected] = useState([]);
-
+	const [progress, setProgress] = useState(0);
 	// Extracting variables from query string
 	const params = new URLSearchParams(window.location.search);
 	var id = params.get('id');
@@ -298,18 +296,7 @@ export const MedRecords = () => {
 		}
 		fileN.splice(j, 1);
 		setFileNames(fileN);
-
-		let AfileN = AllFileNames;
-		let r = -1;
-		for (let i = 0; i < AfileN.length; i++) {
-			if (AfileN[i] == filename) {
-				j = i;
-				break;
-			}
-		}
-		AfileN.splice(r, 1);
-		setAllFileNames(AfileN);
-		// window.location.reload();
+		setAllFileNames(fileN);
 	}
 	function deleteFilefromFolder(filename, folderName) {
 		var deleteRef;
@@ -392,19 +379,36 @@ export const MedRecords = () => {
 			storageRef = firebase.storage().ref().child(`${id}/`);
 		}
 		var uploadRef = storageRef.child(file.name);
-		uploadRef.put(file).then((snap) => {
-			console.log('File successfully uploded to ' + id);
-			// window.location.reload();
-			// navigate(0);
-		});
-		let fileN = FileNames;
-		fileN.push(file.name);
-		setFileNames(fileN);
-
-		// let AfileN = AllFileNames;
-		// AfileN.push(file.name);
-		// setAllFileNames(AfileN);
-		// setModalIsOpen(false);
+		const uploadTask = uploadRef.put(file);
+		uploadTask.on(
+			'state_changed',
+			(snapshot) => {
+				const prog = Math.round(
+					(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+					);
+					console.log('Upload is ' + progress + '% done');
+					setProgress(prog);
+			},
+			(err) => console.log(err),
+			() => {
+				console.log("'File successfully uploded to ' + id");
+				let fileN = FileNames;
+				fileN.push(file.name);
+				setFileNames(fileN);
+				setAllFileNames(fileN);
+				setModalIsOpen(false);
+				setProgress(0)
+			}
+		);
+		// uploadRef.put(file).then((snap) => {
+		// 	console.log('File successfully uploded to ' + id);
+		// 	// setModalIsOpen(false)
+		// });
+		// let fileN = FileNames;
+		// 		fileN.push(file.name);
+		// 		setFileNames(fileN);
+		// 		setAllFileNames(fileN);
+		// 		setModalIsOpen(false);
 	}
 	function closeModalHandler() {
 		setModalIsOpen(false);
@@ -417,7 +421,7 @@ export const MedRecords = () => {
 	return (
 		<>
 			<div id='saveMedRecHeading' className='container mt-3 w-75'>
-				<h2 className='fw-bold' >Save Your Medical Records</h2>
+				<h2 className='fw-bold'>Save Your Medical Records</h2>
 			</div>
 			<div
 				id='saveMedRecContainer'
@@ -426,15 +430,20 @@ export const MedRecords = () => {
 				{!currFolder ? null : (
 					<button
 						className='btn btn-outline-light mt-3 ms-2 pt-2 pb-2 ps-3 pe-2 styleCarousel fw-bold'
+						style={{borderColor:'cornflowerblue'}}
 						onClick={goBack}>
-						<span className='material-icons align-middle'>arrow_back_ios</span>
+						<span className='material-icons align-middle text-dark'>arrow_back_ios</span>
 					</button>
 				)}
 				<button
 					className='btn btn-dark mt-3 ms-2 pt-2 pb-2 ps-3 pe-3 styleCarousel fw-bold'
 					onClick={ChooseFiles}>
-					<span className='material-icons me-2 align-middle d-inline'>file_upload</span>
-					<span id='hide_in_mobile' className='desktopView d-inline'>Upload</span>
+					<span className='material-icons me-2 align-middle d-inline'>
+						file_upload
+					</span>
+					<span id='hide_in_mobile' className='desktopView d-inline'>
+						Upload
+					</span>
 				</button>
 
 				{!currFolder ? (
@@ -467,18 +476,20 @@ export const MedRecords = () => {
 						data-toggle='dropdown'
 						aria-haspopup='true'
 						aria-expanded='false'>
-						<span id='hide_in_mobile' className='desktopView d-inline'>SORT</span>
-						<span id='sort_span-medRec' className='material-icons ms-2 align-middle d-inline'>sort</span>
+						<span id='hide_in_mobile' className='desktopView d-inline'>
+							SORT
+						</span>
+						<span
+							id='sort_span-medRec'
+							className='material-icons ms-2 align-middle d-inline'>
+							sort
+						</span>
 					</button>
 					<div className='dropdown-menu'>
-						<button
-							className='dropdown-item fw-bold'
-							onClick={sort_AtoZ}>
+						<button className='dropdown-item fw-bold' onClick={sort_AtoZ}>
 							Lexiographically(A to Z)
 						</button>
-						<button
-							className='dropdown-item fw-bold'
-							onClick={sort_ZtoA}>
+						<button className='dropdown-item fw-bold' onClick={sort_ZtoA}>
 							Lexiographically(Z to A)
 						</button>
 						<button
@@ -526,20 +537,20 @@ export const MedRecords = () => {
 							purpose == 'AddFolder'
 								? AddFolder
 								: purpose == 'DeleteFile'
-									? () => {
+								? () => {
 										console.log(deleteFileName);
 										deleteFile(deleteFileName);
-									}
-									: purpose == 'DeleteFolder'
-										? () => {
-											console.log('Folders Selected: ', FoldersSelected);
-											FoldersSelected.forEach((fo) => deleteFolder(fo));
-											setModalIsOpen(false);
-											// window.location.reload();
-										}
-										: UploadFile
+								  }
+								: purpose == 'DeleteFolder'
+								? () => {
+										console.log('Folders Selected: ', FoldersSelected);
+										FoldersSelected.forEach((fo) => deleteFolder(fo));
+										setModalIsOpen(false);
+								  }
+								: UploadFile
 						}
 						task={purpose}
+						prog={progress}
 					/>
 				)}
 

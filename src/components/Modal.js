@@ -24,16 +24,21 @@ export default function Modal(props) {
       );
     }
 
-    const FileTask=()=>{
+    const FileTask=(progress)=>{
       return(
+        <>
         <input type='file' onChange={(e)=>{file=e.target.files[0]}}/>
+        {progress==0? null:
+          <div><h5>Uploaded {progress}</h5></div>
+        }
+        </>
         );
     }
     return (
       <div className='modal_up'>
         {console.log(props.task)}
-        {props.task=='AddFolder' ? FolderTask() : props.task =='UploadFiles' ? FileTask(): <h4>Are you sure you want to delete</h4>}
-        <button className='btn_up' onClick={confirmHandler}>
+        {props.task=='AddFolder' ? FolderTask() : props.task =='UploadFiles' ? FileTask(props.prog): <h4>Are you sure you want to delete</h4>}
+        <button className='btn_up mb-2' onClick={confirmHandler}>
           Confirm
         </button>
         <button className='btn_up btn_up--alt' onClick={cancelHandler}>
