@@ -14,7 +14,7 @@ import thumbnailDoc from '../assets/images/thumbnailDoc.png';
 import promo1 from '../assets/images/dashboard/promo1.png';
 import promo2 from '../assets/images/dashboard/promo2.png';
 import promo3 from '../assets/images/dashboard/promo3.png';
-import microsoftTemplate from '../assets/images/dashboard/microsoft_template.jpeg';
+import microsoftTemplate from '../assets/images/dashboard/microsoft_template.jpg';
 
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 
@@ -58,7 +58,7 @@ export default function Dashboard() {
 						<div className='order-2 order-md-1 ps-0 col-sm-12 col-md-5 ps-md-5 pe-0 d-flex flex-column justify-content-around align-items-start h-100'>
 							<span className='px-2 dashboard-headline display-5 mt-3 mt-md-4'>Book Offline Appointments Directly From Your Phone</span>
 							<span className='mx-3 dashboard-content h5 mt-3'>Friska makes booking offline doctor appointments easier and more flexible so that you never have to wait for your turn when visiting a doctor.</span>
-							<Link to="/who-we-are" className='dashboard-knowmore mt-3 mb-3 mb-md-5 btn btn-outline-dark text-white button-color rounded-pill mx-3'>Learn More</Link>
+							<Link to="/book-appointment-info" className='dashboard-knowmore mt-3 mb-3 mb-md-5 btn btn-outline-dark text-white button-color rounded-pill mx-3'>Learn More</Link>
 						</div>
 						<div className='order-1 order-md-2 col-sm-12 col-md-7 d-flex align-items-end'>
 							<img className='dashboard-doctor' src={dashboardDoctor}></img>

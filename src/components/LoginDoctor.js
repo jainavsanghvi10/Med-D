@@ -157,7 +157,7 @@ export default function Signup() {
 								<Link to="/signup"><button className="dropdown-item darkerTextColor" type="button">As Patient</button></Link>
 								<Link to="/signup-doctor"><button className="dropdown-item darkerTextColor" type="button">As Doctor</button></Link>
 							</ul> */}
-							<Link to="/signup"> <a type='button' className='w-100 darkerTextColor'>Signup</a> </Link>
+							<Link to="/signup" style={{textDecoration:'none'}}> <a type='button' className='w-100 darkerTextColor' style={{textDecoration:'none'}}>Signup</a> </Link>
 						</div>
 
 						<span className="text-center darkerTextColor fw-bold">Doctor Login Form</span>

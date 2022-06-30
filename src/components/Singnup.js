@@ -161,14 +161,15 @@ export default function Signup() {
 						<form className="row g-3 needs-validation mt-0 px-0 mx-0" id="signup-form" onSubmit={otpDisplay ? handleSubmit: signin} noValidate>
 							{/* NavBar For Signup Login options */}
 							<div className="col-6 text-center border mt-0 py-3 darkerTextColor greyishColor fw-bold fs-4">
-								<Link to="/login"> <a type='button' className='w-100 darkerTextColor'>Login</a> </Link>
+							<Link to="/login" style={{textDecoration:'none'}}> <a type='button' className='w-100 darkerTextColor' style={{textDecoration:'none'}}>Login</a> </Link>
 							</div>
 							<div className="col-6 text-center border mt-0 py-3 btn-group dropdown darkerTextColor fw-bold fs-4">
 								{/* <span type="button" className="dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false"><u>Sign Up</u></span>
 								<ul className="dropdown-menu">
 									<Link to="/signup"><button className="dropdown-item darkerTextColor" type="button">As Patient</button></Link>
 									<Link to="/signup-doctor"><button className="dropdown-item darkerTextColor" type="button">As Doctor</button></Link>
-								</ul> */}
+								</ul> 
+								<Link to="/signup"> <a type='button' className='w-100 darkerTextColor'>Signup</a> </Link>*/}
 								<Link to="/signup"> <a type='button' className='w-100 darkerTextColor'>Signup</a> </Link>
 							</div>
 
@@ -252,7 +253,7 @@ export default function Signup() {
 						</div>
 						<div className="d-flex justify-content-around align-items-center">
 							<p>
-								<Link to="/signup-doctor"> Signup as a Health Care Professional </Link>
+								<Link to="/signup-doctor"> Signup as a Healthcare Professional </Link>
 							</p>
 						</div>
 

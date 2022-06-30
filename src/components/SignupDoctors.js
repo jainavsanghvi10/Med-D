@@ -191,7 +191,7 @@ export default function SignupDoctors() {
 				</h1> */}
 				<form className='row g-3 needs-validation mt-0 px-0 mx-0' id='signup-form' onSubmit={otpDisplay ? handleSubmit: signin} noValidate>
 					<div className="col-6 text-center border mt-0 py-3 darkerTextColor greyishColor fw-bold fs-4">
-						<Link to="/login"> <a type='button' className='w-100 darkerTextColor'>Login</a> </Link>
+						<Link to="/login" style={{textDecoration:'none'}}> <a type='button' className='w-100 darkerTextColor' style={{textDecoration:'none'}}>Login</a> </Link>
 					</div>
 					<div className="col-6 text-center border mt-0 py-3 btn-group dropdown darkerTextColor fw-bold fs-4">
 						{/* <span type="button" className="dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false"><u>Sign Up</u></span>
@@ -202,7 +202,7 @@ export default function SignupDoctors() {
 						<Link to="/signup"> <a type='button' className='w-100 darkerTextColor'>Signup</a> </Link>
 					</div>
 
-					<span className="text-center darkerTextColor fw-bold">Signup as a Health Care Professional</span>
+					<span className="text-center darkerTextColor fw-bold">Signup as a Healthcare Professional</span>
 					{errorMsg &&
 					<div className="alert alert-danger" role="alert">
 						{errorMsg}
@@ -303,7 +303,7 @@ export default function SignupDoctors() {
 				<hr className="w-75 mx-auto my-auto mt-3"></hr>
 				<div className="d-flex justify-content-around align-items-center">
 					<p className="mb-1 mt-2">
-						Already a Registered Health Care Professional ? <Link to="/login-doctor"> Login </Link>
+						Already a Registered Healthcare Professional ? <Link to="/login-doctor"> Login </Link>
 					</p>
 				</div>
 				<div className="d-flex justify-content-around align-items-center">

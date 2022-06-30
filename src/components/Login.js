@@ -150,7 +150,7 @@ export default function Signup() {
 						noValidate
 					>
 						<div className="col-6 text-center border mt-0 py-3 darkerTextColor fw-bold fs-4">
-							<Link to="/login" style={{textDecoration:'none'}}> <a type='button' className='w-100 darkerTextColor' style={{textDecoration:'none'}}>Login</a> </Link>
+						<Link to="/login"> <a type='button' className='w-100 darkerTextColor'>Login</a> </Link>
 						</div>
 						<div className="col-6 text-center border mt-0 py-3 btn-group dropdown greyishColor darkerTextColor fw-bold fs-4">
 							{/* <span type="button" className="dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false" style={{textDecoration:'none'}}><u style={{textDecoration:'none'}}>Sign Up</u></span>
@@ -158,7 +158,7 @@ export default function Signup() {
 								<Link to="/signup" style={{textDecoration:'none'}}><button className="dropdown-item darkerTextColor" type="button" style={{textDecoration:'none'}}>As User</button></Link>
 								<Link to="/signup-doctor" style={{textDecoration:'none'}}><button className="dropdown-item darkerTextColor" type="button" style={{textDecoration:'none'}}>As Doctor</button></Link>
 							</ul> */}
-							<Link to="/signup"> <a type='button' className='w-100 darkerTextColor'>Signup</a> </Link>
+							<Link to="/signup" style={{textDecoration:'none'}}> <a type='button' className='w-100 darkerTextColor' style={{textDecoration:'none'}}>Signup</a> </Link>
 						</div>
 
 						<span className="text-center darkerTextColor fw-bold">User Login Form</span>
