@@ -136,7 +136,7 @@ export const Footer = () => {
 									{/* <img className="me-2" height={30} width={30} src={fb_icon}></img>
 									<img className="me-2" height={30} width={30} src={twitter_icon}></img>
 									<img className="me-2" height={30} width={30} src={insta_icon}></img> */}
-									<a href="https://www.linkedin.com/company/friskanow">
+									<a href="https://www.linkedin.com/company/friskanow" target="_blank">
 										<img className="me-2" height={30} width={30} src={linkedin_icon}></img>
 									</a>
 								</p>
