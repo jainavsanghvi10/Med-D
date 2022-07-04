@@ -323,15 +323,6 @@ export const MedRecords = () => {
 		}
 		folderN.splice(j, 1);
 		setFolderNames(folderN);
-		let AfolderN = AllFolderNames;
-		let r = -1;
-		for (let i = 0; i < AfolderN.length; i++) {
-			if (AfolderN[i] == folderName) {
-				r = i;
-				break;
-			}
-		}
-		AfolderN.splice(r, 1);
 		setAllFolderNames(folderN);
 		console.log(folderName + ' deleted successfully!');
 	}
